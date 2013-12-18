@@ -11,3 +11,72 @@
  *= require_self
  *= require_tree .
  */
+
+.f_size{
+	font-size: 18px !important;
+}
+.centerInput{
+	margin-left: 440px;
+  margin-top: 60px;
+}
+.size_drop{
+	width: 30% !important;
+}
+.size_area{
+	width: 212px !important;
+}
+.size_area_s{
+	width: 280px !important;
+	height: 45px !important
+}
+.fbook_text{
+	font-size: 14px;
+	font-style: italic;
+	color:#999;
+	margin-top: -5px;
+	margin-bottom: 10px;
+	margin-left: 20px;
+}
+.mar_top{
+	margin-top: -10px;
+	margin-bottom: 20px;
+}
+h4.lead {
+font-size: 16px;
+margin-bottom: 7px;
+}
+.loc{
+	margin-left: 90px;
+  margin-top: -25px;
+  margin-bottom: 40px;
+}
+.btn_s_i{
+	margin-top: 14px;
+	font-size:16px !important;
+	padding: 8px 21px !important;
+}
+.fb_image{
+	width:27px;
+	margin-right:5px;
+	margin-left:20px;
+	margin-top: -65px;
+}
+.or_s{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 135px;
+	font-size: 15px;
+	font-style: italic;
+	color:#ccc;
+}
+.mov_l{
+	margin-left: 30px;
+}
+.link_p{
+	margin-left: 115px;
+  margin-top: -30px;
+}
+.sign_up-p{
+	margin-left: 155px;
+  margin-top: -42px;
+}
