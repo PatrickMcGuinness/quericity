@@ -11,8 +11,8 @@
   
   <%=render 'layouts/header'%>
   <div class="container">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <div class="alert alert-success"><%= notice %></div>
+    <div class="alert alert-error"><%= alert %></div>
     <%= yield %>
   </div>
   <%=render 'layouts/footer'%>
