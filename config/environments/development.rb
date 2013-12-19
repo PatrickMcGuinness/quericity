@@ -4,7 +4,7 @@ QuizLib::Application.configure do
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
+  config.cache_classes = true
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
@@ -34,5 +34,17 @@ QuizLib::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  config.action_mailer.asset_host = "http://localhost:3000"
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  :address              => "smtp.sendgrid.net",
+  :port                 =>  587,
+  :user_name            => "c2sbrett",
+  :password             => "c2ssmtp@ut",
+  :authentication       => 'plain',
+  :enable_starttls_auto => true  
+  }
 end
