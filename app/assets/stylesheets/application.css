@@ -20,14 +20,24 @@
   margin-top: 60px;
 }
 .size_drop{
-	width: 30% !important;
+	margin-left: -50px !important;
 }
 .size_area{
 	width: 212px !important;
 }
 .size_area_s{
-	width: 280px !important;
-	height: 45px !important
+	width: 212px !important;
+	height: 45px !important;
+}
+.size_area_edit{
+	width: 410px !important;
+}
+.update_b{
+	width: 130px !important;
+	height: 45px !important;
+}
+.profile_b{
+	margin-left: 25px;
 }
 .fbook_text{
 	font-size: 14px;
@@ -46,37 +56,93 @@ font-size: 16px;
 margin-bottom: 7px;
 }
 .loc{
-	margin-left: 90px;
+	margin-left: -50px;
   margin-top: -25px;
-  margin-bottom: 40px;
+  margin-bottom: 40px !important;
 }
 .btn_s_i{
 	margin-top: 14px;
 	font-size:16px !important;
 	padding: 8px 21px !important;
+	margin-right: 175px;
 }
 .fb_image{
-	width:27px;
-	margin-right:5px;
-	margin-left:20px;
-	margin-top: -65px;
+	width: 20px;
+  margin-right: 10px;
+  margin-left: -225px;
+  margin-top: -65px;
 }
 .or_s{
 	margin-top: 20px;
 	margin-bottom: 20px;
-	margin-left: 135px;
+	margin-left: -45px;
 	font-size: 15px;
 	font-style: italic;
 	color:#ccc;
 }
 .mov_l{
-	margin-left: 30px;
+	margin-left: 10px;
 }
 .link_p{
-	margin-left: 115px;
+	margin-left: 58px;
   margin-top: -30px;
 }
 .sign_up-p{
-	margin-left: 155px;
+	margin-left: 110px;
   margin-top: -42px;
+}
+.f_w{
+	font-weight: 200;
+	margin-right: 220px;
+}
+.f_w_e{
+  font-weight: 200;
+	margin-left: 15px;	
+}
+.f_w_p{
+  font-weight: 200;
+	margin-right: 192px;	
+}
+.link_s{
+	font-size: 13px;
+}
+.padd{
+	padding-left: 30px !important;
+}
+.mar_left{
+	margin-left: 30px;
+}
+#new_user .signup_email label.error{
+    margin-top: 10px !important ;
+}
+#new_user .signup_password label.error{
+    margin-top: 10px !important ;
+}
+#new_user .signin_email label.error{
+    margin-top: 10px !important ;
+    margin-left: -55px;
+}
+#new_user .signin_password label.error{
+    margin-top: 10px !important ;
+}
+.error{
+	color: red !important;
+}
+.pos_im{
+	margin-left: 50px;
+}
+.pos_name{
+	margin-left: 150px;
+  margin-top: -40px;
+}
+.pos_pro{
+	margin-top: 35px;
+  margin-left: 45px;
+}
+.pos_email{
+	margin-left: 45px;
+}
+.pos_edit{
+	margin-left: 520px;
+  margin-top: -280px;
 }

@@ -1,32 +1,43 @@
-<div class = "centerInput">
-	<div class="lead f_size">New to QuizLib?</div>
-	<h3 class = "mar_top">Sign up</h3>
-
-	<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-	  <%= devise_error_messages! %>
-
-    <div>
-		  <select class="form-control size_drop" id="role" name="role_user">
-		    <option>Select Role</option>
-		    <option>Professor</option>
-		    <option>Student</option>
-		  </select>
-		  <br/>
-    </div>
-
-    <div class="form-group">
-      <%= f.email_field :email,:class => "form-control size_area",:placeholder => "Email" %>
-    </div>
-    <div class="form-group">
-      <%= f.password_field :password,:class => "form-control size_area",:placeholder => "Choose a Password" %>
-    </div>
-
-	  <div><%= f.submit "Sign up!", :class => "btn btn-default btn-lg active size_drop" %></div></br>
-	  <div class = "fbook_text">or sign up with Facebook:</div>
-	  <%= link_to "Facebook Sign Up", "#", :class => "size_area btn btn-primary btn-block btn-large"%></br>
-
-	<% end %>
-  <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-    <%= link_to "Forgot your password?", new_password_path(resource_name), :class => "mov_l" %><br />
-  <% end -%>
+<div class = "container">
+	<div class="hero-unit">
+		<div style="text-align:center;">
+			<div style="display:inline-block;">
+				<div class="lead f_size">New to QuizLib?</div>
+				<h3 class = "mar_top">Sign up</h3>
+				<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
+				  <%= devise_error_messages! %>
+			    <div class="form-group">
+			    	<div class="col-sm-10">
+						  <select class="form-control size_area" id="role" name="user[role]">
+						    <option>Select Role</option>
+						    <option>Professor</option>
+						    <option>Student</option>
+						  </select>
+						</div>  
+					  <br/>
+			    </div>
+			    <div class="form-group">
+			    	<div class="signup_email col-sm-10">
+			        <%= f.email_field :email,:class => "form-control size_area",:placeholder => "Email", :id => 'user_registeration_email' %>
+			      </div>
+			    </div>
+			    <div class="form-group">
+			    	<div class="signup_password col-sm-10">
+			        <%= f.password_field :password,:class => "form-control size_area",:placeholder => "Choose a Password", :id => 'user_registeration_password' %>
+			      </div>
+			    </div>
+				  <div class="form-group">
+				  	<div class="col-sm-10">
+				  	  <%= f.submit "Sign up!", :class => "btn btn-default btn-lg active form-control size_area" %>
+				  	</div>  
+				  </div></br>
+				  <div class = "fbook_text">or sign up with Facebook:</div>
+				  <%= link_to "Facebook Sign Up", "#", :class => "size_area btn btn-primary btn-block btn-large"%></br>
+				<% end %>
+			  <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+			    <%= link_to "Forgot your password?", new_password_path(resource_name), :class => "mov_l" %><br />
+			  <% end -%>
+		  </div>
+	  </div>
+  </div>
 </div>
