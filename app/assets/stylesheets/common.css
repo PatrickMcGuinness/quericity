@@ -9,3 +9,20 @@
 .float-right{
     float: right !important;
 }
+
+.tab-container{
+    
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-top: none;
+}
+
+.nav-tabs.nav-justified>li>a{
+    background-color: #eee;
+}
+
+.nav-tabs.nav-justified>li.active>a{
+    background-color: white;
+}

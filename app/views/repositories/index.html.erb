@@ -2,7 +2,7 @@
 
 
 
-<div class="tab-content padding-top40">
+<div class="tab-content padding-top40 tab-container">
      <a class="btn btn-primary float-right" href="<%=new_repository_path%>">Create Repo</a>
     <%=render 'repositories/repo_tabs'%>
     <%if @repositories.present?%>
@@ -35,7 +35,7 @@
               </a>
               
               <a href="<%=edit_repository_path(repository)%>" class='active'>
-                <span class="glyphicon glyphicon-align-justify"></span>
+                <span class="glyphicon glyphicon-share-alt"></span>
               </a>
             </td>
           </tr>

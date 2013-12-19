@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>QuizLib</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-  
-  <%=render 'layouts/header'%>
-  <div class="container">
-    <div class="alert alert-success"><%= notice %></div>
-    <div class="alert alert-error"><%= alert %></div>
-    <%= yield %>
-  </div>
-  <%=render 'layouts/footer'%>
-  
-</body>
+  <head>
+    <title>QuizLib</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    
+    <%=render 'layouts/header'%>
+    <br/><br/><br/><br/><br/>
+    <div class="container">
+      <%if notice%>    
+      <div class="alert alert-success"><%= notice %></div>
+      <%elsif alert%>
+      <div class="alert alert-error"><%= alert %></div>
+      <%end%>
+      <%= yield %>
+    </div>
+    <%=render 'layouts/footer'%>
+    
+  </body>
 </html>

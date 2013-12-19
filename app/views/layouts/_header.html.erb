@@ -14,7 +14,7 @@
       <ul class="nav navbar-nav navbar-right">
         <%if user_signed_in?%>
         <li>
-          <%=link_to 'Profile' , edit_user_registration_path %>
+          <%=link_to 'Profile' , profile_user_path(:id => current_user.id)%>
         </li>
         
         <li>

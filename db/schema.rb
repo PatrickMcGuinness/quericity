@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131219113735) do
+ActiveRecord::Schema.define(:version => 20131219133550) do
 
   create_table "quiz_banks", :force => true do |t|
     t.string   "title"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(:version => 20131219113735) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
+    t.string   "profile_pic"
+    t.string   "role"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
