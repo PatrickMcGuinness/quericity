@@ -1,1 +1,50 @@
 <%=render 'common/tabs'%>
+
+
+
+<div class="tab-content padding-top40">
+     <a class="btn btn-primary float-right" href="<%=new_repository_path%>">Create Repo</a>
+    <%=render 'repositories/repo_tabs'%>
+    <%if @repositories.present?%>
+      <div class="table-responsive  padding-top40">
+        <table class="table table-bordered">
+          <tr>
+            <th>Title </th>
+            <th>Quiz Banks </th>
+            <th>Topics </th>
+            <th> </th>
+          </tr>
+          <%@repositories.each do |repository|%>
+          <tr>
+            <td>
+              <%=repository.title%>
+            </td>
+            <td>
+              Quiz Banks: <%=repository.quiz_banks.count%>
+            </td>
+            <td>
+              
+            </td>
+            <td>
+              <a href="<%=edit_repository_path(repository)%>" >
+                <span class="glyphicon glyphicon-pencil"></span>
+              </a>
+              
+              <a href="<%=repository_path(repository)%>" data-method="delete">
+                <span class="glyphicon glyphicon-trash"></span>
+              </a>
+              
+              <a href="<%=edit_repository_path(repository)%>" class='active'>
+                <span class="glyphicon glyphicon-align-justify"></span>
+              </a>
+            </td>
+          </tr>
+          <%end%>
+        </table>
+      </div>
+    <%else%>
+      There is no repository 
+    <%end%>  
+  
+</div>
+

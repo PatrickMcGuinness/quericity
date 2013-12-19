@@ -1,3 +1,11 @@
 .padding-zero{
     padding: 0px !important;
 }
+
+.padding-top40{
+    padding-top: 40px !important;
+}
+
+.float-right{
+    float: right !important;
+}
