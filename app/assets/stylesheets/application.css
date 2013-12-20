@@ -50,6 +50,7 @@
 .mar_top{
 	margin-top: -10px;
 	margin-bottom: 20px;
+	margin-left: 75px;
 }
 h4.lead {
 font-size: 16px;
@@ -97,7 +98,7 @@ margin-bottom: 7px;
 }
 .f_w_e{
   font-weight: 200;
-	margin-left: 15px;	
+	margin-left: -160px;	
 }
 .f_w_p{
   font-weight: 200;
@@ -143,6 +144,51 @@ margin-bottom: 7px;
 	margin-left: 45px;
 }
 .pos_edit{
-	margin-left: 520px;
-  margin-top: -280px;
+	margin-left: 1005px;
+  margin-top: -300px;
+}
+.logo_p{
+	margin-top: -80px;
+	margin-bottom: 25px;
+}
+.brws_btn{
+	cursor: pointer;
+  margin-left: 95px;
+  margin-top: 20px;
+}
+.mar_t{
+	margin-top: -15px;
+}
+.mar_top_profile{
+	margin-left: -30px;
+}
+.loc_p{
+	margin-right: 20px;
+}
+.loc_e{
+	margin-right: 55px;
+}
+.big_thumb{
+	width: 90px;
+  height: 90px;
+  border: 1px solid #B6B6B4;
+  border-radius: 5px;
+}
+.pos_img_prof{
+	margin-top: -4px;
+	margin-left: 40px;
+}
+.f_pass{
+	margin-top: 60px !important;
+  margin-left: 15px;
+}
+.links_p{
+	margin-top: 15px;
+  margin-left: 15px;
+}
+.form_edit{
+	margin-left: 255px;
+}
+.marg_cor{
+	margin-top: -38px;
 }

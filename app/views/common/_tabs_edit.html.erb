@@ -25,6 +25,6 @@
       Reports
     </a>
   </li>
-  <li class="<%= controller.class == UsersController and controller.action_name == 'profile' ? 'active' : '' %>"><%= link_to "Settings", profile_user_path(:id => current_user.id), :method=> "GET",:class => "glyphicon glyphicon-cog"%> 
+  <li class="<%= controller.class == Devise::RegistrationsController and controller.action_name == 'edit' ? 'active' : '' %>"><%= link_to "Settings", profile_user_path(:id => current_user.id), :method=> "GET",:class => "glyphicon glyphicon-cog"%> 
   </li>
 </ul>

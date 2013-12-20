@@ -12,4 +12,5 @@ class User < ActiveRecord::Base
   :confirmed_at, :confirmation_sent_at, :unconfirmed_email
   
   has_many :repositories
+  mount_uploader :profile_pic, ImageUploader
 end

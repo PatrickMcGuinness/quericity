@@ -1,52 +1,75 @@
-<div class = "mar_left">
+<%=render 'common/tabs_edit'%>
+<div class = "tab-content padding-top40 tab-container">
   <h2 class = "mar_top">Edit <%= resource_name.to_s.humanize %></h2>
+  <div class = "form_edit">
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal", :multipart => true }) do |f| %>
+      <%= devise_error_messages! %>
+      <div class="form-group">
+        <h4 class = "lead"><label class="f_w_e control-label">First Name</label><h4>
+        <div class="edit_email col-sm-10">
+          <%= f.text_field :first_name,:class => "form-control marg_cor",:placeholder => "First Name"%>
+        </div>
+      </div>
+      <div class="form-group">
+        <h4 class = "lead"><label class="f_w_e control-label">Last Name</label><h4>
+        <div class="edit_email col-sm-10">
+          <%= f.text_field :last_name,:class => "form-control marg_cor",:placeholder => "Last Name"%>
+        </div>
+      </div>
+      <div class="form-group">
+        <h4 class = "lead"><label class="f_w_e control-label">Email</label><h4>
+        <div class="edit_email col-sm-10">
+          <%= f.email_field :email,:class => "form-control marg_cor",:placeholder => "Email"%>
+        </div>
+      </div>
 
-  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f| %>
-    <%= devise_error_messages! %>
-    <div class="form-group">
-      <h4 class = "lead"><label class="f_w_e control-label">First Name</label><h4>
-      <div class="edit_email col-sm-10">
-        <%= f.text_field :first_name,:class => "form-control size_area_edit",:placeholder => "First Name"%>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+      <div class="form-group">
+        <h4 class = "lead"><label class="f_w_e control-label">Password</label><h4>
+        <div class="edit_password col-sm-10">
+          <%= f.password_field :password, :autocomplete => "off",:class => "form-control marg_cor",:placeholder => "Password (leave blank if you don't want to change it)"%>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <h4 class = "lead"><label class="f_w_e control-label">Last Name</label><h4>
-      <div class="edit_email col-sm-10">
-        <%= f.text_field :last_name,:class => "form-control size_area_edit",:placeholder => "Last Name"%>
+      <div class="form-group">
+        <h4 class = "lead"><label class="f_w_e control-label">Password Confirmation</label><h4>
+        <div class="edit_password_confirm col-sm-10">
+          <%= f.password_field :password_confirmation, :autocomplete => "off",:class => "marg_cor form-control",:placeholder => "Password Confirmation"%>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <h4 class = "lead"><label class="f_w_e control-label">Email</label><h4>
-      <div class="edit_email col-sm-10">
-        <%= f.email_field :email,:class => "form-control size_area_edit",:placeholder => "Email"%>
+      <div class="form-group">
+        <h4 class = "lead"><label class="f_w_e control-label" for="inputEmail">Current Password</label><h4>
+        <div class="edit_password_current col-sm-10">
+          <%= f.password_field :current_password, :class => "marg_cor form-control",:placeholder => "We need your current password to confirm your changes"%>
+        </div>
       </div>
-    </div>
+      <div class="form-group">
+      <h4 class = "lead"><label class="f_w_e control-label" for="inputImage">Profile Picture
+      </label><h4> 
+        <div class="col-sm-10 mar_t">
+          <% if (current_user.profile_pic.present?)%>
+              <input id="holder2" type="file" name = "user[profile_pic]" style = "width: 0px;">
+              <div class="marg_cor">
+                  <%=image_tag current_user.profile_pic,:class => 'big_thumb', :id => "logo2"%>
+              </div>
+              <img src="/assets/edit_icon.png" id="up_logo_file2" style="cursor:pointer; margin-left:75px; margin-top:-30px;">
+          <%else%>
+              <input id="holder2" type="file" name = "user[profile_pic]" style = "width: 0px;">
+              <img src="/assets/brws.png" id="up_logo_file2" class = "brws_btn">
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+              <div class="logo_p">
+                  <img id="logo2" src="/assets/Picupload_bg.png" alt="logo2" class = "big_thumb"/>
+              </div>      
+          <%end%>
+        </div>
+      </div> 
+      <div class="form-group">
+        <div class="col-sm-10">
+          <%= f.submit "Update", :class => "btn btn-default btn-lg active form-control update_b" %>
+        </div>
+      </div>
     <% end %>
-    <div class="form-group">
-      <h4 class = "lead"><label class="f_w_e control-label">Password</label><h4>
-      <div class="edit_password col-sm-10">
-        <%= f.password_field :password, :autocomplete => "off",:class => "form-control size_area_edit",:placeholder => "Password (leave blank if you don't want to change it)"%>
-      </div>
-    </div>
-    <div class="form-group">
-      <h4 class = "lead"><label class="f_w_e control-label">Password Confirmation</label><h4>
-      <div class="edit_password_confirm col-sm-10">
-        <%= f.password_field :password_confirmation, :autocomplete => "off",:class => "form-control size_area_edit",:placeholder => "Password Confirmation"%>
-      </div>
-    </div>
-    <div class="form-group">
-      <h4 class = "lead"><label class="f_w_e control-label" for="inputEmail">Current Password</label><h4>
-      <div class="edit_password_current col-sm-10">
-        <%= f.password_field :current_password, :class => "form-control size_area_edit",:placeholder => "We need your current password to confirm your changes"%>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-10">
-        <%= f.submit "Update", :class => "btn btn-default btn-lg active form-control update_b" %>
-      </div>
-    </div>
-  <% end %>
+  </div>
 </div>
+ 

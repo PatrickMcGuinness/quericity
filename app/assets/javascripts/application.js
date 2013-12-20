@@ -91,4 +91,24 @@ $("#edit_user").validate({
           $(element).closest('.control_validate').removeClass('error').addClass('success');
       }
     });
+
+function readURL2(input1) {
+        if (input1.files && input1.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#logo2').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input1.files[0]);
+        }
+    }
+    
+    $("#holder2").change(function(){
+        readURL2(this);
+    });
+
+$("#up_logo_file2").click(function () {
+             $("#holder2").trigger('click');
+        });
 });
