@@ -206,3 +206,26 @@ margin-bottom: 7px;
 border-bottom: 1px solid #ECECEC;
 position: relative;
 }
+.mar_l_30{
+	margin-left: 20px;
+}
+.top_bar_s{
+	margin-top: 40px;
+}
+.top_bar_ss{
+	margin-left: -15px;
+}
+
+.custom_d{
+	margin-left: 960px;
+  margin-top: -65px;
+}
+.page-title-box {
+float: left;
+position: relative;
+width: 100%;
+}
+.alert-error {
+color: black;
+background-color: #F62217;
+}

@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
   has_many :shared_repositories  , :through => :user_repositories , :source => :repository
   
   mount_uploader :profile_pic, ImageUploader
+
+  def name
+    "#{self.first_name} #{self.last_name}"
+  end
 end

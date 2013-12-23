@@ -1,0 +1,23 @@
+<%=render 'common/tabs'%>
+<div class="tab-content padding-top40 tab-container">
+	<div class="mar_top creat-repo-div"> <h2><%= @repository.title%></h2>
+	 <a class="btn btn-primary float-right marg_cor" href="<%=edit_repository_path(@repository)%>">Edit</a>
+	 <a class="btn btn-primary marg_cor custom_d" href="#">Share</a>	
+  </div>
+	<div class = "top_bar_ss">
+	  <span class = "mar_l_30"><b>Owned by:</b> <%=current_user.name %>  </span> <font class = "mar_l_30">|</font>
+	  <span class = "mar_l_30"><b>Created on:</b> <%=@repository.created_at.to_date %>  </span><font class = "mar_l_30">|</font>
+	  <span class = "mar_l_30"><b>Quiz Banks:</b> 0  </span><font class = "mar_l_30">|</font>
+	  <span class = "mar_l_30"><b>Topics:</b> 0  </span><font class = "mar_l_30">|</font>
+	  <span class = "mar_l_30"><b>Collaborators:</b> 0  </span>
+	</div>
+
+	<ul class="breadcrumb top_bar_s">
+	  <li><%= link_to "My Repo", repositories_path%></li>
+	  <li class="active"><%= @repository.title%></li>
+  </ul>
+	<div class = "top_bar_s">
+	  There are no quiz banks.
+	</div>  
+</div>
+<a class="btn btn-primary top_bar_s" href="#">Add quiz bank</a>
