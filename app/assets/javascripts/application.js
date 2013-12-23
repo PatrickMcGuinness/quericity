@@ -98,6 +98,40 @@ $("#edit_user").validate({
       }
     });
 
+$("#repo_form").validate({
+      onkeyup: false,
+      onclick: false,
+      onfocusout: false,
+      rules: {
+          'repository[title]': {
+            required: true
+          },
+          'repository[description]': {
+              required: true
+          }
+      },
+      messages: {
+          'repository[title]': {
+            required: "Please enter title"
+          },
+          
+          'repository[description]': {
+             required: "Please enter description"
+          }
+      },
+      highlight: function(element) {
+          $(element).siblings('label').remove();
+          $(element).closest('.control_validate').removeClass('success').addClass('error');
+      },
+      success: function(element) {
+          // $("#" + $(element).attr('for')).css('border', 'black');
+          
+          $(element).addClass('valid').removeClass('error');
+          
+          $(element).siblings('label').remove();
+          $(element).closest('.control_validate').removeClass('error').addClass('success');
+      }
+    });
 function readURL2(input1) {
         if (input1.files && input1.files[0]) {
             var reader = new FileReader();
