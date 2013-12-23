@@ -50,7 +50,6 @@
 .mar_top{
 	margin-top: -10px;
 	margin-bottom: 20px;
-	margin-left: 75px;
 }
 h4.lead {
 font-size: 16px;
@@ -100,6 +99,11 @@ margin-bottom: 7px;
   font-weight: 200;
 	margin-left: -160px;	
 }
+.f_w_r{
+	font-weight: 200;
+  margin-left: -100px;
+}
+
 .f_w_p{
   font-weight: 200;
 	margin-right: 192px;	
@@ -159,6 +163,12 @@ margin-bottom: 7px;
 .mar_t{
 	margin-top: -15px;
 }
+.mar_res{
+	margin-left: 200px !important; 
+}
+.mar_res_b{
+  margin-left: 215px !important;	
+}
 .mar_top_profile{
 	margin-left: -30px;
 }
@@ -191,4 +201,8 @@ margin-bottom: 7px;
 }
 .marg_cor{
 	margin-top: -38px;
+}
+.creat-repo-div {
+border-bottom: 1px solid #ECECEC;
+position: relative;
 }
