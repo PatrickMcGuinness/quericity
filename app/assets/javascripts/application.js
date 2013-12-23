@@ -77,7 +77,7 @@ $("#edit_user").validate({
       messages: {
           'user[current_password]': {
             required: "Please enter password",  
-            minlength:  "Please enter min 8 character"
+            minlength:  "Please enter min 8 characters"
           },    
           'user[email]': {
              required: "Please enter email",
@@ -104,7 +104,8 @@ $("#repo_form").validate({
       onfocusout: false,
       rules: {
           'repository[title]': {
-            required: true
+            required: true,
+            minlength: 5
           },
           'repository[description]': {
               required: true
@@ -112,7 +113,8 @@ $("#repo_form").validate({
       },
       messages: {
           'repository[title]': {
-            required: "Please enter title"
+            required: "Please enter title",
+            minlength: "Please enter min 5 characters"
           },
           
           'repository[description]': {

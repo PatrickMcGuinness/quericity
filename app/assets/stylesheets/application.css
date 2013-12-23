@@ -206,3 +206,17 @@ margin-bottom: 7px;
 border-bottom: 1px solid #ECECEC;
 position: relative;
 }
+.mar_l_30{
+	margin-left: 40px;
+}
+.top_bar_s{
+	margin-top: 40px;
+}
+.top_bar_ss{
+	margin-top: 40px;
+	margin-left: -40px;
+}
+.custom_d{
+	margin-left: 960px;
+  margin-top: -65px;
+}

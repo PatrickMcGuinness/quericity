@@ -7,7 +7,7 @@ class RepositoriesController < ApplicationController
   end
   
   def show
-    @repository = current_user.repositories.new(params[:repository])
+    @repository = Repository.find(params[:id])
   end
   
   def new

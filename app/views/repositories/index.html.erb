@@ -1,7 +1,4 @@
 <%=render 'common/tabs'%>
-
-
-
 <div class="tab-content padding-top40 tab-container">
      <a class="btn btn-primary float-right" href="<%=new_repository_path%>">Create Repo</a>
     <%=render 'repositories/repo_tabs'%>
@@ -17,7 +14,7 @@
           <%@repositories.each do |repository|%>
           <tr>
             <td>
-              <%=repository.title%>
+              <a href = "<%= repository_path(:id => repository.id, :title => repository.title)%>"><%=repository.title%></a>
             </td>
             <td>
               Quiz Banks: <%=repository.quiz_banks.count%>
@@ -44,7 +41,6 @@
       </div>
     <%else%>
       There is no repository 
-    <%end%>  
-  
+    <%end%>   
 </div>
 

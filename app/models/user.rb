@@ -13,4 +13,8 @@ class User < ActiveRecord::Base
   
   has_many :repositories
   mount_uploader :profile_pic, ImageUploader
+
+  def name
+    "#{self.first_name} #{self.last_name}"
+  end
 end
