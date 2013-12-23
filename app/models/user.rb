@@ -12,8 +12,8 @@ class User < ActiveRecord::Base
   :confirmed_at, :confirmation_sent_at, :unconfirmed_email
   
   has_many :repositories
-  #has_many :user_repositories
-  #has_many :shared_repositories , :through => user_repositories
+  has_many :user_repositories 
+  has_many :shared_repositories  , :through => :user_repositories , :source => :repository
   
   mount_uploader :profile_pic, ImageUploader
 end

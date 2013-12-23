@@ -1,6 +1,14 @@
 QuizLib::Application.routes.draw do
   
 
+  get "collaborators/index"
+
+  get "collaborators/new"
+
+  get "collaborators/edit"
+
+  get "collaborators/destroy"
+
   devise_for :users
 
   # The priority is based upon order of creation:
