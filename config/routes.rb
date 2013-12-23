@@ -1,13 +1,4 @@
 QuizLib::Application.routes.draw do
-  
-
-  get "collaborators/index"
-
-  get "collaborators/new"
-
-  get "collaborators/edit"
-
-  get "collaborators/destroy"
 
   devise_for :users
 
@@ -28,6 +19,9 @@ QuizLib::Application.routes.draw do
     member do
       get 'profile'
     end
+  end
+  resources :repositories do
+    resources :collaborators
   end
   # Sample resource route with options:
   #   resources :products do
@@ -65,7 +59,7 @@ QuizLib::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
-  resources :repositories
+  
   root :to => "home#index"
   # See how all your routes lay out with "rake routes"
 
