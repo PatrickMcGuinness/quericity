@@ -28,6 +28,9 @@ $("#new_user").validate({
           'user[email]': {
               required: true,
               email: true
+          },
+          'user[role]': {
+              required: true
           }
       },
       messages: {
@@ -39,6 +42,9 @@ $("#new_user").validate({
           'user[email]': {
              required: "Please enter email",
              email: "Please enter valid email"
+          },
+          'user[role]': {
+             required: "Please select a role"
           }
       },
       highlight: function(element) {
