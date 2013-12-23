@@ -1,5 +1,7 @@
 class CollaboratorsController < ApplicationController
   def index
+    @repository = Repository.find(params[:repository_id])
+    
   end
 
   def new
