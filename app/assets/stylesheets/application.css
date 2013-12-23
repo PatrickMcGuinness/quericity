@@ -50,7 +50,6 @@
 .mar_top{
 	margin-top: -10px;
 	margin-bottom: 20px;
-	margin-left: 75px;
 }
 h4.lead {
 font-size: 16px;
@@ -165,10 +164,10 @@ margin-bottom: 7px;
 	margin-top: -15px;
 }
 .mar_res{
-	margin-left: 240px !important; 
+	margin-left: 200px !important; 
 }
 .mar_res_b{
-  margin-left: 255px !important;	
+  margin-left: 215px !important;	
 }
 .mar_top_profile{
 	margin-left: -30px;
