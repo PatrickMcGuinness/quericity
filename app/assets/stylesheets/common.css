@@ -1,3 +1,9 @@
+body{
+    background-image: url('/assets/bg.jpg');
+}
+.red-color{
+    color: #9B2D1F !important;
+}
 .padding-zero{
     padding: 0px !important;
 }
@@ -21,8 +27,15 @@
 
 .nav-tabs.nav-justified>li>a{
     background-color: #eee;
+    color: #696464;
 }
 
 .nav-tabs.nav-justified>li.active>a{
+    background-color: white;
+    color: #9B2D1F;
+    
+}
+
+.main-container{
     background-color: white;
 }
