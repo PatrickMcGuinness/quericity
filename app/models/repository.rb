@@ -16,4 +16,5 @@ class Repository < ActiveRecord::Base
   def add_collaborator user , permission
     UserRepository.create(:repository_id => self.id , :user_id => user.id , :permission => permission)
   end
+
 end

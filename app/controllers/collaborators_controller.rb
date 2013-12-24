@@ -1,6 +1,7 @@
 class CollaboratorsController < ApplicationController
   def index
-    @repository = Repository.find(params[:repository_id]) 
+    @repository = Repository.find(params[:repository_id])
+    @user_repository = UserRepository.last
   end
 
   def new
@@ -10,7 +11,7 @@ class CollaboratorsController < ApplicationController
   def create
     user = User.where(:email => params[:email]).first
     @repository = Repository.find(params[:repository_id])
-    @status = @repository.add_collaborator user , params[:permission]
+    @status = @repository.add_collaborator user , params[:user_repository][:permission]
   end
 
   def edit
@@ -20,7 +21,8 @@ class CollaboratorsController < ApplicationController
   end
 
   def destroy
-    @repository = Repository.find(params[:repository_id])
-    @repository.collaborators.where(:id => params[:id])
+    @user_repository = UserRepository.where(:repository_id => params[:repository_id] , :user_id => params[:id]).first
+    @user_repository.destroy 
+    redirect_to :back
   end
 end
