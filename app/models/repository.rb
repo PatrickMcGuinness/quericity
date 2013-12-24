@@ -8,4 +8,12 @@ class Repository < ActiveRecord::Base
   has_many :collaborators , :through => :user_repositories , :source => :user
   
   has_many :quiz_banks
+  
+  def is_collaborator? user
+    self.collaborators.where(:user_id => user.id).present?
+  end
+  
+  def add_collaborator user , permission
+    self.collaborators.create(:user_id => user.id , :permission => permission)
+  end
 end

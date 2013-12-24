@@ -1,5 +1,5 @@
 class UserRepository < ActiveRecord::Base
-  attr_accessible :permission
+  attr_accessible :user_d , :permission
   
   belongs_to :user
   belongs_to :repository
