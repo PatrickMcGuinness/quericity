@@ -7,7 +7,7 @@
     </div>
 
     <div class="modal-body">
-      <div id='add-collaborator-panel'>
+      <div id='add-collaborator-panel' class = "custom_b_s">
         
         <form class="form-inline" role="form">
         
@@ -29,10 +29,10 @@
         
       </div>
       
-      <table class="table custom_width">
+      <table class="table">
         <tr>
           <td> <%= @repository.user.email %></td>
-          <td> owner </td>
+          <td class = "custom_width"> owner </td>
           <td></td>
         </tr>
         <% @repository.collaborators.each do |collaborator|%>

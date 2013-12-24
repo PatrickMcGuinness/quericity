@@ -230,11 +230,16 @@ color: black;
 background-color: #F62217;
 }
 .width{
-	width: 318px;
+	width: 305px;
 }
 .size_area_pop{
 	width: 180px !important;
 }
 .custom_width{
-	width: 79% !important;
+	width: 38% !important;
+}
+.custom_b_s{
+	width: 560px;
+	padding: 8px 8px;
+	background-color: #f5f5f5;
 }
