@@ -3,7 +3,7 @@
      <a class="btn btn-primary float-right" href="<%=new_repository_path%>">Create Repo</a>
     <%=render 'repositories/repo_tabs'%>
     <div class="table-responsive  padding-top40">
-    <%if @repositories.present?%>
+    <%if @shared_repositories.present?%>
       <table class="table table-bordered">
         <tr>
           <th>Title </th>
@@ -11,7 +11,9 @@
           <th>Topics </th>
           <th> Shared by</th>
         </tr>
-        <%= render @shared_repositories %>
+        <%  @shared_repositories.each do |repo| %>
+          <%= render 'shared_repository' , :repository => repo%>
+        <%end%>  
       </table>  
     <%else%>
       There is no repository shared with you

@@ -23,20 +23,18 @@
         
       </div>
       
-      <table class="table">
+      <table id='collaborator-list' class="table">
         <tr>
           <td> <%= @repository.user.email %></td>
           <td class = "custom_width"> owner </td>
           <td></td>
         </tr>
-        <% @repository.collaborators.each do |collaborator|%>
-        <tr>
-          <td> <%= collaborator.email %></td>
-          <td class = "custom_width"> owner </td>
-          <td>
-            <span class="glyphicon glyphicon-remove-circle"></span>
-          </td>
-        </tr>
+        <% @repository.user_repositories.each do |collaborator|%>
+          <%=render 'collaborator' , :collaborator => collaborator %>
+        <%end%>
+        
+        <% @repository.invitations.each do |invitation|%>
+          <%=render 'invitation' , :invitation => invitation %>
         <%end%>
       </table>  
     </div>
