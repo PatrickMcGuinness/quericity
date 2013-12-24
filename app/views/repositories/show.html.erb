@@ -2,7 +2,8 @@
 <div class="tab-content padding-top40 tab-container">
 	<div class="mar_top creat-repo-div"> <h2><%= @repository.title%></h2>
 	 <a class="btn btn-primary float-right marg_cor" href="<%=edit_repository_path(@repository)%>">Edit</a>
-	 <a class="btn btn-primary marg_cor custom_d" href="#">Share</a>	
+	 <a class="btn btn-primary marg_cor custom_d" data-remote = true href="<%=repository_collaborators_path(@repository)%>">Share</a>
+	 <a class="btn btn-primary custom_p" href="#">Add quiz bank</a>	
   </div>
 	<div class = "top_bar_ss">
 	  <span class = "mar_l_30"><b>Owned by:</b> <%=current_user.name %>  </span> <font class = "mar_l_30">|</font>
@@ -20,4 +21,3 @@
 	  There are no quiz banks.
 	</div>  
 </div>
-<a class="btn btn-primary top_bar_s" href="#">Add quiz bank</a>
