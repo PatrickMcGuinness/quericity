@@ -18,6 +18,16 @@
 			    </div>
 			    <div class="form-group">
 			    	<div class="signup_email col-sm-10">
+			        <%= f.text_field :first_name,:class => "form-control size_area",:placeholder => "First Name", :id => 'user_registeration_f_name' %>
+			      </div>
+			    </div>
+			    <div class="form-group">
+			    	<div class="signup_email col-sm-10">
+			        <%= f.text_field :last_name,:class => "form-control size_area",:placeholder => "Last Name", :id => 'user_registeration_l_name' %>
+			      </div>
+			    </div>
+			    <div class="form-group">
+			    	<div class="signup_email col-sm-10">
 			        <%= f.email_field :email,:class => "form-control size_area",:placeholder => "Email", :id => 'user_registeration_email' %>
 			      </div>
 			    </div>

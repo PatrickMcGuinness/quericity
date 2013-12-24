@@ -229,3 +229,12 @@ width: 100%;
 color: black;
 background-color: #F62217;
 }
+.width{
+	width: 318px;
+}
+.size_area_pop{
+	width: 180px !important;
+}
+.custom_width{
+	width: 79% !important;
+}

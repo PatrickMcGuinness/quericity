@@ -1,25 +1,27 @@
 
-
-
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h4 class="modal-title">Repository Collaborators</h4>
     </div>
+
     <div class="modal-body">
       <div id='add-collaborator-panel'>
         
         <form class="form-inline" role="form">
         
-          <div class="form-group">
-            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+          <div class="form-group width">
+            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Username or email address">
           </div>
-          <div class="form-group">
-            <select>
-              <option> Read</option>
-              <option> Write</option>
-            </select>
+           <div class="form-group">
+            
+              <select class="form-control size_area_pop" name="">
+                <option>Read</option>
+                <option>Write</option>
+                <option>Admin</option>
+              </select>
+            
           </div>
           
           <button type="submit" class="btn btn-default">Add</button>
@@ -27,7 +29,7 @@
         
       </div>
       
-      <table class="table">
+      <table class="table custom_width">
         <tr>
           <td> <%= @repository.user.email %></td>
           <td> owner </td>
