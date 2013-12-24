@@ -9,23 +9,17 @@
     <div class="modal-body">
       <div id='add-collaborator-panel' class = "custom_b_s">
         
-        <form class="form-inline" role="form">
         
+        <%=form_for UserRepository.new , :url => repository_collaborators_path(@repository) ,:html=>{ :class=>"form-inline"}  , :remote => true do |f|%>
           <div class="form-group width">
-            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Username or email address">
+            <input name="email" type="email" class="form-control" id="exampleInputEmail2" placeholder="email address">
           </div>
-           <div class="form-group">
-            
-              <select class="form-control size_area_pop" name="">
-                <option>Read</option>
-                <option>Write</option>
-                <option>Admin</option>
-              </select>
-            
+          <div class="form-group">
+            <%= f.select :permission, ['Read', 'Write', 'Admin'] , {} , {:class => 'form-control size_area_pop'}%>
           </div>
           
           <button type="submit" class="btn btn-default">Add</button>
-        </form>
+        <% end %>
         
       </div>
       

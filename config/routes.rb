@@ -21,6 +21,9 @@ QuizLib::Application.routes.draw do
     end
   end
   resources :repositories do
+    collection do
+      get 'shared'
+    end
     resources :collaborators
   end
   # Sample resource route with options:

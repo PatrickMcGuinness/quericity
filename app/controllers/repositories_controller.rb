@@ -6,6 +6,10 @@ class RepositoriesController < ApplicationController
     @repositories  = current_user.repositories
   end
   
+  def shared
+    @shared_repositories  = current_user.shared_repositories
+  end
+  
   def show
     @repository = Repository.find(params[:id])
   end
