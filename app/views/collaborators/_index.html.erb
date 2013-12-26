@@ -29,16 +29,21 @@
           <td class = "custom_width"> owner </td>
           <td></td>
         </tr>
+        
         <% @repository.collaborators.each do |collaborator|%>
-        <tr>
+
+        <tr> 
           <td> <%= collaborator.email %></td>
-          <td class = "custom_width"> <%= @user_repository.permission %> </td>
+            <td><%= UserRepository.where(:user_id => collaborator.id).first.permission %>
+            </td>  
           <td>
             <a href="<%=repository_collaborator_path(:id => collaborator.id)%>" data-method="delete">
               <span class="glyphicon glyphicon-remove-circle"></span>
             </a>         
           </td>
         </tr>
+        
+        
         <%end%>
       </table>  
     </div>

@@ -1,7 +1,7 @@
 class CollaboratorsController < ApplicationController
   def index
     @repository = Repository.find(params[:repository_id])
-    @user_repository = UserRepository.last
+    @user_repository = UserRepository.where(:repository_id => params[:repository_id]) 
   end
 
   def new
