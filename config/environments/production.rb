@@ -64,4 +64,21 @@ QuizLib::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  config.assets.compress = false
+
+  # Expands the lines which load the assets
+  config.assets.debug = true
+  config.action_mailer.asset_host = "http://quiz-lib.herokuapp.com"
+  config.action_mailer.default_url_options = { :host => 'quiz-lib.herokuapp.com' }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  :address              => "smtp.sendgrid.net",
+  :port                 =>  587,
+  :user_name            => "c2sbrett",
+  :password             => "c2ssmtp@ut",
+  :authentication       => 'plain',
+  :enable_starttls_auto => true  
+  }
 end
