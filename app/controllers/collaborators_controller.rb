@@ -4,14 +4,17 @@ class CollaboratorsController < ApplicationController
     @user_repository = UserRepository.where(:repository_id => params[:repository_id]) 
   end
 
-  def new
-    
-  end
   
   def create
-    user = User.where(:email => params[:email]).first
     @repository = Repository.find(params[:repository_id])
-    @status = @repository.add_collaborator user , params[:user_repository][:permission]
+
+    user = User.where(:email => params[:email]).first
+    if user.present?
+      @collaborator = @repository.add_collaborator user , params[:user_repository][:permission]
+    else
+      @invitation = @repository.invitations.create(:email => params[:email] ,:permission => params[:user_repository][:permission])
+    end  
+
   end
 
   def edit

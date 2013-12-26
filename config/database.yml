@@ -5,7 +5,7 @@
 #   gem 'sqlite3'
 development:
   adapter: postgresql
-  database: dev-quiz
+  database: quiz-dev
   username: postgres
   password: 'anser'
   host: localhost
