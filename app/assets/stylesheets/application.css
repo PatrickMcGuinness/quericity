@@ -131,14 +131,12 @@ margin-bottom: 7px;
     margin-top: 10px !important ;
 }
 #new_user .signin_email label.error{
-    margin-top: 10px !important ;
     margin-left: -55px;
 }
-#new_user .signin_password label.error{
-    margin-top: 10px !important ;
-}
+
 .error{
 	color: red !important;
+	font-size: 15px;
 }
 .pos_im{
 	margin-left: 50px;

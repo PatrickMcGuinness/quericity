@@ -9,6 +9,10 @@
     
   </td>
   <td>
-    <%=repository.user.email%>
+    <%if repository.user.name.present?%>
+      <%=repository.user.name%>
+    <%else%>
+      <%=repository.user.email%>
+    <%end%>  
   </td>
 </tr>

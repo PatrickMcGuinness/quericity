@@ -21,14 +21,22 @@
       </div>
       <table class="table">
         <tr>
-          <td> <%= @repository.user.email %></td>
+          <%if @repository.user.name.present? %>
+            <td> <%= @repository.user.name %></td>
+          <%else%>    
+            <td> <%= @repository.user.email %></td>
+          <%end%>   
           <td class = "custom_width"> owner </td>
           <td></td>
         </tr>
         
         <% @repository.collaborators.each do |collaborator|%>
           <tr> 
-            <td> <%= collaborator.email %></td>
+            <%if collaborator.name.present?%>
+              <td> <%= collaborator.name %></td>
+            <%else%>  
+              <td> <%= collaborator.email %></td>
+            <%end%>  
               <td><%= UserRepository.where(:user_id => collaborator.id).first.permission %>
               </td>  
             <td>
