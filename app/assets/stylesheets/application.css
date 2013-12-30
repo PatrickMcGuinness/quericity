@@ -39,6 +39,9 @@
 .profile_b{
 	margin-left: 25px;
 }
+.pad{
+	padding: 5px 16px !important;
+}
 .fbook_text{
 	font-size: 14px;
 	font-style: italic;
@@ -98,6 +101,10 @@ margin-bottom: 7px;
 .f_w_e{
   font-weight: 200;
 	margin-left: -160px;	
+}
+.f_w_edit_p{
+	font-weight: 200;
+	margin-left: 16px;
 }
 .f_w_r{
 	font-weight: 200;
@@ -183,6 +190,11 @@ margin-bottom: 7px;
   height: 90px;
   border: 1px solid #B6B6B4;
   border-radius: 5px;
+}
+.small_thumb{
+  width: 70px;
+  height: 80px;
+  border-radius: 5px;	
 }
 .pos_img_prof{
 	margin-top: -4px;

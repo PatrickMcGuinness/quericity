@@ -52,7 +52,7 @@
           <% if (current_user.profile_pic.present?)%>
               <input id="holder2" type="file" name = "user[profile_pic]" style = "width: 0px;">
               <div class="marg_cor">
-                  <%=image_tag current_user.profile_pic,:class => 'big_thumb', :id => "logo2"%>
+                  <%=image_tag current_user.profile_pic,:class => 'small_thumb', :id => "logo2"%>
               </div>
               <img src="/assets/edit_icon.png" id="up_logo_file2" style="cursor:pointer; margin-left:75px; margin-top:-30px;">
           <%else%>
@@ -60,7 +60,7 @@
               <img src="/assets/brws.png" id="up_logo_file2" class = "brws_btn">
 
               <div class="logo_p">
-                  <img id="logo2" src="/assets/Picupload_bg.png" alt="logo2" class = "big_thumb"/>
+                  <img id="logo2" src="/assets/Picupload_bg.png" alt="logo2" class = "small_thumb"/>
               </div>      
           <%end%>
         </div>
