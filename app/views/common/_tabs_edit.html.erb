@@ -1,5 +1,9 @@
 <ul class="nav nav-tabs nav-justified">
-  <li class="<%= controller.class == RepositoriesController ? 'active' : '' %>"><%= link_to "Repository", repositories_path, :method=> "GET",:class => "glyphicon glyphicon-align-justify"%>
+  <li class="<%= controller.class == RepositoriesController ? 'active' : '' %>">
+    <a href="<%= repositories_path%>">
+      <span class="glyphicon glyphicon-align-justify"></span>
+      Repository
+    </a>
   </li>
   <li class=' col-xs-2 padding-zero'>
     <a href="#profile" data-toggle="tab">
@@ -25,6 +29,11 @@
       Reports
     </a>
   </li>
-  <li class="<%= controller.class == Devise::RegistrationsController and controller.action_name == 'edit' ? 'active' : '' %>"><%= link_to "Settings", profile_user_path(:id => current_user.id), :method=> "GET",:class => "glyphicon glyphicon-cog"%> 
+  <li class="<%= controller.class == Devise::RegistrationsController and controller.action_name == 'edit' ? 'active' : '' %>">
+    <a href="<%= profile_user_path(:id => current_user.id)%>">
+      <span class="glyphicon glyphicon glyphicon-cog"></span>
+      Settings
+    </a> 
   </li>
+
 </ul>
