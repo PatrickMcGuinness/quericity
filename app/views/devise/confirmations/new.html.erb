@@ -2,11 +2,20 @@
 
 <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
+  <div class="form-group">
+  	<h4 class = "lead"><label class="mar_l_30 control-label">Email</label><h4>
+  		<div class="edit_email col-sm-10">
+        <%= f.email_field :email,:class => "form-control size_area_edit",:placeholder => "Email", :autofocus => true %>
+      </div>
+  </div>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.submit "Resend confirmation instructions" %></div>
+  <div  class = "f_pass">
+  	<%= f.submit "Resend confirmation instructions", :class => "btn btn-primary" %>
+  </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<div class = "links_p">
+  <%= link_to "Sign in", new_session_path(resource_name) %>
+  <%= link_to "Sign up", new_registration_path(resource_name), :class => "mar_l_30" %>
+  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), :class => "mar_l_30" %><br />
+</div>
