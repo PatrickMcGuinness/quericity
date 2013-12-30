@@ -1,11 +1,13 @@
+<%= devise_error_messages! %>	
 <div class = "container">
 	<div class="hero-unit">
 		<div style="text-align:center;">
 			<div style="display:inline-block;">
 				<div class="lead f_size">New to QuizLib?</div>
 				<h3 class = "mar_top">Sign up</h3>
+
 				<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
-				  <%= devise_error_messages! %>
+				  
 			    <div class="form-group">
 			    	<div class="col-sm-10">
 						  <select class="form-control size_area" id="role" name="user[role]">

@@ -15,6 +15,9 @@
  </div>
 	 
 <% end %>
+
 <div class = "links_p">
-  <%= render "devise/shared/links" %>
+  <%= link_to "Sign in", new_session_path(resource_name) %>
+  <%= link_to "Sign up", new_registration_path(resource_name), :class => "mar_l_30" %>
+  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), :class => "mar_l_30" %><br />
 </div>  

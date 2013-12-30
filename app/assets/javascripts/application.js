@@ -105,7 +105,8 @@ $("#repo_form").validate({
       rules: {
           'repository[title]': {
             required: true,
-            minlength: 5
+            minlength: 5,
+            maxlength: 50
           },
           'repository[description]': {
               required: true
@@ -114,7 +115,8 @@ $("#repo_form").validate({
       messages: {
           'repository[title]': {
             required: "Please enter title",
-            minlength: "Please enter min 5 characters"
+            minlength: "Please enter minimum 5 characters",
+            maxlength: "Please enter maximum 50 characters"
           },
           
           'repository[description]': {
