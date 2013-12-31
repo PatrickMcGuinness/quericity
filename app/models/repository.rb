@@ -19,6 +19,10 @@ class Repository < ActiveRecord::Base
     self.user_repositories.where(:user_id => user.id , :permission => 'Admin').present?
   end
   
+  def can_write? user
+    self.user_repositories.where(:user_id => user.id , :permission => 'Write').present?
+  end
+
   def is_owner? user
     self.user.id == user.id
   end

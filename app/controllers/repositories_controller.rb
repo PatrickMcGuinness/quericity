@@ -28,11 +28,11 @@ class RepositoriesController < ApplicationController
   end
   
   def edit
-    @repository = current_user.repositories.find(params[:id])
+    @repository = Repository.find(params[:id])
   end
   
   def update
-    @repository = current_user.repositories.find(params[:id])
+    @repository = Repository.find(params[:id])
     if @repository.update_attributes(params[:repository])
       redirect_to repositories_path
     else

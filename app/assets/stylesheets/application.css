@@ -257,3 +257,24 @@ background-color: #F62217;
 	margin-left: 822px;
   margin-top: -104px;
 }
+.custom_pp{
+	margin-left: 822px;
+  margin-top: -65px;
+}
+#loading-indicator {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+.load_pos{
+	margin-left: 580px;
+  margin-top: 25px;
+}
+.links_pos{
+	margin-left: 860px;
+  margin-top: -40px;
+  margin-bottom: 35px;
+}
+.modal_w{
+	width: 620px;
+}

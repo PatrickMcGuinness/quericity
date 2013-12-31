@@ -1,9 +1,13 @@
-<tr id='collaborator-<%= collaborator.id %>'>
+<tr id='collaborator-<%= collaborator.id %>' class = "modal_stream">
   <td> <%= collaborator.user.email %></td>
   <td id='permission-<%= collaborator.id %>' class = "custom_width">
     <%= collaborator.permission %>
   </td>
   <td>
-    <span class="glyphicon glyphicon-remove-circle"></span>
+    <a href="<%=repository_collaborator_path(:id => collaborator.id, :repository_id =>
+    @repository.id)%>" data-method="delete" data-remote = "true">
+      <span class="glyphicon glyphicon-remove-circle" id = "del_circ"></span>
+    </a>
   </td>
 </tr>
+

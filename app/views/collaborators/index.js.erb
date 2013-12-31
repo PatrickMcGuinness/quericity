@@ -1,4 +1,21 @@
 $('#base-modal').html('<%=escape_javascript(render "index" ) %>')
 $('#base-modal').modal({
     show:true
+});	
+
+$(function() {
+  $('#del_circ').click(function(event) {
+    var repo_id = $("#repo_id").val();
+    var collaborator_id = $("#collaborator_id").val();
+    
+    $.ajax({
+        type: "delete",
+        url: "/repositories/"+repo_id+"/collaborators/"+collaborator_id,
+        dataType: "script",
+        complete: function(){
+         $('#modal_stream').remove();
+        }
+    });
+  });
 });
+
