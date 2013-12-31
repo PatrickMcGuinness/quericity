@@ -1,8 +1,8 @@
 $('#loading-indicator').hide();
 <%if @collaborator.present? %>
-  if($('#collaborator-<%=@collaborator.id%>').length > 0)
+  if($('#collaborator-<%=@collaborator.user.id%>').length > 0)
   {
-      $('#permission-<%=@collaborator.id%>').html('<%=@collaborator.permission%>')
+      $('#permission-<%=@collaborator.user.id%>').html('<%=@collaborator.permission%>')
   }
   else
   {

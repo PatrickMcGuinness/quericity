@@ -1,6 +1,6 @@
-<tr id='collaborator-<%= collaborator.id %>' class = "modal_stream">
+<tr id='collaborator-<%= collaborator.user.id %>'>
   <td> <%= collaborator.user.email %></td>
-  <td id='permission-<%= collaborator.id %>' class = "custom_width">
+  <td id='permission-<%= collaborator.user.id %>' class = "custom_width">
     <%= collaborator.permission %>
   </td>
   <td>
