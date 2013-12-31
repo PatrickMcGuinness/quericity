@@ -43,4 +43,5 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem 'carrierwave'
+gem 'fog', '~> 1.3.1'
 gem "rmagick"

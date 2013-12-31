@@ -120,6 +120,8 @@ $("#repo_form").validate({
           $(element).closest('.control_validate').removeClass('error').addClass('success');
       }
     });
+ 
+
 function readURL2(input1) {
         if (input1.files && input1.files[0]) {
             var reader = new FileReader();

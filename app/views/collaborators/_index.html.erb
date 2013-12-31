@@ -39,7 +39,7 @@
             <%else%>  
               <td> <%= collaborator.email %></td>
             <%end%>  
-              <td  id='permission-<%= collaborator.id %>'>
+              <td id='permission-<%= collaborator.id %>'>
                 <%= UserRepository.where(:user_id => collaborator.id).first.permission %>
               </td>  
             <td>

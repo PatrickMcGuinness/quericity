@@ -13,9 +13,10 @@ $(function() {
         url: "/repositories/"+repo_id+"/collaborators/"+collaborator_id,
         dataType: "script",
         complete: function(){
-         $('#modal_stream').remove();
+         $('.modal_stream').remove();
         }
     });
   });
 });
+
 

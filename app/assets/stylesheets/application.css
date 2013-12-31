@@ -278,3 +278,9 @@ background-color: #F62217;
 .modal_w{
 	width: 620px;
 }
+.modal_stream_c{
+	width:500px !important;
+}
+.pad_8{
+	padding: 8px;
+}
