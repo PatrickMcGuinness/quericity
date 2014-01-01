@@ -44,8 +44,8 @@
               </td>  
             <td>
               <a href="<%=repository_collaborator_path(:id => collaborator.id)%>" data-method="delete" data-remote = "true">
-                <span class="glyphicon glyphicon-remove-circle" id = "del_circ"></span>
-                <input type="hidden" id="collaborator_id" value="<%=collaborator.id%>">
+                <span class="glyphicon glyphicon-remove-circle del_circ" id = "del_circ_<%=collaborator.id%>"></span>
+                <input type="hidden" class = "collaborator_id" id="collaborator_id_<%=collaborator.id%>" value="<%=collaborator.id%>">
               </a>         
             </td>
           </tr>
@@ -58,6 +58,5 @@
 <script>
   $('#add_b').click(function() {
       $('#loading-indicator').show();
-
   });
 </script>

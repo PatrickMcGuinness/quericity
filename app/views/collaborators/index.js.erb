@@ -4,16 +4,16 @@ $('#base-modal').modal({
 });	
 
 $(function() {
-  $('#del_circ').click(function(event) {
+  $('.del_circ').click(function(event) {
+    $(this).parent().closest('tr').remove();
+    var collaborator_id = $(this).context.id.split('_').pop();
     var repo_id = $("#repo_id").val();
-    var collaborator_id = $("#collaborator_id").val();
-    
+    debugger;
     $.ajax({
         type: "delete",
         url: "/repositories/"+repo_id+"/collaborators/"+collaborator_id,
         dataType: "script",
         complete: function(){
-         $('.modal_stream').remove();
         }
     });
   });

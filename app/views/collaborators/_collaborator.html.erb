@@ -1,5 +1,5 @@
 
-<tr id='collaborator-<%= collaborator.user.id %>' class = "modal_stream_c">
+<tr id='collaborator-<%= collaborator.user.id %>' class = "modal_stream">
   <%if collaborator.user.name.present?%>
     <td class = "pad_8"> <%= collaborator.user.name %></td>
   <%else%>  
@@ -9,9 +9,8 @@
     <%= collaborator.permission %>
   </td>
   <td>
-    <a href="<%=repository_collaborator_path(:id => collaborator.user.id, :repository_id =>
-    @repository.id)%>" data-method="delete" data-remote = "true">
-      <span class="glyphicon glyphicon-remove-circle" id = "del_circ"></span>
+    <a href="<%=repository_collaborator_path(:id => collaborator.user.id)%>" data-method="delete" data-remote = "true">
+      <span class="glyphicon glyphicon-remove-circle del_circ pad_6" id = "del_circ_<%=collaborator.user.id%>"></span>
     </a>
   </td>
 </tr>

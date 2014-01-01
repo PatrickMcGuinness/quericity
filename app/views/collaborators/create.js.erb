@@ -17,3 +17,19 @@ $('#loading-indicator').hide();
    }
     
 <%end%>
+
+$(function() {
+  $('.del_circ').click(function(event) {
+    $(this).parent().closest('tr').remove();
+    var collaborator_id = $(this).context.id.split('_').pop();
+    var repo_id = $("#repo_id").val();
+    debugger;
+    $.ajax({
+        type: "delete",
+        url: "/repositories/"+repo_id+"/collaborators/"+collaborator_id,
+        dataType: "script",
+        complete: function(){
+        }
+    });
+  });
+});

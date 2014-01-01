@@ -40,7 +40,7 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+ gem 'debugger'
 
 gem 'carrierwave'
 gem 'fog', '~> 1.3.1'
