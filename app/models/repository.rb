@@ -34,7 +34,6 @@ class Repository < ActiveRecord::Base
       user_repo
     else
       UserRepository.create(:repository_id => self.id , :user_id => user.id , :permission => permission)
-    end
-    
+    end  
   end
 end

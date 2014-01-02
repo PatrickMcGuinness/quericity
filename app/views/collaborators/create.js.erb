@@ -23,7 +23,6 @@ $(function() {
     $(this).parent().closest('tr').remove();
     var collaborator_id = $(this).context.id.split('_').pop();
     var repo_id = $("#repo_id").val();
-    debugger;
     $.ajax({
         type: "delete",
         url: "/repositories/"+repo_id+"/collaborators/"+collaborator_id,
