@@ -46,9 +46,9 @@
                   <%= UserRepository.where(:user_id => collaborator.id).first.permission %>
                 </td>  
               <td>
+                 <input type="hidden" class = "collaborator_id" id="collaborator_id_<%=collaborator.id%>" value="<%=collaborator.id%>">
                 <a href="<%=repository_collaborator_path(:id => collaborator.id)%>" data-method="delete" data-remote = "true">
                   <span class="glyphicon glyphicon-remove-circle del_circ" id = "del_circ_<%=collaborator.id%>"></span>
-                  <input type="hidden" class = "collaborator_id" id="collaborator_id_<%=collaborator.id%>" value="<%=collaborator.id%>">
                 </a>         
               </td>
             </tr>
