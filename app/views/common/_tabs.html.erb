@@ -1,13 +1,13 @@
 <ul class="nav nav-tabs nav-justified">
   <li class="<%= controller.class == RepositoriesController ? 'active' : '' %>">
-    <a href="<%= repositories_path%>">
+    <a href="<%= repositories_path %>">
       <span class="glyphicon glyphicon-align-justify"></span>
       Repository
     </a>
   </li>
-  <li class=' col-xs-2 padding-zero'>
-    <a href="#profile" data-toggle="tab">
-      <span class="glyphicon glyphicon glyphicon-edit"></span>
+  <li class="<%= controller.class == QuizBanksController ? 'active' : '' %>">
+    <a href="<%= quiz_banks_path %>">
+      <span class="glyphicon glyphicon-edit"></span>
       Quiz
     </a>
   </li>

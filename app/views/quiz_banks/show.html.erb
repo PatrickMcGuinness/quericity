@@ -1,0 +1,14 @@
+<%=render 'common/tabs'%>
+<div class="tab-content padding-top40 tab-container">
+	<div class="mar_top creat-repo-div">
+		<h2><%= @quiz_bank.title%></h2>
+  </div>
+	<div class = "top_bar_ss">
+	  <span class = "mar_l_30"><b>Created on:</b> <%=@quiz_bank.created_at.to_date %> </span>
+	</div>
+
+	<ul class="breadcrumb top_bar_s">
+	  <li><%= link_to "My Quiz Bank", quiz_banks_path%></li>
+	  <li class="active"><%= @quiz_bank.title%></li>
+  </ul>
+</div>
