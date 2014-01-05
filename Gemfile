@@ -26,7 +26,7 @@ group :development do
 end
 
 gem 'jquery-rails'
-
+gem 'fog'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -40,8 +40,7 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
- gem 'debugger'
+# gem 'debugger'
 
 gem 'carrierwave'
-gem 'fog', '~> 1.3.1'
 gem "rmagick"
