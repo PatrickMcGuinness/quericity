@@ -1,11 +1,19 @@
 class QuizBanksController < ApplicationController
 
 	def index
-		@quiz_banks = QuizBank.all
+    if params[:search]
+      @quiz_banks = QuizBank.search(params[:search])
+    else
+		  @quiz_banks = QuizBank.all
+    end
 	end
 
 	def new
     @quiz_bank = QuizBank.new
+  end
+
+  def search
+    @quiz_banks_search = QuizBank.search(params[:search])
   end
 
   def show

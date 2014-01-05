@@ -2,6 +2,12 @@
 <div class="tab-content padding-top40 tab-container">
    <a class="btn btn-primary float-right" href="<%= new_quiz_bank_path%>">Create Quiz</a>
   <div class="table-responsive  padding-top40">
+    <%= form_tag quiz_banks_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
     <%if @quiz_banks.present?%>
       <table class="table table-bordered">
         <tr>
