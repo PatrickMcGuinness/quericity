@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131224104852) do
+ActiveRecord::Schema.define(:version => 20140107075723) do
 
   create_table "invitations", :force => true do |t|
     t.string   "email"
@@ -19,6 +19,35 @@ ActiveRecord::Schema.define(:version => 20131224104852) do
     t.integer  "repository_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "question_options", :force => true do |t|
+    t.integer  "question_id"
+    t.integer  "seq",           :default => 0
+    t.boolean  "is_correct"
+    t.text     "answer"
+    t.string   "option_detail"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  create_table "question_topics", :force => true do |t|
+    t.integer  "question_id"
+    t.integer  "topic_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "questions", :force => true do |t|
+    t.integer  "subject_id"
+    t.integer  "seq",              :default => 0
+    t.text     "description"
+    t.integer  "type"
+    t.integer  "difficulty_level"
+    t.text     "reference_url"
+    t.integer  "section_id"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   create_table "quiz_banks", :force => true do |t|
@@ -37,7 +66,21 @@ ActiveRecord::Schema.define(:version => 20131224104852) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "sections", :force => true do |t|
+    t.integer  "seq",          :default => 0
+    t.integer  "quiz_bank_id"
+    t.string   "title"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
   create_table "subjects", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "topics", :force => true do |t|
     t.string   "title"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
