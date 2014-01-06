@@ -35,12 +35,10 @@ $("#new_user").validate({
           $(element).siblings('label').remove();
           $(element).closest('.control_validate').removeClass('success').addClass('error');
       },
+      // The success function receives label as element
       success: function(element) {
           // $("#" + $(element).attr('for')).css('border', 'black');
-          
-          $(element).addClass('valid').removeClass('error');
-          
-          $(element).siblings('label').remove();
+          $(element).remove();
           $(element).closest('.control_validate').removeClass('error').addClass('success');
       }
     });
@@ -72,12 +70,11 @@ $("#edit_user").validate({
           $(element).siblings('label').remove();
           $(element).closest('.control_validate').removeClass('success').addClass('error');
       },
+      // Success function accepts label as an element
       success: function(element) {
           // $("#" + $(element).attr('for')).css('border', 'black');
           
-          $(element).addClass('valid').removeClass('error');
-          
-          $(element).siblings('label').remove();
+          $(element).remove();
           $(element).closest('.control_validate').removeClass('error').addClass('success');
       }
     });
@@ -111,12 +108,11 @@ $("#repo_form").validate({
           $(element).siblings('label').remove();
           $(element).closest('.control_validate').removeClass('success').addClass('error');
       },
+      // Success function accepts label as an argument
       success: function(element) {
           // $("#" + $(element).attr('for')).css('border', 'black');
           
-          $(element).addClass('valid').removeClass('error');
-          
-          $(element).siblings('label').remove();
+          $(element).remove();
           $(element).closest('.control_validate').removeClass('error').addClass('success');
       }
     });
@@ -150,12 +146,11 @@ $("#quiz_form").validate({
           $(element).siblings('label').remove();
           $(element).closest('.control_validate').removeClass('success').addClass('error');
       },
+      // Success function accepts lable as an argument
       success: function(element) {
           // $("#" + $(element).attr('for')).css('border', 'black');
           
-          $(element).addClass('valid').removeClass('error');
-          
-          $(element).siblings('label').remove();
+          $(element).remove();
           $(element).closest('.control_validate').removeClass('error').addClass('success');
       }
     });
