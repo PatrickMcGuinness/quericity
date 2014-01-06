@@ -25,7 +25,9 @@ QuizLib::Application.routes.draw do
       get 'shared'
     end
     resources :collaborators
-    resources :quiz_banks
+    resources :quiz_banks do
+      resources :sections 
+    end
   end
   # Sample resource route with options:
   #   resources :products do

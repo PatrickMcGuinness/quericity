@@ -19,7 +19,7 @@
 	<div class = "top_bar_ss">
 	  <span class = "mar_l_30"><b>Owned by:</b> <%=@repository.user.name %>  </span> <font class = "mar_l_30">|</font>
 	  <span class = "mar_l_30"><b>Created on:</b> <%=@repository.created_at.to_date %>  </span><font class = "mar_l_30">|</font>
-	  <span class = "mar_l_30"><b>Quiz Banks:</b> 0  </span><font class = "mar_l_30">|</font>
+	  <span class = "mar_l_30"><b>Quiz Banks:</b><%=@quiz_banks.blank? ? 0:@quiz_banks.count%></span><font class = "mar_l_30">|</font>
 	  <span class = "mar_l_30"><b>Topics:</b> 0  </span><font class = "mar_l_30">|</font>
 	  <span class = "mar_l_30"><b>Collaborators:</b> <%= @repository.collaborators.count %>  </span>
 	</div>
@@ -28,7 +28,25 @@
 	  <li><%= link_to "My Repo", repositories_path%></li>
 	  <li class="active"><%= @repository.title%></li>
   </ul>
-	<div class = "top_bar_s">
-	  There are no quiz banks.
-	</div>  
+  <%if @quiz_banks.blank?%>
+		<div class = "top_bar_s">
+  		There are no quiz banks.
+		</div>
+	<%else%>
+		<div class = "creat-repo-div">
+			<h4>Quiz Banks</h4>
+		</div>
+		<table class="table table-bordered table_with_margin">
+      <tr>
+        <th>Title </th>
+        <th>Description </th>
+      </tr>
+      <%@quiz_banks.each do |q|%>
+      	<tr>
+      		<td><%=link_to q.title, repository_quiz_bank_path(@repository,q) %></td>
+      		<td><%=q.description%></td>
+      	</tr>
+      <%end%>
+    </table>
+	<%end%>  
 </div>
