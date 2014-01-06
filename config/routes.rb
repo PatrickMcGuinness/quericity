@@ -20,12 +20,12 @@ QuizLib::Application.routes.draw do
       get 'profile'
     end
   end
-  resources :quiz_banks
   resources :repositories do
     collection do
       get 'shared'
     end
     resources :collaborators
+    resources :quiz_banks
   end
   # Sample resource route with options:
   #   resources :products do

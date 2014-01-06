@@ -34,7 +34,7 @@ class RepositoriesController < ApplicationController
   def update
     @repository = Repository.find(params[:id])
     if @repository.update_attributes(params[:repository])
-      redirect_to repositories_path
+      redirect_to repositories_path, notice: 'Updated Successfully.'
     else
       redirect_to edit_repositories_path
     end
@@ -43,6 +43,6 @@ class RepositoriesController < ApplicationController
   def destroy
     @repository = current_user.repositories.find(params[:id])
     @repository.destroy
-    redirect_to repositories_path
+    redirect_to repositories_path, notice: 'Deleted Successfully.'
   end
 end

@@ -1,19 +1,17 @@
 class QuizBanksController < ApplicationController
 
 	def index
+    @repository = Repository.find(params[:repository_id])
     if params[:search]
-      @quiz_banks = QuizBank.search(params[:search])
+      @quiz_banks = @repository.quiz_banks.search(params[:search])
     else
-		  @quiz_banks = QuizBank.all
+		  @quiz_banks = @repository.quiz_banks.all
     end
 	end
 
 	def new
-    @quiz_bank = QuizBank.new
-  end
-
-  def search
-    @quiz_banks_search = QuizBank.search(params[:search])
+    @repository = Repository.find(params[:repository_id])
+    @quiz_bank = @repository.quiz_banks.new 
   end
 
   def show
@@ -21,31 +19,35 @@ class QuizBanksController < ApplicationController
   end
 
   def create
-    @quiz_bank = QuizBank.new(params[:quiz_bank])
+    @repository = Repository.find(params[:repository_id])
+    @quiz_bank= @repository.quiz_banks.new(params[:quiz_bank])
   	if @quiz_bank.save
-  		redirect_to quiz_banks_path
+  		redirect_to repository_quiz_banks_path
     else
        render action: "new"
     end
   end
 
   def edit
-  	@quiz_bank = QuizBank.find(params[:id])
+    @repository = Repository.find(params[:repository_id])
+  	@quiz_bank = @repository.quiz_banks.find(params[:id])
   end
 
   def update
-    @quiz_bank = QuizBank.find(params[:id])
+    @repository = Repository.find(params[:repository_id])
+    @quiz_bank = @repository.quiz_banks.find(params[:id])
     if @quiz_bank.update_attributes(params[:quiz_bank])
-      redirect_to quiz_banks_path
+      redirect_to repository_quiz_banks_path, notice: 'Updated Successfully.'
     else
-      redirect_to edit_quiz_bank_path
+      redirect_to edit_repository_quiz_bank_path
     end
   end
 
   def destroy
-    @quiz_bank = QuizBank.find(params[:id])
+    @repository = Repository.find(params[:repository_id])
+    @quiz_bank = @repository.quiz_banks.find(params[:id])
     @quiz_bank.destroy
-    redirect_to quiz_banks_path
+    redirect_to repository_quiz_banks_path, notice: 'Deleted Successfully.'
   end
 
 end
