@@ -49,13 +49,15 @@ $("#section_form").validate({
       rules: {
           'section[title]': {
             required: true,
-            minlength: 5
+            minlength: 5,
+            maxlength: 50
             }   
       },
       messages: {
           'section[title]': {
             required: "Please enter title",  
-            minlength:  "Please enter min 5 characters"
+            minlength:  "Please enter min 5 characters",
+            maxlength:  "Please enter max 50 characters"
           }
       },
       highlight: function(element) {
