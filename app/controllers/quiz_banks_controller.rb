@@ -14,6 +14,7 @@ class QuizBanksController < ApplicationController
   end
 
   def show
+    @repository = Repository.find(params[:repository_id])
   	@quiz_bank = QuizBank.find(params[:id])
     @repository = @quiz_bank.repository
     @sections = @quiz_bank.sections
