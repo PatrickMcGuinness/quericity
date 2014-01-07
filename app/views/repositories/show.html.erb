@@ -49,5 +49,7 @@
       <%end%>
     </table>
 	<%end%>  
-	<%= paginate @quiz_banks %>
+	<%#= unless params[:search]%>
+	  <%= paginate @quiz_banks %>
+	  
 </div>

@@ -4,7 +4,7 @@ class QuizBank < ActiveRecord::Base
   belongs_to :repository
   has_many :sections, dependent: :destroy
 
-  paginates_per 5
+  #paginates_per 5
 
   def self.search(search)
 	  if search
