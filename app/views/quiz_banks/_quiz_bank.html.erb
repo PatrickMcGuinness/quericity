@@ -1,8 +1,8 @@
 
 <tr> 
-  <td><%=link_to q.title, repository_quiz_bank_path(repository,q) %></td>
-  <td><%=q.description%></td>
-  <td>
+  <td class = "th_s"><%=link_to q.title.truncate(18), repository_quiz_bank_path(repository,q) %></td>
+  <td class = "th_b"><%=q.description.truncate(100)%></td>
+  <td class = "th_s">
     <a href="<%=edit_repository_quiz_bank_path(repository,q)%>" >
     <span class="glyphicon glyphicon-pencil" rel="tooltip" title="Edit"></span>
     </a>

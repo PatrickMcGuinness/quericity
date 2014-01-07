@@ -2,12 +2,14 @@
 <div class="tab-content padding-top40 tab-container">
    <a class="btn btn-primary float-right" href="#">Create Quiz</a>
   <div class="table-responsive  padding-top40">
-    <%= form_tag quiz_banks_path, :method => 'get' do %>
-      <p>
-        <%= text_field_tag :search, params[:search], :placeholder => "Search" %>
-        <%= submit_tag "Search", :name => nil, :class => "btn btn-primary" %>
-      </p>
-    <% end %>
+    <div class = "form_pos creat-repo-div">
+      <%= form_tag quiz_banks_path, :method => 'get' do %>
+        <p>
+          <%= text_field_tag :search, params[:search], :placeholder => "Search" %>
+          <%= submit_tag "Search", :name => nil, :class => "btn btn-primary" %>
+        </p>
+      <% end %>
+    </div>
     <%if @quiz_banks.present?%>
       <table class="table table-bordered">
         <tr>
@@ -17,7 +19,6 @@
         </tr>
         <%@quiz_banks.each do |q|%>
           <%=render partial: "quiz_banks/quiz_bank", :locals => { :repository => q.repository,:q => q }%>
-        
         <%end%>
       </table>  
     <%else%>

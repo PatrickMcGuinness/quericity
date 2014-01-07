@@ -12,7 +12,11 @@ class RepositoriesController < ApplicationController
   
   def show
     @repository = current_user.repositories.find(params[:id])
-    @quiz_banks = @repository.quiz_banks
+    if params[:search]
+      @quiz_banks = @repository.quiz_banks.search(params[:search]).page params[:page]
+    else
+      @quiz_banks = @repository.quiz_banks.page params[:page]
+    end
   end
   
   def new

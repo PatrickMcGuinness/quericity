@@ -27,6 +27,7 @@ end
 
 gem 'jquery-rails'
 gem 'fog'
+gem 'kaminari'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

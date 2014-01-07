@@ -10,7 +10,8 @@ class Repository < ActiveRecord::Base
   
   
   has_many :quiz_banks
-  
+
+
   def is_collaborator? user
     self.collaborators.where(:id => user.id).present?
   end
