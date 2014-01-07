@@ -42,6 +42,33 @@ $("#new_user").validate({
           $(element).closest('.control_validate').removeClass('error').addClass('success');
       }
     });
+$("#section_form").validate({
+      onkeyup: false,
+      onclick: false,
+      onfocusout: false,
+      rules: {
+          'section[title]': {
+            required: true,
+            minlength: 5
+            }   
+      },
+      messages: {
+          'section[title]': {
+            required: "Please enter title",  
+            minlength:  "Please enter min 5 characters"
+          }
+      },
+      highlight: function(element) {
+          $(element).siblings('label').remove();
+          $(element).closest('.control_validate').removeClass('success').addClass('error');
+      },
+      // The success function receives label as element
+      success: function(element) {
+          // $("#" + $(element).attr('for')).css('border', 'black');
+          $(element).remove();
+          $(element).closest('.control_validate').removeClass('error').addClass('success');
+      }
+});
 $("#edit_user").validate({
       onkeyup: false,
       onclick: false,
