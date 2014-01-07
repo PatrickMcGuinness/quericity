@@ -12,6 +12,7 @@ class RepositoriesController < ApplicationController
   
   def show
     @repository = Repository.find(params[:id])
+    @quiz_banks = @repository.quiz_banks
   end
   
   def new

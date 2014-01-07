@@ -16,6 +16,7 @@ class QuizBanksController < ApplicationController
 
   def show
   	@quiz_bank = QuizBank.find(params[:id])
+    @sections = @quiz_bank.sections
   end
 
   def create
