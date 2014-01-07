@@ -3,7 +3,7 @@
 	<div class="mar_top creat-repo-div">
 		<h2><%= @quiz_bank.title%></h2>
 		<div class = "style_r">
-		 	<a class="btn btn-primary" href="#">Add Section</a>
+		 	<a class="btn btn-primary" href="<%=  new_repository_quiz_bank_section_path(@repository,@quiz_bank)%>">Add Section</a>
  		</div>
   </div>
 	<div class = "top_bar_ss">
@@ -20,16 +20,19 @@
 		</div>
 	<%else%>
 		<h4>Sections</h4>
-		<hr>
-		<table class="table table-bordered">
-      <tr>
-        <th>Title</th>
-      </tr>
-      <%@sections.each do |s|%>
-      	<tr>
-      		<td><%=s.title%></td>
-      	</tr>
-      <%end%>
-    </table>
+	<%@sections.each do |s|%>
+    <div class = "well">
+    		<%=s.title%>
+			  <div class = "pull-right">
+			    <a href="<%= edit_repository_quiz_bank_section_path(@repository,@quiz_bank,s)%>" >
+			      <span class="glyphicon glyphicon-pencil" rel="tooltip" title="Edit"></span>
+			    </a>
+			    <a href="<%= repository_quiz_bank_section_path(@repository,@quiz_bank,s)%>" data-method="delete" data-confirm = "Are you sure?">
+			      <span class="glyphicon glyphicon-trash" rel="tooltip" title="Delete"></span>
+			    </a>
+			  </div>
+    </div>
+  <%end%>
+    
 	<%end%>
 </div>
