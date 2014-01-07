@@ -40,12 +40,11 @@
       <tr>
         <th>Title </th>
         <th>Description </th>
+        <th></th>
       </tr>
       <%@quiz_banks.each do |q|%>
-      	<tr>
-      		<td><%=link_to q.title, repository_quiz_bank_path(@repository,q) %></td>
-      		<td><%=q.description%></td>
-      	</tr>
+      	<%=render partial: "quiz_banks/quiz_bank", :locals => { :repository => @repository,:q => q }%>
+      	
       <%end%>
     </table>
 	<%end%>  

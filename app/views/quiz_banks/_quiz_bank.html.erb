@@ -1,18 +1,13 @@
 
-<tr>
+<tr> 
+  <td><%=link_to q.title, repository_quiz_bank_path(repository,q) %></td>
+  <td><%=q.description%></td>
   <td>
-    <a href = "<%= repository_quiz_bank_path(:id => quiz_bank.id)%>"><%=quiz_bank.title%></a>
-  </td>
-  <td>
-    <%=quiz_bank.description%>
-  </td>
-  <td>
-    <a href="<%= edit_repository_quiz_bank_path(:id => quiz_bank.id) %>" >
-      <span class="glyphicon glyphicon-pencil" rel="tooltip" title="Edit"></span>
+    <a href="<%=edit_repository_quiz_bank_path(repository,q)%>" >
+    <span class="glyphicon glyphicon-pencil" rel="tooltip" title="Edit"></span>
     </a>
-
-    <a href="<%= repository_quiz_bank_path(:id => quiz_bank.id) %>" data-method="delete" data-confirm = "Are you sure?">
-      <span class="glyphicon glyphicon-trash" rel="tooltip" title="Delete"></span>
+    <a href="<%=repository_quiz_bank_path(repository,q)%>" data-method="delete" data-confirm = "Are you sure?">
+    <span class="glyphicon glyphicon-trash" rel="tooltip" title="Delete"></span>
     </a>
   </td>
 </tr>

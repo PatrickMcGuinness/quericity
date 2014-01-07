@@ -11,7 +11,9 @@
 	</div>
 
 	<ul class="breadcrumb top_bar_s">
-	  <li><%= link_to "My Quiz Bank", repository_quiz_banks_path%></li>
+		<li><%= link_to "My Repo", repositories_path%></li>
+	  <li class="active"><%= @repository.title%></li>
+	  <li><%= link_to "My Quiz Bank", repository_path(@repository)%></li>
 	  <li class="active"><%= @quiz_bank.title%></li>
   </ul>
   <%if @sections.blank?%>

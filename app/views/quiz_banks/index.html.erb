@@ -1,8 +1,8 @@
 <%=render 'common/tabs'%>
 <div class="tab-content padding-top40 tab-container">
-   <a class="btn btn-primary float-right" href="<%=  new_repository_quiz_bank_path%>">Create Quiz</a>
+   <a class="btn btn-primary float-right" href="#">Create Quiz</a>
   <div class="table-responsive  padding-top40">
-    <%= form_tag repository_quiz_banks_path, :method => 'get' do %>
+    <%= form_tag quiz_banks_path, :method => 'get' do %>
       <p>
         <%= text_field_tag :search, params[:search], :placeholder => "Search" %>
         <%= submit_tag "Search", :name => nil, :class => "btn btn-primary" %>
@@ -15,7 +15,10 @@
           <th>Description </th>
           <th>Status</th>
         </tr>
-        <%= render @quiz_banks %>
+        <%@quiz_banks.each do |q|%>
+          <%=render partial: "quiz_banks/quiz_bank", :locals => { :repository => q.repository,:q => q }%>
+        
+        <%end%>
       </table>  
     <%else%>
       There is no quiz bank 

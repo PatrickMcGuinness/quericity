@@ -15,6 +15,9 @@ QuizLib::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+
+  get "/quiz_banks" ,to:"quiz_banks#index" ,as: :quiz_banks
+  
   resources :users do
     member do
       get 'profile'
@@ -25,7 +28,7 @@ QuizLib::Application.routes.draw do
       get 'shared'
     end
     resources :collaborators
-    resources :quiz_banks do
+    resources :quiz_banks, :except => :index do
       resources :sections 
     end
   end
