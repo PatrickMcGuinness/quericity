@@ -16,7 +16,7 @@
 	  <li><%= link_to "My Quiz Bank", repository_path(@repository)%></li>
 	  <li class="active"><%= @quiz_bank.title%></li>
   </ul>
-  <%if @sections.blank?%>
+  <%if @sections.count == 0 %>
 		<div class = "top_bar_s">
   		There are no sections.
 		</div>
