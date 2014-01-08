@@ -1,6 +1,8 @@
 class QuizBanksController < ApplicationController
 
-	def index
+  before_filter :authenticate_user!
+	
+  def index
     if params[:search]
       @quiz_banks = QuizBank.search(params[:search])
     else

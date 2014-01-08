@@ -11,7 +11,7 @@ class RepositoriesController < ApplicationController
   end
   
   def show
-    @repository = Repository.find(params[:id])
+    @repository = current_user.repositories.find(params[:id])
     @quiz_banks = @repository.quiz_banks
   end
   
@@ -46,4 +46,5 @@ class RepositoriesController < ApplicationController
     @repository.destroy
     redirect_to repositories_path, notice: 'Deleted Successfully.'
   end
+
 end
