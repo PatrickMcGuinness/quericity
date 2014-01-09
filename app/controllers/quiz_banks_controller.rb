@@ -3,55 +3,52 @@ class QuizBanksController < ApplicationController
   before_filter :authenticate_user!
 	
   def index
-    if params[:search]
-      @quiz_banks = QuizBank.search(params[:search])
-    else
-		  @quiz_banks = QuizBank.all
-    end
+    @quiz_banks = QuizBank.search(params["search"],current_user)
 	end
 
 	def new
-    @repository = Repository.find(params[:repository_id])
-    @quiz_bank = QuizBank.new 
+    @repository = current_user.repositories.find(params[:repository_id])
+    @quiz_bank = @repository.quiz_banks.new
+    render layout: nil 
+  end
+  def without_repo
+    @quiz_bank = QuizBank.new
+    @repository = Repository.first
+    render layout:nil
   end
 
   def show
-    @repository = Repository.find(params[:repository_id])
-  	@quiz_bank = QuizBank.find(params[:id])
+    @repository = current_user.repositories.find(params[:repository_id])
+  	@quiz_bank = @repository.quiz_banks.find(params[:id])
     @repository = @quiz_bank.repository
-    @sections = @quiz_bank.sections.all
+    @sections = @quiz_bank.sections
   end
 
   def create
-    @repository = Repository.find(params[:repository_id])
-    @quiz_bank= @repository.quiz_banks.new(params[:quiz_bank])
-  	if @quiz_bank.save
-  		redirect_to repository_path(@repository)
-    else
-       render action: "new"
-    end
+    @repository = current_user.repositories.find(params[:quiz_bank][:repository_id])
+    @quiz_bank= @repository.quiz_banks.create(params[:quiz_bank])
+  	render layout: nil
   end
 
   def edit
-    @repository = Repository.find(params[:repository_id])
+    @repository = current_user.repositories.find(params[:repository_id])
   	@quiz_bank = @repository.quiz_banks.find(params[:id])
+    render layout:nil
   end
 
   def update
-    @repository = Repository.find(params[:repository_id])
+    @repository = current_user.repositories.find(params[:repository_id])
     @quiz_bank = @repository.quiz_banks.find(params[:id])
-    if @quiz_bank.update_attributes(params[:quiz_bank])
-      redirect_to repository_path(@repository), notice: 'Updated Successfully.'
-    else
-      redirect_to edit_repository_quiz_bank_path(@repository,@quiz_bank)
-    end
+    @quiz_bank.update_attributes(params[:quiz_bank])
+    render layout:nil
   end
 
   def destroy
-    @repository = Repository.find(params[:repository_id])
+    @repository = current_user.repositories.find(params[:repository_id])
     @quiz_bank = @repository.quiz_banks.find(params[:id])
+    @quiz_bank_id = @quiz_bank.id
     @quiz_bank.destroy
-    redirect_to repository_path(@repository), notice: 'Deleted Successfully.'
+    render layout:nil
   end
 
 end

@@ -12,7 +12,7 @@
 		  <%if @repository.is_admin? current_user or  @repository.is_owner? current_user %>
 		    <a class="btn btn-primary" data-remote = true href="<%=repository_collaborators_path(@repository)%>">Share</a>
 		  <%end%>
-		 <a class="btn btn-primary" href="<%= new_repository_quiz_bank_path(@repository)%>">Add quiz bank</a>
+		  	<%=link_to "Add quiz bank", new_repository_quiz_bank_path(@repository), class:"btn btn-primary", remote: true%>
  	</div>
 
   </div>
@@ -28,24 +28,21 @@
 	  <li><%= link_to "My Repo", repositories_path%></li>
 	  <li class="active"><%= @repository.title%></li>
   </ul>
+  <div class = "creat-repo-div">
+		<h4>Quiz Banks</h4>
+	</div>
+	<input type = "hidden" class = "repo-id" value = <%=@repository.id%>>
   <%if @quiz_banks.blank?%>
-		<div class = "top_bar_s">
+		<div class = "top_bar_s no-record">
   		There are no quiz banks.
 		</div>
 	<%else%>
-		<div class = "creat-repo-div">
-			<h4>Quiz Banks</h4>
-		</div>
-		<table class="table table-bordered table_with_margin">
-      <tr>
-        <th>Title </th>
-        <th>Description </th>
-        <th></th>
-      </tr>
-      <%@quiz_banks.each do |q|%>
-      	<%=render partial: "quiz_banks/quiz_bank", :locals => { :repository => @repository,:q => q }%>
+		<%=render partial: "quiz_banks/table"%>
+      	<%@quiz_banks.each do |q|%>
+      		<%=render partial: "quiz_banks/quiz_bank", :locals => { :@repository => @repository,:@quiz_bank => q }%>
       	
-      <%end%>
+      	<%end%>
+    </tbody>
     </table>
 	<%end%>  
 </div>

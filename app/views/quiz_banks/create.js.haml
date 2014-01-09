@@ -1,0 +1,23 @@
+$('#base-modal').modal('hide');
+if($(".repo-id").length > 0){
+if($(".repo-id").val() == "#{@repository.id}"){
+if($("table").length != 0){
+$("tbody").append(' #{j(render(partial: 'quiz_bank'))} ')
+}
+else{
+$(".no-record").remove()
+$(".tab-content").append(' #{j(render(partial: 'table'))} ')
+$("tbody").append(' #{j(render(partial: 'quiz_bank'))} ')
+}
+}
+}
+else{
+if($("table").length != 0){
+$("tbody").append(' #{j(render(partial: 'quiz_bank'))} ')
+}
+else{
+$(".no-record").remove()
+$(".tab-content").append(' #{j(render(partial: 'table'))} ')
+$("tbody").append(' #{j(render(partial: 'quiz_bank'))} ')
+}
+}

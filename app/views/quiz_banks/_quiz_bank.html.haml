@@ -1,0 +1,10 @@
+%tr{id: @quiz_bank.id}
+  %td
+    =link_to @quiz_bank.title, repository_quiz_bank_path(@repository,@quiz_bank)
+  %td
+    =@quiz_bank.description
+  %td
+    =link_to edit_repository_quiz_bank_path(@repository,@quiz_bank), remote: true do
+      %span.glyphicon.glyphicon-pencil
+    =link_to  repository_quiz_bank_path(@repository,@quiz_bank), data:{method: :delete, confirm: "Are you sure?"},remote: true do
+      %span.glyphicon.glyphicon-trash

@@ -1,0 +1,11 @@
+$('#base-modal').modal('hide')
+if($(".repo-id").length > 0){
+if($(".repo-id").val() == "#{@repository.id}"){
+$("tr##{@quiz_bank.id}").after(' #{j(render(partial: 'quiz_bank'))} ')
+$("tr##{@quiz_bank.id}").remove()
+}
+}
+else{
+$("tr##{@quiz_bank.id}").after(' #{j(render(partial: 'quiz_bank'))} ')
+$("tr##{@quiz_bank.id}").remove()	
+}

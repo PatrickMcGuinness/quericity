@@ -1,0 +1,20 @@
+=render 'common/tabs'
+.tab-content.padding-top40.tab-container
+  =link_to "Create Quiz", quiz_banks_without_repo_path, remote: true, class: "btn btn-primary float-right"
+  .table-responsive.padding-top40
+    = form_tag quiz_banks_path, :method => 'get' do
+      %p
+        = text_field_tag :search, params[:search], :placeholder => "Search", :class => "search-text"
+        = submit_tag "Search", :name => nil, :class => "btn btn-primary search-quiz-bank"
+    -if @quiz_banks.present?
+      %table.table.table-bordered.table_with_margin
+        %thead
+          %tr
+            %th Title
+            %th Description
+            %th
+        %tbody
+          -@quiz_banks.each do |q|
+            =render partial: "quiz_banks/quiz_bank", :locals => {:@repository => q.repository,:@quiz_bank => q }
+    -else
+      There is no quiz bank 

@@ -146,43 +146,7 @@ $("#repo_form").validate({
       }
     });
 
-$("#quiz_form").validate({
-      onkeyup: false,
-      onclick: false,
-      onfocusout: false,
-      rules: {
-          'quiz_bank[title]': {
-            required: true,
-            minlength: 5,
-            maxlength: 50
-          },
-          'quiz_bank[description]': {
-              required: true
-          }
-      },
-      messages: {
-          'quiz_bank[title]': {
-            required: "Please enter title",
-            minlength: "Please enter minimum 5 characters",
-            maxlength: "Please enter maximum 50 characters"
-          },
-          
-          'quiz_bank[description]': {
-             required: "Please enter description"
-          }
-      },
-      highlight: function(element) {
-          $(element).siblings('label').remove();
-          $(element).closest('.control_validate').removeClass('success').addClass('error');
-      },
-      // Success function accepts lable as an argument
-      success: function(element) {
-          // $("#" + $(element).attr('for')).css('border', 'black');
-          
-          $(element).remove();
-          $(element).closest('.control_validate').removeClass('error').addClass('success');
-      }
-    });
+
  
 
 function readURL2(input1) {

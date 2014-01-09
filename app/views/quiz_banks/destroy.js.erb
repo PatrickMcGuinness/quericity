@@ -1,0 +1,5 @@
+$("tr#<%=@quiz_bank_id%>").remove()
+if($("tbody tr").length == 0){
+	$("table").remove()
+	$(".tab-content").append("<div class = 'top_bar_s no-record'>There are no quiz banks.</div>")
+}

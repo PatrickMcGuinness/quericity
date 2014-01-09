@@ -9,7 +9,7 @@ class Repository < ActiveRecord::Base
   has_many :collaborators , :through => :user_repositories , :source => :user
   
   
-  has_many :quiz_banks
+  has_many :quiz_banks, dependent: :destroy
   
   def is_collaborator? user
     self.collaborators.where(:id => user.id).present?
@@ -25,6 +25,10 @@ class Repository < ActiveRecord::Base
 
   def is_owner? user
     self.user.id == user.id
+  end
+
+  def self.for_select(user)
+    user.repositories.map{|r| [r.title, r.id]}
   end
   
   def add_collaborator user , permission

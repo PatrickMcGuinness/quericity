@@ -1,0 +1,19 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4
+        =@quiz_bank.new_record? ? "Add New Quiz Bank" : "Update Quiz Bank"
+    - if current_user.any_repository_present? 
+      =simple_form_for ([@repository,@quiz_bank]), format: :js, remote: true, html:{class: "form-horizontal",id:"quiz_form"} do |f|
+        .modal-body
+          = f.input :title,:placeholder => "Enter Title", input_html: { class: 'form-control' }
+          = f.input :repository_id,collection: Repository.for_select(current_user),  prompt: "Select Repo", input_html: { class: 'form-control' }
+          = f.input :description,:placeholder => "Description", :as => :text,input_html: { class: 'form-control',rows: 20,style: "height:100px;" }
+        .modal-footer
+          -@quiz_bank.new_record? ? display = "Create Quiz" : display = "Update"
+          = f.submit display, :class => "btn btn-primary"
+    - else
+      .modal-body
+        Please first create the repository
+      
