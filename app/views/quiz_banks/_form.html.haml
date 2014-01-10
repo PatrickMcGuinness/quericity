@@ -7,20 +7,27 @@
     - if current_user.any_repository_present? 
       =simple_form_for ([@repository,@quiz_bank]), format: :js, remote: true, html:{class: "form-horizontal",id:"quiz_form"} do |f|
         .modal-body
-          = f.input :title,:placeholder => "Enter Title", input_html: { class: 'form-control' }
-          = f.input :repository_id,collection: Repository.for_select(current_user),  prompt: "Select Repo", input_html: { class: 'form-control' }
-          = f.input :description,:placeholder => "Description", :as => :text,input_html: { class: 'form-control',rows: 20,style: "height:100px;" }
-          Add new Tag
-          %input{type:"text", class: "form-control tag-field",data:{quiz_id: @quiz_bank.id}}
-          = hidden_field_tag("tags", "", :id => "submit_tag")
-          .tag-list-div
-            %h4 Tag List
-            %ul.tag-list
-          .tag-badges
-            .tag-badges-list
-              -unless @quiz_bank.new_record?
-                -@topics.each do |t|
-                  %span.badge.badge-success #{t.title.downcase}
+          .row
+            .col-xs-12
+              = f.input :title,:placeholder => "Enter Title", input_html: { class: 'form-control' }
+              = f.input :repository_id,collection: Repository.for_select(current_user),  prompt: "Select Repo", input_html: { class: 'form-control' }
+              = f.input :description,:placeholder => "Description", :as => :text,input_html: { class: 'form-control',rows: 20,style: "height:100px;" }
+          .row
+            .col-xs-12    
+              Add new Tag
+              %input{type:"text", class: "form-control tag-field",data:{quiz_id: @quiz_bank.id}}
+              = hidden_field_tag("tags", "", :id => "submit_tag")
+              .tag-list-div
+                %h4 Tag List
+                %ul.tag-list
+              .tag-badges
+                .tag-badges-list
+                  -if @quiz_bank.question_topics.present?
+                    %h4
+                      Quiz Bank Tags
+                  -unless @quiz_bank.new_record?
+                    -@topics.each do |t|
+                      %span.badge.badge-success #{t.title.downcase}
         .modal-footer
           -@quiz_bank.new_record? ? display = "Create Quiz" : display = "Update"
           = f.submit display, :class => "btn btn-primary"
