@@ -2,13 +2,14 @@
   %td
     =link_to @quiz_bank.title, repository_quiz_bank_path(@repository,@quiz_bank)
   %td
-    =@quiz_bank.description
+    =@quiz_bank.description.html_safe
   %td
     - @quiz_bank.topics.map(&:title).each_with_index do |title,index|
-      -if index%2 == 0
-        %span.badge.badge-success #{title.downcase}
-      -else
-        %span.badge.badge-warning #{title.downcase}
+      .tag-outer-div
+        -if index%2 == 0
+          %span.badge.badge-success #{title.downcase}
+        -else
+          %span.badge.badge-warning #{title.downcase}
   %td
     =link_to edit_repository_quiz_bank_path(@repository,@quiz_bank), remote: true do
       %span.glyphicon.glyphicon-pencil

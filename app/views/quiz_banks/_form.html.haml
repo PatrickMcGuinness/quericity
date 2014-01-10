@@ -10,8 +10,9 @@
           .row
             .col-xs-12
               = f.input :title,:placeholder => "Enter Title", input_html: { class: 'form-control' }
-              = f.input :repository_id,collection: Repository.for_select(current_user),  prompt: "Select Repo", input_html: { class: 'form-control' }
-              = f.input :description,:placeholder => "Description", :as => :text,input_html: { class: 'form-control',rows: 20,style: "height:100px;" }
+              = f.input :repository_id,collection: Repository.for_select(current_user),  prompt: "Select Repo", input_html: { class: 'form-control' } 
+              = f.input :description, :class => "text-editor",:placeholder => "Description", :as => :ckeditor, :input_html => { :ckeditor => {:toolbar => 'toolbarLight'}}
+
           .row
             .col-xs-12    
               Add new Tag
@@ -39,6 +40,7 @@
 :javascript
   $(document).ready(function(){
     $(".tag-list-div").hide()
+    $(".math-div").hide()
     $(window).keydown(function(event){
       if(event.keyCode == 13) {
         event.preventDefault();

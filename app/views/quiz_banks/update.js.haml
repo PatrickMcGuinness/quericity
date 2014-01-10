@@ -9,3 +9,4 @@ else{
 $("tr##{@quiz_bank.id}").after(' #{j(render(partial: 'quiz_bank'))} ')
 $("tr##{@quiz_bank.id}").remove()	
 }
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);

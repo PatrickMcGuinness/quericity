@@ -11,7 +11,7 @@
 		    <a class="btn btn-primary" data-remote = true href="<%=repository_collaborators_path(@repository)%>">Share</a>
 		  <%end%>
 		  	<%=link_to "Add quiz bank", new_repository_quiz_bank_path(@repository), class:"btn btn-primary", remote: true%>
- 	</div>
+ 		</div>
   </div>
 	<div class = "top_bar_ss">
 	  <span class = "mar_l_30"><b>Owned by:</b> <%=@repository.user.name %>  </span> <font class = "mar_l_30">|</font>
@@ -24,17 +24,16 @@
 	  <li><%= link_to "My Repo", repositories_path%></li>
 	  <li class="active"><%= @repository.title%></li>
   </ul>
+  <%= form_tag repository_path, :method => 'get' do %>
+    <p>
+      <%= text_field_tag :search, params[:search], :placeholder => "Search", :class => "form-control cust_wid search-text"%>
+      <%= submit_tag "Search", :name => nil, :class => "btn btn-primary pos_b_s search-quiz-bank" %>
+    </p>
+  <% end %>
   <div class = "creat-repo-div">
 		<h4>Quiz Banks</h4>
 	</div>
 	<input type = "hidden" class = "repo-id" value = <%=@repository.id%>>
-		<%= form_tag repository_path, :method => 'get' do %>
-      <p>
-        <%= text_field_tag :search, params[:search], :placeholder => "Search", :class => "form-control cust_wid"%>
-        <%= submit_tag "Search", :name => nil, :class => "btn btn-primary pos_b_s" %>
-      </p>
-    <% end %>
-	</div>
   <%if @quiz_banks.blank?%>
 		<div class = "top_bar_s no-record">
   		There are no quiz banks.
@@ -46,8 +45,6 @@
       	
       	<%end%>
     </table>
-	<%end%>  
-	<%#= unless params[:search]%>
-	  <%#= paginate @quiz_banks %>
-	  
+	<%end%>
+	</div>  	  
 </div>
