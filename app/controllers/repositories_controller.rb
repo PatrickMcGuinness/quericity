@@ -12,7 +12,8 @@ class RepositoriesController < ApplicationController
   
   def show
     @repository = current_user.repositories.find(params[:id])
-    @quiz_banks = @repository.quiz_banks
+    @quiz_banks = @repository.quiz_banks.search(params[:search],current_user)
+    #@quiz_banks = Kaminari.paginate_array(myarray).page(params[:page]).per(5)
   end
   
   def new
