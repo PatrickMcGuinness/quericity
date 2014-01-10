@@ -3,6 +3,9 @@ class QuizBank < ActiveRecord::Base
   validates :title, :presence => true, :uniqueness => true,:length => { minimum: 5 }
   belongs_to :repository
   has_many :sections, dependent: :destroy
+
+  has_many :question_topics, dependent: :destroy
+  has_many :topics, :through => :question_topics
   
   def self.search(search,user)
     quiz_banks = QuizBank.joins("Left outer join repositories on  repositories.id = quiz_banks.repository_id Left outer join users on repositories.user_id = users.id").where("users.id = ?",user.id)

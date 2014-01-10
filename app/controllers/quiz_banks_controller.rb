@@ -27,12 +27,15 @@ class QuizBanksController < ApplicationController
   def create
     @repository = current_user.repositories.find(params[:quiz_bank][:repository_id])
     @quiz_bank= @repository.quiz_banks.create(params[:quiz_bank])
+    @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank)
+    @question_topics = @quiz_bank.question_topics
   	render layout: nil
   end
 
   def edit
     @repository = current_user.repositories.find(params[:repository_id])
   	@quiz_bank = @repository.quiz_banks.find(params[:id])
+    @topics = @quiz_bank.topics
     render layout:nil
   end
 
@@ -40,6 +43,7 @@ class QuizBanksController < ApplicationController
     @repository = current_user.repositories.find(params[:repository_id])
     @quiz_bank = @repository.quiz_banks.find(params[:id])
     @quiz_bank.update_attributes(params[:quiz_bank])
+    @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank) 
     render layout:nil
   end
 

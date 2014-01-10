@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140107075723) do
+ActiveRecord::Schema.define(:version => 20140109071511) do
 
   create_table "invitations", :force => true do |t|
     t.string   "email"
@@ -32,10 +32,10 @@ ActiveRecord::Schema.define(:version => 20140107075723) do
   end
 
   create_table "question_topics", :force => true do |t|
-    t.integer  "question_id"
+    t.integer  "quiz_bank_id"
     t.integer  "topic_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "questions", :force => true do |t|
