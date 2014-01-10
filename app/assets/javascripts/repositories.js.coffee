@@ -5,12 +5,14 @@
 
 jQuery ->
 
-  $(".search-quiz-bank").on "click", (e)->
+  $(".search-quiz-bank-from-show").on "click", (e)->
     e.preventDefault()
     _this = this
     value = $('.search-text').val()
+    repo_id = $(".repo-id").val()
+    console.log(repo_id)
     $.ajax
-      url: "quiz_banks",
+      url: "/repositories/"+repo_id,
       data: {search:value}
       success: (data)->
         $('.search-text').val("")

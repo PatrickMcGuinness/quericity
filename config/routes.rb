@@ -19,6 +19,8 @@ QuizLib::Application.routes.draw do
   get "/quiz_banks" ,to:"quiz_banks#index" ,as: :quiz_banks
   get "/quiz_banks/without_repo" ,to:"quiz_banks#without_repo", as: :quiz_banks_without_repo
   get "/topics/search",to:"topics#search",as: :topics_search
+
+  resources :question_topics
   resources :users do
     member do
       get 'profile'

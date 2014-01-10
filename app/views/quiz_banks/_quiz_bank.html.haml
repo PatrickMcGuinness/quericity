@@ -4,12 +4,8 @@
   %td
     =@quiz_bank.description.html_safe
   %td
-    - @quiz_bank.topics.map(&:title).each_with_index do |title,index|
-      .tag-outer-div
-        -if index%2 == 0
-          %span.badge.badge-success #{title.downcase}
-        -else
-          %span.badge.badge-warning #{title.downcase}
+    - @quiz_bank.question_topics.each do |question_topic|
+      %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase} <a href="#{question_topic_path(question_topic.id)}" data-remote = true data-method = "delete" data-confirm = "Are you sure?">x</a>
   %td
     =link_to edit_repository_quiz_bank_path(@repository,@quiz_bank), remote: true do
       %span.glyphicon.glyphicon-pencil
