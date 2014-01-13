@@ -1,0 +1,12 @@
+.row.mcq
+  .row
+    %p{style:"margin:20px;"} Enter description and check checkbox if it is true
+    .col-xs-12
+      %label Description     
+      = cktext_area :description,nil,:class => "text-editor true-false-description",:placeholder => "Description", :cols => 40, :ckeditor => {:toolbar => "mini",height: "100"}
+    .col-xs-12
+      .col-xs-8
+        Answer
+      .col-xs-4
+        Correct?  
+  

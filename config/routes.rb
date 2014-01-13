@@ -19,7 +19,10 @@ QuizLib::Application.routes.draw do
   get "/quiz_banks" ,to:"quiz_banks#index" ,as: :quiz_banks
   get "/quiz_banks/without_repo" ,to:"quiz_banks#without_repo", as: :quiz_banks_without_repo
   get "/topics/search",to:"topics#search",as: :topics_search
-
+  get "/questions/true_false_edit", to:"questions#true_false_edit",as: :true_false_edit
+  get "/questions/open_ended_edit", to: "questions#open_ended_edit", as: :open_ended_edit
+  get "/questions/fill_in_the_blank_edit", to: "questions#fill_in_the_blank_edit", as: :fill_in_the_blank_edit
+  get "/questions/mcq_edit", to: "questions#mcq_edit", as: :mcq_edit
   resources :question_topics
   resources :users do
     member do
@@ -33,7 +36,9 @@ QuizLib::Application.routes.draw do
     end
     resources :collaborators
     resources :quiz_banks, :except => :index do
-      resources :sections 
+      resources :sections do
+        resources :questions
+      end
     end
   end
   # Sample resource route with options:

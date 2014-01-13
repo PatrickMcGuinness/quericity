@@ -1,0 +1,15 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4
+        =@section.new_record? ? "Add New Section" : "Update Section"
+    =simple_form_for ([@repository,@quiz_bank,@section]), format: :js, remote: true, html:{class: "form-horizontal",id:"section_form"} do |f|
+      .modal-body
+        .row
+          .col-xs-12
+            = f.input :title,:placeholder => "Enter Title", input_html: { class: 'form-control' }
+      .modal-footer
+        -@section.new_record? ? display = "Create Section" : display = "Update Section"
+        = f.submit display, :class => "btn btn-primary"
+      

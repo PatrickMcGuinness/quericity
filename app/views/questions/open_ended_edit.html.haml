@@ -1,0 +1,8 @@
+.row.open_ended
+  %p{style:"margin:20px;"} Enter description and fill the answer if necessary
+  .col-xs-12
+    %label Description     
+    = cktext_area :description,nil,:class => "text-editor open-ended-description",:placeholder => "Description", :cols => 40, :ckeditor => {:toolbar => "mini",height: "100"}
+  .cols-xs-12{style:"margin:20px;"}
+    %label Answer(optional)
+    = cktext_area :answer, nil,:class => "open-ended-answer",:placeholder => "Answer (Optional)", :cols => 40, :ckeditor =>{:toolbar => "mini",height: "100"}

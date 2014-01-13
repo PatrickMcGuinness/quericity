@@ -1,0 +1,8 @@
+%tr{id:@question.id}
+  %td
+    .col-xs-12
+      =@question.description.html_safe
+      %ul.col-xs-10.options
+        -if @question.question_options.first.answer != ""
+          %strong Answer
+          =@question.question_options.first.answer.html_safe  

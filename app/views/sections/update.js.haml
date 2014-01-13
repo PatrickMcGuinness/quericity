@@ -1,0 +1,3 @@
+$('#base-modal').modal('hide')
+$(".section##{@section.id}").after(' #{j(render(partial: 'section'))} ')
+$(".section##{@section.id}").remove()

@@ -1,0 +1,11 @@
+$('#base-modal').modal('hide');
+$(".no-record").remove()
+if(#{@question.is_true_false?}){
+$(".questions table tbody").append(' #{j(render(partial: 'questions/true_false_question'))} ')
+}
+if(#{@question.is_open_ended?}){
+$(".questions table tbody").append(' #{j(render(partial: 'questions/open_ended_question'))} ')
+}
+if(#{@question.is_fill_in_the_blank?}){
+$(".questions table tbody").append(' #{j(render(partial: 'questions/open_ended_question'))} ')	
+}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140109071511) do
+ActiveRecord::Schema.define(:version => 20140113081445) do
 
   create_table "invitations", :force => true do |t|
     t.string   "email"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(:version => 20140109071511) do
     t.integer  "subject_id"
     t.integer  "seq",              :default => 0
     t.text     "description"
-    t.integer  "type"
+    t.integer  "question_type"
     t.integer  "difficulty_level"
     t.text     "reference_url"
     t.integer  "section_id"

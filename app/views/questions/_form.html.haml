@@ -1,0 +1,65 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4
+        =@question.new_record? ? "Create Question" : "Update Question"
+    =simple_nested_form_for ([@repository,@quiz_bank,@section,@question]), html:{class: "form-horizontal",id:"question_form"},remote: true, format: :js do |f|    
+      .modal-body
+        .row
+          .col-xs-4
+            =f.input :question_type,collection: Question.types_for_select, prompt: "Select Difficulty",input_html: { class: 'form-control type-dropdown' }
+          .col-xs-4
+            =f.input :difficulty_level,collection: Question.difficulty_for_select, prompt: "Select Difficulty",input_html: { class: 'form-control difficulty-dropdown' }
+          .col-xs-4
+            = f.input :subject_id,collection: Subject.for_select,  prompt: "Select Repo", input_html: { class: 'form-control subject-dropdown' }
+            =hidden_field_tag :section_id, @section.id ,:class => "section-id"
+        .question-add
+   
+      .modal-footer
+        -@question.new_record? ? display = "Save & Close" : display = "Update"
+        = f.submit display, :class => "btn btn-primary add-question"        
+   
+
+:javascript
+  $(document).ready(function(){
+    $(".true_false").hide()
+    $(".modal-body").on("change",".type-dropdown",function(){
+      if($(this).val() == 1){
+        $.ajax({
+          url: "/questions/true_false_edit",
+          success: function(data){
+            $('.question-add').html($(data).find('.true_false').html())
+          }
+        });
+
+      }
+      if($(this).val() == 2){
+        $.ajax({
+          url: "/questions/mcq_edit",
+          success: function(data){
+            $('.question-add').html($(data).find('.mcq').html())
+          }
+        });
+      }
+      if($(this).val() == 3){
+        $.ajax({
+          url: "/questions/open_ended_edit",
+          success: function(data){
+            $('.question-add').html($(data).find('.open_ended').html())
+          }
+        });
+      }
+      if($(this).val() == 4){
+        $.ajax({
+          url: "/questions/fill_in_the_blank_edit",
+          success: function(data){
+            $('.question-add').html($(data).find('.fill_in_the_blank').html())
+          }
+        });
+      }
+
+    })
+  })        
+              
+          

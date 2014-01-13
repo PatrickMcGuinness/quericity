@@ -8,8 +8,6 @@ config.resize_enabled = false;
 
 	config.toolbar_mini =
 	[		
-		['Format','Font','FontSize'],
-		'/',
 		['Bold','Italic','Strike','NumberedList','BulletedList','Outdent','Indent','Blockquote', 'TextColor','BGColor']
 	];
 	

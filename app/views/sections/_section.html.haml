@@ -1,0 +1,10 @@
+.well.section{id:@section.id}
+  =@section.title
+  .pull-right
+    =link_to new_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section),remote: true do
+      %span.glyphicon.glyphicon-plus-sign
+    = link_to edit_repository_quiz_bank_section_path(@repository,@quiz_bank,@section),remote:true do
+      %span.glyphicon.glyphicon-pencil
+    = link_to repository_quiz_bank_section_path(@repository,@quiz_bank,@section), remote:true,data:{method:"delete",confirm: "Are you sure"} do
+      %span.glyphicon.glyphicon-trash
+=render partial: "questions/index", :locals => {:@section => @section}     

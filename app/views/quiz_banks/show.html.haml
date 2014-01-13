@@ -1,0 +1,29 @@
+=render 'common/tabs'
+.tab-content.padding-top40.tab-container
+  .mar_top.creat-repo-div
+    %h2
+      = @quiz_bank.title
+    .style_r
+      =link_to "Add Section", new_repository_quiz_bank_section_path(@repository,@quiz_bank),:class => "btn btn-primary", remote:true
+  .top_bar_ss
+    %span.mar_l_30
+      %b
+        = "Created on #{@quiz_bank.created_at.to_date}"
+
+  %ul.breadcrumb.top_bar_s
+    %li
+      = link_to "My Repo", repositories_path
+    %li.active
+      = @repository.title
+    %li
+      = link_to "My Quiz Bank", repository_path(@repository)
+    %li.active
+      = @quiz_bank.title
+  .sections
+    %h4 Sections    
+    -if @sections.blank?
+      .top_bar_s.no-record
+        = "There are no sections."
+    -else
+      -@sections.each do |s|
+        =render partial: "sections/section", :locals => {:@section => s} 

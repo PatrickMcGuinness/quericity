@@ -1,0 +1,8 @@
+.row.true_false
+  %p{style:"margin:20px;"} Enter description and check checkbox if it is true
+  .col-xs-12
+    %label Description     
+    = cktext_area :description,nil,:class => "text-editor true-false-description",:placeholder => "Description", :cols => 40, :ckeditor => {:toolbar => "mini",height: "100"}
+  .cols-xs-10{style:"margin:15px;"}
+    =check_box_tag :truefalse,nil, false,:class => "true-or-false",:style => "margin-top:15px;"
+    = "Is the description true?"

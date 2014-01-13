@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require ckeditor/init
 //=require ckeditor/config
+//= require jquery_nested_form
 //= require_tree .
 
  

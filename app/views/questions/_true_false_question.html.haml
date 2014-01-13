@@ -1,0 +1,11 @@
+%tr{id:@question.id}
+  %td
+    .col-xs-12
+      =@question.description.html_safe
+      %ul.col-xs-10.options
+        -if @question.question_options.first.is_correct == true
+          %li
+            = "True"
+        -else
+          %li
+            = "False"  

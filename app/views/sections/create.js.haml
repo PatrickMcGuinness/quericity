@@ -1,0 +1,6 @@
+$('#base-modal').modal('hide')
+if($(".section").length == 0){
+$(".no-record").remove()
+}
+$(".sections").append(' #{j(render(partial: 'section'))} ')
+
