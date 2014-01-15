@@ -12,6 +12,7 @@
 //
 //= require jquery-1.9.1.min
 //= require jquery_ujs
+//= require jquery-ui.min
 //= require ckeditor/init
 //=require ckeditor/config
 //= require jquery_nested_form

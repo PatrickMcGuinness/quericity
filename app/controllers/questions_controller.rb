@@ -15,6 +15,7 @@ class QuestionsController < ApplicationController
     @quiz_bank = @repository.quiz_banks.find(params[:quiz_bank_id])
     @section = @quiz_bank.sections.find(params[:section_id])
     @question = Question.create_question(params,@section)
+    @type = @question.question_type.to_i
     @question_option = @question.create_option(params)
     render layout:nil
     #render json:{question: @question,question_option: @question_option}

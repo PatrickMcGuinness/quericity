@@ -1,0 +1,13 @@
+%tr{id:@question.id}
+  %td
+    .col-xs-12
+      =@question.description.html_safe
+      .col-xs-10.options
+        -@question.question_options.each do |option|
+          .col-xs-8
+            -if option.is_correct == true
+              =check_box_tag :truefalse,nil, true,:class => "true-or-false", :disabled => true
+              = option.answer
+            -else
+              =check_box_tag :truefalse,nil, false,:class => "true-or-false",:disabled => true
+              = option.answer    

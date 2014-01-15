@@ -10,4 +10,6 @@
         -if question.is_open_ended?
           =render partial: "questions/open_ended_question", :locals => {:@question => question}
         -if question.is_fill_in_the_blank?
-          =render partial: "questions/open_ended_question", :locals => {:@question => question}  
+          =render partial: "questions/open_ended_question", :locals => {:@question => question}
+        -if question.is_mcq?
+          =render partial: "questions/mcq_question", :locals => {:@question => question}  

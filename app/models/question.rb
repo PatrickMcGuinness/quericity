@@ -13,7 +13,7 @@ class Question < ActiveRecord::Base
     MEDIUM = 2
     DIFFICULT = 3
     def self.get_all_difficulties
-      [["Easy",1],["Medium",2],["Difficulty",3]]
+      [["Easy",1],["Medium",2],["Difficult",3]]
     end
   end
 
@@ -33,7 +33,23 @@ class Question < ActiveRecord::Base
     question.save
     question
   end
-  
+
+  def self.create_mcq(params,section)
+    question = section.questions.new(params[:question])
+    question.description = params[:description][0]
+    question.save
+    question
+  end
+  def create_mcq_option(params)
+    params["options"].to_i.times.each do |i|
+      question_option = self.question_options.new
+      question_option.answer = params["answer#{i+1}"]
+      question_option.is_correct = true if params["option#{i+1}"] == "on"
+      question_option.is_correct = false unless params["option#{i+1}"] == "on"
+      question_option.save
+    end
+  end
+
   def create_true_false_option(params)
     question_option = self.question_options.new
     question_option.is_correct = true if params["truefalse"] == "on"
@@ -57,7 +73,11 @@ class Question < ActiveRecord::Base
   end
   
   def self.create_fill_in_the_blank(params,section)
-    description = "#{params[:question][:description]} _____ #{params[:question][:description2]}" 
+    #params[:description][0].gsub!("\n","")
+    #params[:description][0].gsub!("\r","")
+    #params[:description][0].gsub!("</p>","")
+    #params[:description2][0].gsub!("<p>","")
+    description = "#{params[:description]} _______ #{params[:description2]}" 
     question = section.questions.new(:subject_id => params[:question][:subject_id],:difficulty_level => params[:question][:difficulty_level],
                                     :question_type => params[:question][:question_type], :description => description)
     question.save
@@ -65,7 +85,9 @@ class Question < ActiveRecord::Base
   end
 
   def create_fill_in_the_blank_option(params)
-    question_option = self.question_options.create(params[:question_options])
+    question_option = self.question_options.new
+    question_option.answer = params[:answer]
+    question_option.save
     question_option
   end
   def self.create_question(params,section)
@@ -73,9 +95,9 @@ class Question < ActiveRecord::Base
       question = Question.create_true_false(params,section)
     end
     if params[:question][:question_type] == '2'
+      question = Question.create_mcq(params,section)
     end
     if params[:question][:question_type] == '3'
-      puts "@@@@@@@@@@@@@@@@@@ in open ended"
       question = Question.create_open_ended(params,section)
     end
     if params[:question][:question_type] == '4'
@@ -93,6 +115,9 @@ class Question < ActiveRecord::Base
     end
     if self.is_fill_in_the_blank?
       question_option = self.create_fill_in_the_blank_option(params)
+    end
+    if self.is_mcq?
+      question_option = self.create_mcq_option(params) 
     end
     question_option
   end
@@ -114,7 +139,7 @@ class Question < ActiveRecord::Base
   end
 
   def is_mcq?
-    self.question_type == Question::QuestioType::MCQ
+    self.question_type == Question::QuestionType::MCQ
   end
 
   def is_open_ended?

@@ -1,14 +1,15 @@
 CKEDITOR.editorConfig = function(config) {
 	config.toolbar = [ [ 'Source', 'Bold' ], ['CreatePlaceholder'] ];
 
- config.toolbar = 'toolbar_mini';
+config.toolbar = 'mini';
 
 config.removePlugins = 'elementspath' ;
 config.resize_enabled = false;
+config.extraPlugins = 'lineutils,widget,mathjax';
 
 	config.toolbar_mini =
 	[		
-		['Bold','Italic','Strike','NumberedList','BulletedList','Outdent','Indent','Blockquote', 'TextColor','BGColor']
+		['Bold','Italic','NumberedList','BulletedList','Outdent','Indent','mathjax']
 	];
 	
 	config.toolbar_toolbarLight =

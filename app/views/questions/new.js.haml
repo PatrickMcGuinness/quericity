@@ -1,1 +1,43 @@
 $('#base-modal').html(' #{j(render(partial: 'new'))} ').modal()
+$(".modal-body").on('click','.add-answer',function(){
+rows = $("table.mcq tbody tr").length
+$("table.mcq tbody").append('<tr><td class="col-xs-8"><input class="form-control" id="answer'+(rows+1)+'" name="answer'+(rows+1)+'" type="text"></td><td class="col-xs-4"><input class="option-1" id="option'+(rows+1)+'" name="option'+(rows+1)+'" type="checkbox">Correct?</td></tr>')	
+$('.options').val(rows+1)
+})
+
+$("#question_form").validate({
+onkeyup: false,
+onclick: false,
+onfocusout: false,
+rules: {
+"question[question_type]": {
+required: true
+},
+"question[difficulty_level]": {
+required: true
+},
+"question[subject_id]":{
+required: true
+}
+},
+messages: {
+"question[question_type]": {
+required: "Please choose type"
+},
+"question[difficulty_level]": {
+required: "Please choose difficulty level"
+},
+"question[subject_id]":{
+required: "Please choose subject"
+}
+},
+highlight: function(element) {
+$(element).siblings('label.error').remove();
+$(element).closest('.control_validate').removeClass('success').addClass('error');
+},
+// Success function accepts lable as an argument
+success: function(element) {
+$(element).remove();
+$(element).closest('.control_validate').removeClass('error').addClass('success');
+}
+});

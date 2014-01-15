@@ -1,12 +1,11 @@
 .row.fill_in_the_blank
-  %p{style:"margin:20px;"} Leave 2nd description blank if the blank is at last
-  .col-xs-12
-    %label Description(Before blank)     
-    = cktext_area :description,nil,:class => "text-editor before-blank-description",:placeholder => "Description", :cols => 40, :ckeditor => {:toolbar => "mini",height: "100"}
-  .cols-xs-12{style:"margin:20px;"}
-    %label Anwser
-    = cktext_area :answer, nil,:class => "blank-answer",:placeholder => "Answer", :cols => 40, :rows => 20,:ckeditor =>{:toolbar => "mini",height: "60"}
-  .cols-xs-12{style:"margin:20px;"}
-    %label Description (After blank)
-    = cktext_area :description2, nil,:class => "after-blank-description",:placeholder => "Answer (Optional)", :cols => 40, :ckeditor =>{:toolbar => "mini", height: "100"}
+  .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
+    %button{class: "close",data:{dismiss:"alert"}}×
+    Enter description ,answer and description after the blank if necessary 
+  .col-xs-14{style:"margin-top:10px;"}  
+    =text_area_tag :description, nil, :placeholder => "Description before blank", :class => "form-control"
+  .cols-xs-14{style:"margin-top:10px;"} 
+    =text_area_tag :answer, nil, :placeholder => "answer", :class => "form-control"
+  .cols-xs-14{style:"margin-top:10px;"} 
+    =text_area_tag :description2, nil, :placeholder => "Description after blank", :class => "form-control"
     

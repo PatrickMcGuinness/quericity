@@ -1,11 +1,15 @@
 $('#base-modal').modal('hide');
 $(".no-record").remove()
-if(#{@question.is_true_false?}){
+if(#{@type} == 1){
 $(".questions table tbody").append(' #{j(render(partial: 'questions/true_false_question'))} ')
 }
-if(#{@question.is_open_ended?}){
+else if(#{@type} == 2){
+$(".questions table tbody").append(' #{j(render(partial: 'questions/mcq_question'))} ')
+}
+else if(#{@type} == 3){
 $(".questions table tbody").append(' #{j(render(partial: 'questions/open_ended_question'))} ')
 }
-if(#{@question.is_fill_in_the_blank?}){
+else if(#{@type} == 4){
 $(".questions table tbody").append(' #{j(render(partial: 'questions/open_ended_question'))} ')	
 }
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);

@@ -2,10 +2,11 @@
   %td
     .col-xs-12
       =@question.description.html_safe
-      %ul.col-xs-10.options
-        -if @question.question_options.first.is_correct == true
-          %li
+      .col-xs-10.options
+        .col-xs-8
+          -if @question.question_options.first.is_correct == true
+            =check_box_tag :truefalse,nil, true, :disabled => true
             = "True"
-        -else
-          %li
-            = "False"  
+          -else
+            =check_box_tag :truefalse,nil,false, :disabled => true
+            = "False" 

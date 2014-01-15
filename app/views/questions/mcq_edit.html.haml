@@ -1,12 +1,33 @@
 .row.mcq
   .row
-    %p{style:"margin:20px;"} Enter description and check checkbox if it is true
+    .col-xs-12
+      .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
+        %button{class: "close",data:{dismiss:"alert"}}×
+        Enter description and options and check if the option is true
     .col-xs-12
       %label Description     
-      = cktext_area :description,nil,:class => "text-editor true-false-description",:placeholder => "Description", :cols => 40, :ckeditor => {:toolbar => "mini",height: "100"}
-    .col-xs-12
-      .col-xs-8
-        Answer
-      .col-xs-4
-        Correct?  
-  
+      = cktext_area :description,nil,:class => "text-editor true-false-description",:placeholder => "Description", :cols => 40, :ckeditor => {height: "100"}
+    .col-xs-12{style:"margin-top:20px;"}
+      %table.table.table-bordered.mcq
+        %thead
+          %tr
+            %th.col-xs-8
+              Answer
+            %th.col-xs-4
+              Correct?
+        %tbody
+          %tr
+            %td.col-xs-8
+              =text_field_tag :answer1, nil,:class => "form-control"
+            %td.col-xs-4
+              =check_box_tag :option1 ,nil, false,:class => "option-1"
+              = "Correct?"
+          %tr       
+            %td.col-xs-8
+              =text_field_tag :answer2, nil,:class => "form-control"
+            %td.col-xs-4
+              =check_box_tag :option2 ,nil, false,:class => "option-2"
+              = "Correct?"
+    .col-xs-2.pull-right
+      =link_to "Add Answer", "#", :class => "btn btn-primary btn-success add-answer"
+      =hidden_field_tag :options, 2, :class=>"options"           
