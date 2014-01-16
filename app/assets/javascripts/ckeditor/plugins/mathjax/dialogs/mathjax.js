@@ -42,7 +42,13 @@ CKEDITOR.dialog.add( 'mathjax', function( editor ) {
 						commit: function( widget ) {
 							// Add \( and \) to make TeX be parsed by MathJax by default.
 							widget.setData( 'math', '\\(' + this.getValue() + '\\)' );
-						}
+						},
+            onHide: function(widget){
+              $("#base-modal").show()
+            },
+            onShow: function(widget){
+              $("#base-modal").hide()
+            }
 					},
 					{
 						id: 'documentation',

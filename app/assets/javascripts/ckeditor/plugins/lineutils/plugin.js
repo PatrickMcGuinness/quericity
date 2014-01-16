@@ -570,7 +570,7 @@
 			height: '0px',
 			'border-top': '1px dashed red',
 			position: 'absolute',
-			'z-index': 9999
+			'z-index': 'inherit'
 		},
 
 		lineTpl =

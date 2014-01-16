@@ -16,3 +16,7 @@ jQuery ->
         $('.search-text').val("")
         $('table').html($(data).find('table').html())
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+
+  $("tab-content").on ".cke_dialog_ui_button cke_dialog_ui_button_cancel", "click", (e)->
+    console.log "hello"
+    $("#base-modal").show()

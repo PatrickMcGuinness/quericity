@@ -20,7 +20,12 @@
 
 		init: function( editor ) {
 			var cls = editor.config.mathJaxClass || 'math-tex';
-
+      editor.ui.addButton('mathjax',
+      {
+        label: 'Add Math Formula',
+        command: 'mathjax',
+        icon: CKEDITOR.plugins.getPath('mathjax/icons') + 'mathjax.png'
+      }),
 			editor.widgets.add( 'mathjax', {
 				inline: true,
 				dialog: 'mathjax',
