@@ -18,9 +18,33 @@ class QuestionsController < ApplicationController
     @type = @question.question_type.to_i
     @question_option = @question.create_option(params)
     render layout:nil
-    #render json:{question: @question,question_option: @question_option}
+  end
+  def edit
+    @repository = current_user.repositories.find(params[:repository_id])
+    @quiz_bank = @repository.quiz_banks.find(params[:quiz_bank_id])
+    @section = @quiz_bank.sections.find(params[:section_id])
+    @question = @section.questions.find(params[:id])
+    @question_options = @question.question_options
+    render layout:nil
   end
 
+  def destroy
+    @repository = current_user.repositories.find(params[:repository_id])
+    @quiz_bank = @repository.quiz_banks.find(params[:quiz_bank_id])
+    @section = @quiz_bank.sections.find(params[:section_id])
+    @question = @section.questions.find(params[:id])
+    @question_id = @question.id
+    @question.destroy
+    render layout:nil
+  end
+
+  def update
+    @repository = current_user.repositories.find(params[:repository_id])
+    @quiz_bank = @repository.quiz_banks.find(params[:quiz_bank_id])
+    @section = @quiz_bank.sections.find(params[:section_id])
+    @question = @section.questions.find(params[:id])
+    @question.update_question(params)
+  end
   def true_false_edit
   end
 

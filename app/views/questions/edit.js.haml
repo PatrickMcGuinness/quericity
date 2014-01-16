@@ -1,0 +1,19 @@
+$('#base-modal').html(' #{j(render(partial: 'edit'))} ').modal()
+$(".modal-body").on('click','.add-answer',function(){
+rows = $("table.mcq tbody tr").length
+$("table.mcq tbody").append('<tr><td class="col-xs-8"><input class="form-control" id="answer'+(rows+1)+'" name="answer'+(rows+1)+'" type="text"></td><td class="col-xs-4"><input class="option-1" id="option'+(rows+1)+'" name="option'+(rows+1)+'" type="checkbox">Correct?</td></tr>')	
+$('.options').val(rows+1)
+})
+if(#{@question.question_type} == 1){
+$(".question-add").append(' #{j(render(partial: 'true_false_edit'))} ')
+}
+else if(#{@question.question_type} == 2){
+$(".question-add").append(' #{j(render(partial: 'mcq_edit'))} ')	
+}
+else if(#{@question.question_type} == 3){
+$(".question-add").append(' #{j(render(partial: 'open_ended_edit'))} ')
+}
+else if(#{@question.question_type} == 4){
+$(".description").hide()
+$(".question-add").append(' #{j(render(partial: 'fill_in_the_blank_edit'))} ')
+}

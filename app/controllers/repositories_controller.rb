@@ -18,34 +18,30 @@ class RepositoriesController < ApplicationController
   
   def new
     @repository = Repository.new
+    render layout: nil
   end
   
   def create
-    @repository = current_user.repositories.new(params[:repository])
-    if @repository.save!
-      redirect_to repositories_path
-    else
-      redirect_to new_repositories_path
-    end
+    @repository = current_user.repositories.create(params[:repository])
+    render layout:nil
   end
   
   def edit
-    @repository = Repository.find(params[:id])
+    @repository = current_user.repositories.find(params[:id])
+    render layout: nil
   end
   
   def update
-    @repository = Repository.find(params[:id])
-    if @repository.update_attributes(params[:repository])
-      redirect_to repositories_path, notice: 'Updated Successfully.'
-    else
-      redirect_to edit_repositories_path
-    end
+    @repository = current_user.repositories.find(params[:id])
+    @repository.update_attributes(params[:repository])
+    render layout:nil
   end
   
   def destroy
     @repository = current_user.repositories.find(params[:id])
+    @repository_id = @repository.id
     @repository.destroy
-    redirect_to repositories_path, notice: 'Deleted Successfully.'
+    render layout:nil
   end
 
 end

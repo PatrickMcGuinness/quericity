@@ -1,15 +1,15 @@
 $('#base-modal').modal('hide');
 $(".no-record").remove()
 if(#{@type} == 1){
-$(".questions table tbody").append(' #{j(render(partial: 'questions/true_false_question'))} ')
+$("##{@section.id}.questions table tbody").append(' #{j(render(partial: 'questions/true_false_question'))} ')
 }
 else if(#{@type} == 2){
-$(".questions table tbody").append(' #{j(render(partial: 'questions/mcq_question'))} ')
+$("##{@section.id}.questions table tbody").append(' #{j(render(partial: 'questions/mcq_question'))} ')
 }
 else if(#{@type} == 3){
-$(".questions table tbody").append(' #{j(render(partial: 'questions/open_ended_question'))} ')
+$("##{@section.id}.questions table tbody").append(' #{j(render(partial: 'questions/open_ended_question'))} ')
 }
 else if(#{@type} == 4){
-$(".questions table tbody").append(' #{j(render(partial: 'questions/open_ended_question'))} ')	
+$("##{@section.id}.questions table tbody").append(' #{j(render(partial: 'questions/open_ended_question'))} ')	
 }
 MathJax.Hub.Queue(["Typeset",MathJax.Hub]);

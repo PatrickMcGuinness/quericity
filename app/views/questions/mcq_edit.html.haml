@@ -1,12 +1,5 @@
 .row.mcq
   .row
-    .col-xs-12
-      .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
-        %button{class: "close",data:{dismiss:"alert"}}×
-        Enter description and options and check if the option is true
-    .col-xs-12
-      %label Description     
-      = cktext_area :description,nil,:class => "text-editor true-false-description",:placeholder => "Description", :cols => 40, :ckeditor => {height: "100"}
     .col-xs-12{style:"margin-top:20px;"}
       %table.table.table-bordered.mcq
         %thead

@@ -1,0 +1,21 @@
+=render 'common/tabs'
+.tab-content.padding-top40.tab-container
+  =link_to "Create Repo", new_repository_path, class: "btn btn-primary float-right", remote: true
+  =render 'repositories/repo_tabs'
+  .table-responsive.padding-top40
+    -if @repositories.present?
+      %table.table.table-bordered
+        %thead
+          %tr
+            %th Title
+            %th Quiz Banks
+            %th Topics
+            %th 
+        %tbody
+          -@repositories.each do |repo|
+            = render partial: "repository", :locals => {:@repository => repo}     
+    -else
+      .no-record
+        There is no repository 
+
+

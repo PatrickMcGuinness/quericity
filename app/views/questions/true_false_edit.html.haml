@@ -1,10 +1,4 @@
 .row.true_false
-  .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
-    %button{class: "close",data:{dismiss:"alert"}}×
-    Enter description and check checkbox if it is true
-  .col-xs-14
-    Description     
-    = cktext_area :description,nil,:class => "text-editor true-false-description",:placeholder => "Description", :cols => 40, :ckeditor => {height: "100"}
   .cols-xs-14
     =check_box_tag :truefalse,nil, false,:class => "true-or-false",:style => "margin-top:15px;"
     = "Is the description true?"

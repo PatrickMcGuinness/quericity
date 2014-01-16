@@ -1,0 +1,14 @@
+$('#base-modal').modal('hide');
+if(#{@question.question_type} == 1){
+$("##{@section.id}.questions table tbody tr##{@question.id}").after(' #{j(render(partial: 'questions/true_false_question'))} ')
+}
+else if(#{@question.question_type} == 2){
+$("##{@section.id}.questions table tbody tr##{@question.id}").after(' #{j(render(partial: 'questions/mcq_question'))} ')
+}
+else if(#{@question.question_type} == 3){
+$("##{@section.id}.questions table tbody tr##{@question.id}").after(' #{j(render(partial: 'questions/open_ended_question'))} ')
+}
+else if(#{@question.question_type} == 4){
+$("##{@section.id}.questions table tbody tr##{@question.id}").after(' #{j(render(partial: 'questions/open_ended_question'))} ')
+}
+$("##{@section.id}.questions table tbody tr##{@question.id}").remove()

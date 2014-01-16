@@ -1,0 +1,8 @@
+.row.true_false
+  .cols-xs-10
+    -if @question.question_options.first.is_correct == true
+      =check_box_tag :truefalse,nil, true,:class => "true-or-false",:style => "margin-top:15px;margin-left:15px"
+      = "Is the description true?"
+    -else
+      =check_box_tag :truefalse,nil, false,:class => "true-or-false",:style => "margin-top:15px;margin-left:15px"
+      = "Is the description true?"

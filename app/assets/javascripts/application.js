@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui.min
 //= require ckeditor/init
-//=require ckeditor/config
+//= require ckeditor/config
 //= require jquery_nested_form
 //= require_tree .
 

@@ -1,7 +1,14 @@
 %tr{id:@question.id}
   %td
     .col-xs-12
-      =@question.description.html_safe
+      .row
+        .col-xs-11
+          =@question.description.html_safe
+        .col-xs-1.pull-right
+          = link_to repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question), remote:true,data:{method:"delete",confirm: "Are you sure"} do
+            %span.glyphicon.glyphicon-trash.pull-right 
+          = link_to edit_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question),remote:true do
+            %span.glyphicon.glyphicon-pencil.pull-right
       .col-xs-10.options
         -@question.question_options.each do |option|
           .col-xs-8

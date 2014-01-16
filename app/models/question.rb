@@ -28,16 +28,12 @@ class Question < ActiveRecord::Base
   end
   
   def self.create_true_false(params,section)
-    question = section.questions.new(params[:question])
-    question.description = params[:description][0]
-    question.save
+    question = section.questions.create(params[:question])
     question
   end
 
   def self.create_mcq(params,section)
-    question = section.questions.new(params[:question])
-    question.description = params[:description][0]
-    question.save
+    question = section.questions.create(params[:question])
     question
   end
   def create_mcq_option(params)
@@ -59,15 +55,13 @@ class Question < ActiveRecord::Base
   end
   
   def self.create_open_ended(params,section)
-    question = section.questions.new(params[:question])
-    question.description = params[:description][0]
-    question.save
+    question = section.questions.create(params[:question])
     question
   end
 
   def create_open_ended_option(params)
     question_option = self.question_options.new
-    question_option.answer = params[:answer][0]
+    question_option.answer = params[:answer]
     question_option.save 
     question_option
   end
@@ -106,6 +100,36 @@ class Question < ActiveRecord::Base
     question
   end
 
+  def update_question(params)
+    if self.is_true_false?
+      self.update_attributes(params[:question])
+      option = self.question_options.first
+      option.is_correct = true if params["truefalse"] == "on"
+      option.is_correct = false unless params["truefalse"] == "on"
+      option.save
+    end
+    if self.is_mcq?
+      self.update_attributes(params[:question])
+      self.question_options.destroy_all
+      self.create_mcq_option(params)
+    end
+    if self.is_open_ended?
+      self.update_attributes(params[:question])
+      unless self.question_options.first.blank?
+        option = self.question_options.first
+        option.answer = params[:answer]
+        option.save
+      end
+    end
+    if self.is_fill_in_the_blank?
+      description = "#{params[:description]} _______ #{params[:description2]}" 
+      self.update_attributes(:subject_id => params[:question][:subject_id],:difficulty_level => params[:question][:difficulty_level],
+                                    :question_type => params[:question][:question_type], :description => description)
+      self.question_options.first.answer = params[:answer]
+    end
+    self
+  end
+
   def create_option(params)
     if self.is_true_false?
       question_option = self.create_true_false_option(params)
@@ -121,7 +145,17 @@ class Question < ActiveRecord::Base
     end
     question_option
   end
-
+  def get_first_description
+    description = self.description
+    temp = description.split("_")
+    temp[0]
+  end
+  def get_second_description
+    description = self.description
+    temp = description.split("_")
+    length = temp.length - 1
+    temp[length]
+  end
   def is_easy?
     self.difficulty_level == Question::Difficulty::EASY
   end

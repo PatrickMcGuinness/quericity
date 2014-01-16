@@ -1,0 +1,11 @@
+$('#base-modal').modal('hide');
+console.log($('.no-record').length)
+if($('.no-record').length > 0){
+$('.no-record').remove()
+$("table").append("<thead><tr><th>Title</th><th>Quiz Banks</th><th>Topics</th><th></th></tr></thead><tbody></tbody>")
+$("tbody").append(' #{j(render(partial: 'repository'))} ')
+}
+else{
+$("tbody").append(' #{j(render(partial: 'repository'))} ')
+}
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);

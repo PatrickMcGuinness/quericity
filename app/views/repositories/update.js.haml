@@ -1,0 +1,3 @@
+$('#base-modal').modal('hide')
+$("tr##{@repository.id}").after(' #{j(render(partial: 'repository'))} ')
+$("tr##{@repository.id}").remove()

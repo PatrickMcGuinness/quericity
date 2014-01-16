@@ -1,10 +1,3 @@
 .row.open_ended
-  .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
-    %button{class: "close",data:{dismiss:"alert"}}×
-    Enter description and enter answer if necessary
-  .col-xs-14
-    Description     
-    = cktext_area :description,nil,:class => "text-editor open-ended-description",:placeholder => "Description", :cols => 40, :ckeditor => {height: "100"}
   .cols-xs-14{style:"margin-top:20px"}
-    Answer(optional)
-    = cktext_area :answer, nil,:class => "open-ended-answer",:placeholder => "Answer (Optional)", :cols => 40, :ckeditor =>{height: "100"}
+    =text_area_tag :answer, nil,:class => "form-control",:style => "height:100px;", :placeholder => "Answer(optinal)"

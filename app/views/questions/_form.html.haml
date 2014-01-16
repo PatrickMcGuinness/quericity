@@ -14,6 +14,14 @@
           .col-xs-4
             = f.input :subject_id,collection: Subject.for_select,  prompt: "Select Repo", input_html: { class: 'form-control subject-dropdown' }
             =hidden_field_tag :section_id, @section.id ,:class => "section-id"
+        .row.alert-div    
+          .col-xs-12
+            .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
+              %button{class: "close",data:{dismiss:"alert"}}×
+              Enter description and answer    
+        .row.description
+          .col-xs-12  
+            = f.input :description, :as => :ckeditor, :input_html => { :ckeditor => {:toolbar => 'mini',height: "100"} } 
         .question-add
    
       .modal-footer
@@ -29,6 +37,7 @@
         $.ajax({
           url: "/questions/true_false_edit",
           success: function(data){
+            $(".description, .alert-div").show()
             $('.question-add').html($(data).find('.true_false').html())
             
           }
@@ -39,6 +48,7 @@
         $.ajax({
           url: "/questions/mcq_edit",
           success: function(data){
+            $(".description, .alert-div").show()
             $('.question-add').html($(data).find('.mcq').html())
           }
         });
@@ -47,6 +57,7 @@
         $.ajax({
           url: "/questions/open_ended_edit",
           success: function(data){
+            $(".description, .alert-div").show()
             $('.question-add').html($(data).find('.open_ended').html())
           }
         });

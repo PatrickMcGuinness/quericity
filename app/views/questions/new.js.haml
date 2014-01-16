@@ -1,4 +1,5 @@
 $('#base-modal').html(' #{j(render(partial: 'new'))} ').modal()
+$(".description, .alert-div").hide()
 $(".modal-body").on('click','.add-answer',function(){
 rows = $("table.mcq tbody tr").length
 $("table.mcq tbody").append('<tr><td class="col-xs-8"><input class="form-control" id="answer'+(rows+1)+'" name="answer'+(rows+1)+'" type="text"></td><td class="col-xs-4"><input class="option-1" id="option'+(rows+1)+'" name="option'+(rows+1)+'" type="checkbox">Correct?</td></tr>')	

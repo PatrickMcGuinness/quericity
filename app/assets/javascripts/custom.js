@@ -42,35 +42,6 @@ $("#new_user").validate({
           $(element).closest('.control_validate').removeClass('error').addClass('success');
       }
     });
-$("#section_form").validate({
-      onkeyup: false,
-      onclick: false,
-      onfocusout: false,
-      rules: {
-          'section[title]': {
-            required: true,
-            minlength: 5,
-            maxlength: 50
-            }   
-      },
-      messages: {
-          'section[title]': {
-            required: "Please enter title",  
-            minlength:  "Please enter min 5 characters",
-            maxlength:  "Please enter max 50 characters"
-          }
-      },
-      highlight: function(element) {
-          $(element).siblings('label').remove();
-          $(element).closest('.control_validate').removeClass('success').addClass('error');
-      },
-      // The success function receives label as element
-      success: function(element) {
-          // $("#" + $(element).attr('for')).css('border', 'black');
-          $(element).remove();
-          $(element).closest('.control_validate').removeClass('error').addClass('success');
-      }
-});
 $("#edit_user").validate({
       onkeyup: false,
       onclick: false,
@@ -107,48 +78,6 @@ $("#edit_user").validate({
           $(element).closest('.control_validate').removeClass('error').addClass('success');
       }
     });
-
-$("#repo_form").validate({
-      onkeyup: false,
-      onclick: false,
-      onfocusout: false,
-      rules: {
-          'repository[title]': {
-            required: true,
-            minlength: 5,
-            maxlength: 50
-          },
-          'repository[description]': {
-              required: true
-          }
-      },
-      messages: {
-          'repository[title]': {
-            required: "Please enter title",
-            minlength: "Please enter minimum 5 characters",
-            maxlength: "Please enter maximum 50 characters"
-          },
-          
-          'repository[description]': {
-             required: "Please enter description"
-          }
-      },
-      highlight: function(element) {
-          $(element).siblings('label').remove();
-          $(element).closest('.control_validate').removeClass('success').addClass('error');
-      },
-      // Success function accepts label as an argument
-      success: function(element) {
-          // $("#" + $(element).attr('for')).css('border', 'black');
-          
-          $(element).remove();
-          $(element).closest('.control_validate').removeClass('error').addClass('success');
-      }
-    });
-
-
- 
-
 function readURL2(input1) {
         if (input1.files && input1.files[0]) {
             var reader = new FileReader();

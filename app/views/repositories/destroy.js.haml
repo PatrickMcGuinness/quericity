@@ -1,0 +1,6 @@
+$("tr##{@repository_id}").remove()
+if($("tbody tr").length == 0){
+$("table tbody").remove()
+$("table thead").remove()
+$("table").append("<div class= 'no-record'>There are no repositories</div>")
+}

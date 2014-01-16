@@ -1,0 +1,8 @@
+.row
+  .col-xs-12{style:"margin-top:10px;"}  
+    =text_area_tag :description, @question.get_first_description, :placeholder => "Description before blank", :class => "form-control"
+.cols-xs-12{style:"margin-top:10px;"} 
+  =text_area_tag :answer, @question.question_options.first.answer, :placeholder => "answer", :class => "form-control"
+.cols-xs-12{style:"margin-top:10px;"} 
+  =text_area_tag :description2, @question.get_first_description, :placeholder => "Description after blank", :class => "form-control"
+    
