@@ -19,7 +19,7 @@
               =check_box_tag :truefalse,nil, false,:class => "true-or-false",:disabled => true
               = option.answer
   %td
-    .col-xs-1.pull-right
+    .col-xs-12.pull-right
       = link_to repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question), remote:true,data:{method:"delete",confirm: "Are you sure"} do
         %span.glyphicon.glyphicon-trash.pull-right 
       = link_to edit_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question),remote:true do
