@@ -15,7 +15,6 @@ class QuestionsController < ApplicationController
     @quiz_bank = @repository.quiz_banks.find(params[:quiz_bank_id])
     @section = @quiz_bank.sections.find(params[:section_id])
     @question = Question.create_question(params,@section)
-    @type = @question.question_type.to_i
     @question_option = @question.create_option(params)
     render layout:nil
   end
@@ -33,7 +32,6 @@ class QuestionsController < ApplicationController
     @quiz_bank = @repository.quiz_banks.find(params[:quiz_bank_id])
     @section = @quiz_bank.sections.find(params[:section_id])
     @question = @section.questions.find(params[:id])
-    @question_id = @question.id
     @question.destroy
     render layout:nil
   end

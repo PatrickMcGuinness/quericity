@@ -1,5 +1,2 @@
-$("##{@section.id}.questions").children("table").children("tbody").children("tr##{@question_id}").remove()
-console.log($("##{@section.id}.questions").find("table tbody tr").length)
-if($("##{@section.id}.questions").find("table tbody tr").length == 0){
-$("##{@section.id}.questions").children("table").children("tbody").append("<tr class = 'no-record'><td>There are no question in this sections</td></tr>")	
-}
+$("##{@section.id}.questions").html(' #{j(render(partial: 'questions/index'))} ')
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);

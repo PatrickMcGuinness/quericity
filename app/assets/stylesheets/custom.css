@@ -314,4 +314,8 @@ background-color: #F62217;
 	margin-left: 215px;
   margin-top: -58px;
 }
+.monofont{
+  font-size: 16px;
+  font-family: monospace;
+}
 
