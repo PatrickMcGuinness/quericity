@@ -2,15 +2,18 @@ class Repository < ActiveRecord::Base
   attr_accessible :description, :title
   validates :title, :presence => true, :length => { minimum: 5 }
   
-  belongs_to :user
+  has_many :users, :through => :user_repositories
   
   has_many :invitations
-  has_many :user_repositories
+  has_many :user_repositories, dependent: :destroy
   has_many :collaborators , :through => :user_repositories , :source => :user
   
   
   has_many :quiz_banks, dependent: :destroy
   
+  def owner
+    self.user_repositories.find_by_permission("Owner").user
+  end
   def is_collaborator? user
     self.collaborators.where(:id => user.id).present?
   end
@@ -24,12 +27,13 @@ class Repository < ActiveRecord::Base
   end
 
   def is_owner? user
-    self.user.id == user.id
+    self.user_repositories.where(:user_id => user.id , :permission => 'Owner').present?
   end
 
   def self.for_select(user)
-    user.repositories.map{|r| [r.title, r.id]}
+    user.can_change_repositories.map{|r| [r.title, r.id]}
   end
+
   
   def add_collaborator user , permission
     if is_collaborator? user

@@ -1,10 +1,10 @@
 =render 'common/tabs'
 .tab-content.padding-top40.tab-container
-  =link_to "Create Repo", new_repository_path, class: "btn btn-primary float-right", remote: true
+  =link_to "Create Repo", new_repository_path, class: "btn btn-primary create-repo float-right", remote: true, rel: "tooltip", title: "Create Repo"
   =render 'repositories/repo_tabs'
   .table-responsive.padding-top40
-    -if @repositories.present?
-      %table.table.table-bordered
+    %table.table.table-bordered
+      -if @repositories.present?
         %thead
           %tr
             %th Title
@@ -14,8 +14,6 @@
         %tbody
           -@repositories.each do |repo|
             = render partial: "repository", :locals => {:@repository => repo}     
-    -else
-      .no-record
-        There is no repository 
-
-
+      -else
+        .no-record
+          There is no repository 

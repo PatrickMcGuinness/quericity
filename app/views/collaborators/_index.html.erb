@@ -25,10 +25,10 @@
       </div>
       <table id='collaborator-list' class="table">
         <tr>
-          <%if @repository.user.name.present? %>
-            <td> <%= @repository.user.name %></td>
+          <%if @repository.owner.name.present? %>
+            <td> <%= @repository.owner.name %></td>
           <%else%>    
-            <td> <%= @repository.user.email %></td>
+            <td> <%= @repository.owner.email %></td>
           <%end%>   
           <td class = "custom_width"> owner </td>
           <td></td>

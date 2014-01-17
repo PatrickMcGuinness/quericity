@@ -6,9 +6,15 @@ class UserRepository < ActiveRecord::Base
 
   after_create :send_email
 
-  before_update :send_email
+  #before_update :send_email
   
   def send_email
-    UserMailer.welcome_email(self.user).deliver
+  	if self.send_email?
+    	UserMailer.welcome_email(self.user).deliver
+    end
+  end
+
+  def send_email?
+  	self.permission != "Owner"
   end
 end

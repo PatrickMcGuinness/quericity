@@ -3,18 +3,19 @@
 	<div class="mar_top creat-repo-div">
 		<h2><%= @repository.title%></h2>
 		<div class = "style_r">
-			<%if @repository.is_admin? current_user or @repository.can_write? current_user or  
-				@repository.is_owner? current_user %>
-		      <a class="btn btn-primary" href="<%=edit_repository_path(@repository)%>">Edit</a>
+			<%if current_user.can_change_repo?(@repository) %>
+		      <a class="btn btn-primary" href="<%=edit_repository_path(@repository)%>" data-remote = true>Edit</a>
 		  <%end%>  
 		  <%if @repository.is_admin? current_user or  @repository.is_owner? current_user %>
 		    <a class="btn btn-primary" data-remote = true href="<%=repository_collaborators_path(@repository)%>">Share</a>
 		  <%end%>
+      <%if current_user.can_change_repo?(@repository)%>
 		  	<%=link_to "Add quiz bank", new_repository_quiz_bank_path(@repository), class:"btn btn-primary", remote: true%>
- 		</div>
+ 		  <%end%>
+    </div>
   </div>
 	<div class = "top_bar_ss">
-	  <span class = "mar_l_30"><b>Owned by:</b> <%=@repository.user.name %>  </span> <font class = "mar_l_30">|</font>
+	  <span class = "mar_l_30"><b>Owned by:</b> <%=@repository.owner.name %>  </span> <font class = "mar_l_30">|</font>
 	  <span class = "mar_l_30"><b>Created on:</b> <%=@repository.created_at.to_date %>  </span><font class = "mar_l_30">|</font>
 	  <span class = "mar_l_30"><b>Quiz Banks:</b><%=@quiz_banks.blank? ? 0:@quiz_banks.count%></span><font class = "mar_l_30">|</font>
 	  <span class = "mar_l_30"><b>Topics:</b> 0  </span><font class = "mar_l_30">|</font>

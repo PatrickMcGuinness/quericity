@@ -1,10 +1,11 @@
 .well.section{id:@section.id}
   =@section.title
   .pull-right
-    =link_to new_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section),remote: true do
-      %span.glyphicon.glyphicon-plus-sign
-    = link_to edit_repository_quiz_bank_section_path(@repository,@quiz_bank,@section),remote:true do
-      %span.glyphicon.glyphicon-pencil
-    = link_to repository_quiz_bank_section_path(@repository,@quiz_bank,@section), remote:true,data:{method:"delete",confirm: "Are you sure"} do
-      %span.glyphicon.glyphicon-trash
+    -if current_user.can_change_repo?(@section.quiz_bank.repository)
+      =link_to new_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section),remote: true, rel: "tooltip", title: "Create Question in this section" do
+        %span.glyphicon.glyphicon-plus-sign
+      = link_to edit_repository_quiz_bank_section_path(@repository,@quiz_bank,@section),remote:true, rel: "tooltip", title: "Edit Section Title" do
+        %span.glyphicon.glyphicon-pencil
+      = link_to repository_quiz_bank_section_path(@repository,@quiz_bank,@section), remote:true,data:{method:"delete",confirm: "Are you sure"},rel: "tooltip",title: "Delete Section" do
+        %span.glyphicon.glyphicon-trash
 =render partial: "questions/index", :locals => {:@section => @section}     

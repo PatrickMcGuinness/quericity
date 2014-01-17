@@ -9,7 +9,7 @@
         .row
           .col-xs-12
             = f.input :title,:placeholder => "Enter Title", input_html: { class: 'form-control' }
-            = f.input :description,:placeholder => "Description", :as => :text, input_html: {class: 'form-control'}
+            = f.input :description,:placeholder => "Description", :as => :text, input_html: {class: 'form-control',style:"height:200px"}
       .modal-footer
         -@repository.new_record? ? display = "Create Repo" : display = "Update Repo"
         = f.submit display, :class => "btn btn-primary"

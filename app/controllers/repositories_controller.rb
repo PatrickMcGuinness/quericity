@@ -3,7 +3,7 @@ class RepositoriesController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @repositories  = current_user.repositories
+    @repositories  = current_user.own_repositories
   end
   
   def shared
@@ -22,7 +22,8 @@ class RepositoriesController < ApplicationController
   end
   
   def create
-    @repository = current_user.repositories.create(params[:repository])
+    @repository = Repository.create(params[:repository])
+    @user_respository = current_user.user_repositories.create(:repository_id => @repository.id, :permission => "Owner")
     render layout:nil
   end
   

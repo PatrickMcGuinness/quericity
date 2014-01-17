@@ -4,7 +4,8 @@
     %h2
       = @quiz_bank.title
     .style_r
-      =link_to "Add Section", new_repository_quiz_bank_section_path(@repository,@quiz_bank),:class => "btn btn-primary", remote:true
+      -if current_user.can_change_repo?(@quiz_bank.repository)
+        =link_to "Add Section", new_repository_quiz_bank_section_path(@repository,@quiz_bank),:class => "btn btn-primary", remote:true
   .top_bar_ss
     %span.mar_l_30
       %b
