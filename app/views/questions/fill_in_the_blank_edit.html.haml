@@ -1,6 +1,6 @@
 .row.fill_in_the_blank
   .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
-    %button{class: "close",data:{dismiss:"alert"}}×
+    -#%button{class: "close",data:{dismiss:"alert"}}×
     Enter description ,answer and description after the blank if necessary 
   .col-xs-14{style:"margin-top:10px;"}  
     =text_area_tag :description, nil, :placeholder => "Description before blank", :class => "form-control"

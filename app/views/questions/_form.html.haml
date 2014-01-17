@@ -8,7 +8,10 @@
       .modal-body
         .row
           .col-xs-4
-            =f.input :question_type,collection: Question.types_for_select, prompt: "Select Type",input_html: { class: 'form-control type-dropdown' }
+            -if @question.new_record?
+              =f.input :question_type,collection: Question.types_for_select, prompt: "Select Type",input_html: { class: 'form-control type-dropdown' }
+            -else
+              =f.input :question_type,collection: Question.types_for_select, prompt: "Select Type",input_html: { class: 'form-control type-dropdown', disabled: true }
           .col-xs-4
             =f.input :difficulty_level,collection: Question.difficulty_for_select, prompt: "Select Difficulty",input_html: { class: 'form-control difficulty-dropdown' }
           .col-xs-4
@@ -17,7 +20,7 @@
         .row.alert-div    
           .col-xs-12
             .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
-              %button{class: "close",data:{dismiss:"alert"}}×
+              -#%button{class: "close",data:{dismiss:"alert"}}×
               Enter description and answer    
         .row.description
           .col-xs-12  
@@ -63,6 +66,7 @@
         });
       }
       if($(this).val() == 4){
+        $(".description, .alert-div").hide()
         $.ajax({
           url: "/questions/fill_in_the_blank_edit",
           success: function(data){
