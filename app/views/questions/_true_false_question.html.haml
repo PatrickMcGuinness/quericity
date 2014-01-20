@@ -12,14 +12,18 @@
         .col-xs-10.options
           .col-xs-8
             -if @question.question_options.first.is_correct == true
-              =check_box_tag :truefalse,nil, true, :disabled => true
+              =check_box_tag :true,nil, true, :disabled => true
               = "True"
+              =check_box_tag :false,nil,false, :disabled => true
+              = "False"
             -else
-              =check_box_tag :truefalse,nil,false, :disabled => true
+              =check_box_tag :true,nil,false, :disabled => true
+              = "True"
+              =check_box_tag :false,nil,true, :disabled => true
               = "False"
   %td
     .col-xs-10.pull-right
-      = link_to repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question), remote:true,data:{method:"delete",confirm: "Are you sure"} do
+      = link_to repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question), remote:true,data:{method:"delete",confirm: "Are you sure"},rel:"tooltip", title:"Delete Question" do
         %span.glyphicon.glyphicon-trash.pull-right 
-      = link_to edit_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question),remote:true do
+      = link_to edit_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question),remote:true,rel:"tooltip", title:"Edit Question" do
         %span.glyphicon.glyphicon-pencil.pull-right            

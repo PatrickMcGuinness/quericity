@@ -4,23 +4,29 @@
       %table.table.table-bordered.mcq
         %thead
           %tr
-            %th.col-xs-8
+            %th.col-xs-1
+            %th.col-xs-7
               Answer
             %th.col-xs-4
               Correct?
         %tbody
           %tr
-            %td.col-xs-8
-              =text_field_tag :answer1, nil,:class => "form-control"
+            %td.col-xs-1
+              =check_box_tag :delete1 ,nil, false,:class => "delete", :disabled => true 
+            %td.col-xs-7
+              =text_field_tag :answer1, nil,:class => "form-control answer-field"
             %td.col-xs-4
               =check_box_tag :option1 ,nil, false,:class => "option-1"
               = "Correct?"
-          %tr       
-            %td.col-xs-8
-              =text_field_tag :answer2, nil,:class => "form-control"
+          %tr
+            %td.col-xs-1
+              =check_box_tag :delete2 ,nil, false,:class => "delete", :disabled => true      
+            %td.col-xs-7
+              =text_field_tag :answer2, nil,:class => "form-control answer-field"
             %td.col-xs-4
               =check_box_tag :option2 ,nil, false,:class => "option-2"
               = "Correct?"
     .col-xs-2.pull-right
+      =link_to "Remove Answer", "#", :class => "btn btn-primary btn-danger remove-answer"
       =link_to "Add Answer", "#", :class => "btn btn-primary btn-success add-answer"
-      =hidden_field_tag :options, 2, :class=>"options"           
+      =hidden_field_tag :options, 2, :class=>"option-rows"          

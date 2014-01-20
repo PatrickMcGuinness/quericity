@@ -1,9 +1,34 @@
 $('#base-modal').html(' #{j(render(partial: 'edit'))} ').modal()
-$(".modal-body").on('click','.add-answer',function(){
+$(".modal-body").on('click','.add-answer',function(e){
+e.preventDefault()
 rows = $("table.mcq tbody tr").length
-$("table.mcq tbody").append('<tr><td class="col-xs-8"><input class="form-control" id="answer'+(rows+1)+'" name="answer'+(rows+1)+'" type="text"></td><td class="col-xs-4"><input class="option-1" id="option'+(rows+1)+'" name="option'+(rows+1)+'" type="checkbox">Correct?</td></tr>')	
-$('.options').val(rows+1)
+$("table.mcq tbody").append('<tr><td class = "col-xs-1"><input class="delete" id="delete1" name="delete1" type="checkbox"></td><td class="col-xs-7"><input class="form-control answer-field" id="answer'+(rows+1)+'" name="answer'+(rows+1)+'" type="text"></td><td class="col-xs-4"><input class="option-1" id="option'+(rows+1)+'" name="option'+(rows+1)+'" type="checkbox">Correct?</td></tr>')
+$('.option-rows').val(rows+1)
 })
+
+$(".modal-body").on('click',".remove-answer",function(e){
+e.preventDefault()
+if($(".delete").is(":checked")){
+if($(".option-rows").val() >= 2){
+$(".delete:checked").each(function(){
+rows = $('.option-rows').val()
+$(this).parents("tr").remove()
+$('.option-rows').val(rows-1)
+})
+$(".answer-field").each(function(index){
+$(this).attr('name',"answer"+(index+1))
+$(this).attr('id',"answer"+(index+1))
+})
+}
+else{
+alert("Can not remove last 2 answer")
+}
+}
+else{
+alert("select an answer to remove")
+}
+})
+
 if(#{@question.question_type} == 1){
 $(".question-add").append(' #{j(render(partial: 'true_false_edit'))} ')
 }
@@ -17,3 +42,41 @@ else if(#{@question.question_type} == 4){
 $(".description").hide()
 $(".question-add").append(' #{j(render(partial: 'fill_in_the_blank_edit'))} ')
 }
+
+
+$("#question_form").validate({
+onkeyup: false,
+onclick: false,
+onfocusout: false,
+rules: {
+"question[question_type]": {
+required: true
+},
+"question[difficulty_level]": {
+required: true
+},
+"question[subject_id]":{
+required: true
+}
+},
+messages: {
+"question[question_type]": {
+required: "Please choose type"
+},
+"question[difficulty_level]": {
+required: "Please choose difficulty level"
+},
+"question[subject_id]":{
+required: "Please choose subject"
+}
+},
+highlight: function(element) {
+$(element).siblings('label.error').remove();
+$(element).closest('.control_validate').removeClass('success').addClass('error');
+},
+// Success function accepts lable as an argument
+success: function(element) {
+$(element).remove();
+$(element).closest('.control_validate').removeClass('error').addClass('success');
+}
+});

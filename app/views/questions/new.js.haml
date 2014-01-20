@@ -1,9 +1,27 @@
 $('#base-modal').html(' #{j(render(partial: 'new'))} ').modal()
 $(".description, .alert-div").hide()
-$(".modal-body").on('click','.add-answer',function(){
+$(".modal-body").on('click','.add-answer',function(e){
+e.preventDefault()
 rows = $("table.mcq tbody tr").length
-$("table.mcq tbody").append('<tr><td class="col-xs-8"><input class="form-control" id="answer'+(rows+1)+'" name="answer'+(rows+1)+'" type="text"></td><td class="col-xs-4"><input class="option-1" id="option'+(rows+1)+'" name="option'+(rows+1)+'" type="checkbox">Correct?</td></tr>')	
-$('.options').val(rows+1)
+$("table.mcq tbody").append('<tr><td class = "col-xs-1"><input class="delete" id="delete1" name="delete1" type="checkbox"></td><td class="col-xs-7"><input class="form-control answer-field" id="answer'+(rows+1)+'" name="answer'+(rows+1)+'" type="text"></td><td class="col-xs-4"><input class="option-1" id="option'+(rows+1)+'" name="option'+(rows+1)+'" type="checkbox">Correct?</td></tr>')	
+$('.option-rows').val(rows+1)
+})
+$(".modal-body").on("click",'.remove-answer', function(e){
+e.preventDefault()
+if($(".delete").is(":checked")){
+$(".delete:checked").each(function(){
+rows = $('.option-rows').val()
+$(this).parents("tr").remove()
+$('.option-rows').val(rows-1)
+})
+$(".answer-field").each(function(index){
+$(this).attr('name',"answer"+(index+1))
+$(this).attr('id',"answer"+(index+1))
+})
+}
+else{
+alert("select an answer to remove")
+}
 })
 
 $("#question_form").validate({
