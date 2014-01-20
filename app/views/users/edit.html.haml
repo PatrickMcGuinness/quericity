@@ -1,0 +1,39 @@
+=render 'common/tabs_edit'
+.tab-content.padding-top40.tab-container
+  .mar_top.creat-repo-div 
+    %h2 Edit
+  .form_edit
+    = form_for @user, :html => { :method => :put, :class => "form-horizontal", :multipart => true } do |f|
+      .form-group
+        %h4.lead
+          %label.f_w_e.control-label  First Name
+        .edit_email.col-sm-10
+          = f.text_field :first_name,:class => "form-control marg_cor",:placeholder => "First Name"
+      .form-group
+        %h4.lead
+          %label.f_w_e.control-label Last Name
+        .edit_email.col-sm-10
+          = f.text_field :last_name,:class => "form-control marg_cor",:placeholder => "Last Name"
+      .form-group
+        %h4.lead
+          %label.f_w_e.control-label Email
+        .edit_email.col-sm-10
+          = f.email_field :email,:class => "form-control marg_cor",:placeholder => "Email"
+      .form-group
+        %h4.lead
+          %label.f_w_e.control-label{for:"inputImage"}Profile Picture 
+        .col-sm-10.mar_t
+          -if (current_user.profile_pic.present?)
+            %input{id:"holder2", type:"file", name:"user[profile_pic]", style:"width: 0px;"}
+            .marg_cor
+              =image_tag current_user.profile_pic,:class => 'small_thumb', :id => "logo2"
+              %img{src:"/assets/edit_icon.png", id:"up_logo_file2", style:"cursor:pointer; margin-left:60px; margin-top:-30px;"}
+          -else
+            %input{id:"holder2", type:"file", name:"user[profile_pic]", style: "width: 0px;"}
+            %img{src:"/assets/brws.png", id:"up_logo_file2", class:"brws_btn"}
+            .logo_p
+              %img{id:"logo2", src: "/assets/Picupload_bg.png", alt:"logo2", class: "small_thumb"}
+      .form-group
+        .col-sm-10
+          = f.submit "Update", :class => "btn btn-primary btn-lg active form-control update_b"
+ 

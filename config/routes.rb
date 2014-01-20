@@ -25,8 +25,12 @@ QuizLib::Application.routes.draw do
   get "/questions/mcq_edit", to: "questions#mcq_edit", as: :mcq_edit
   resources :question_topics
   resources :users do
+    collection do
+      post 'update_change_password'
+    end 
     member do
       get 'profile'
+      get 'change_password'
     end
   end
   resources :topics

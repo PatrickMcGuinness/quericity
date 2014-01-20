@@ -1,0 +1,23 @@
+=render 'common/tabs'
+.tab-content.padding-top40.tab-container
+  .row
+    .col-xs-2
+      -if(current_user.profile_pic.present?)
+        =image_tag current_user.profile_pic,:class => 'big_thumb pos_img_prof', :id => "logo2"
+      -else
+        .pos_im
+          %img{id:"logo2", src:"/assets/Picupload_bg.png", alt:"logo2"}
+    .col-xs-7
+      -if current_user.first_name.present?
+        = current_user.first_name
+      %br
+      -if current_user.last_name.present?
+        = current_user.last_name
+      %br   
+      = "Profession: #{current_user.role}"
+      %br
+      -if current_user.email.present?
+        = "Email: #{current_user.email}"
+    .col-xs-3
+      = link_to "Change Password",change_password_user_path(current_user), :class => "btn btn-primary"
+      = link_to "Edit Profile", edit_user_path(current_user), :class => "btn btn-primary"      
