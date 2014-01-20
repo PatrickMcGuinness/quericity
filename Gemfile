@@ -12,6 +12,7 @@ gem 'simple_form'
 gem "twitter-bootstrap-rails"
 gem 'nested_form'
 gem "ckeditor"
+gem 'devise_invitable'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

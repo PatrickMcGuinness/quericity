@@ -10,11 +10,10 @@ jQuery ->
     _this = this
     value = $('.search-text').val()
     repo_id = $(".repo-id").val()
-    console.log(repo_id)
     $.ajax
       url: "/repositories/"+repo_id,
       data: {search:value}
       success: (data)->
         $('.search-text').val("")
-        $('table').html($(data).find('table').html())
+        $('.quiz-banks-div').html($(data).find('.quiz-banks-div').html())
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);

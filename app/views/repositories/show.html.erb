@@ -35,17 +35,19 @@
 		<h4>Quiz Banks</h4>
 	</div>
 	<input type = "hidden" class = "repo-id" value = <%=@repository.id%>>
-  <%if @quiz_banks.blank?%>
-		<div class = "top_bar_s no-record">
-  		There are no quiz banks.
-		</div>
-	<%else%>
-		<%=render partial: "quiz_banks/table"%>
-      	<%@quiz_banks.each do |q|%>
-      		<%=render partial: "quiz_banks/quiz_bank", :locals => { :@repository => @repository,:@quiz_bank => q }%>
+  <div class = "quiz-banks-div"> 
+    <%if @quiz_banks.blank?%>
+		  <div class = "top_bar_s no-record">
+  		  There are no quiz banks.
+		  </div>
+    <%else%>
+	 	 <%=render partial: "quiz_banks/table"%>
+      	 <%@quiz_banks.each do |q|%>
+      		  <%=render partial: "quiz_banks/quiz_bank", :locals => { :@repository => @repository,:@quiz_bank => q }%>
       	
       	<%end%>
-    </table>
-	<%end%>
+      </table>
+    <%end%>
+  </div>
 	</div>  	  
 </div>

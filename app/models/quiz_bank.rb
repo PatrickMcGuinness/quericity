@@ -15,10 +15,11 @@ class QuizBank < ActiveRecord::Base
     quiz_banks = QuizBank.joins("Left outer join repositories on repositories.id = quiz_banks.repository_id left outer join user_repositories on user_repositories.repository_id = repositories.id left outer join users on users.id = user_repositories.user_id").where("users.id = ?",user.id)
     #quiz_banks = QuizBank.joins("Left outer join repositories on  repositories.id = quiz_banks.repository_id Left outer join users on repositories.user_id = users.id").where("users.id = ?",user.id)
 	  if search
-	    quiz_banks.where('quiz_banks.title ILIKE ? or quiz_banks.description ILIKE ?', "%#{search}%","%#{search}%")
+	    quiz_banks = quiz_banks.where('quiz_banks.title ILIKE ? or quiz_banks.description ILIKE ?', "%#{search}%","%#{search}%")
 	  else
 	    quiz_banks
 	  end
+    quiz_banks
   end
 
   def create_section

@@ -24,6 +24,7 @@ class RepositoriesController < ApplicationController
   def create
     @repository = Repository.create(params[:repository])
     @user_respository = current_user.user_repositories.create(:repository_id => @repository.id, :permission => "Owner")
+    @quiz_bank = @repository.quiz_banks.create(:title => "My QuizBank 1", :description => "This is the default quizbank")
     render layout:nil
   end
   

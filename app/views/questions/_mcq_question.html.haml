@@ -1,5 +1,5 @@
 %tr{id:@question.id}
-  %td
+  %td.col-xs-11
     .col-xs-12
       .row
         .col-xs-11
@@ -18,7 +18,7 @@
             -else
               =check_box_tag :truefalse,nil, false,:class => "true-or-false",:disabled => true
               = option.answer
-  %td
+  %td.col-xs-1
     .col-xs-12.pull-right
       = link_to repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question), remote:true,data:{method:"delete",confirm: "Are you sure"},rel:"tooltip", title:"Delete Question" do
         %span.glyphicon.glyphicon-trash.pull-right 

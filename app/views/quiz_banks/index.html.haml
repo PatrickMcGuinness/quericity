@@ -9,7 +9,7 @@
           = text_field_tag :search, params[:search], :placeholder => "Search", :class => "search-text form-control cust_wid", :type => "search"
           = submit_tag "Search", :name => nil, :class => "btn btn-primary search-quiz-bank"
   .row
-    .col-xs-12      
+    .col-xs-12.quiz-banks-div      
       -if @quiz_banks.present?
         %table.table.table-bordered.table_with_margin
           %thead
