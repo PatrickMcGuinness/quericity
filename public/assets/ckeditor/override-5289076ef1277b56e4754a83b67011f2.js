@@ -1,7 +1,7 @@
 window['CKEDITOR_BASEPATH'] = "/assets/ckeditor/";
 
 window.CKEDITOR_ASSETS_MAPPING = {
-  "ckeditor/config.js": "/assets/ckeditor/config-8817a9e72c200d98308e9f096a1df1c5.js",
+  "ckeditor/config.js": "/assets/ckeditor/config-fd4c70a0b19572603f7a85518f8a3935.js",
   "ckeditor/plugins/lineutils/dev/dnd.html": "/assets/ckeditor/plugins/lineutils/dev/dnd-605429c546147b3a1b212554af9d479f.html",
   "ckeditor/plugins/lineutils/dev/magicfinger.html": "/assets/ckeditor/plugins/lineutils/dev/magicfinger-47fe8a4f854bff01a3ce081f0e7bfe71.html",
   "ckeditor/plugins/lineutils/plugin.js": "/assets/ckeditor/plugins/lineutils/plugin-4bf4fc8298b838c21b81d1c14e0116df.js",
