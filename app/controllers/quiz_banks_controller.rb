@@ -25,8 +25,10 @@ class QuizBanksController < ApplicationController
   end
 
   def create
+    puts "@@@@@@@@@@@@@@@@",params
     @repository = current_user.repositories.find(params[:quiz_bank][:repository_id])
     @quiz_bank= @repository.quiz_banks.create(params[:quiz_bank])
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@",@quiz_bank.inspect
     @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank)
     @question_topics = @quiz_bank.question_topics
   	render layout: nil

@@ -34,12 +34,14 @@ class CollaboratorsController < ApplicationController
 
   def verify_owner
     @repository = Repository.find(params[:repository_id])
-    user = User.where(:email => params[:email]).first
-    status = @repository.is_owner? user
-    if status == true
-      flash[:error] = "You are owner"
-      render action: "index"
-    end 
+    user = User.find_by_email(params[:email])
+    if user.present?
+      status = @repository.is_owner? user
+      if status == true
+        flash[:error] = "You are owner"
+        render action: "index"
+      end 
+    end
   end
 
 end
