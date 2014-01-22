@@ -1,6 +1,5 @@
 $('#base-modal').modal('hide')
 if(window.location.pathname == "/repositories"){
-console.log("in first if")
 $("tr##{@repository.id}").after(' #{j(render(partial: 'repository'))} ')
 $("tr##{@repository.id}").remove()
 }
