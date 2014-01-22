@@ -13,6 +13,7 @@ gem "twitter-bootstrap-rails"
 gem 'nested_form'
 gem "ckeditor"
 gem 'devise_invitable'
+gem 'paperclip'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

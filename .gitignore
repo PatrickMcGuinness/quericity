@@ -15,3 +15,5 @@
 /tmp
 *.komodoproject
 /config/database.yml
+/db/schema.rb
+/public/ckeditor_assets
