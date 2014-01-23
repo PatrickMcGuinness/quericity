@@ -46,4 +46,11 @@ class RepositoriesController < ApplicationController
     render layout:nil
   end
 
+  def update_title
+    @repository = current_user.repositories.find(params[:id])
+    @repository.title = params[:title]
+    @repository.save
+    render json:{title: @repository.title}
+  end
+
 end

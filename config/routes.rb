@@ -25,6 +25,8 @@ QuizLib::Application.routes.draw do
   get "/questions/open_ended_edit", to: "questions#open_ended_edit", as: :open_ended_edit
   get "/questions/fill_in_the_blank_edit", to: "questions#fill_in_the_blank_edit", as: :fill_in_the_blank_edit
   get "/questions/mcq_edit", to: "questions#mcq_edit", as: :mcq_edit
+  get "quiz_banks/:id/update_title", to: "quiz_banks#update_title", as: :update_title
+  get "repositories/:id/update_title", to: "repositories#update_title", as: :repo_update_title
   resources :question_topics
   resources :users do
     collection do

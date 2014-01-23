@@ -34,7 +34,10 @@ class Repository < ActiveRecord::Base
     user.can_change_repositories.map{|r| [r.title, r.id]}
   end
 
-  
+  def question_tags
+    quiz_banks_ids = QuizBank.where("repository_id = ?",self.id).pluck(:id)
+    QuestionTopic.where("quiz_bank_id IN (?)",quiz_banks_ids) 
+  end
   def add_collaborator user , permission
     if is_collaborator? user
       user_repo = self.user_repositories.where(:user_id => user.id).first

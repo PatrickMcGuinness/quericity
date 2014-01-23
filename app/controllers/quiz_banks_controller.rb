@@ -55,4 +55,11 @@ class QuizBanksController < ApplicationController
     render layout:nil
   end
 
+  def update_title
+    @quiz_bank = QuizBank.find(params[:id])
+    @quiz_bank.title = params[:title]
+    @quiz_bank.save
+    render json: {title: @quiz_bank.title}
+  end
+
 end

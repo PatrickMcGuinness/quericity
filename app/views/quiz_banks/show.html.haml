@@ -1,8 +1,23 @@
 =render 'common/tabs'
-.tab-content.padding-top40.tab-container
+.tab-content.padding-top40
   .mar_top.creat-repo-div
-    %h2
-      = @quiz_bank.title
+    %h2.quiz-bank-title-show
+      %span.title
+        = @quiz_bank.title
+      %span  
+        =link_to "#",rel: "popover",data:{content: @quiz_bank.description, :"original-title" => "Quiz bank Description"}, style: "margin-left:15px",id: "description-popover" do
+          %span.glyphicon.glyphicon-comment 
+    %h2.quiz-bank-title-edit{data:{id: @quiz_bank.id}}
+      %form.form-inline
+        .form-group
+          %label{for: "title-field"}Edit Title
+          %input{type:"text", class:"form-control",id:"title-field",placeholder:"Enter Title", value: @quiz_bank.title}
+    .tags.col-xs-8
+      -@quiz_bank.question_topics.each do |question_topic|
+        -if current_user.can_change_repo?(@quiz_bank.repository)
+          %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase} <a href="#{question_topic_path(question_topic.id)}" data-remote = true data-method = "delete" data-confirm = "Are you sure?" rel= "tooltip" title = "Remove Tag">x</a>
+        -else
+          %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}      
     .style_r
       -if current_user.can_change_repo?(@quiz_bank.repository)
         =link_to "Add Section", new_repository_quiz_bank_section_path(@repository,@quiz_bank),:class => "btn btn-primary", remote:true
@@ -27,4 +42,36 @@
         = "There are no sections."
     -else
       -@sections.each do |s|
-        =render partial: "sections/section", :locals => {:@section => s} 
+        =render partial: "sections/section", :locals => {:@section => s}
+
+:javascript
+  $(document).ready(function(){
+    $(".quiz-bank-title-edit").hide()
+    $(".glyphicon-comment").hover(function(){
+      $("#description-popover").popover('show')
+      },function(){
+      $("#description-popover").popover('hide')
+    })
+    $(".quiz-bank-title-show").click(function(){
+      $(this).hide()
+      $(".quiz-bank-title-edit").show()
+    })
+
+    $(".tab-content").on("keydown","#title-field",function(key){
+      _this = this
+      quiz_bank_id = $(".quiz-bank-title-edit").data("id")
+      console.log(quiz_bank_id)
+      if(key.keyCode == 13){
+        key.preventDefault()
+        $.ajax({
+          url: "/quiz_banks/"+quiz_bank_id+"/update_title",
+          data: {title: $(_this).val()},
+          success: function(data){
+            $(".quiz-bank-title-edit").hide()
+            $(".quiz-bank-title-show").find(".title").html(data.title)
+            $(".quiz-bank-title-show").show()
+          }
+        })
+      }
+    })
+  }) 
