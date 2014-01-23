@@ -1,4 +1,7 @@
 .row.true_false
   .cols-xs-14
-    =check_box_tag :truefalse,nil, false,:class => "true-or-false",:style => "margin-top:15px;"
-    = "Is the description true?"
+    =check_box_tag :truequestion,nil, false,:class => "true-or-false",:style => "margin-top:15px;"
+    = "Is the question true?"
+  .col-xs-14
+    =check_box_tag :falsequestion,nil, false,:class => "true-or-false",:style => "margin-top:15px;"
+    = "Is the question false?"

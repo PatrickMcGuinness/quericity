@@ -47,8 +47,8 @@ class Question < ActiveRecord::Base
 
   def create_true_false_option(params)
     question_option = self.question_options.new
-    question_option.is_correct = true if params["truefalse"] == "on"
-    question_option.is_correct = false unless params["truefalse"] == "on" 
+    question_option.is_correct = true if params["truequestion"] == "on"
+    question_option.is_correct = false if params["falsequestion"] == "on" 
     question_option.save
     question_option
   end
@@ -103,8 +103,8 @@ class Question < ActiveRecord::Base
     if self.is_true_false?
       self.update_attributes(params[:question])
       option = self.question_options.first
-      option.is_correct = true if params["truefalse"] == "on"
-      option.is_correct = false unless params["truefalse"] == "on"
+      option.is_correct = true if params["truequestion"] == "on"
+      option.is_correct = false if params["falsequestion"] == "on"
       option.save
     end
     if self.is_mcq?

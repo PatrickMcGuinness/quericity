@@ -24,6 +24,14 @@ alert("select an answer to remove")
 }
 })
 
+$.validator.addMethod("checkboxcheck",function(value,element){
+if($("#truequestion").is(":checked") && $("#falsequestion").is(":checked")){
+return false
+}
+else{
+return true
+}
+},"Can not check both at same time")
 $("#question_form").validate({
 onkeyup: false,
 onclick: false,
@@ -37,6 +45,18 @@ required: true
 },
 "question[subject_id]":{
 required: true
+},
+"truequestion":{
+required:function(){
+return !$("#falsequestion").is(":checked")
+},
+checkboxcheck :true
+},
+"falsequestion":{
+required: function(){
+return !$("#truequestion").is(":checked")
+},
+checkboxcheck: true
 }
 },
 messages: {
