@@ -27,6 +27,8 @@ QuizLib::Application.routes.draw do
   get "/questions/mcq_edit", to: "questions#mcq_edit", as: :mcq_edit
   get "quiz_banks/:id/update_title", to: "quiz_banks#update_title", as: :update_title
   get "repositories/:id/update_title", to: "repositories#update_title", as: :repo_update_title
+  get "sections/:id/update_title", to: "sections#update_title", as: :section_update_title
+  
   resources :question_topics
   resources :users do
     collection do
@@ -46,6 +48,10 @@ QuizLib::Application.routes.draw do
     resources :quiz_banks, :except => :index do
       resources :sections do
         resources :questions
+        member do
+          get "section_before_destroy"
+          get "update_section_before_destroy"
+        end
       end
     end
   end

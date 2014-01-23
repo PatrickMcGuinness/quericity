@@ -5,7 +5,7 @@
       %span.title
         = @quiz_bank.title
       %span  
-        =link_to "#",rel: "popover",data:{content: @quiz_bank.description, :"original-title" => "Quiz bank Description"}, style: "margin-left:15px",id: "description-popover" do
+        =link_to "#",rel: "popover",data:{content: @quiz_bank.description}, style: "margin-left:15px",id: "description-popover" do
           %span.glyphicon.glyphicon-comment 
     %h2.quiz-bank-title-edit{data:{id: @quiz_bank.id}}
       %form.form-inline
@@ -52,11 +52,18 @@
       },function(){
       $("#description-popover").popover('hide')
     })
+    
     $(".quiz-bank-title-show").click(function(){
       $(this).hide()
       $(".quiz-bank-title-edit").show()
     })
-
+    
+    $(".section-title-show").click(function(){
+      id = $(this).attr("id")
+      $(this).hide()
+      $("#"+id+".section-title-edit").show()
+    })
+    
     $(".tab-content").on("keydown","#title-field",function(key){
       _this = this
       quiz_bank_id = $(".quiz-bank-title-edit").data("id")

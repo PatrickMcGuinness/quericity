@@ -37,6 +37,24 @@ class SectionsController < ApplicationController
     render layout:nil
   end
 
+  def section_before_destroy
+    @repository = current_user.repositories.find(params[:repository_id])
+    @quiz_bank = @repository.quiz_banks.find(params[:quiz_bank_id])
+    @section = @quiz_bank.sections.find(params[:id])
+    @questions =  @section.questions
+  end
+
+  def update_section_before_destroy
+
+  end
+
+  def update_title
+    @section = Section.find(params[:id])
+    @section.title = params[:title]
+    @section.save
+    render json:{title: @section.title}
+  end
+
   def destroy
     @repository = current_user.repositories.find(params[:repository_id])
     @quiz_bank = @repository.quiz_banks.find(params[:quiz_bank_id])

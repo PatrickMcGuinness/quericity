@@ -1,0 +1,24 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4
+        = "Manage Questions in Section"
+    -if @questions.blank?        
+      .modal-body
+        = "No questions to manage"
+      .modal-footer
+        = link_to "Remove Section",repository_quiz_bank_section_path(@repository,@quiz_bank,@section), remote:true,data:{method:"delete",confirm: "Are you sure"},rel: "tooltip",title: "Delete Section", class: "btn btn-primary btn-danger"
+    -else
+      = form_tag "/sections/update_section_before_destroy",:class => "form-horizontal" do |f|
+        .modal-body
+          .row.alert-div    
+            .col-xs-12
+              .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
+                Choose section in which you want to move questions
+          .row.questions
+            .col-xs-12
+              =select_tag 'section_id', options_for_select(Section.all.collect{ |u| [u.title, u.id] }), :class => "form-control"           
+        .modal-footer
+          = link_to "Remove Section With Questions",repository_quiz_bank_section_path(@repository,@quiz_bank,@section), remote:true,data:{method:"delete",confirm: "Are you sure"},rel: "tooltip",title: "Delete Section", class: "btn btn-primary btn-danger"     
+      
