@@ -28,6 +28,7 @@ QuizLib::Application.routes.draw do
   get "quiz_banks/:id/update_title", to: "quiz_banks#update_title", as: :update_title
   get "repositories/:id/update_title", to: "repositories#update_title", as: :repo_update_title
   get "sections/:id/update_title", to: "sections#update_title", as: :section_update_title
+  post "sections/change_question_positions", to: "sections#change_question_positions", as: :change_question_positions
   
   resources :question_topics
   resources :users do

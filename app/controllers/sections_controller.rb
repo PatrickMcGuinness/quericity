@@ -48,6 +48,15 @@ class SectionsController < ApplicationController
 
   end
 
+  def change_question_positions
+    params[:"question"].each_with_index do |id, index|
+      Question.update_all({seq: index+1},{id: id})
+    end
+    @questions = Question.where("id in (?)",params[:"question"]).order("seq ASC")
+    @section = @questions.first.section 
+    render json:{questions: @questions, section: @section}
+  end
+
   def update_title
     @section = Section.find(params[:id])
     @section.title = params[:title]

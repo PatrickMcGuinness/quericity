@@ -1,14 +1,35 @@
 %table.table-bordered{style: "width:100%;margin-bottom: 20px;"}
-  -if @section.questions.blank?
-    %tr.no-record
-      %td There are no questions in this sections
-  -else
-    -@section.questions.order("created_at ASC").each_with_index do |question,index|
-      -if question.is_true_false?
-        =render partial: "questions/true_false_question", :locals => {:@question => question,:@index => (index + 1)}
-      -if question.is_open_ended?
-        =render partial: "questions/open_ended_question", :locals => {:@question => question,:@index => (index + 1)}
-      -if question.is_fill_in_the_blank?
-        =render partial: "questions/open_ended_question", :locals => {:@question => question,:@index => (index + 1)}
-      -if question.is_mcq?
-        =render partial: "questions/mcq_question", :locals => {:@question => question,:@index => (index + 1)}  
+  %tbody
+    -if @section.questions.blank?
+      %tr.no-record
+        %td There are no questions in this sections
+    -else
+      -@section.questions.order("seq ASC").each_with_index do |question,index|
+        -if question.is_true_false?
+          =render partial: "questions/true_false_question", :locals => {:@question => question,:@index => (index + 1)}
+        -if question.is_open_ended?
+          =render partial: "questions/open_ended_question", :locals => {:@question => question,:@index => (index + 1)}
+        -if question.is_fill_in_the_blank?
+          =render partial: "questions/open_ended_question", :locals => {:@question => question,:@index => (index + 1)}
+        -if question.is_mcq?
+          =render partial: "questions/mcq_question", :locals => {:@question => question,:@index => (index + 1)}
+
+:javascript
+  $(document).ready(function(){
+    $(".table-bordered tbody").sortable({
+      cursor: "move",
+      axis: 'y',
+      update: function(){
+        $.ajax({
+          url: "/sections/change_question_positions",
+          method: "POST",
+          data: $(this).sortable("serialize"),
+          success: function(data){
+            $("#"+data.section.id+".questions").find(".question-number").each(function(index){
+              $(this).html("<strong>Question No #"+(index+1)+"</strong>")
+            })
+          }                  
+        })
+      }
+    });
+  })            
