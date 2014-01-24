@@ -2,3 +2,4 @@ $('#base-modal').modal('hide')
 $("##{@section.id}.questions").remove()
 $(".section##{@section.id}").after(' #{j(render(partial: 'section'))} ')
 $(".section##{@section.id}").remove()
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);

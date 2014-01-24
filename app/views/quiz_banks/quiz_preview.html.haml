@@ -1,0 +1,33 @@
+.tab-content.padding-top40.tab-container
+  .row
+    .col-xs-6.col-xs-offset-4{style:"padding-bottom:40px"}
+      %h1
+        = @quiz_bank.title
+    .row    
+      -@sections.each_with_index do |section,index|     
+        .col-xs-12
+          .well
+            %strong
+              ="Section No #{(index + 1)}) #{section.title}"
+        -section.questions.order("seq ASC").each_with_index do |question, index|
+          .col-xs-12
+            .col-xs-2
+              = "Question No #{(index + 1)})"
+            .col-xs-10
+              .question{style: "margin-bottom:20px;"} 
+                = question.description.html_safe
+              -if question.is_true_false?
+                .options
+                  %p
+                    = check_box_tag :true, nil, false, class: "form_contorl", disabled: true
+                    = "True"
+                  %p
+                    = check_box_tag :false, nil, false, class: "form_contorl", disabled: true   
+                    = "False"   
+              -if question.is_mcq?
+                .options
+                  -question.question_options.each do |option|
+                    %p
+                      = check_box_tag :answer, nil, false, class: "form_contorl", disabled: true 
+                      = option.answer
+

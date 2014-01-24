@@ -31,6 +31,8 @@ QuizLib::Application.routes.draw do
   post "sections/change_question_positions", to: "sections#change_question_positions", as: :change_question_positions
   post "sections/change_question_section", to: "sections#change_question_section", as: :change_question_section
   post "sections/change_section_positions", to: "sections#change_section_positions", as: :change_section_positions
+  post "sections/update_section_before_destroy", to: "sections#update_section_before_destroy", as: :update_section_before_destroy
+
   resources :question_topics
   resources :users do
     collection do
@@ -48,11 +50,13 @@ QuizLib::Application.routes.draw do
     end
     resources :collaborators
     resources :quiz_banks, :except => :index do
+      member do
+        get "quiz_preview"
+      end
       resources :sections do
         resources :questions
         member do
           get "section_before_destroy"
-          get "update_section_before_destroy"
         end
       end
     end

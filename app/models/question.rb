@@ -71,7 +71,7 @@ class Question < ActiveRecord::Base
     #params[:description][0].gsub!("</p>","")
     #params[:description2][0].gsub!("<p>","")
     description = "#{params[:description]} _______ #{params[:description2]}" 
-    question = section.questions.new(:subject_id => params[:question][:subject_id],:difficulty_level => params[:question][:difficulty_level],
+    question = section.questions.new(:difficulty_level => params[:question][:difficulty_level],
                                     :question_type => params[:question][:question_type], :description => description)
     question.save
     question
@@ -122,7 +122,7 @@ class Question < ActiveRecord::Base
     end
     if self.is_fill_in_the_blank?
       description = "#{params[:description]} _______ #{params[:description2]}" 
-      self.update_attributes(:subject_id => params[:question][:subject_id],:difficulty_level => params[:question][:difficulty_level],
+      self.update_attributes(:difficulty_level => params[:question][:difficulty_level],
                                     :question_type => params[:question][:question_type], :description => description)
       self.question_options.first.answer = params[:answer]
     end

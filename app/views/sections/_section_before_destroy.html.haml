@@ -10,7 +10,7 @@
       .modal-footer
         = link_to "Remove Section",repository_quiz_bank_section_path(@repository,@quiz_bank,@section), remote:true,data:{method:"delete",confirm: "Are you sure"},rel: "tooltip",title: "Delete Section", class: "btn btn-primary btn-danger"
     -else
-      = form_tag "/sections/update_section_before_destroy",:class => "form-horizontal" do |f|
+      = form_tag "/sections/update_section_before_destroy",:class => "form-horizontal", remote:true do |f|
         .modal-body
           .row.alert-div    
             .col-xs-12
@@ -18,7 +18,9 @@
                 Choose section in which you want to move questions
           .row.questions
             .col-xs-12
-              =select_tag 'section_id', options_for_select(Section.all.collect{ |u| [u.title, u.id] }), :class => "form-control"           
+              =hidden_field_tag "prev_section_id", @section.id
+              =select_tag 'section_id', options_for_select(@quiz_bank.sections.collect{ |u| [u.title, u.id] }), :class => "form-control"           
         .modal-footer
+          = submit_tag "Move Questions and Delete Section",:class => "btn btn-primary"
           = link_to "Remove Section With Questions",repository_quiz_bank_section_path(@repository,@quiz_bank,@section), remote:true,data:{method:"delete",confirm: "Are you sure"},rel: "tooltip",title: "Delete Section", class: "btn btn-primary btn-danger"     
       

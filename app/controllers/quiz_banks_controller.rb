@@ -1,6 +1,7 @@
 class QuizBanksController < ApplicationController
 
   before_filter :authenticate_user!
+  layout "preview", only: [:quiz_preview]
 	
   def index
     @quiz_banks = QuizBank.search(params["search"],current_user)
@@ -21,6 +22,12 @@ class QuizBanksController < ApplicationController
     @repository = current_user.repositories.find(params[:repository_id])
   	@quiz_bank = @repository.quiz_banks.find(params[:id])
     @repository = @quiz_bank.repository
+    @sections = @quiz_bank.sections
+  end
+
+  def quiz_preview
+    @repository = current_user.repositories.find(params[:repository_id])
+    @quiz_bank = @repository.quiz_banks.find(params[:id])
     @sections = @quiz_bank.sections
   end
 

@@ -45,7 +45,12 @@ class SectionsController < ApplicationController
   end
 
   def update_section_before_destroy
-
+    @prev_section = Section.find(params[:prev_section_id])
+    @prev_section.questions.update_all(:section_id => params[:section_id])
+    @quiz_bank = @prev_section.quiz_bank
+    @prev_section.destroy
+    @sections = @quiz_bank.sections
+    render layout:nil
   end
 
   def change_question_positions
