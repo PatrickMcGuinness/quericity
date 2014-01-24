@@ -69,14 +69,30 @@
     $(".sections-table tbody").sortable({
       cursor: "move",
       axis: 'y',
-      update: function(){
-        $.ajax({
-          url: "/sections/change_section_positions",
-          method: "POST",
-          data: $(this).sortable("serialize"),
-          success: function(){
-          }                  
-        })
+      update: function(event,ui){
+        if(ui.item.attr("class") == "question"){
+          $.ajax({
+            url: "/sections/change_question_positions",
+            method: "POST",
+            data: $(this).sortable("serialize"),
+            success: function(data){
+              $("#"+data.section.id+".questions").find(".question-number").each(function(index){
+                $(this).html("<strong>Question No #"+(index+1)+"</strong>")
+              })
+            }                  
+          })
+        }
+        else{
+          console.log("section")
+          $.ajax({
+            url: "/sections/change_section_positions",
+            method: "POST",
+            data: $(this).sortable("serialize"),
+            success: function(){
+            }                  
+          })
+        }
+        
       }
     }).disableSelection();
 
