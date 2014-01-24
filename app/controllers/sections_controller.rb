@@ -57,6 +57,13 @@ class SectionsController < ApplicationController
     render json:{questions: @questions, section: @section}
   end
 
+  def change_question_section
+    @question = Question.find(params[:question_id])
+    @question.update_attribute(:section_id,params[:section_id])
+    @question_count = @question.section.questions.count
+    render json:{count: @question_count}
+  end
+
   def update_title
     @section = Section.find(params[:id])
     @section.title = params[:title]

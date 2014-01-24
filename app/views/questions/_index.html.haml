@@ -1,5 +1,5 @@
 %table.table-bordered{style: "width:100%;margin-bottom: 20px;"}
-  %tbody
+  %tbody{data:{section_id: @section.id}}
     -if @section.questions.blank?
       %tr.no-record
         %td There are no questions in this sections
@@ -31,5 +31,38 @@
           }                  
         })
       }
-    });
+    }).disableSelection();
+
+    $(".table-bordered tbody").droppable({
+      activeClass: "ui-state-default",
+      hoverClass: "dropping",
+      accept: ".question",
+      drop: function(event,ui){
+        if($(ui.draggable).data("sectionId") != $(this).data("sectionId")){
+          prev_section = $(ui.draggable).data("sectionId")
+          _tbody = this
+          _question = ui.draggable
+          params = {section_id: $(this).data("sectionId"), question_id: $(ui.draggable).data("id")}
+          $.ajax({
+            url: "/sections/change_question_section",
+            data: params,
+            method: "POST",
+            success: function(data){
+              value = $(_tbody).data("sectionId")
+              $(_question).data().sectionId = value
+              $(_question).find(".question-number").html("<strong>Question No #"+(data.count)+"</strong>")
+              $(_tbody).append($(_question))
+              $("#"+prev_section+".questions").find(".question-number").each(function(index){
+                $(this).html("<strong>Question No #"+(index+1)+"</strong>")
+              })
+              if($("#"+prev_section+".questions").find("tbody tr").length == 0){
+                $("#"+prev_section+".questions").find("tbody").append("<tr class = 'no-record'><td>There are no questions</td></tr>")
+              }
+              $("#"+value+".questions").find("tr.no-record").remove()
+            }
+          })
+        }
+      }
+    })
+
   })            
