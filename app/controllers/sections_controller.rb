@@ -64,6 +64,13 @@ class SectionsController < ApplicationController
     render json:{count: @question_count}
   end
 
+  def change_section_positions
+    params[:"section"].each_with_index do |id, index|
+      Section.update_all({seq: index+1},{id: id})
+    end
+    render nothing:true
+  end
+
   def update_title
     @section = Section.find(params[:id])
     @section.title = params[:title]

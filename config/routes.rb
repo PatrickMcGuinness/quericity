@@ -30,6 +30,7 @@ QuizLib::Application.routes.draw do
   get "sections/:id/update_title", to: "sections#update_title", as: :section_update_title
   post "sections/change_question_positions", to: "sections#change_question_positions", as: :change_question_positions
   post "sections/change_question_section", to: "sections#change_question_section", as: :change_question_section
+  post "sections/change_section_positions", to: "sections#change_section_positions", as: :change_section_positions
   resources :question_topics
   resources :users do
     collection do
