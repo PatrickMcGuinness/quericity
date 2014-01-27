@@ -50,6 +50,12 @@
             success: function(data){
               value = $(_tbody).data("sectionId")
               $(_question).data().sectionId = value
+              _edit = $(_question).find(".edit-delete").children()[1]
+              _delete = $(_question).find(".edit-delete").children()[0]
+              _edit_url = $(_edit).attr("href").split("sections")[0]+ "sections/"+ value + "/questions/"+$(_question).data().id+ "/edit"
+              $(_edit).attr("href",_edit_url)
+              _delete_url = $(_delete).attr("href").split("sections")[0]+ "sections/"+ value + "/questions/"+$(_question).data().id
+              $(_delete).attr("href",_delete_url)
               $(_question).find(".question-number").html("<strong>Question No #"+(data.count)+"</strong>")
               $(_tbody).append($(_question))
               $("#"+prev_section+".questions").find(".question-number").each(function(index){

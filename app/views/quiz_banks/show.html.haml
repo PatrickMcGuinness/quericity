@@ -59,12 +59,14 @@
       $("#"+id+".section-title-edit").show()
     })
 
-    
+    $(".tab-content").on("focusout", "#title-field", function(){
+      $(".quiz-bank-title-edit").hide()
+      $(".quiz-bank-title-show").show()
+    })    
 
     $(".tab-content").on("keydown","#title-field",function(key){
       _this = this
       quiz_bank_id = $(".quiz-bank-title-edit").data("id")
-      console.log(quiz_bank_id)
       if(key.keyCode == 13){
         key.preventDefault()
         $.ajax({

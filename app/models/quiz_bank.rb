@@ -5,7 +5,7 @@ class QuizBank < ActiveRecord::Base
   validates :title,:repository_id,:subject_id, :presence => true
   after_create :create_section 
 
-  belongs_to :repository
+  belongs_to :repository, :counter_cache => true
   belongs_to :subject
   has_many :sections, dependent: :destroy
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140122142443) do
+ActiveRecord::Schema.define(:version => 20140124193047) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -77,8 +77,9 @@ ActiveRecord::Schema.define(:version => 20140122142443) do
   create_table "repositories", :force => true do |t|
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.integer  "quiz_banks_count", :default => 0
   end
 
   create_table "sections", :force => true do |t|
