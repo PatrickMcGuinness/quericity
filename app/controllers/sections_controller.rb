@@ -49,7 +49,6 @@ class SectionsController < ApplicationController
     @prev_section.questions.update_all(:section_id => params[:section_id])
     @quiz_bank = @prev_section.quiz_bank
     @prev_section.destroy
-    @sections = @quiz_bank.sections
     render layout:nil
   end
 

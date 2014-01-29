@@ -5,7 +5,7 @@
       %span.title
         = @repository.title
       %span  
-        =link_to "#",rel: "popover",data:{content: @repository.description, :"original-title" => "Repo Description"}, style: "margin-left:15px",id: "description-popover" do
+        =link_to "#",rel: "popover",data:{content: @repository.description}, style: "margin-left:15px",id: "description-popover" do
           %span.glyphicon.glyphicon-comment
     %h2.repo-title-edit{data:{id: @repository.id}}
       %form.form-inline

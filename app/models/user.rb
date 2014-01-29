@@ -6,14 +6,16 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :role, :invited_by
   attr_accessible :first_name, :last_name,:profile_pic, :role, :encrypted_password,:reset_password_token, :reset_password_sent_at, :remember_created_at,
   :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip,:confirmation_token,
   :confirmed_at, :confirmation_sent_at, :unconfirmed_email
   
   has_many :repositories, :through => :user_repositories
   has_many :user_repositories, dependent: :destroy 
-  
+  has_many :owned_sharings, :class_name => 'Sharing', :foreign_key => 'owner_id'
+  has_many :groups, :class_name => 'Group', :foreign_key => 'owner_id'  
+  has_many :student_groups, :class_name => 'StudentGroup', :foreign_key => 'student_id'
   mount_uploader :profile_pic, ImageUploader
 
   def name
@@ -37,5 +39,18 @@ class User < ActiveRecord::Base
 
   def can_change_repo?(repo)
     self.user_repositories.find_by_repository_id(repo.id).permission != "Read"
+  end
+
+  def quiz_banks
+    repo_ids = self.repositories.pluck(:id)
+    QuizBank.where("repository_id IN (?)", repo_ids)
+  end
+
+  def is_student?
+    self.role == "Student"
+  end
+
+  def is_professor?
+    self.role == "Professor"
   end
 end

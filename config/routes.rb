@@ -34,6 +34,18 @@ QuizLib::Application.routes.draw do
   post "sections/update_section_before_destroy", to: "sections#update_section_before_destroy", as: :update_section_before_destroy
 
   resources :question_topics
+  resources :groups do
+    member do
+      get "get_student"
+      get "search_group" 
+    end 
+  end
+  resources :sharings do
+    collection do
+      get "history_search"
+      get "get_all_students" 
+    end 
+  end
   resources :users do
     collection do
       post 'update_change_password'

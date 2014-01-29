@@ -11,8 +11,9 @@ class QuizBank < ActiveRecord::Base
 
   has_many :question_topics, dependent: :destroy
   has_many :topics, :through => :question_topics
-  
-  def self.search(search,user)
+  has_many :sharings
+  has_many :student_invitations  
+  def self.search_quiz(search,user)
     quiz_banks = QuizBank.joins("Left outer join repositories on repositories.id = quiz_banks.repository_id left outer join user_repositories on user_repositories.repository_id = repositories.id left outer join users on users.id = user_repositories.user_id").where("users.id = ?",user.id)
 	  if search
 	    quiz_banks = quiz_banks.where('quiz_banks.title ILIKE ? or quiz_banks.description ILIKE ?', "%#{search}%","%#{search}%")

@@ -6,13 +6,13 @@
     </a>
   </li>
   <li class="<%= controller.class == QuizBanksController ? 'active' : '' %>">
-    <a href=<%= quiz_banks_path%>>
+    <a href="<%= quiz_banks_path%>">
       <span class="glyphicon glyphicon-edit"></span>
       Quiz
     </a>
   </li>
   <li class=' col-xs-2 padding-zero'>
-    <a href="#messages" data-toggle="tab">
+    <a href=<%= sharings_path%>>
       <span class="glyphicon glyphicon glyphicon-list-alt"></span>
       Serve
     </a>

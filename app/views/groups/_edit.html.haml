@@ -1,0 +1,62 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h3
+        Edit Group
+    = form_for @group,:class => "form-horizontal", remote:true do |f|
+      .modal-body
+        =f.text_field :title,:class => "form-control", :placeholder => "Give group a title"
+        .row{style: "margin-top:10px;"}       
+          .col-xs-6
+            %button.btn.btn-primary.btn-warning.all-students{style:"width:100%"} All My Students
+          .col-xs-6
+            -if current_user.groups.present?
+              =select_tag :group_id, options_for_select(current_user.groups.collect{ |u| [u.title, u.id] }), :class => "form-control select-group", :prompt => "Select from previous group"
+
+          .student-cloud.col-xs-12{style: "margin-top:10px;"}
+            .student-thumbnails{style:"margin-top:10px;overflow-y: auto;max-height:250px"}  
+              -@group.student_groups.each do |student_group|
+                .col-xs-2{style: "margin-left:5px;"}
+                  .thumbnail.row{style:"width:250px"}
+                    .col-xs-1
+                      =check_box_tag "user_ids[]" ,student_group.student.id,false,:class => "delete"
+                    .col-xs-1
+                      %img{src:"/assets/Picupload_bg.png", id:"student-image",style:"width:25px;height:25px;"}
+                    .col-xs-6.offset-1{style:"font-size:10px;"}
+                      -if student_group.student.name.blank?
+                        = "Name not set by student"
+                      -else
+                        = student_group.student.name  
+                      = student_group.student.email
+          
+      .modal-footer
+        =f.submit "Update Group", class: "btn btn-primary update-group"
+
+:javascript
+  $(document).ready(function(){
+    $(".modal-body").on("click", ".all-students", function(e){
+      e.preventDefault()
+      $.ajax({
+        url: "sharings/get_all_students",
+        method: "GET",
+        success: function(data){
+          $(".student-cloud").html($(data).find('.student-thumbnails').html())
+        }
+      })
+    })
+
+    $(".modal-body").on("change", ".select-group", function(e){
+      console.log("hello")
+      value = $(this).val()
+      if(value != ""){
+        $.ajax({
+          url: "groups/"+value+"/get_student",
+          method: "GET",
+          success: function(data){
+            $(".student-cloud").html($(data).find('.student-thumbnails').html())
+          }
+        })
+      }
+    })
+  })             

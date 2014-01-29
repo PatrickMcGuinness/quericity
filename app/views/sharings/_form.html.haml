@@ -1,0 +1,50 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4
+        ="Choose Students"
+    = form_tag "/sharings",:class => "form-horizontal", :id => "choose_students", remote: true do |f|
+      .modal-body
+        .row.alert-div    
+          .col-xs-12
+            .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
+              Either enter comma separated emails of students or choose from group
+        .row
+          .col-xs-12      
+            =text_field_tag :email_ids, nil, class: "form-control emails", placeholder: "Enter comma separated emails"
+        .row{style: "margin-top:10px;"}
+          .col-xs-6
+            =select_tag 'quiz_bank_id', options_for_select(current_user.quiz_banks.collect{ |u| [u.title, u.id] }), :class => "form-control", prompt: "Select Quiz"
+          .col-xs-6
+            -if current_user.groups.blank?
+              = "No student group"
+            -else
+              =select_tag 'group_id', options_for_select(current_user.groups.collect{ |u| [u.title, u.id] }), :class => "form-control student-group-id", prompt: "Select Group"
+        .row.students        
+      .modal-footer
+        =submit_tag "Serve Quiz",{class:"btn btn-primary"}
+
+
+:javascript
+  $(document).ready(function(){
+    $(".modal-body").on("change", ".student-group-id", function(){
+      if($(this).val() != ""){
+        $(".emails").hide()
+        value = $(this).val()
+        $.ajax({
+          url: "/groups/"+value+"/get_student",
+          method: "get",
+          success: function(data){
+            console.log($(data).find('.student-cloud').html())
+            $(".students").html($(data).find('.student-cloud').html())
+          }
+        })
+      }
+      else{
+        $(".students").html("")
+        $(".emails").show()
+      }
+    })
+  })
+      

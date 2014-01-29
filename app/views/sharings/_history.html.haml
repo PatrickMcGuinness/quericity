@@ -1,0 +1,71 @@
+.col-xs-12.tab-pane.active#history
+  .col-xs-9
+    .col-xs-12
+      %h3 History
+    .col-xs-4
+      %input{type: "search", class: "form-control history-search", placeholder: "Search history"}
+    .col-xs-12.history{style:"margin-top:10px;"}
+      -if @quiz_banks.blank?
+        %table.table-bordered{style: "margin-top:15px;width:100%;"}
+          %tbody
+            %tr 
+              %td There is nothing to show in history
+      -else
+        -@quiz_banks.each do |quiz|
+          .well.well-sm.served-quiz
+            =quiz.title
+          .quiz-sharings
+            %table.table-bordered{style: "width:100%;margin-bottom:15px;"}
+              %tbody
+                -quiz.sharings.each do |sharing|
+                  %tr
+                    %td
+                      = sharing.user.email
+                    %td
+                      = "#{time_ago_in_words(sharing.created_at)} ago"   
+
+  .col-xs-3
+    %h4
+      Search by Date
+    %ul.row{style:"list-style:none;"}
+      %li.col-xs-12.history_list
+        = search_form_for @q, url: sharings_path, format: :js do |f|
+          .field
+            =f.hidden_field :created_at_lteq, value: Time.now
+            =f.hidden_field :created_at_gteq, value: 1.days.ago
+            =f.submit "Quiz Served Today" ,class: "btn-link"
+      %li.col-xs-12.history_list
+        = search_form_for @q, url: sharings_path do |f|
+          .field
+            =f.hidden_field :created_at_lteq, value: Time.now
+            =f.hidden_field :created_at_gteq, value: 7.days.ago
+            =f.submit "Quiz Served Upto Week" ,class: "btn-link"
+      %li.col-xs-12.history_list
+        = search_form_for @q, url: sharings_path do |f|
+          .field
+            =f.hidden_field :created_at_lteq, value: Time.now
+            =f.hidden_field :created_at_gteq, value: 1.months.ago
+            =f.submit "Quiz Served Upto Month" ,class: "btn-link"
+      %li.col-xs-12.history_list
+        = search_form_for @q, url: sharings_path do |f|
+          .field
+            =f.hidden_field :created_at_lteq, value: Time.now
+            =f.hidden_field :created_at_gteq, value: 1.years.ago
+            =f.submit "Quiz Served Upto Year" ,class: "btn-link"
+
+:javascript
+  $(document).ready(function(){
+    $("#history").on("keydown", ".history-search", function(key){
+      _this = this
+      if(key.keyCode == 13){
+        $.ajax({
+          url: "/sharings/history_search",
+          data: {q:{title_cont:$(_this).val()}},
+          method: "GET",
+          success: function(data){
+            $(".history").html($(data).find('.history').html())
+          }
+        })
+      }
+    })
+  })            

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140124193047) do
+ActiveRecord::Schema.define(:version => 20140127132752) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -28,6 +28,13 @@ ActiveRecord::Schema.define(:version => 20140124193047) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
+
+  create_table "groups", :force => true do |t|
+    t.string   "title"
+    t.integer  "owner_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "invitations", :force => true do |t|
     t.string   "email"
@@ -88,6 +95,29 @@ ActiveRecord::Schema.define(:version => 20140124193047) do
     t.string   "title"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
+  end
+
+  create_table "sharings", :force => true do |t|
+    t.integer  "quiz_bank_id"
+    t.integer  "user_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "owner_id"
+  end
+
+  create_table "student_groups", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "group_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "student_invitations", :force => true do |t|
+    t.integer  "quiz_bank_id"
+    t.string   "email"
+    t.integer  "sharing_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "subjects", :force => true do |t|

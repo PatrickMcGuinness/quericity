@@ -4,7 +4,7 @@ class QuizBanksController < ApplicationController
   layout "preview", only: [:quiz_preview]
 	
   def index
-    @quiz_banks = QuizBank.search(params["search"],current_user)
+    @quiz_banks = QuizBank.search_quiz(params["search"],current_user)
 	end
 
 	def new

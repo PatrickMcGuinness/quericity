@@ -318,4 +318,8 @@ background-color: #F62217;
   font-size: 16px;
   font-family: monospace;
 }
-
+.history_list{
+	background-color: #B6B6B6;
+  padding: 8px;
+  margin-bottom: 5px;
+}
