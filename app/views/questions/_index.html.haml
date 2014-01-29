@@ -26,7 +26,7 @@
           data: $(this).sortable("serialize"),
           success: function(data){
             $("#"+data.section.id+".questions").find(".question-number").each(function(index){
-              $(this).html("<strong>Question No #"+(index+1)+"</strong>")
+              $(this).html("<strong>Question No "+(index+1)+"</strong>")
             })
           }                  
         })
@@ -56,10 +56,10 @@
               $(_edit).attr("href",_edit_url)
               _delete_url = $(_delete).attr("href").split("sections")[0]+ "sections/"+ value + "/questions/"+$(_question).data().id
               $(_delete).attr("href",_delete_url)
-              $(_question).find(".question-number").html("<strong>Question No #"+(data.count)+"</strong>")
+              $(_question).find(".question-number").html("<strong>Question No. "+(data.count)+"</strong>")
               $(_tbody).append($(_question))
               $("#"+prev_section+".questions").find(".question-number").each(function(index){
-                $(this).html("<strong>Question No #"+(index+1)+"</strong>")
+                $(this).html("<strong>Question No. "+(index+1)+"</strong>")
               })
               if($("#"+prev_section+".questions").find("tbody tr").length == 0){
                 $("#"+prev_section+".questions").find("tbody").append("<tr class = 'no-record'><td>There are no questions</td></tr>")

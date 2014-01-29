@@ -3,16 +3,18 @@
     .col-xs-6.col-xs-offset-4{style:"padding-bottom:40px"}
       %h1
         = @quiz_bank.title
-    .row    
+    .col-xs-2.pull-right
+      =link_to "Hide Sections", "#", class: "btn btn-primary hide-section"    
+    .row.questions-with-sections   
       -@sections.each_with_index do |section,index|     
         .col-xs-12
           .well
             %strong
-              ="Section No #{(index + 1)}) #{section.title}"
+              ="Section No. #{(index + 1)}) #{section.title}"
         -section.questions.order("seq ASC").each_with_index do |question, index|
           .col-xs-12
             .col-xs-2
-              = "Question No #{(index + 1)})"
+              = "Question No. #{(index + 1)})"
             .col-xs-10
               .question{style: "margin-bottom:20px;"} 
                 = question.description.html_safe
@@ -30,4 +32,39 @@
                     %p
                       = check_box_tag :answer, nil, false, class: "form_contorl", disabled: true 
                       = option.answer
+    .row.questions-without-sections.hide   
+      -@questions_without_sections.each_with_index do |question,index|     
+        .col-xs-12
+          .col-xs-2
+            = "Question No. #{(index + 1)})"
+          .col-xs-10
+            .question{style: "margin-bottom:20px;"} 
+              = question.description.html_safe
+            -if question.is_true_false?
+              .options
+                %p
+                  = check_box_tag :true, nil, false, class: "form_contorl", disabled: true
+                  = "True"
+                %p
+                  = check_box_tag :false, nil, false, class: "form_contorl", disabled: true   
+                  = "False"   
+            -if question.is_mcq?
+              .options
+                -question.question_options.each do |option|
+                  %p
+                    = check_box_tag :answer, nil, false, class: "form_contorl", disabled: true 
+                    = option.answer                  
 
+:javascript
+  $(document).ready(function(){
+    $(".tab-container").on("click", ".hide-section", function(){
+      $(this).html("Show Sections").addClass("show-section").removeClass("hide-section")
+      $(".questions-without-sections").removeClass("hide")
+      $(".questions-with-sections").addClass("hide") 
+    })
+    $(".tab-container").on("click", ".show-section", function(){
+      $(this).html("Hide Sections").addClass("hide-section").removeClass("show-section")
+      $(".questions-without-sections").addClass("hide")
+      $(".questions-with-sections").removeClass("hide") 
+    }) 
+  })

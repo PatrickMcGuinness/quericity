@@ -69,7 +69,7 @@
             data: $(this).sortable("serialize"),
             success: function(data){
               $("#"+data.section.id+".questions").find(".question-number").each(function(index){
-                $(this).html("<strong>Question No #"+(index+1)+"</strong>")
+                $(this).html("<strong>Question No. "+(index+1)+"</strong>")
               })
             }                  
           })

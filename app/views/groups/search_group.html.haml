@@ -1,0 +1,25 @@
+.col-xs-9.groups
+  -if @groups.blank?
+    %table.table-bordered{style: "margin-top:15px;width:100%;"}
+      %tbody
+        %tr 
+          %td You have no groups
+  -else
+    %table.table-bordered{style: "margin-top:15px;width:100%;"}
+      %thead
+        %tr
+          %th Name
+          %th Created on
+          %th Action
+      %tbody
+        -@groups.each do |group|
+          %tr{id: group.id}
+            %td
+              = group.title
+            %td
+              = "#{time_ago_in_words(group.created_at)} ago"
+            %td
+              =link_to edit_group_path(group),remote: true,rel: "tooltip",title: "Edit Group" do
+                %span.glyphicon.glyphicon-pencil
+              = link_to group_path(group),data:{method: :delete, confirm: "Are you sure?"}, remote:true,rel: "tooltip",title: "Delete Group" do
+                %span.glyphicon.glyphicon-trash

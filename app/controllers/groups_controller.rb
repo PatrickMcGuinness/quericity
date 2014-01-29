@@ -34,6 +34,11 @@ class GroupsController < ApplicationController
   end
 
   def update
-
+    @group = current_user.groups.find(params[:id])
+    @group.update_attributes(params[:group])
+    @group.student_groups.destroy_all
+    @group.add_student_groups(params)
+    @groups = current_user.groups
+    render layout:nil
   end
 end

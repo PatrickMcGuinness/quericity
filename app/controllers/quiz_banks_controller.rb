@@ -29,6 +29,7 @@ class QuizBanksController < ApplicationController
     @repository = current_user.repositories.find(params[:repository_id])
     @quiz_bank = @repository.quiz_banks.find(params[:id])
     @sections = @quiz_bank.sections
+    @questions_without_sections = Section.all_questions_in_sections(@sections)
   end
 
   def create
