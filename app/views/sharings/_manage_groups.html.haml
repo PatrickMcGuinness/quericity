@@ -5,14 +5,14 @@
     =link_to "Add Group", new_group_path,remote:true,class: "btn btn-primary add-group"
 .col-xs-12    
   .col-xs-4.pull-left
-    %input{type:"search", :class => "form-control", :placeholder => "Search groups"}    
+    %input{type:"search", :class => "form-control search-group", :placeholder => "Search groups"}    
 .col-xs-12.groups-div
   .col-xs-9.groups
     -if @groups.blank?
       %table.table-bordered{style: "margin-top:15px;width:100%;"}
         %tbody
           %tr 
-            %td You have no groups
+            %td There are no groups to show
     -else
       %table.table-bordered{style: "margin-top:15px;width:100%;"}
         %thead
@@ -34,5 +34,21 @@
                   %span.glyphicon.glyphicon-trash
 
 
-
+:javascript
+  $(document).ready(function(){
+    $("#manage_group").on("keydown", ".search-group",function(key){
+      if(key.keyCode == 13){
+        _this = this
+        key.preventDefault()
+        $.ajax({
+          url: "/groups/search_group",
+          data: {q:{title_cont:$(_this).val()}},
+          method: "GET",
+          success: function(data){
+            $(".groups").html($(data).find('.groups').html())
+          }
+        })
+      }
+    })
+  })
                   

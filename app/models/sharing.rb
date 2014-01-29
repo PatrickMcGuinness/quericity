@@ -49,5 +49,18 @@ class Sharing < ActiveRecord::Base
     quiz_banks
   end
 
+  def self.send_invitations(user,params)
+    users = []
+    emails = params[:emails].split(",")
+    emails.each do |email|
+      if User.exists?(email)
+        users << User.find_by_email(email)
+      else
+        users << User.invite!({:email => email, :role => "Student"},user)
+      end
+    end
+    users   
+  end
+
 end
 

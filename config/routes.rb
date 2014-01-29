@@ -36,14 +36,17 @@ QuizLib::Application.routes.draw do
   resources :question_topics
   resources :groups do
     member do
-      get "get_student"
-      get "search_group" 
+      get "get_student" 
+    end
+    collection do
+      get "search_group"
     end 
   end
   resources :sharings do
     collection do
       get "history_search"
-      get "get_all_students" 
+      get "get_all_students"
+      get "add_students" 
     end 
   end
   resources :users do

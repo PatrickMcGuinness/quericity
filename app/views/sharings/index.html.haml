@@ -11,6 +11,7 @@
       =render partial: "serving_tabs"
 
   .row.tab-content
-    =render partial: "history", :locals => {:@q => @q, :@sharings => @sharings}
+    .col-xs-12.tab-pane.active#history
+      =render partial: "history", :locals => {:@q => @q, :@sharings => @sharings}
     .col-xs-12.tab-pane#manage_group       
       =render partial: "manage_groups", :locals => {:@q => @q, :@sharings => @sharings}         
