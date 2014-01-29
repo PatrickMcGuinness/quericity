@@ -15,7 +15,7 @@
               None Users will be sent emails, which will take time      
         .row
           .col-xs-12.emails-div      
-            =text_field_tag :email_ids, nil, class: "form-control emails", placeholder: "Enter comma separated emails"
+            =text_field_tag :email_ids, nil, class: "form-control emails", placeholder: "Enter comma separated emails then press enter"
           .col-xs-12.email-show-btn-div.hide
             %button.btn.btn-primary.btn-warning.email-show-btn{style: "width:100%"} Serve Individuals 
         .row{style: "margin-top:10px;"}
@@ -31,7 +31,7 @@
         .row.students
           .student-cloud.col-xs-12{style: "margin-top:10px;"}
           .col-xs-12.emails-for-group-div.hide
-            =text_field_tag :emails_for_group_ids, nil, class: "form-control emails-for-group", placeholder: "Enter comma separated emails"          
+            =text_field_tag :emails_for_group_ids, nil, class: "form-control emails-for-group", placeholder: "Enter comma separated emails then press enter"          
       .modal-footer
         =submit_tag "Serve Quiz",{class:"btn btn-primary",placeholder: "Enter comma separated emails to add students"}
 
