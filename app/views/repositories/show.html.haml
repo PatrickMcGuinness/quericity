@@ -1,55 +1,59 @@
 =render 'common/tabs'
 .tab-content.padding-top40.tab-container
   .mar_top.creat-repo-div.row
-    %h2.repo-title-show
-      %span.title
-        = @repository.title
-      %span  
-        =link_to "#",rel: "popover",data:{content: @repository.description}, style: "margin-left:15px",id: "description-popover" do
-          %span.glyphicon.glyphicon-comment
-    %h2.repo-title-edit{data:{id: @repository.id}}
-      %form.form-inline
-        .form-group
-          %label{for: "title-field"}Edit Title
-          %input{type:"text", class:"form-control",id:"title-field",placeholder:"Enter Title", value: @repository.title}       
+    .col-xs-12
+      %h2.repo-title-show
+        %span.title
+          = @repository.title
+        %span  
+          =link_to "#",rel: "popover",data:{content: @repository.description}, style: "margin-left:15px",id: "description-popover" do
+            %span.glyphicon.glyphicon-comment
+      %h2.repo-title-edit{data:{id: @repository.id}}
+        %form.form-inline
+          .form-group
+            %label{for: "title-field"}Edit Title
+            %input{type:"text", class:"form-control",id:"title-field",placeholder:"Enter Title", value: @repository.title}       
     .tags.col-xs-8
       -@repository.question_tags.each do |question_topic|
         -if current_user.can_change_repo?(@repository)
           %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase} <a href="#{question_topic_path(question_topic.id)}" data-remote = true data-method = "delete" data-confirm = "Are you sure?" rel= "tooltip" title = "Remove Tag">x</a>
         -else
           %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}     
-    .style_r
+    .style_r.col-xs-4
       -if current_user.can_change_repo?(@repository)
         =link_to "Edit",edit_repository_path(@repository), class: "btn btn-primary", remote: true  
       -if @repository.is_admin? current_user or  @repository.is_owner? current_user
         =link_to "Share",repository_collaborators_path(@repository),class: "btn btn-primary",remote: true
       -if current_user.can_change_repo?(@repository)
         =link_to "Add quiz bank", new_repository_quiz_bank_path(@repository), class: "btn btn-primary", remote: true
-  .top_bar_ss
-    %span.mar_l_30
-      %b Owned by 
-      =@repository.owner.name
-    %font.mar_l_30 |
-    %span.mar_l_30
-      %b Created on:
-      =@repository.created_at.to_date
-    %font.mar_l_30 |
-    %span.mar_l_30
-      %b Quiz Banks:
-      =@quiz_banks.blank? ? 0:@repository.quiz_banks_count
-    %font.mar_l_30 |
-    %span.mar_l_30
-      %b Topics:
-      0
-    %font.mar_l_30 |
-    %span.mar_l_30
-      %b Collaborators:
-      = @repository.collaborators.count
-  %ul.breadcrumb.top_bar_s
-    %li
-      = link_to "My Repo", repositories_path
-    %li.active
-      = @repository.title
+  .row
+    .top_bar_ss.col-xs-12
+      %span.mar_l_30
+        %b Owned by 
+        =@repository.owner.name
+      %font.mar_l_30 |
+      %span.mar_l_30
+        %b Created on:
+        =@repository.created_at.to_date
+      %font.mar_l_30 |
+      %span.mar_l_30
+        %b Quiz Banks:
+        =@quiz_banks.blank? ? 0:@repository.quiz_banks_count
+      %font.mar_l_30 |
+      %span.mar_l_30
+        %b Topics:
+        0
+      %font.mar_l_30 |
+      %span.mar_l_30
+        %b Collaborators:
+        = @repository.collaborators.count
+  .row
+    .col-xs-12      
+      %ul.breadcrumb.top_bar_s
+        %li
+          = link_to "My Repo", repositories_path
+        %li.active
+          = @repository.title
   = form_tag repository_path, :method => 'get' do
     %p
       = text_field_tag :search, params[:search], :placeholder => "Search", :class => "form-control cust_wid search-text"

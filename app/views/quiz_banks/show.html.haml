@@ -1,43 +1,47 @@
 =render 'common/tabs'
 .tab-content.padding-top40
-  .mar_top.creat-repo-div
-    %h2.quiz-bank-title-show
-      %span.title
-        = @quiz_bank.title
-      %span  
-        =link_to "#",rel: "popover",data:{content: @quiz_bank.description}, style: "margin-left:15px",id: "description-popover" do
-          %span.glyphicon.glyphicon-comment 
-    %h2.quiz-bank-title-edit{data:{id: @quiz_bank.id}}
-      %form.form-inline
-        .form-group
-          %label{for: "title-field"}Edit Title
-          %input{type:"text", class:"form-control",id:"title-field",placeholder:"Enter Title", value: @quiz_bank.title}
+  .mar_top.creat-repo-div.row
+    .col-xs-12
+      %h2.quiz-bank-title-show
+        %span.title
+          = @quiz_bank.title
+        %span  
+          =link_to "#",rel: "popover",data:{content: @quiz_bank.description}, style: "margin-left:15px",id: "description-popover" do
+            %span.glyphicon.glyphicon-comment 
+      %h2.quiz-bank-title-edit{data:{id: @quiz_bank.id}}
+        %form.form-inline
+          .form-group
+            %label{for: "title-field"}Edit Title
+            %input{type:"text", class:"form-control",id:"title-field",placeholder:"Enter Title", value: @quiz_bank.title}
     .tags.col-xs-8
       -@quiz_bank.question_topics.each do |question_topic|
         -if current_user.can_change_repo?(@quiz_bank.repository)
           %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase} <a href="#{question_topic_path(question_topic.id)}" data-remote = true data-method = "delete" data-confirm = "Are you sure?" rel= "tooltip" title = "Remove Tag">x</a>
         -else
           %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}      
-    .style_r
+    .style_r.col-xs-4
       =link_to "Quiz Preview",quiz_preview_repository_quiz_bank_path(@repository,@quiz_bank), class: "btn btn-primary", :target => "_blank"
       -if current_user.can_change_repo?(@quiz_bank.repository)
         =link_to "Add Section", new_repository_quiz_bank_section_path(@repository,@quiz_bank),:class => "btn btn-primary", remote:true  
-  .top_bar_ss
-    %span.mar_l_30
-      %b
-        = "Created on #{@quiz_bank.created_at.to_date}"
-
-  %ul.breadcrumb.top_bar_s
-    %li
-      = link_to "My Repo", repositories_path
-    %li.active
-      = @repository.title
-    %li
-      = link_to "My Quiz Bank", repository_path(@repository)
-    %li.active
-      = @quiz_bank.title
-  .sections
-    =render partial: "sections/sections", :locals => {:@quiz_bank => @quiz_bank}
+  .row
+    .top_bar_ss.col-xs-12
+      %span.mar_l_30
+        %b
+          = "Created on #{@quiz_bank.created_at.to_date}"
+  .row
+    .col-xs-12
+      %ul.breadcrumb.top_bar_s
+        %li
+          = link_to "My Repo", repositories_path
+        %li.active
+          = @repository.title
+        %li
+          = link_to "My Quiz Bank", repository_path(@repository)
+        %li.active
+          = @quiz_bank.title
+  .row        
+    .sections.col-xs-12
+      =render partial: "sections/sections", :locals => {:@quiz_bank => @quiz_bank}
 
 :javascript
   $(document).ready(function(){

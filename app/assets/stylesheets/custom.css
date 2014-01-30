@@ -319,7 +319,11 @@ background-color: #F62217;
   font-family: monospace;
 }
 .history_list{
-	background-color: #B6B6B6;
+  background-color: #B6B6B6;
   padding: 8px;
   margin-bottom: 5px;
+}
+
+.popover{
+  max-width: 100%;	
 }
