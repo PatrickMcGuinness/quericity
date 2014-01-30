@@ -2,6 +2,7 @@ class QuizBanksController < ApplicationController
 
   before_filter :authenticate_user!
   layout "preview", only: [:quiz_preview]
+  layout "application", only: [:show]
 	
   def index
     @quiz_banks = current_user.quiz_banks.search(params[:q]).result(:distinct => true).page(params[:page])

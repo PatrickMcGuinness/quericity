@@ -1,17 +1,17 @@
 <ul class="nav nav-tabs nav-justified">
-  <li class="<%= controller.class == RepositoriesController ? 'active' : '' %>">
+  <li class="<%= controller.class == RepositoriesController ? 'active col-xs-2 padding-zero' : 'col-xs-2 padding-zero' %>">
     <a href="<%= repositories_path %>">
       <span class="glyphicon glyphicon-align-justify"></span>
       Repository
     </a>
   </li>
-  <li class="<%= controller.class == QuizBanksController ? 'active' : '' %>">
+  <li class="<%= controller.class == QuizBanksController ? 'active col-xs-2 padding-zero' : 'col-xs-2 padding-zero' %>">
     <a href="<%= quiz_banks_path%>">
       <span class="glyphicon glyphicon-edit"></span>
       Quiz
     </a>
   </li>
-  <li class=' col-xs-2 padding-zero'>
+  <li class="<%= controller.class == SharingsController ? 'active col-xs-2 padding-zero' : 'col-xs-2 padding-zero' %>">
     <a href=<%= sharings_path%>>
       <span class="glyphicon glyphicon glyphicon-list-alt"></span>
       Serve
