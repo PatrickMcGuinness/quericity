@@ -10,7 +10,6 @@ gem 'devise'
 gem 'haml'
 gem 'simple_form'
 gem "twitter-bootstrap-rails"
-gem 'nested_form'
 gem "ckeditor"
 gem 'devise_invitable'
 gem 'paperclip'

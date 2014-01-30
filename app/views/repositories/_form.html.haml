@@ -12,4 +12,4 @@
             = f.input :description,:placeholder => "Description", :as => :text, input_html: {class: 'form-control',style:"height:200px"}
       .modal-footer
         -@repository.new_record? ? display = "Create Repo" : display = "Update Repo"
-        = f.submit display, :class => "btn btn-primary"
+        = f.submit display, :class => "btn btn-primary repo-modal"

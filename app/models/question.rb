@@ -1,11 +1,9 @@
 class Question < ActiveRecord::Base
-  attr_accessible :seq,:description,:question_type,:difficulty_level,:reference_url,:section_id,:question_options_attributes
+  attr_accessible :seq,:description,:question_type,:difficulty_level,:reference_url,:section_id
   validates :description, :section_id, :difficulty_level, :question_type, :presence => true
   belongs_to :section
 
   has_many :question_options
-
-  accepts_nested_attributes_for :question_options
 
   class Difficulty
     EASY = 1

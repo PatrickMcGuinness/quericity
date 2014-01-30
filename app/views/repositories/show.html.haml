@@ -8,7 +8,7 @@
         %span  
           =link_to "#",rel: "popover",data:{content: @repository.description}, style: "margin-left:15px",id: "description-popover" do
             %span.glyphicon.glyphicon-comment
-      %h2.repo-title-edit{data:{id: @repository.id}}
+      %h2.repo-title-edit.hide{data:{id: @repository.id}}
         %form.form-inline
           .form-group
             %label{for: "title-field"}Edit Title
@@ -21,11 +21,11 @@
           %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}     
     .style_r.col-xs-4
       -if current_user.can_change_repo?(@repository)
-        =link_to "Edit",edit_repository_path(@repository), class: "btn btn-primary", remote: true  
+        =link_to "Edit",edit_repository_path(@repository), class: "btn btn-primary edit-repo", remote: true  
       -if @repository.is_admin? current_user or  @repository.is_owner? current_user
-        =link_to "Share",repository_collaborators_path(@repository),class: "btn btn-primary",remote: true
+        =link_to "Share",repository_collaborators_path(@repository),class: "btn btn-primary share-repo",remote: true
       -if current_user.can_change_repo?(@repository)
-        =link_to "Add quiz bank", new_repository_quiz_bank_path(@repository), class: "btn btn-primary", remote: true
+        =link_to "Add Quiz", new_repository_quiz_bank_path(@repository), class: "btn btn-primary add-quiz", remote: true
   .row
     .top_bar_ss.col-xs-12
       %span.mar_l_30
@@ -63,34 +63,4 @@
   %input{type:"hidden", class:"repo-id", value:@repository.id}
   .quiz-banks-div 
     =render partial: "quiz_banks/all_quiz_banks", :locals => {:@quiz_banks => @quiz_banks}
-
-:javascript
-  $(document).ready(function(){
-    $(".repo-title-edit").hide()
-    $(".glyphicon-comment").hover(function(){
-      $("#description-popover").popover('show')
-      },function(){
-      $("#description-popover").popover('hide')
-      })
-    $(".repo-title-show").click(function(){
-      $(this).hide()
-      $(".repo-title-edit").show()
-    })
-
-    $(".tab-content").on("keydown","#title-field",function(key){
-      _this = this
-      repo_id = $(".repo-title-edit").data("id")
-      if(key.keyCode == 13){
-        key.preventDefault()
-        $.ajax({
-          url: "/repositories/"+repo_id+"/update_title",
-          data: {title: $(_this).val()},
-          success: function(data){
-            $(".repo-title-edit").hide()
-            $(".repo-title-show").find(".title").html(data.title)
-            $(".repo-title-show").show()
-          }
-        })
-      }
-    }) 
-  })        
+        
