@@ -4,7 +4,7 @@ class QuizBanksController < ApplicationController
   layout "preview", only: [:quiz_preview]
 	
   def index
-    @quiz_banks = QuizBank.search_quiz(params["search"],current_user)
+    @quiz_banks = current_user.quiz_banks.search(params[:q]).result(:distinct => true).page(params[:page])
 	end
 
 	def new
@@ -34,7 +34,7 @@ class QuizBanksController < ApplicationController
 
   def create
     @repository = current_user.repositories.find(params[:quiz_bank][:repository_id])
-    @quiz_bank= @repository.quiz_banks.create(params[:quiz_bank])
+    @quiz_bank = @repository.quiz_banks.create(params[:quiz_bank])
     @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank)
     @question_topics = @quiz_bank.question_topics
   	render layout: nil
@@ -51,7 +51,7 @@ class QuizBanksController < ApplicationController
     @repository = current_user.repositories.find(params[:repository_id])
     @quiz_bank = @repository.quiz_banks.find(params[:id])
     @quiz_bank.update_attributes(params[:quiz_bank])
-    @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank) 
+    @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank)
     render layout:nil
   end
 

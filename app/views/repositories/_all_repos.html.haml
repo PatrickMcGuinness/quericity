@@ -1,0 +1,15 @@
+%table.table.table-bordered
+  -if @repositories.present?
+    %thead
+      %tr
+        %th Title
+        %th Quiz Banks
+        %th Topics
+        %th 
+    %tbody
+      -@repositories.each do |repo|
+        = render partial: "repository", :locals => {:@repository => repo}     
+  -else
+    .no-record
+      There is no repository
+=paginate @repositories, :window => 2,:remote => true      

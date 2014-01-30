@@ -3,17 +3,4 @@
   =link_to "Create Repo", new_repository_path, class: "btn btn-primary create-repo float-right", remote: true, rel: "tooltip", title: "Create Repo"
   =render 'repositories/repo_tabs'
   .table-responsive.padding-top40
-    %table.table.table-bordered
-      -if @repositories.present?
-        %thead
-          %tr
-            %th Title
-            %th Quiz Banks
-            %th Topics
-            %th 
-        %tbody
-          -@repositories.each do |repo|
-            = render partial: "repository", :locals => {:@repository => repo}     
-      -else
-        .no-record
-          There is no repository 
+    =render 'repositories/all_repos', :locals => {:@repositories => @repositories}         

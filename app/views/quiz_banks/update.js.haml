@@ -1,12 +1,13 @@
 $('#base-modal').modal('hide')
 if($(".repo-id").length > 0){
 if($(".repo-id").val() == "#{@repository.id}"){
+console.log("in if")
 $("tr##{@quiz_bank.id}").after(' #{j(render(partial: 'quiz_bank'))} ')
 $("tr##{@quiz_bank.id}").remove()
 }
 }
 else{
+console.log("in else")
 $("tr##{@quiz_bank.id}").after(' #{j(render(partial: 'quiz_bank'))} ')
 $("tr##{@quiz_bank.id}").remove()	
 }
-MathJax.Hub.Queue(["Typeset",MathJax.Hub]);

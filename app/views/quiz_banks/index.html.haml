@@ -10,16 +10,4 @@
           = submit_tag "Search", :name => nil, :class => "btn btn-primary search-quiz-bank"
   .row
     .col-xs-12.quiz-banks-div      
-      -if @quiz_banks.present?
-        %table.table.table-bordered.table_with_margin
-          %thead
-            %tr
-              %th Title
-              %th Description
-              %th Topics
-              %th
-          %tbody
-            -@quiz_banks.each do |q|
-              =render partial: "quiz_banks/quiz_bank", :locals => {:@repository => q.repository,:@quiz_bank => q }
-      -else
-        There is no quiz bank 
+      =render partial: "quiz_banks/all_quiz_banks", :locals => {:@quiz_banks => @quiz_banks} 

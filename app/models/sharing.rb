@@ -1,4 +1,6 @@
 class Sharing < ActiveRecord::Base
+  
+
   attr_accessible :user_id, :quiz_bank_id, :owner_id
 
   belongs_to :user, :class_name => 'User', :foreign_key => 'user_id'

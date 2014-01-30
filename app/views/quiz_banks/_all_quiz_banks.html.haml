@@ -1,0 +1,15 @@
+-if @quiz_banks.present?
+  %table.table.table-bordered.table_with_margin
+    %thead
+      %tr
+        %th Title
+        %th Description
+        %th Topics
+        %th
+    %tbody
+      -@quiz_banks.each do |q|
+        =render partial: "quiz_banks/quiz_bank", :locals => {:@repository => q.repository,:@quiz_bank => q }
+-else
+  There is no quiz bank
+
+=paginate @quiz_banks, :window => 2,:remote => true   

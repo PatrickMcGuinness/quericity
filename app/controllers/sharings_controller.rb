@@ -23,7 +23,9 @@ class SharingsController < ApplicationController
   end
 
   def history_search
-    @quiz_banks = current_user.quiz_banks.search(params[:q]).result(:distinct => true)
+    @sharings = current_user.owned_sharings
+    @quiz_banks = Sharing.get_unique_quiz_banks(@sharings)
+    @quiz_banks = @quiz_banks.search(params[:q]).result(:distinct => true)
   end
 
   def add_students

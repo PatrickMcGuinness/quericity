@@ -3,7 +3,7 @@ class RepositoriesController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @repositories  = current_user.own_repositories
+    @repositories  = current_user.own_repositories.page(params[:page])
   end
   
   def shared
@@ -12,8 +12,7 @@ class RepositoriesController < ApplicationController
   
   def show
     @repository = current_user.repositories.find(params[:id])
-    @quiz_banks = @repository.quiz_banks.search_quiz(params[:search],current_user)
-    #@quiz_banks = Kaminari.paginate_array(myarray).page(params[:page]).per(5)
+    @quiz_banks = @repository.quiz_banks.search(params[:q]).result(:distinct => true).page(params[:page])
   end
   
   def new

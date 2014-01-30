@@ -11,9 +11,7 @@ jQuery ->
     value = $('.search-text').val()
     $.ajax
       url: "quiz_banks",
-      data: {search:value}
+      data: {q:{title_or_description_cont:value}},
       success: (data)->
-        console.log(data)
         $('.search-text').val("")
         $('.quiz-banks-div').html($(data).find('.quiz-banks-div').html())
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);

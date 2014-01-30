@@ -58,13 +58,7 @@
     %h4 Quiz Banks
   %input{type:"hidden", class:"repo-id", value:@repository.id}
   .quiz-banks-div 
-    -if @quiz_banks.blank?
-      .top_bar_s.no-record
-        There are no quiz banks.
-    -else
-      =render partial: "quiz_banks/table"
-      -@quiz_banks.each do |q|
-        =render partial: "quiz_banks/quiz_bank", :locals => {:@repository => @repository,:@quiz_bank => q }
+    =render partial: "quiz_banks/all_quiz_banks", :locals => {:@quiz_banks => @quiz_banks}
 
 :javascript
   $(document).ready(function(){
