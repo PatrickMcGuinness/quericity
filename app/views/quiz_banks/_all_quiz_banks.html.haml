@@ -10,6 +10,7 @@
       -@quiz_banks.each do |q|
         =render partial: "quiz_banks/quiz_bank", :locals => {:@repository => q.repository,:@quiz_bank => q }
 -else
-  There is no quiz bank
+  .top_bar_s.no_record
+    There is no quiz bank
 
 =paginate @quiz_banks, :window => 2,:remote => true   
