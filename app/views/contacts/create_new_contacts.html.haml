@@ -3,7 +3,7 @@
     .col-xs-2.contact{style: "margin-left:5px;"}
       .thumbnail.row{style:"width:250px"}
         .col-xs-1
-          =check_box_tag "contact_ids[]" ,contact.id,false,:class => "delete"
+          =check_box_tag "contact_ids[]" ,contact.id,true,:class => "delete"
         .col-xs-1
           %img{src:"/assets/Picupload_bg.png", id:"student-image",style:"width:25px;height:25px;"}
         .col-xs-6.offset-1{style:"font-size:10px;"}  
