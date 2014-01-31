@@ -5,31 +5,30 @@
       %h4
         ="Add Students"
     = form_tag "/sharings",:class => "form-horizontal", :id => "choose_students", remote: true do |f|
-      .modal-body
-        .row    
-          .col-xs-12
-            .alert.alert-warning.fade.in
-              Either enter comma separated emails of students or choose from group   
-          .col-xs-12
-            .alert.alert-success.fade.in
-              None Users will be sent emails, which will take time      
+      .modal-body     
         .row
           .col-xs-12.emails-div      
             =text_field_tag :email_ids, nil, class: "form-control emails", placeholder: "Enter comma separated emails then press enter"
-          .col-xs-12.email-show-btn-div.hide
-            %button.btn.btn-primary.btn-warning.email-show-btn{style: "width:100%"} Serve Individuals 
-        .row{style: "margin-top:10px;"}
-          .col-xs-6
-            =select_tag 'quiz_bank_id', options_for_select(current_user.quiz_banks.collect{ |u| [u.title, u.id] }), :class => "form-control", prompt: "Select Quiz"
-          .col-xs-6.hide.group-dropdown
+          .col-xs-12.hide.group-dropdown
             -if current_user.groups.blank?
               = "No student group"
             -else
-              =select_tag 'group_id', options_for_select(current_user.groups.collect{ |u| [u.title, u.id] }), :class => "form-control student-group-id", prompt: "Select Group"
-          .col-xs-6.select-from-group
-            %button.btn.btn-primary.btn-warning.select-from-group-btn{style: "width:100%"} Select from Group    
+              =select_tag 'group_id', options_for_select(current_user.groups.collect{ |u| [u.title, u.id] }), :class => "form-control student-group-id", prompt: "Select Group"  
+        .row{style: "margin-top:10px;"}
+          .col-xs-6
+            =link_to "OR Select from group", "#"  
         .row.students
           .student-cloud.col-xs-12{style: "margin-top:10px;"}
+            .student-thumbnails{style:"margin-top:10px;overflow-y: auto;max-height:250px"}  
+              -current_user.contacts.each do |contact|
+                .col-xs-2{style: "margin-left:5px;"}
+                  .thumbnail.row{style:"width:250px"}
+                    .col-xs-1
+                      =check_box_tag "contact_ids[]" ,contact.id,false,:class => "delete"
+                    .col-xs-1
+                      %img{src:"/assets/Picupload_bg.png", id:"student-image",style:"width:25px;height:25px;"}
+                    .col-xs-6.offset-1{style:"font-size:10px;"}  
+                      =contact.email
           .col-xs-12.emails-for-group-div.hide
             =text_field_tag :emails_for_group_ids, nil, class: "form-control emails-for-group", placeholder: "Enter comma separated emails then press enter"          
       .modal-footer

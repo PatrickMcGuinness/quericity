@@ -53,4 +53,9 @@ class User < ActiveRecord::Base
   def is_professor?
     self.role == "Professor"
   end
+
+  def contacts
+    group_ids = self.groups.pluck(:id)
+    Contact.joins(:group_contacts).where("group_contacts.group_id IN (?)",group_ids)
+  end
 end

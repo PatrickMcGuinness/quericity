@@ -34,6 +34,12 @@ QuizLib::Application.routes.draw do
   post "sections/update_section_before_destroy", to: "sections#update_section_before_destroy", as: :update_section_before_destroy
 
   resources :question_topics
+  resources :contacts do
+    collection do
+      post "create_new_contacts"
+    end
+  end
+  resources :group_contacts
   resources :groups do
     member do
       get "get_student" 
