@@ -16,7 +16,14 @@ class User < ActiveRecord::Base
   has_many :owned_sharings, :class_name => 'Sharing', :foreign_key => 'owner_id'
   has_many :groups, :class_name => 'Group', :foreign_key => 'owner_id'  
   has_many :student_groups, :class_name => 'StudentGroup', :foreign_key => 'student_id'
+  has_many :invites, :class_name => "Invite", :foreign_key => "sender_id"
   mount_uploader :profile_pic, ImageUploader
+
+  after_create :create_default_group
+
+  def create_default_group
+    self.groups.create(:title => "default") if self.is_professor?
+  end
 
   def name
     "#{self.first_name} #{self.last_name}"
@@ -57,5 +64,16 @@ class User < ActiveRecord::Base
   def contacts
     group_ids = self.groups.pluck(:id)
     Contact.joins(:group_contacts).where("group_contacts.group_id IN (?)",group_ids)
+  end
+
+  def default_group
+    self.groups.find_by_title("default")
+  end
+
+
+  def students
+    group_ids = self.groups.pluck(:id)
+    student_ids = StudentGroup.where("group_id IN (?)",group_ids).pluck(:student_id)
+    User.where("id IN (?)", student_ids)
   end
 end

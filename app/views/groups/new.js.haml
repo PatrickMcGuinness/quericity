@@ -1,2 +1,55 @@
 $(".add-group").html("Add Group")
 $('#base-modal').html(' #{j(render(partial: 'new'))} ').modal()
+
+function validateEmail(email){ 
+var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+return re.test(email);
+}
+$.validator.addMethod("validate_comma_separated_emails",function(value,element){
+check = 1
+if($("#add_new_users").val() != ""){
+emails = $("#add_new_users").val().split(",")
+$.each(emails,function(index,value){
+console.log(value)
+if(!validateEmail(value)){
+console.log("in if")
+check = 0
+}
+})
+}
+if(check == 0){
+return false
+}
+else{
+return true
+}
+},"Enter correct email ids")
+
+
+$("#new_group").validate({
+onkeyup: false,
+onclick: false,
+onfocusout: false,
+rules: {
+"group[title]": {
+required: true
+},
+"add_new_users":{
+validate_comma_separated_emails: true
+}
+},
+messages: {
+"email_ids": {
+validate_comma_separated_emails: "Entered Emails are not valid"
+}
+},
+highlight: function(element) {
+$(element).siblings('label.error').remove();
+$(element).closest('.control_validate').removeClass('success').addClass('error');
+},
+// Success function accepts lable as an argument
+success: function(element) {
+$(element).remove();
+$(element).closest('.control_validate').removeClass('error').addClass('success');
+}
+});

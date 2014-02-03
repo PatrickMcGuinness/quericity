@@ -6,7 +6,6 @@ class Sharing < ActiveRecord::Base
   belongs_to :user, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id'
   belongs_to :quiz_bank
-  has_many :student_invitations, dependent: :destroy
 
   validates :user_id, presence: true
   validates :quiz_bank_id, presence: true

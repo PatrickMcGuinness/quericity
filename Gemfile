@@ -15,6 +15,7 @@ gem 'devise_invitable'
 gem 'paperclip'
 gem "ransack"
 gem 'omniauth-facebook'
+gem 'delayed_job_active_record'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

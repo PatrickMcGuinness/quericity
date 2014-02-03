@@ -15,17 +15,20 @@
 
           .student-cloud.col-xs-12{style: "margin-top:10px;"}
             .student-thumbnails{style:"margin-top:10px;overflow-y: auto;max-height:250px"}  
-              -@group.contacts.each do |contact|
-                .col-xs-2.contact{style: "margin-left:5px;"}
+              -@group.student_groups.each do |student_group|
+                .col-xs-2.student{id: student_group.id, style: "margin-left:5px;"}
                   .thumbnail.row{style:"width:250px"}
                     .col-xs-1
-                      =check_box_tag "contact_ids[]" ,contact.id,true,:class => "delete"
-                    .col-xs-1
                       %img{src:"/assets/Picupload_bg.png", id:"student-image",style:"width:25px;height:25px;"}
-                    .col-xs-6.offset-1{style:"font-size:10px;"}  
-                      = contact.email
-                    -#.col-xs-1.pull-right{style:"font-size:10px;"}
-                      -#= link_to "x",group_contact_path(contact), remote:true,data:{method:"delete",confirm: "Are you sure"},rel:"tooltip", title:"Remove student from group"
+                    .col-xs-6.offset-1{style:"font-size:10px;"}
+                      -if student_group.student.name.present?
+                        = student_group.student.name
+                      -else
+                        = "Name not set by Student"  
+                      = student_group.student.email
+                    .col-xs-1.pull-right{style:"font-size:10px;"}
+                      = link_to "x",student_group_path(student_group),data:{method: :delete, confirm: "Are you sure?"}, remote:true,rel: "tooltip",title: "Remove student from group", class: "student-to-invite"
+                      %input{type: "hidden", value: @group.id, class: "group-id"}  
           
       .modal-footer
         =f.submit "Update Group", class: "btn btn-primary update-group"
@@ -34,10 +37,12 @@
   $(document).ready(function(){
     $(".modal-body").on("click", ".add-users",function(){
       $.ajax({
-        url: "contacts/create_new_contacts",
-        data: {emails:$(".add-new-users").val()},
-        method: "POST",
+        url: "groups/add_students_edit",
+        data: {emails:$(".add-new-users").val(),id:$(".group-id").val()},
+        method: "GET",
         success: function(data){
+          console.log(data)
+          $(".add-new-users").val("")
           $(".student-thumbnails").append($(data).find('.student-thumbnails').html())
         }
       })

@@ -13,16 +13,26 @@
           .col-xs-2.pull-right{style: "margin-top:10px;"}
             =link_to "Add More Students","#", class: "btn btn-primary btn-warning add-users" 
           .student-cloud.col-xs-12{style: "margin-top:10px;"} 
-            .student-thumbnails{style:"margin-top:10px;overflow-y: auto;max-height:250px"}  
-              -current_user.contacts.each do |contact|
-                .col-xs-2{style: "margin-left:5px;"}
-                  .thumbnail.row{style:"width:250px"}
-                    .col-xs-1
-                      =check_box_tag "contact_ids[]" ,contact.id,false,:class => "delete"
-                    .col-xs-1
-                      %img{src:"/assets/Picupload_bg.png", id:"student-image",style:"width:25px;height:25px;"}
-                    .col-xs-6.offset-1{style:"font-size:10px;"}  
-                      =contact.email
+            .student-thumbnails{style:"margin-top:10px;overflow-y: auto;max-height:250px"}
+              -if current_user.students.present?  
+                -current_user.students.each do |student|
+                  .col-xs-2.student{style: "margin-left:5px;"}
+                    .thumbnail.row{style:"width:250px"}
+                      .col-xs-1
+                        =check_box_tag "student_ids[]" ,student.id,false,:class => "delete"
+                      .col-xs-1
+                        %img{src:"/assets/Picupload_bg.png", id:"student-image",style:"width:25px;height:25px;"}
+                      .col-xs-6.offset-1{style:"font-size:10px;"}
+                        -if student.name.present?
+                          = student.name
+                        -else
+                          = "Name not set by Student"    
+                        =student.email
+                      .col-xs-1.pull-right{style:"font-size:10px;"}
+                        =link_to "x", "#", class: "already-student"
+              -else
+                .no-student-record
+                  You have no students,Add some by entering comma separated emails          
           
       .modal-footer
         =f.submit "Create Group", class: "btn btn-primary create-group"
@@ -31,13 +41,19 @@
   $(document).ready(function(){
     $(".modal-body").on("click", ".add-users",function(){
       $.ajax({
-        url: "contacts/create_new_contacts",
+        url: "groups/add_students",
         data: {emails:$(".add-new-users").val()},
-        method: "POST",
+        method: "GET",
         success: function(data){
+          console.log(data)
+          $(".no-student-record").remove()
           $(".add-new-users").val("")
           $(".student-thumbnails").append($(data).find('.student-thumbnails').html())
         }
       })
+    })
+
+    $(".student-cloud").on("click", ".already-student", function(){
+      $(this).parents(".student").remove()
     })
   })             

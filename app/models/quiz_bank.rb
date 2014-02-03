@@ -12,8 +12,7 @@ class QuizBank < ActiveRecord::Base
 
   has_many :question_topics, dependent: :destroy
   has_many :topics, :through => :question_topics
-  has_many :sharings
-  has_many :student_invitations  
+  has_many :sharings 
   
 
 

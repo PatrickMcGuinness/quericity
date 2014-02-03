@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
 
   def create
     @group = current_user.groups.create(params[:group])
-    @group.add_group_contacts(params)
+    @group.delay.background_tasks_for_create(current_user,params)
     @groups = current_user.groups
     render layout:nil
   end
@@ -21,8 +21,13 @@ class GroupsController < ApplicationController
     @group = current_user.groups.find(params[:id])
   end
 
-  def add_new_users
-    Group.add_users(current_user,params)
+  def add_students
+    @students, @invites = Group.add_students(current_user,params)
+  end
+
+  def add_students_edit
+    @group = current_user.groups.find(params[:id])
+    @student_groups, @invites = @group.add_students_edit(current_user,params)
   end
 
   def search_group
@@ -40,8 +45,7 @@ class GroupsController < ApplicationController
   def update
     @group = current_user.groups.find(params[:id])
     @group.update_attributes(params[:group])
-    @group.group_contacts.destroy_all if params[:contact_ids]
-    @group.add_group_contacts(params) if params[:contact_ids]
+    @group.background_tasks_for_update(current_user,params)
     @groups = current_user.groups
     render layout:nil
   end
