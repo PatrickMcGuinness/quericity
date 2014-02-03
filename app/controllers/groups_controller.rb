@@ -31,7 +31,7 @@ class GroupsController < ApplicationController
   end
 
   def search_group
-    @q = current_user.groups.search(params[:q])  
+    @q = current_user.groups_to_show.search(params[:q])  
     @groups = @q.result(:distinct => true)
   end
 

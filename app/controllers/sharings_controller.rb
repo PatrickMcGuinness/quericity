@@ -6,7 +6,7 @@ class SharingsController < ApplicationController
     @q = current_user.owned_sharings.search(params[:q])  
     @sharings = @q.result(:distinct => true)
     @quiz_banks = Sharing.get_unique_quiz_banks(@sharings)
-    @groups = current_user.groups
+    @groups = current_user.groups_to_show
   end
   
   def new

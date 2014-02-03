@@ -70,6 +70,10 @@ class User < ActiveRecord::Base
     self.groups.find_by_title("default")
   end
 
+  def groups_to_show
+    self.groups.where("title != 'default'")
+  end
+
 
   def students
     group_ids = self.groups.pluck(:id)
