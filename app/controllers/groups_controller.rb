@@ -13,7 +13,7 @@ class GroupsController < ApplicationController
   def create
     @group = current_user.groups.create(params[:group])
     @group.delay.background_tasks_for_create(current_user,params)
-    @groups = current_user.groups
+    @groups = current_user.groups_to_show
     render layout:nil
   end
 
@@ -46,7 +46,7 @@ class GroupsController < ApplicationController
     @group = current_user.groups.find(params[:id])
     @group.update_attributes(params[:group])
     @group.delay.background_tasks_for_update(current_user,params)
-    @groups = current_user.groups
+    @groups = current_user.groups_to_show
     render layout:nil
   end
 end
