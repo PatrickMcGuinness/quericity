@@ -55,7 +55,8 @@ QuizLib::Application.routes.draw do
     collection do
       get "history_search"
       get "get_all_students"
-      get "add_students" 
+      get "add_students"
+      get "add_more_students" 
     end 
   end
   resources :users do

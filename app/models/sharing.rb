@@ -10,26 +10,26 @@ class Sharing < ActiveRecord::Base
   validates :user_id, presence: true
   validates :quiz_bank_id, presence: true
 
-  def self.create_sharings(user, params)
-    unless params[:email_ids].blank?
-    	emails = params[:email_ids].split(",")
-    	emails.each do |email|
-        if Sharing.email_is_user?(email) and !Sharing.email_is_teacher?(email)
-          Sharing.create(:user_id => User.find_by_email(email).id, :quiz_bank_id => params[:quiz_bank_id], :owner_id => user.id)
+  def self.add_more_students(user,params)
+    students = []
+    invites = []
+    if params[:emails].present?
+      emails = params[:emails].split(",")
+      emails.each do |email|
+        if User.exists?(:email => email)
+          student = User.find_by_email(email)
+          students << student
+        else
+          invites << Invite.create(:sender_id => user.id, :receiver_email => email, :invitable_id => params[:quiz_bank_id], :invitable_type => "QuizBank")
         end
-        unless Sharing.email_is_user?(email)
-          Sharing.transaction do
-            new_user = User.invite!({:email => email, :role => "Student"},user)
-            sharing = Sharing.create(:user_id => new_user.id, :quiz_bank_id => params[:quiz_bank_id], :owner_id => user.id)
-            sharing.student_invitations.create(:email => email, :quiz_bank_id => params[:quiz_bank_id])
-          end
-        end
-    	end
-    else
-      params[:user_ids].each do |user_id|
-        Sharing.create(:user_id => user_id, :quiz_bank_id => params[:quiz_bank_id], :owner_id => user.id) 
       end
-    end  
+    end
+    [students, invites]
+  end
+
+  def self.background_job_for_create(user,params)
+    if params[:student_ids].present?
+    end
   end
 
   def self.email_is_valid?(email)

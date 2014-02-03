@@ -20,9 +20,7 @@ class Group < ActiveRecord::Base
   end
 
   def background_tasks_for_create(user,params)
-    puts "@@@@@@@@@@@@@@@@@@ in function"
     if params[:student_ids].present?
-      puts "@@@@@@@@@@@@@@@@@@ in if student ids"
       student_groups = user.default_group.student_groups
       student_groups.update_all(:group_id => self.id)
       student_ids_new = student_groups.pluck(:student_id)
@@ -33,7 +31,6 @@ class Group < ActiveRecord::Base
     end
 
     if params[:invite_ids].present?
-      puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ in invirte ids",params[:invite_ids]
       invites = Invite.where("id IN (?)", params[:invite_ids])
       invites.each do |invite|
         new_user = User.invite!({:email => invite.receiver_email, :role => "Student"},user)
@@ -45,9 +42,7 @@ class Group < ActiveRecord::Base
   handle_asynchronously :background_tasks_for_create, :run_at => Proc.new { Time.now }
 
   def background_tasks_for_update(user,params)
-    puts "@@@@@@@@@@@@@@@@@@ in function"
     if params[:invite_ids].present?
-      puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ in invirte ids",params[:invite_ids]
       invites = Invite.where("id IN (?)", params[:invite_ids])
       invites.each do |invite|
         new_user = User.invite!({:email => invite.receiver_email, :role => "Student"},user)
@@ -56,7 +51,7 @@ class Group < ActiveRecord::Base
       end
     end
   end
-  #handle_asynchronously :background_tasks_for_update
+  handle_asynchronously :background_tasks_for_update, :run_at => Proc.new { Time.now }
 
   def self.add_students(user,params)
     students = []

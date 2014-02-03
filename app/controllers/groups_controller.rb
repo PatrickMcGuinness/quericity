@@ -38,14 +38,14 @@ class GroupsController < ApplicationController
   def destroy
     @group = current_user.groups.find(params[:id])
     @group.destroy
-    @groups = current_user.groups
+    @groups = current_user.groups_to_show
     render layout:nil
   end
 
   def update
     @group = current_user.groups.find(params[:id])
     @group.update_attributes(params[:group])
-    @group.background_tasks_for_update(current_user,params)
+    @group.delay.background_tasks_for_update(current_user,params)
     @groups = current_user.groups
     render layout:nil
   end

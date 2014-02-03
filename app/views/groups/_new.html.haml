@@ -45,7 +45,6 @@
         data: {emails:$(".add-new-users").val()},
         method: "GET",
         success: function(data){
-          console.log(data)
           $(".no-student-record").remove()
           $(".add-new-users").val("")
           $(".student-thumbnails").append($(data).find('.student-thumbnails').html())
