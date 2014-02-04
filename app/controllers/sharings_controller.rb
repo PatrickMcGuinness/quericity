@@ -10,14 +10,13 @@ class SharingsController < ApplicationController
   end
   
   def new
-    @quiz_bank = current_user.quiz_banks.find(params[:quiz_bank_id])
+    @quiz_bank = params[:quiz_bank_id].present? ? current_user.quiz_banks.find(params[:quiz_bank_id]) : nil
   	@sharing = current_user.owned_sharings.new
   	render layout:nil
   end
 
   def create
-  	#Sharing.create_sharings(current_user, params)
-    Sharing.background_job_for_create(current_user,params)
+    Sharing.delay.background_job_for_create(current_user,params)
     @q = current_user.owned_sharings.search(params[:q])
     @sharings = @q.result(:distinct => true) 
     @quiz_banks = Sharing.get_unique_quiz_banks(@sharings)
@@ -30,12 +29,19 @@ class SharingsController < ApplicationController
     @quiz_banks = @quiz_banks.search(params[:q]).result(:distinct => true)
   end
 
-  def add_students
-    @users = Sharing.send_invitations(current_user,params)
+  def add_more_students
+    @students, @invites = Sharing.add_more_students(current_user,get_emails_list(params),params[:quiz_bank_id])
   end
 
-  def add_more_students
-    @students, @invites = Sharing.add_more_students(current_user,params)
+  def get_all_students
+    @sutdents = current_user.students
   end
+
+  private
+
+  def get_emails_list(params)
+    params[:emails].present? ? params[:emails].split(",") : []
+  end
+
 
 end

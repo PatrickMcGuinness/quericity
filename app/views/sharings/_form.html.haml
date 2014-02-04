@@ -8,14 +8,16 @@
       .modal-body     
         .row
           .col-xs-12{style: "margin-bottom:10px;"}
-            -#=select_tag 'quiz_bank_id', options_for_select(current_user.quiz_banks.collect{ |u| [u.title, u.id] }), :class => "form-control quiz-bank-dropdown", prompt: "Select Quiz"
-            %h4
-              = @quiz_bank.title
+            -if @quiz_bank.blank? 
+              =select_tag 'quiz_bank_id', options_for_select(current_user.quiz_banks.collect{ |u| [u.title, u.id] }), :class => "form-control quiz-bank-dropdown",id: "quiz-bank-id", prompt: "Select Quiz"
+            -else
+              %h4
+                = @quiz_bank.title
+              =hidden_field_tag "quiz_bank_id",@quiz_bank.id, id: "quiz-bank-id"   
           .col-xs-12.emails-div     
             =text_field_tag :email_ids, nil, class: "form-control emails", placeholder: "Enter comma separated emails then press enter"
           .col-xs-2.add-users.pull-right{style: "margin-top:10px;"}
-            =link_to "Add more students", "#", class: "add-more-students btn btn-primary btn-warning"
-            %input{type:"hidden", value:@quiz_bank.id, id: "quiz-bank-id"}  
+            =link_to "Add more students", "#", class: "add-more-students btn btn-primary btn-warning" 
           .col-xs-12.hide.group-dropdown
             -if current_user.groups_to_show.blank?
               = "No student group"
@@ -43,14 +45,17 @@
                       =student.email
 
           .col-xs-12.emails-for-group-div.hide
-            =text_field_tag :emails_for_group_ids, nil, class: "form-control emails-for-group", placeholder: "Enter comma separated emails then press enter"          
+            =text_field_tag :emails_for_group_ids, nil, class: "form-control emails-for-group", placeholder: "Enter comma separated emails then press enter"
+          .col-xs-2.add-user-group-div.pull-right.hide{style: "margin-top:10px;"}
+            =link_to "Add more students", "#", class: "btn btn-primary btn-warning add-user-group"            
       .modal-footer
         =submit_tag "Serve Quiz",{class:"btn btn-primary",placeholder: "Enter comma separated emails to add students"}
 
 
 :javascript
   $(document).ready(function(){
-    $(".modal-body").on("click", ".add-more-students", function(){
+    $(".modal-body").on("click", ".add-more-students", function(e){
+      e.preventDefault()
       console.log("hello")
       $.ajax({
         url: "/sharings/add_more_students",
@@ -66,6 +71,7 @@
     $(".modal-body").on("change", ".student-group-id", function(){
       if($(this).val() != ""){
         $(".emails-for-group-div").removeClass("hide")
+        $(".add-user-group-div").removeClass("hide")
         value = $(this).val()
         $.ajax({
           url: "/groups/"+value+"/get_student",
@@ -97,23 +103,30 @@
       $(this).addClass("hide")
       $(".select-from-group").removeClass("hide")
       $(".emails-for-group-div").addClass("hide")
-
+      $(".add-users").removeClass("hide")
+      $(".add-user-group-div").addClass("hide")
+      $.ajax({
+        url: "/sharings/get_all_students",
+        method: "GET",
+        success: function(data){
+          $(".student-thumbnails").html($(data).find('.student-thumbnails').html())
+        }
+      })
     })
 
-    $(".modal-body").on("keydown", ".emails-for-group", function(key){
-      if(key.keyCode == 13){
-        key.preventDefault()
-        value = $(this).val()
-        $.ajax({
-          url: "sharings/add_students",
-          method: "GET",
-          data: {emails: value},
-          success: function(data){
-            console.log(data)
-            $(".student-thumbnails").append($(data).find('.invited-users').html())
-          }
-        })
-      }
+    $(".modal-body").on("click", ".add-user-group", function(e){
+      e.preventDefault()
+      console.log("hello")
+      $.ajax({
+        url: "/sharings/add_more_students",
+        method: "GET",
+        data: {emails:$(".emails-for-group").val(), quiz_bank_id: $("#quiz-bank-id").val()},
+        success: function(data){
+          console.log(data)
+          $(".student-thumbnails").append($(data).find('.student-thumbnails').html())
+          $(".emails-for-group").val("")
+        }
+      })
     })
   })
       
