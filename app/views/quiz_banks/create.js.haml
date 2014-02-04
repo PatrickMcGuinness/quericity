@@ -1,13 +1,17 @@
 $('#base-modal').modal('hide');
 if($(".repo-id").length > 0){
 if($(".repo-id").val() == "#{@repository.id}"){
+if($(".no-record").length > 0){
 $(".no-record").remove()
 $(".quiz-banks-div").append("<table class='table table-bordered table_with_margin'><thead><tr><th>Title</th><th>Description</th><th>Topics</th><th></th></tr></thead><tbody></tbody></table>")
+}
 $("tbody").append(' #{j(render(partial: 'quiz_bank'))} ')
 }
 }
 else{
+if($(".no-record").length > 0){
 $(".no-record").remove()
 $(".quiz-banks-div").append("<table class='table table-bordered table_with_margin'><thead><tr><th>Title</th><th>Description</th><th>Topics</th><th></th></tr></thead><tbody></tbody></table>")
+}
 $("tbody").append(' #{j(render(partial: 'quiz_bank'))} ')
 }

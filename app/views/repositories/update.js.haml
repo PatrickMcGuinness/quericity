@@ -4,5 +4,7 @@ $("tr##{@repository.id}").after(' #{j(render(partial: 'repository'))} ')
 $("tr##{@repository.id}").remove()
 }
 else{
-$(".mar_top h2").html("#{@repository.title}")
+$(".repo-title-show").children().first().html("#{@repository.title}")
+$(".repo-title-show").find("span a").data("content", "#{@repository.description}")
+$("#description-popover").popover()
 }

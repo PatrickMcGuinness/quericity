@@ -83,7 +83,6 @@ class User < ActiveRecord::Base
     self.groups.where("title != 'default'")
   end
 
-
   def students
     group_ids = self.groups.pluck(:id)
     student_ids = StudentGroup.where("group_id IN (?)",group_ids).pluck(:student_id)

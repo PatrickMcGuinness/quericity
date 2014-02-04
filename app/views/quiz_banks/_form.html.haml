@@ -9,13 +9,13 @@
         .modal-body
           .row
             .col-xs-12
-              = f.input :title,:placeholder => "Enter Title", input_html: { class: 'form-control' }
-            .col-xs-6
-              = f.input :repository_id,collection: Repository.for_select(current_user),  prompt: "Select Repo", input_html: { class: 'form-control' }
-            .col-xs-6
-              = f.input :subject_id, collection: Subject.for_select, prompt: "Select Subject", input_html:{class: 'form-control'}
-            .col-xs-12   
-              = f.input :description,:placeholder => "Description", :as => :text, input_html: {class: 'form-control',style:"height:200px"}
+              = f.input :title,:placeholder => "Enter Title", input_html: { class: 'form-control' },:label => false
+            .col-xs-6{style: "margin-top:10px;"}
+              = f.input :repository_id,collection: Repository.for_select(current_user),  prompt: "Select Repo", input_html: { class: 'form-control' },:label => false
+            .col-xs-6{style: "margin-top:10px;"}
+              = f.input :subject_id, collection: Subject.for_select, prompt: "Select Subject", input_html:{class: 'form-control'}, :label => false
+            .col-xs-12{style: "margin-top:10px;"}   
+              = f.input :description,:placeholder => "Description", :as => :text, input_html: {class: 'form-control',style:"height:200px"}, :label => false
 
           .row
             .col-xs-12    
