@@ -35,7 +35,9 @@
 			    </div>
 			    <div class="form-group">
 			    	<div class="signup_password col-sm-10">
-			        <%= f.password_field :password,:class => "form-control size_area",:placeholder => "Choose a Password", :id => 'user_registeration_password' %>
+			        <%= f.hidden_field :password,:class => "form-control size_area",:placeholder => "Choose a Password", :id => 'user_registeration_password' %>
+              <%= f.hidden_field :provider %>
+              <%= f.hidden_field :uid %>
 			      </div>
 			    </div>
 				  <div class="form-group">

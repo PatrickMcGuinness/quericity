@@ -1,0 +1,33 @@
+common: &common
+  #feedback_emails: "taqweem@clustox.com,salman@clustox.com,omer.aslam@clustox.com"
+  facebook:
+    key: ""  
+
+development:
+  <<: *common
+  #cause_emails: "omeraslam07@gmail.com,omer.aslam@clustox.com,salman@clustox.com,taqweem@clustox.com"
+  facebook:
+    key: "499075120212976"
+    secret: "1778fed82d90d21856458554f7fc76ff"
+
+test:
+  <<: *common
+  #cause_emails: "omeraslam07@gmail.com,omer.aslam@clustox.com,salman@clustox.com,c2s.brett@gmail.com,taqweem@clustox.com"
+  facebook:
+    #for c2s-staging
+    key:	"499075120212976"
+    secret:	"1778fed82d90d21856458554f7fc76ff"
+    #for c2s-clustox
+    #key: '541620042588015'
+    #secret: '69a1e790279085ff49a789a333078c3a'
+    #for c2s-test
+    #key: '390177311093224'
+    #secret: '1097b7452545b3b29e5e2bd4542b8f48'
+
+production:
+  <<: *common
+  facebook:
+    key: "647951568597540"
+    secret: "a278c87b0b6802f68ebf31c360acc123"
+  #feedback_emails: "taqweem@clustox.com,withyou@causetoshare.com,support@causetoshare.com"
+  #cause_emails: "omeraslam07@gmail.com,omer.aslam@clustox.com,salman@clustox.com,taqweem@clustox.com,c2s.brett@gmail.com,gbthwg@gmail.com"

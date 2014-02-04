@@ -3,10 +3,10 @@ class User < ActiveRecord::Base
   # :token_authenticatable,
   # :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable,:omniauthable, :omniauth_providers => [:facebook]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :role, :invited_by
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :role, :invited_by, :provider, :uid
   attr_accessible :first_name, :last_name,:profile_pic, :role, :encrypted_password,:reset_password_token, :reset_password_sent_at, :remember_created_at,
   :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip,:confirmation_token,
   :confirmed_at, :confirmation_sent_at, :unconfirmed_email
@@ -20,9 +20,18 @@ class User < ActiveRecord::Base
   mount_uploader :profile_pic, ImageUploader
 
   after_create :create_default_group
+  after_create :confirm_the_user
 
   def create_default_group
     self.groups.create(:title => "default") if self.is_professor?
+  end
+
+  def confirm_the_user
+    if self.provider.present?
+      self.confirmed_at = Time.now
+      self.confirmation_token = nil
+      self.save
+    end
   end
 
   def name
@@ -79,5 +88,20 @@ class User < ActiveRecord::Base
     group_ids = self.groups.pluck(:id)
     student_ids = StudentGroup.where("group_id IN (?)",group_ids).pluck(:student_id)
     User.where("id IN (?)", student_ids)
+  end
+
+  def self.find_for_facebook_oauth(auth)
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first  || User.where(:email => auth.info.email ).first
+    unless user
+      user = User.new
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+      user.first_name = auth.info.first_name
+      user.last_name = auth.info.last_name
+      #user.profile_pic = auth.info.image # assuming the user model has an image
+    end
+    user
   end
 end
