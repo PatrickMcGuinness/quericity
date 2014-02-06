@@ -62,7 +62,7 @@ class SectionsController < ApplicationController
     @prev_section.questions.update_all(:section_id => params[:section_id])
     @quiz_bank = @prev_section.quiz_bank
     @repository = @quiz_bank.repository
-    @prev_section.update_attribute(:delete_at, Time.now)
+    @prev_section.update_attribute(:deleted_at, Time.now)
     render layout:nil
   end
 
