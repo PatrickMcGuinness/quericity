@@ -13,12 +13,6 @@ class Group < ActiveRecord::Base
     end
   end
 
-  def add_group_contacts(params)
-    params[:contact_ids].each do |contact_id|
-      GroupContact.create(:group_id => self.id, :contact_id => Contact.find(contact_id).id)
-    end
-  end
-
   def background_tasks_for_create(user,params)
     if params[:student_ids].present?
       student_groups = user.default_group.student_groups
@@ -62,8 +56,10 @@ class Group < ActiveRecord::Base
       emails.each do |email|
         if User.exists?(:email => email)
           student = User.find_by_email(email)
-          StudentGroup.create(:group_id => default_group.id, :student_id => student.id)
-          students << student
+          unless student.is_professor?
+            StudentGroup.create(:group_id => default_group.id, :student_id => student.id)
+            students << student
+          end
         else
           invites << Invite.create(:sender_id => user.id, :receiver_email => email, :invitable_id => default_group.id, :invitable_type => "Group")
           
@@ -82,7 +78,7 @@ class Group < ActiveRecord::Base
       emails.each do |email|
         if User.exists?(:email => email)
           student = User.find_by_email(email)
-          unless self.student_groups.exists?(:student_id => student.id)
+          unless self.student_groups.exists?(:student_id => student.id) and student.is_professor?
             student_groups << StudentGroup.create(:group_id => self.id, :student_id => student.id)
           end
         else

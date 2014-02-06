@@ -20,12 +20,6 @@ class CollaboratorsController < ApplicationController
     
   end
 
-  def edit
-  end
-  
-  def update
-  end
-
   def destroy
     @user_repository = UserRepository.where(:repository_id => params[:repository_id] , :user_id => params[:id]).first
     @user_repository.destroy 

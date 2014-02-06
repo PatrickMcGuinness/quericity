@@ -3,72 +3,61 @@ class QuizBanksController < ApplicationController
   before_filter :authenticate_user!
   layout "preview", only: [:quiz_preview]
   layout "application", only: [:show]
+  before_filter :set_variables, :only => [:show, :quiz_preview, :edit, :destroy, :update, :new, :destroy]
 	
   def index
     @quiz_banks = current_user.quiz_banks.search(params[:q]).result(:distinct => true).page(params[:page])
 	end
 
 	def new
-    @repository = current_user.repositories.find(params[:repository_id])
-    @quiz_bank = @repository.quiz_banks.new
     render layout: nil 
-  end
-  def without_repo
-    @quiz_bank = QuizBank.new
-    @repository = Repository.first
-    render layout:nil
-  end
-
-  def show
-    @repository = current_user.repositories.find(params[:repository_id])
-  	@quiz_bank = @repository.quiz_banks.find(params[:id])
-    @repository = @quiz_bank.repository
-    @sections = @quiz_bank.sections
   end
 
   def quiz_preview
-    @repository = current_user.repositories.find(params[:repository_id])
-    @quiz_bank = @repository.quiz_banks.find(params[:id])
-    @sections = @quiz_bank.sections
     @questions_without_sections = Section.all_questions_in_sections(@sections)
   end
 
-  def create
-    @repository = current_user.repositories.find(params[:quiz_bank][:repository_id])
-    @quiz_bank = @repository.quiz_banks.create(params[:quiz_bank])
-    @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank)
-    @question_topics = @quiz_bank.question_topics
-  	render layout: nil
-  end
-
   def edit
-    @repository = current_user.repositories.find(params[:repository_id])
-  	@quiz_bank = @repository.quiz_banks.find(params[:id])
     @topics = @quiz_bank.topics
     render layout:nil
   end
 
   def update
-    @repository = current_user.repositories.find(params[:repository_id])
-    @quiz_bank = @repository.quiz_banks.find(params[:id])
     @quiz_bank.update_attributes(params[:quiz_bank])
     @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank)
     render layout:nil
   end
 
   def destroy
-    @repository = current_user.repositories.find(params[:repository_id])
-    @quiz_bank = @repository.quiz_banks.find(params[:id])
-    @quiz_bank_id = @quiz_bank.id
-    @quiz_bank.destroy
+    @quiz_bank.update_attribute(:deleted_at, Time.now)
     render layout:nil
+  end
+
+  def without_repo
+    @quiz_bank = QuizBank.new
+    @repository = Repository.first
+    render layout:nil
+  end
+
+  def create
+    @repository = current_user.repositories.find(params[:quiz_bank][:repository_id])
+    @quiz_bank = @repository.quiz_banks.create(params[:quiz_bank])
+    @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank)
+  	render layout: nil
   end
 
   def update_title
     @quiz_bank = QuizBank.find(params[:id])
-    @quiz_bank.title = params[:title]
-    @quiz_bank.save
+    @quiz_bank.update_attribute(:title, params[:title])
     render json: {title: @quiz_bank.title}
+  end
+
+  private
+
+  def set_variables
+    @repository = current_user.repositories.find(params[:repository_id])
+    @quiz_bank = params[:id].present? ? @repository.quiz_banks.find(params[:id]) : @repository.quiz_banks.new
+    @sections = @quiz_bank.sections
   end
 
 end

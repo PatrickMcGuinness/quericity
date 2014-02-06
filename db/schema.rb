@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140203095201) do
+ActiveRecord::Schema.define(:version => 20140206074353) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20140203095201) do
     t.integer  "section_id"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+    t.datetime "deleted_at"
   end
 
   create_table "quiz_banks", :force => true do |t|
@@ -104,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20140203095201) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "subject_id"
+    t.datetime "deleted_at"
   end
 
   create_table "repositories", :force => true do |t|
@@ -112,14 +114,17 @@ ActiveRecord::Schema.define(:version => 20140203095201) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.integer  "quiz_banks_count", :default => 0
+    t.datetime "deleted_at"
   end
 
   create_table "sections", :force => true do |t|
-    t.integer  "seq",          :default => 0
+    t.integer  "seq",             :default => 0
     t.integer  "quiz_bank_id"
     t.string   "title"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.datetime "deleted_at"
+    t.integer  "questions_count", :default => 0
   end
 
   create_table "sharings", :force => true do |t|

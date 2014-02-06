@@ -5,8 +5,6 @@ class UserRepository < ActiveRecord::Base
   belongs_to :repository
 
   after_create :send_email
-
-  #before_update :send_email
   
   def send_email
   	if self.send_email?

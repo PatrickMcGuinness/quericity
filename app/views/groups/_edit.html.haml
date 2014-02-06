@@ -24,7 +24,7 @@
                       -if student_group.student.name.present?
                         = student_group.student.name
                       -else
-                        = "Name not set by Student"  
+                      = "Name not set by Student"  
                       = student_group.student.email
                     .col-xs-1.pull-right{style:"font-size:10px;"}
                       = link_to "x",student_group_path(student_group),data:{method: :delete, confirm: "Are you sure?"}, remote:true,rel: "tooltip",title: "Remove student from group", class: "student-to-invite"

@@ -17,7 +17,9 @@ class Sharing < ActiveRecord::Base
       emails.each do |email|
         if User.exists?(:email => email)
           student = User.find_by_email(email)
-          students << student
+          unless student.is_professor?
+            students << student
+          end
         else
           invites << Invite.create(:sender_id => user.id, :receiver_email => email, :invitable_id => quiz_bank_id, :invitable_type => "QuizBank")
         end

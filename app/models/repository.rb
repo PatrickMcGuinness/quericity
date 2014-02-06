@@ -6,15 +6,14 @@ class Repository < ActiveRecord::Base
   attr_accessible :description, :title
   validates :title, :presence => true, :length => { minimum: 5 }
   
-  has_many :users, :through => :user_repositories
-  
+  has_many :users, :through => :user_repositories 
   has_many :invitations
   has_many :user_repositories, dependent: :destroy
-  has_many :collaborators , :through => :user_repositories , :source => :user
-  
-  
+  has_many :collaborators , :through => :user_repositories , :source => :user 
   has_many :quiz_banks, dependent: :destroy
-  
+
+  default_scope { where("deleted_at IS NULL") }
+
   def owner
     self.user_repositories.find_by_permission("Owner").user
   end

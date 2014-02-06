@@ -1,9 +1,12 @@
 class Question < ActiveRecord::Base
+  
   attr_accessible :seq,:description,:question_type,:difficulty_level,:reference_url,:section_id
   validates :description, :section_id, :difficulty_level, :question_type, :presence => true
-  belongs_to :section
-
+  
+  belongs_to :section, :counter_cache => true
   has_many :question_options
+
+  default_scope { where("deleted_at IS NULL") }
 
   class Difficulty
     EASY = 1
@@ -25,13 +28,11 @@ class Question < ActiveRecord::Base
   end
   
   def self.create_true_false(params,section)
-    question = section.questions.create(params[:question])
-    question
+    section.questions.create(params[:question])
   end
 
   def self.create_mcq(params,section)
-    question = section.questions.create(params[:question])
-    question
+    section.questions.create(params[:question])
   end
   def create_mcq_option(params)
     params["options"].to_i.times.each do |i|
@@ -52,22 +53,14 @@ class Question < ActiveRecord::Base
   end
   
   def self.create_open_ended(params,section)
-    question = section.questions.create(params[:question])
-    question
+    section.questions.create(params[:question])
   end
 
   def create_open_ended_option(params)
-    question_option = self.question_options.new
-    question_option.answer = params[:answer]
-    question_option.save 
-    question_option
+    self.question_options.create(:answer => params[:answer]) 
   end
   
   def self.create_fill_in_the_blank(params,section)
-    #params[:description][0].gsub!("\n","")
-    #params[:description][0].gsub!("\r","")
-    #params[:description][0].gsub!("</p>","")
-    #params[:description2][0].gsub!("<p>","")
     description = "#{params[:description]} _______ #{params[:description2]}" 
     question = section.questions.new(:difficulty_level => params[:question][:difficulty_level],
                                     :question_type => params[:question][:question_type], :description => description)
@@ -76,10 +69,7 @@ class Question < ActiveRecord::Base
   end
 
   def create_fill_in_the_blank_option(params)
-    question_option = self.question_options.new
-    question_option.answer = params[:answer]
-    question_option.save
-    question_option
+    question_option = self.question_options.create(:answer => params[:answer])
   end
   def self.create_question(params,section)
     if params[:question][:question_type] == '1'
@@ -153,6 +143,10 @@ class Question < ActiveRecord::Base
     length = temp.length - 1
     temp[length]
   end
+
+  def self.find_by_list(list)
+    Question.where("id in (?)",list).order("seq ASC")
+  end
   def is_easy?
     self.difficulty_level == Question::Difficulty::EASY
   end
@@ -187,6 +181,15 @@ class Question < ActiveRecord::Base
 
   def self.types_for_select
     Question::QuestionType.get_all_question_types
+  end
+
+  def self.change_question_positions(questions)
+    questions.each_with_index do |id, index|
+      Question.update_all({seq: index+1},{id: id})
+    end
+    questions = Question.find_by_list(questions)
+    section = questions.first.section
+    [questions,section]
   end
 
    
