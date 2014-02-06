@@ -31,6 +31,10 @@ class RepositoriesController < ApplicationController
     render layout: nil
   end
   
+  def get_all_collaborators
+    @collaborators = @repository.collaborators
+    render layout:nil
+  end
   def update
     @repository.update_attributes(params[:repository])
     render layout:nil

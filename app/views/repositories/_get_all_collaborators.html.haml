@@ -1,0 +1,25 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4 Collaborators list
+    .modal-body
+      .row
+        .col-xs-12
+          %table.table-bordered{style: "width:100%"}
+            %thead
+              %th Name
+              %th Email
+              %th Permission
+            %tbody  
+              -@collaborators.each do |collaborator|
+                %tr
+                  %td
+                    -if collaborator.name.blank?
+                      = "Collaborator has not joined yet"
+                    -else
+                      = collaborator.name  
+                  %td      
+                    = collaborator.email 
+                  %td
+                    = collaborator.user_repositories.find_by_repository_id(@repository.id).permission

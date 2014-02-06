@@ -3,7 +3,7 @@ class UserRepository < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :repository
-
+  
   after_create :send_email
   
   def send_email

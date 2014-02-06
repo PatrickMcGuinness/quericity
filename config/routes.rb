@@ -72,6 +72,9 @@ QuizLib::Application.routes.draw do
     collection do
       get 'shared'
     end
+    member do
+      get 'get_all_collaborators'
+    end
     resources :collaborators
     resources :quiz_banks, :except => :index do
       member do
