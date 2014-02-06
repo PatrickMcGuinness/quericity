@@ -1,4 +1,7 @@
-$('#base-modal').modal('hide');
+$(".repo-header").addClass("hide")
+$(".quiz-bank-header").removeClass("hide")
+$(".repo-form").addClass("hide")
+$(".quiz-bank-form").append(' #{j(render(partial: 'quiz_banks/simple_form'))} ')
 if(window.location.pathname == "/repositories"){
 if($('.no-record').length > 0){
 $('.no-record').remove()

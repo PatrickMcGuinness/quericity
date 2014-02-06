@@ -43,7 +43,11 @@ class QuizBanksController < ApplicationController
     @repository = current_user.repositories.find(params[:quiz_bank][:repository_id])
     @quiz_bank = @repository.quiz_banks.create(params[:quiz_bank])
     @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank)
-  	render layout: nil
+  	respond_to do |format|
+      format.html{redirect_to repository_quiz_bank_path(@repository,@quiz_bank)}
+      #format.xml { render :xml => @people.to_xml }
+      format.js{render :create}
+    end
   end
 
   def update_title

@@ -4,6 +4,8 @@
   %td
     =@quiz_bank.description.html_safe
   %td
+    =@quiz_bank.subject.title  
+  %td
     - @quiz_bank.question_topics.each do |question_topic|
       -if current_user.can_change_repo?(@quiz_bank.repository)
         %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase} <a href="#{question_topic_path(question_topic.id)}" data-remote = true data-method = "delete" data-confirm = "Are you sure?" rel= "tooltip" title = "Remove Tag">x</a>
