@@ -327,3 +327,11 @@ background-color: #F62217;
 .popover{
   max-width: 100%;	
 }
+
+.mar-top-10{
+	margin-top: 10px;
+}
+
+.mar-top-20{
+	margin-top: 20px;
+}

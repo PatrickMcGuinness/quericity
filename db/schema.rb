@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140206074353) do
+ActiveRecord::Schema.define(:version => 20140207134814) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -127,12 +127,24 @@ ActiveRecord::Schema.define(:version => 20140206074353) do
     t.integer  "questions_count", :default => 0
   end
 
-  create_table "sharings", :force => true do |t|
+  create_table "served_quizzes", :force => true do |t|
+    t.integer  "owner_id"
     t.integer  "quiz_bank_id"
-    t.integer  "user_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.integer  "owner_id"
+    t.datetime "date"
+    t.datetime "close_date"
+    t.integer  "duration"
+    t.integer  "answer"
+    t.integer  "random"
+    t.text     "instructions"
+  end
+
+  create_table "sharings", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "served_quiz_id"
   end
 
   create_table "student_groups", :force => true do |t|

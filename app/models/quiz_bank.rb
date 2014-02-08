@@ -11,7 +11,7 @@ class QuizBank < ActiveRecord::Base
   has_many :sections, dependent: :destroy
   has_many :question_topics, dependent: :destroy
   has_many :topics, :through => :question_topics
-  has_many :sharings
+  has_many :served_quizzes
   has_many :invites, as: :invitable 
 
   after_create :create_section

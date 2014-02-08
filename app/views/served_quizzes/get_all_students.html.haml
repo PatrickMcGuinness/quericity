@@ -1,7 +1,7 @@
 .student-thumbnails{style:"margin-top:10px;overflow-y: auto;max-height:250px"}  
   -current_user.students.each do |student|
     .col-xs-2{style: "margin-left:5px;"}
-      .thumbnail.row{style:"width:250px"}
+      .thumbnail.row{style:"width:220px"}
         .col-xs-1
           =check_box_tag "student_ids[]" ,student.id,false,:class => "delete"
         .col-xs-1

@@ -15,6 +15,7 @@
 //= require jquery-ui.min
 //= require bootstrap.min
 //= require jquery.validate
+//= require jquery.steps
 //= require custom
 
 

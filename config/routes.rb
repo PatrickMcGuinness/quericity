@@ -51,7 +51,7 @@ QuizLib::Application.routes.draw do
       get "add_students_edit"
     end 
   end
-  resources :sharings do
+  resources :served_quizzes do
     collection do
       get "history_search"
       get "get_all_students"

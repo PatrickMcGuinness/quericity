@@ -5,13 +5,13 @@
       %h2
         Quiz Serve DashBoard
     .col-xs-2
-      =link_to "Serve Quiz",new_sharing_path, class: "btn btn-primary serve-quiz", remote: true
+      =link_to "Serve Quiz",new_served_quiz_path, class: "btn btn-primary serve-quiz", remote: true
   .row
     .col-xs-12
       =render partial: "serving_tabs"
 
   .row.tab-content
     .col-xs-12.tab-pane.active#history
-      =render partial: "history", :locals => {:@q => @q, :@sharings => @sharings}
+      =render partial: "history", :locals => {:@served_quizzes => @served_quizzes}
     .col-xs-12.tab-pane#manage_group       
-      =render partial: "manage_groups", :locals => {:@q => @q, :@sharings => @sharings}         
+      =render partial: "manage_groups"        

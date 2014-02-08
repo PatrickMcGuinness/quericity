@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   
   has_many :repositories, :through => :user_repositories
   has_many :user_repositories, dependent: :destroy 
-  has_many :owned_sharings, :class_name => 'Sharing', :foreign_key => 'owner_id'
+  has_many :served_quizzes, :class_name => 'ServedQuiz', :foreign_key => 'owner_id'
   has_many :groups, :class_name => 'Group', :foreign_key => 'owner_id'  
   has_many :student_groups, :class_name => 'StudentGroup', :foreign_key => 'student_id'
   has_many :invites, :class_name => "Invite", :foreign_key => "sender_id"
@@ -62,17 +62,17 @@ class User < ActiveRecord::Base
     QuizBank.where("repository_id IN (?)", repo_ids)
   end
 
+  def search_served_quizzes(params)
+    quiz_ids = self.quiz_banks.search(params[:q]).result(:distinct => true).pluck(:id)
+    ServedQuiz.where("quiz_bank_id IN (?)",quiz_ids)
+  end
+
   def is_student?
     self.role == "Student"
   end
 
   def is_professor?
     self.role == "Professor"
-  end
-
-  def contacts
-    group_ids = self.groups.pluck(:id)
-    Contact.joins(:group_contacts).where("group_contacts.group_id IN (?)",group_ids)
   end
 
   def default_group

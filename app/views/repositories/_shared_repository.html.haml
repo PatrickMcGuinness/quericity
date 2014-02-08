@@ -1,0 +1,16 @@
+%tr
+  %td
+    =link_to "#{repository.title}",repository_path(repository)
+  %td
+    ="Quiz Banks: #{repository.quiz_banks.count}"
+  %td
+    -repository.question_tags.each do |question_topic|
+      -if current_user.can_change_repo?(repository)
+        %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase} <a href="#{question_topic_path(question_topic.id)}" data-remote = true data-method = "delete" data-confirm = "Are you sure?" rel= "tooltip" title = "Remove Tag">x</a>
+      -else
+        %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}
+  %td
+    -if repository.owner.name.present?
+      =repository.owner.name
+    -else
+      =repository.owner.email

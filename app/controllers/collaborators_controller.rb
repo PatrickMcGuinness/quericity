@@ -13,9 +13,13 @@ class CollaboratorsController < ApplicationController
     @repository = current_user.repositories.find(params[:repository_id])
     user = User.find_by_email(params[:email])
     if user.present?
-      @collaborator = @repository.add_collaborator(user , params[:user_repository][:permission]) 
+      if user.is_professor?
+        @collaborator = @repository.add_collaborator(user , params[:user_repository][:permission]) 
+      end
     else
       @invitation = @repository.invitations.create(:email => params[:email] ,:permission => params[:user_repository][:permission])
+      #user = User.invite!({:email => params[:email],:role => "Professor"},current_user)
+      #@collaborator = @repository.add_collaborator(user , params[:user_repository][:permission]) 
     end
     
   end
