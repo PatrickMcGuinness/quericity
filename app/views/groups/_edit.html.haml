@@ -36,15 +36,21 @@
 :javascript
   $(document).ready(function(){
     $(".modal-body").on("click", ".add-users",function(){
-      $.ajax({
-        url: "groups/add_students_edit",
-        data: {emails:$(".add-new-users").val(),id:$(".group-id").val()},
-        method: "GET",
-        success: function(data){
-          console.log(data)
-          $(".add-new-users").val("")
-          $(".student-thumbnails").append($(data).find('.student-thumbnails').html())
-        }
-      })
+      if (validateCommaSeparatedEmails($(".add-new-users").val()) == true){
+        $(".add-new-users").siblings("label.error").remove()
+        $.ajax({
+          url: "groups/add_students_edit",
+          data: {emails:$(".add-new-users").val(),id:$(".group-id").val()},
+          method: "GET",
+          success: function(data){
+            console.log(data)
+            $(".add-new-users").val("")
+            $(".student-thumbnails").append($(data).find('.student-thumbnails').html())
+          }
+        })
+      }
+      else{
+        $(".add-new-users").after("<label class='error'>Entered emails are not valid.</label>")
+      }  
     })
   })             

@@ -16,6 +16,7 @@
 //= require bootstrap.min
 //= require jquery.validate
 //= require jquery.steps
+//= require helper_functions
 //= require custom
 
 
@@ -24,7 +25,3 @@ loadingimage =  "<img alt='Please wait' src='/assets/loading.gif' style='margin-
 function get_ajax_loader_html() {
   return loadingimage
 }
-
-
-
-
