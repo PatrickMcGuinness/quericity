@@ -4,10 +4,10 @@ Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
-
+  config.mailer_sender = 'system@quizlib.com'
   # Configure the class responsible to send e-mails.
   config.mailer = "Devise::Mailer"
-
+  #config.allow_insecure_token_lookup = true
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
@@ -42,8 +42,8 @@ Devise.setup do |config|
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
   config.strip_whitespace_keys = [ :email ]
-  config.secret_key = 'cc0e9185edf7c74beba16c4468550398c0e7f77e09e87931f964a63c27710b4025f36970930e74082e0200d069a0ae23cfa572fe2f420b2360ed07d6381c87b7'
-
+  #config.secret_key = 'cc0e9185edf7c74beba16c4468550398c0e7f77e09e87931f964a63c27710b4025f36970930e74082e0200d069a0ae23cfa572fe2f420b2360ed07d6381c87b7'
+  config.secret_key = '86f7ded2dac9abcdb2c3a646f648ea4668666d3392ac0d4cb0b485c1370312137b3cbc844c21925c9c2783f3342470b2f704a22cc39013d05cfce9b4b48554c0'
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
   # given strategies, for example, `config.params_authenticatable = [:database]` will
