@@ -32,6 +32,11 @@ class ServedQuizzesController < ApplicationController
     @sutdents = current_user.students
   end
 
+  def show_all_sharings
+    @served_quiz = current_user.served_quizzes.find(params[:id])
+    @sharings = @served_quiz.sharings
+  end
+
   private
 
   def get_emails_list(params)

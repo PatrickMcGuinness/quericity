@@ -36,6 +36,11 @@ class GroupsController < ApplicationController
     render layout:nil
   end
 
+  def edit_title
+    @group.update_attribute(:title, params[:title])
+    @groups = current_user.groups_to_show
+  end
+
 
   private
 

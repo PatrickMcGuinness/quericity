@@ -1,3 +1,37 @@
 $(".serve-quiz").html("Serve Quiz")
 $('#base-modal').html(' #{j(render(partial: 'new'))} ').modal()
 
+$("#new_served_quiz").validate({
+onkeyup: false,
+onclick: false,
+onfocusout: false,
+rules: {
+"served_quiz[quiz_bank_id]": {
+required: true
+},
+"served_quiz[date]": {
+required: true
+},
+"served_quiz[close_date]":{
+required: true
+},
+"served_quiz[duration]":{
+required: true
+},
+"served_quiz[instructions]":{
+required: true
+}
+},
+messages: {
+},
+highlight: function(element) {
+$(element).siblings('label.error').remove();
+$(element).closest('.control_validate').removeClass('success').addClass('error');
+},
+// Success function accepts lable as an argument
+success: function(element) {
+$(element).remove();
+$(element).closest('.control_validate').removeClass('error').addClass('success');
+}
+});
+

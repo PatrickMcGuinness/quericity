@@ -1,0 +1,19 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4
+        = "Student List"
+
+    .modal-body
+      %table.table-bordered.mar-top-15.full-width
+        %thead
+          %th Name
+          %th Email
+        %tbody
+          -@sharings.each do |sharing|
+            %tr
+              %td
+                =sharing.user.name.blank? ? "Name not set" : sharing.user.name 
+              %td
+                = sharing.user.email  

@@ -1,0 +1,22 @@
+%table.table-bordered.mar-top-15.full-width
+  %thead
+    %tr
+      %th Name
+      %th Created on
+      %th Action
+  %tbody
+    -@groups.each do |group|
+      %tr{id: group.id}
+        %td
+          .title-show
+            = group.title
+          .title-edit.hide
+            %input{type:"text",class: "group-title-edit form-control",value: group.title}
+            %input{type:"hidden", class: "group-id", value: group.id}
+        %td
+          = show_date(group.created_at)
+        %td
+          =link_to edit_group_path(group),remote: true,rel: "tooltip",title: "Edit Group" do
+            %span.glyphicon.glyphicon-pencil
+          = link_to group_path(group),data:{method: :delete, confirm: "Are you sure?"}, remote:true,rel: "tooltip",title: "Delete Group" do
+            %span.glyphicon.glyphicon-trash
