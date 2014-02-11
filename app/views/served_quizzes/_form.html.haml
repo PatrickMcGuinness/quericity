@@ -57,28 +57,66 @@
             %legend Choose Options
             .row
               .col-xs-4
-                =f.text_field :date,:placeholder => "Start date",class: "form-control date-picker"
-              .col-xs-4    
-                =f.text_field :close_date,:placeholder => "Close date",class: 'form-control date-picker'
+                .input-group.date#datetimepicker1
+                  =f.text_field :date,:placeholder => "Start date",class: "form-control"
+                  %span.input-group-addon
+                    %span.glyphicon.glyphicon-calendar
+              .col-xs-4
+                .input-group.date#datetimepicker2
+                  =f.text_field :start_time,:placeholder => "Start time",class: 'form-control'
+                  %span.input-group-addon
+                    %span.glyphicon.glyphicon-time  
               .col-xs-4
                 =f.select :duration,[["10 min",10],["20 mins", 20]], {},{class: "form-control"}
               .col-xs-12.mar-top-20
                 = f.text_area :instructions,rows:10,:placeholder => "Add instructions", class: "form-control"      
               .col-xs-8.mar-top-20
-                ="Show the answers after the quiz: "
+                ="Show the answers to students after the quiz: "
               .col-xs-4.mar-top-20  
                 =f.check_box :answer
               .col-xs-8.mar-top-20
                 ="Randomize the questions on serve: "
               .col-xs-4.mar-top-20  
-                =f.check_box :random
-              .col-xs-2.pull-right.mar-top-20
-                =f.submit "Serve Quiz",{class:"btn btn-primary"}         
+                =f.check_box :random         
 
 :javascript
   $(document).ready(function(){
     $("#wizard").steps({
-      enableFinishButton: false
+      onStepChanging: function (event, currentIndex, newIndex){
+        check = 0; 
+        if(currentIndex == 0){
+          if ($("#served_quiz_quiz_bank_id").val() == ""){
+            $("#served_quiz_quiz_bank_id").siblings("label.error").remove()
+            $("#served_quiz_quiz_bank_id").after("<label class = 'error'>Select a quiz<label>")
+            check = 1;
+          }
+          else{
+            $("#served_quiz_quiz_bank_id").siblings("label.error").remove()
+            check = 0
+          }
+        }
+        if(currentIndex == 1){
+          if($(".delete").is(":checked")){
+            check = 0
+            $(".student-cloud").siblings("label.error").remove()
+          }
+          else{
+            check = 1
+            $(".student-cloud").siblings("label.error").remove()
+            $(".student-cloud").before("<label class = 'error'>Select at least one student<label>")
+          }
+        }
+        if(check == 0){
+          return true;
+        }
+        if(check == 1){
+          return false
+        } 
+      },
+      onFinishing: function (event, currentIndex){ 
+        $("form#new_served_quiz").submit() 
+      },
+      labels: { finish: "Serve Quiz"}
     });
     $(".date-picker").datepicker();
     $(".modal-body").on("click", ".add-more-students", function(e){

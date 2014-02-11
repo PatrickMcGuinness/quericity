@@ -1,14 +1,9 @@
 =render 'common/tabs'
 .tab-content.padding-top40.tab-container
   .row
-    .col-xs-10
-      %h2
-        Quiz Serve DashBoard
-    .col-xs-2
-      =link_to "Serve Quiz",new_served_quiz_path, class: "btn btn-primary serve-quiz", remote: true
-  .row
     .col-xs-12
       =render partial: "serving_tabs"
+      =link_to "Serve Quiz",new_served_quiz_path, class: "btn btn-primary serve-quiz", remote: true    
 
   .row.tab-content
     .col-xs-12.tab-pane.active#history

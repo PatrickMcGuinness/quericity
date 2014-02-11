@@ -1,5 +1,5 @@
 class ServedQuiz < ActiveRecord::Base
-  attr_accessible :owner_id, :quiz_bank_id,:answer, :duration, :date, :close_date, :instructions,:random
+  attr_accessible :owner_id, :quiz_bank_id,:answer, :duration, :date, :close_date, :instructions,:random,:start_time
 
   validates :owner_id, presence:true
   validates :quiz_bank_id, presence: true

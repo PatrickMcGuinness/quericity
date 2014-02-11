@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140207134814) do
+ActiveRecord::Schema.define(:version => 20140211093724) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20140207134814) do
     t.integer  "answer"
     t.integer  "random"
     t.text     "instructions"
+    t.datetime "start_time"
   end
 
   create_table "sharings", :force => true do |t|

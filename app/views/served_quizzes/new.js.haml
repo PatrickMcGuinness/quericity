@@ -1,6 +1,11 @@
 $(".serve-quiz").html("Serve Quiz")
 $('#base-modal').html(' #{j(render(partial: 'new'))} ').modal()
 
+$('#datetimepicker2').datetimepicker({
+});
+$('#datetimepicker1').datetimepicker({
+});
+
 $("#new_served_quiz").validate({
 onkeyup: false,
 onclick: false,
@@ -17,14 +22,12 @@ required: true
 },
 "served_quiz[duration]":{
 required: true
-},
-"served_quiz[instructions]":{
-required: true
 }
 },
 messages: {
 },
 highlight: function(element) {
+console.log(element.id)
 $(element).siblings('label.error').remove();
 $(element).closest('.control_validate').removeClass('success').addClass('error');
 },

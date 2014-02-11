@@ -341,3 +341,11 @@ background-color: #F62217;
 .mar-top-15{
 	margin-top: 15px;
 }
+
+.serve-quiz{
+	float: right !important;
+	margin-top: -60px;
+}
+.add-group{
+	margin-top: 23px;
+}
