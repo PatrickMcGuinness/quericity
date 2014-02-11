@@ -4,7 +4,8 @@ class QuizBanksController < ApplicationController
   layout "preview", only: [:quiz_preview]
   layout "application", only: [:show]
   before_filter :set_variables, :only => [:show, :quiz_preview, :edit, :destroy, :update, :new, :destroy]
-	
+	before_filter :set_quiz_bank_params, :only => [:create,:update]
+  
   def index
     @quiz_banks = current_user.quiz_banks.search(params[:q]).result(:distinct => true).page(params[:page])
 	end
@@ -45,7 +46,6 @@ class QuizBanksController < ApplicationController
     @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank)
   	respond_to do |format|
       format.html{redirect_to repository_quiz_bank_path(@repository,@quiz_bank)}
-      #format.xml { render :xml => @people.to_xml }
       format.js{render :create}
     end
   end
@@ -62,6 +62,19 @@ class QuizBanksController < ApplicationController
     @repository = current_user.repositories.find(params[:repository_id])
     @quiz_bank = params[:id].present? ? @repository.quiz_banks.find(params[:id]) : @repository.quiz_banks.new
     @sections = @quiz_bank.sections
+  end
+
+  def set_quiz_bank_params
+    if params[:quiz_bank][:subject_id] == 'other'
+      subject = Subject.find_by_title(params[:new_subject].capitalize)
+      unless subject.present?
+        subject = Subject.create(:title => params[:new_subject].capitalize)
+        params[:quiz_bank][:subject_id] = subject.id
+      else
+        params[:quiz_bank][:subject_id] = subject.id
+      end
+    end
+    params
   end
 
 end
