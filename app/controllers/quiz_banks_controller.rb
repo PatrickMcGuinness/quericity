@@ -2,7 +2,7 @@ class QuizBanksController < ApplicationController
 
   before_filter :authenticate_user!
   layout "preview", only: [:quiz_preview]
-  layout "application", only: [:show]
+  layout "quiz_bank_show", only: [:show]
   before_filter :set_variables, :only => [:show, :quiz_preview, :edit, :destroy, :update, :new, :destroy]
 	before_filter :set_quiz_bank_params, :only => [:create,:update]
   

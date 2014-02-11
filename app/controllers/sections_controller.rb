@@ -31,7 +31,7 @@ class SectionsController < ApplicationController
   end
 
   def destroy
-    @section.update_attribute(:delete_at, Time.now)
+    @section.update_attribute(:deleted_at, Time.now)
     render layout:nil
   end
 

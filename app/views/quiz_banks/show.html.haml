@@ -46,44 +46,5 @@
 
 :javascript
   $(document).ready(function(){
-    $(".quiz-bank-title-edit").hide()
-    $(".glyphicon-comment").hover(function(){
-      $("#description-popover").popover('show')
-      },function(){
-      $("#description-popover").popover('hide')
-    })
-    
-    $(".quiz-bank-title-show").click(function(){
-      $(this).hide()
-      $(".quiz-bank-title-edit").show()
-    })
-    
-    $(".section-title-show").click(function(){
-      id = $(this).attr("id")
-      $(this).hide()
-      $("#"+id+".section-title-edit").show()
-    })
-
-    $(".tab-content").on("focusout", "#title-field", function(){
-      $(".quiz-bank-title-edit").hide()
-      $(".quiz-bank-title-show").show()
-    })    
-
-    $(".tab-content").on("keydown","#title-field",function(key){
-      _this = this
-      quiz_bank_id = $(".quiz-bank-title-edit").data("id")
-      if(key.keyCode == 13){
-        key.preventDefault()
-        $.ajax({
-          url: "/quiz_banks/"+quiz_bank_id+"/update_title",
-          data: {title: $(_this).val()},
-          success: function(data){
-            $(".quiz-bank-title-edit").hide()
-            $(".quiz-bank-title-show").find(".title").html(data.title)
-            $(".quiz-bank-title-show").show()
-          }
-        })
-      }
-    })
-    
+    $(".quiz-bank-title-edit").hide()    
   }) 

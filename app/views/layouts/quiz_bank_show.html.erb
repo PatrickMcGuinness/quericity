@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>QuizLib</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "ckeditor/init" %>
+    <%= javascript_include_tag "ckeditor/config" %>
+    <%= javascript_include_tag "dialogpatch" %>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <%= javascript_include_tag "quiz_banks" %>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    
+    <%=render 'layouts/header'%>
+    
+    <div class="container main-container">
+      <br/><br/><br/><br/><br/>
+      <%if notice%>    
+        <div class="alert alert-success">
+          <a class="close mov" data-dismiss="alert">×</a>
+          <div class="notice"><%= flash[:notice] %></div> 
+        </div>
+      <%elsif alert%>
+        <div class="alert alert-error">
+          <a class="close mov" data-dismiss="alert">×</a>
+          <div class="notice"><%= flash[:alert] %></div> 
+        </div>
+      <%end%>
+      <%= yield %>
+    </div>
+    <%=render 'common/modal'%>
+    <%=render 'layouts/footer'%>
+    
+  </body>
+</html>
