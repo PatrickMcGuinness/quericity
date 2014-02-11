@@ -1,11 +1,11 @@
-.col-xs-9.groups
+.col-xs-12.groups
   -if @groups.blank?
-    %table.table-bordered{style: "margin-top:15px;width:100%;"}
+    %table.table-bordered.mar-top-15.full-width
       %tbody
         %tr 
           %td You have no groups
   -else
-    %table.table.table-bordered{style: "margin-top:15px;width:100%;"}
+    %table.table.table-bordered.mar-top-15.full-width
       %thead
         %tr
           %th Name

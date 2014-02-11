@@ -19,8 +19,10 @@ class ServedQuiz < ActiveRecord::Base
   end
 
   def background_job_for_create(user,student_ids,invite_ids)
-    student_ids.each do |student_id|
-      Sharing.create(:user_id => student_id,:served_quiz_id => self.id)
+    if student_ids.present?
+      student_ids.each do |student_id|
+        Sharing.create(:user_id => student_id,:served_quiz_id => self.id)
+      end
     end
     invites = Invite.find_by_list(invite_ids)
     default_group = user.default_group
@@ -31,5 +33,5 @@ class ServedQuiz < ActiveRecord::Base
     end
     Invite.where("invitable_id = ? and invitable_type = ?",self.quiz_bank_id,"QuizBank").destroy_all
   end
-  #handle_asynchronously :background_job_for_create, :run_at => Proc.new { Time.now }
+  handle_asynchronously :background_job_for_create, :run_at => Proc.new { Time.now }
 end

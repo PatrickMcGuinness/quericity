@@ -15,7 +15,7 @@ class ServedQuizzesController < ApplicationController
 
   def create
     @served_quiz = current_user.served_quizzes.create(params[:served_quiz])
-    @served_quiz.background_job_for_create(current_user,params[:student_ids],params[:invite_ids])
+    @served_quiz.delay.background_job_for_create(current_user,params[:student_ids],params[:invite_ids])
     @served_quizzes = current_user.served_quizzes
   	#render layout:nil
   end
