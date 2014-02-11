@@ -5,7 +5,7 @@
         %tr 
           %td There is nothing to show in history
   -else
-    %table.table-bordered{style: "width:100%;margin-bottom:15px;"}
+    %table.table.table-bordered{style: "width:100%;margin-bottom:15px;"}
       %thead
         %th Quiz Title
         %th Students
@@ -17,8 +17,9 @@
             %td 
               = served_quiz.quiz_bank.title
             %td
-              = "Students: #{served_quiz.sharings.count}"  
+              = "Students: "
+              = link_to "#{served_quiz.sharings.count}", show_all_sharings_served_quiz_path(served_quiz), remote: true  
             %td
-              = "#{time_ago_in_words(served_quiz.created_at)} ago" 
+              = show_date(served_quiz.created_at) 
             %td
               = "implemented later"             

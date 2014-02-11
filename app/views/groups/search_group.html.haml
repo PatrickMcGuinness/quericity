@@ -5,7 +5,7 @@
         %tr 
           %td You have no groups
   -else
-    %table.table-bordered{style: "margin-top:15px;width:100%;"}
+    %table.table.table-bordered{style: "margin-top:15px;width:100%;"}
       %thead
         %tr
           %th Name
@@ -17,7 +17,7 @@
             %td
               = group.title
             %td
-              = "#{time_ago_in_words(group.created_at)} ago"
+              = show_date(group.created_at)
             %td
               =link_to edit_group_path(group),remote: true,rel: "tooltip",title: "Edit Group" do
                 %span.glyphicon.glyphicon-pencil
