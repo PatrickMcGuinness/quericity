@@ -57,15 +57,15 @@
             %legend Choose Options
             .row
               .col-xs-4
-                .input-group.date#datetimepicker1
-                  =f.text_field :date,:placeholder => "Start date",class: "form-control"
-                  %span.input-group-addon
-                    %span.glyphicon.glyphicon-calendar
+                -#.input-group.date#datetimepicker1
+                =f.text_field :date,:placeholder => "Start date",class: "form-control datepicker"
+                -#%span.input-group-addon
+                -#%span.glyphicon.glyphicon-calendar
               .col-xs-4
-                .input-group.date#datetimepicker2
-                  =f.text_field :start_time,:placeholder => "Start time",class: 'form-control'
-                  %span.input-group-addon
-                    %span.glyphicon.glyphicon-time  
+                -#.input-group.date#datetimepicker2
+                =f.text_field :start_time,:placeholder => "Start time",class: 'form-control time-picker'
+                -#%span.input-group-addon
+                -#%span.glyphicon.glyphicon-time  
               .col-xs-4
                 =f.select :duration,[["10 min",10],["20 mins", 20]], {},{class: "form-control"}
               .col-xs-12.mar-top-20

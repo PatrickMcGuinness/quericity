@@ -349,3 +349,7 @@ background-color: #F62217;
 .add-group{
 	margin-top: 23px;
 }
+.ui-datepicker{
+	z-index: 1000000;
+	background-color: white;
+}

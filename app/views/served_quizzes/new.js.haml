@@ -1,10 +1,8 @@
 $(".serve-quiz").html("Serve Quiz")
 $('#base-modal').html(' #{j(render(partial: 'new'))} ').modal()
 
-$('#datetimepicker2').datetimepicker({
-});
-$('#datetimepicker1').datetimepicker({
-});
+$('.time-picker').timepicker({});
+$('.datepicker').datepicker({});
 
 $("#new_served_quiz").validate({
 onkeyup: false,

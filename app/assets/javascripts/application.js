@@ -17,8 +17,7 @@
 //= require jquery.validate
 //= require jquery.steps
 //= require helper_functions
-//= require bootstrap-datetimepicker.min
-//= require bootstrap-datepicker
+//= require jquery.timepicker.min
 //= require custom
 
 
