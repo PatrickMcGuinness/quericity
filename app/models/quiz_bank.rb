@@ -2,7 +2,7 @@ class QuizBank < ActiveRecord::Base
   
   paginates_per 5
   
-  attr_accessible :description, :title, :repository_id, :subject_id
+  attr_accessible :description, :title, :repository_id, :subject_id, :instructions
   validates :title,:repository_id,:subject_id, :presence => true 
 
   belongs_to :repository, :counter_cache => true

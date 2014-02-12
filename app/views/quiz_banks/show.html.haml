@@ -40,6 +40,9 @@
           = link_to "My Quiz Bank", repository_path(@repository)
         %li.active
           = @quiz_bank.title
+  .row
+    .instructions.col-xs-12
+      =render partial: "quiz_banks/add_instructions", :locals => {:@quiz_bank => @quiz_bank}             
   .row        
     .sections.col-xs-12
       =render partial: "sections/sections", :locals => {:@quiz_bank => @quiz_bank}

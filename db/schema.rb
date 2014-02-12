@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140211142132) do
+ActiveRecord::Schema.define(:version => 20140212112721) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(:version => 20140211142132) do
     t.datetime "updated_at",    :null => false
     t.integer  "subject_id"
     t.datetime "deleted_at"
+    t.text     "instructions"
   end
 
   create_table "repositories", :force => true do |t|
@@ -130,8 +131,8 @@ ActiveRecord::Schema.define(:version => 20140211142132) do
   create_table "served_quizzes", :force => true do |t|
     t.integer  "owner_id"
     t.integer  "quiz_bank_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.datetime "date"
     t.datetime "close_date"
     t.integer  "duration"
@@ -139,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20140211142132) do
     t.integer  "random"
     t.text     "instructions"
     t.datetime "start_time"
+    t.integer  "infinite_duration"
   end
 
   create_table "sharings", :force => true do |t|

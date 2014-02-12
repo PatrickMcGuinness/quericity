@@ -3,9 +3,17 @@
     .col-xs-6.col-xs-offset-4{style:"padding-bottom:40px"}
       %h1
         = @quiz_bank.title
+      %strong
+        = "from: #{@quiz_bank.repository.owner.name}"
+      %br  
+      %strong  
+        = "email: #{@quiz_bank.repository.owner.email}"  
     .col-xs-2.pull-right
-      =link_to "Hide Sections", "#", class: "btn btn-primary hide-section"    
-    .row.questions-with-sections   
+      =link_to "Hide Sections", "#", class: "btn btn-primary hide-section"
+    .row
+      .instructions.col-xs-12
+        =render partial: "quiz_banks/add_instructions", :locals => {:@quiz_bank => @quiz_bank}      
+    .row.questions-with-sections.mar-top-20   
       -@sections.each_with_index do |section,index|     
         .col-xs-12
           .well

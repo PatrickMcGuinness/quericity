@@ -353,3 +353,8 @@ background-color: #F62217;
 	z-index: 1000000;
 	background-color: white;
 }
+
+.show-instructions{
+	padding: 10px;
+	margin-bottom: 15px;
+}

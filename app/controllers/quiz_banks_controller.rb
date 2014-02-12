@@ -34,6 +34,11 @@ class QuizBanksController < ApplicationController
     render layout:nil
   end
 
+  def add_instructions
+    @quiz_bank = QuizBank.find(params[:id])
+    @quiz_bank.update_attributes(params[:quiz_bank])
+  end
+
   def without_repo
     @quiz_bank = QuizBank.new
     @repository = Repository.first

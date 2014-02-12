@@ -10,14 +10,17 @@
         %tr
           %th Name
           %th Created on
+          %th Last Updated on
           %th Action
       %tbody
         -@groups.each do |group|
           %tr{id: group.id}
             %td
-              = group.title
+              = link_to group.title, get_all_students_group_path(group), remote: true
             %td
               = show_date(group.created_at)
+            %td
+              = show_date(group.updated_at)  
             %td
               =link_to edit_group_path(group),remote: true,rel: "tooltip",title: "Edit Group" do
                 %span.glyphicon.glyphicon-pencil

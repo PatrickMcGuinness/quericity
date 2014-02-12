@@ -26,6 +26,7 @@ QuizLib::Application.routes.draw do
   get "/questions/fill_in_the_blank_edit", to: "questions#fill_in_the_blank_edit", as: :fill_in_the_blank_edit
   get "/questions/mcq_edit", to: "questions#mcq_edit", as: :mcq_edit
   get "quiz_banks/:id/update_title", to: "quiz_banks#update_title", as: :update_title
+  get "quiz_banks/:id/add_instructions", to: "quiz_banks#add_instructions", as: :add_instructions
   get "repositories/:id/update_title", to: "repositories#update_title", as: :repo_update_title
   get "sections/:id/update_title", to: "sections#update_title", as: :section_update_title
   post "sections/change_question_positions", to: "sections#change_question_positions", as: :change_question_positions
@@ -44,7 +45,8 @@ QuizLib::Application.routes.draw do
   resources :groups do
     member do
       get "get_student"
-      get "edit_title" 
+      get "edit_title"
+      get "get_all_students" 
     end
     collection do
       get "search_group"
@@ -92,6 +94,12 @@ QuizLib::Application.routes.draw do
       end
     end
   end
+
+  namespace :students do
+    resources :quiz_banks
+  end
+
+  post "students/quiz_banks/dashboard", to: "students/quiz_banks#dashboard", as: :students_quiz_banks_dashboard
   # Sample resource route with options:
   #   resources :products do
   #     member do

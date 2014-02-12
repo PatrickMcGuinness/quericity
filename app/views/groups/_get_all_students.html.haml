@@ -1,0 +1,18 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4
+        ="Students List"
+    .modal-body
+      %table.table.table-bordered.mar-top-20.full_width
+        %thead
+          %th Name
+          %th Email
+        %tbody
+          -@student_groups.each do |student_group|
+            %tr
+              %td
+                = get_user_name(student_group.student)
+              %td
+                = student_group.student.email      

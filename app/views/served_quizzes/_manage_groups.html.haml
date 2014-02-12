@@ -19,18 +19,17 @@
           %tr
             %th Name
             %th Created on
+            %th Last Updated on
             %th Action
         %tbody
           -@groups.each do |group|
             %tr{id: group.id}
               %td
-                .title-show
-                  = group.title
-                .title-edit.hide
-                  %input{type:"text",class: "group-title-edit form-control",value: group.title}
-                  %input{type:"hidden", class: "group-id", value: group.id}
+                = link_to group.title, get_all_students_group_path(group), remote: true
               %td
                 = show_date(group.created_at)
+              %td
+                = show_date(group.updated_at)  
               %td
                 =link_to edit_group_path(group),remote: true,rel: "tooltip",title: "Edit Group" do
                   %span.glyphicon.glyphicon-pencil
@@ -40,25 +39,6 @@
 
 :javascript
   $(document).ready(function(){
-    $("#manage_group").on("click",".title-show",function(e){
-      $(this).addClass("hide")
-      $(this).siblings(".title-edit").removeClass("hide")
-    })
-
-    $("#manage_group").on("keydown", ".group-title-edit", function(key){
-      if(key.keyCode == 13){
-        _this = this
-        key.preventDefault()
-        $.ajax({
-          url: "groups/"+$(_this).siblings(".group-id").val()+"/edit_title",
-          method: "GET",
-          data: {title: $(_this).val()},
-          success: function(data){
-            $("table.table-bordered").html($(data).find('table.table-bordered').html())
-          }
-        })
-      }
-    })
     $("#manage_group").on("keydown", ".search-group",function(key){
       if(key.keyCode == 13){
         _this = this

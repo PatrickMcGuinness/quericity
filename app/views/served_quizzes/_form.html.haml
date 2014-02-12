@@ -7,14 +7,14 @@
     = form_for @served_quiz,:class => "form-horizontal", :id => "choose_students", remote: true do |f|  
       .modal-body
         #wizard
-          %h1 Quiz
+          %h1 Select Quiz
           %div
             %legend Select Quiz
             .row
               .col-xs-12{style: "margin-bottom:10px;"}
                 = f.select :quiz_bank_id, current_user.quiz_banks.map{|q| [q.title,q.id]},{prompt: "Select Quiz"},{class: 'form-control'}      
        
-          %h1 Students
+          %h1 Add Students
           %div
             %legend Select Students
             .row 
@@ -46,38 +46,40 @@
                             = "Name not set by student"
                           -else
                             = student.name
-                          =student.email
-
-              .col-xs-12.emails-for-group-div.hide
-                =text_field_tag :emails_for_group_ids, nil, class: "form-control emails-for-group", placeholder: "Enter comma separated emails then press enter"
-              .col-xs-2.add-user-group-div.pull-right.hide{style: "margin-top:10px;"}
-                =link_to "Add more students", "#", class: "btn btn-primary btn-warning add-user-group"          
-          %h1 Options
+                          =student.email          
+          %h1 Choose Options
           %div
             %legend Choose Options
             .row
               .col-xs-4
-                -#.input-group.date#datetimepicker1
                 =f.text_field :date,:placeholder => "Start date",class: "form-control datepicker"
-                -#%span.input-group-addon
-                -#%span.glyphicon.glyphicon-calendar
               .col-xs-4
-                -#.input-group.date#datetimepicker2
                 =f.text_field :start_time,:placeholder => "Start time",class: 'form-control time-picker'
-                -#%span.input-group-addon
-                -#%span.glyphicon.glyphicon-time  
               .col-xs-4
-                =f.select :duration,[["10 min",10],["20 mins", 20]], {},{class: "form-control"}
+                =f.text_field :close_date, placeholder: "Close Date", class: "form-control datepicker"
               .col-xs-12.mar-top-20
-                = f.text_area :instructions,rows:10,:placeholder => "Add instructions", class: "form-control"      
-              .col-xs-8.mar-top-20
-                ="Show the answers to students after the quiz: "
-              .col-xs-4.mar-top-20  
-                =f.check_box :answer
-              .col-xs-8.mar-top-20
-                ="Randomize the questions on serve: "
-              .col-xs-4.mar-top-20  
-                =f.check_box :random         
+                = f.text_area :instructions,rows:10,:placeholder => "Add instructions", class: "form-control"
+              .col-xs-12.mar-top-20.infinite  
+                =f.check_box :infinite_duration, {checked:true, value:true}
+                = "Set the duration for quiz to unlimited"
+              .col-xs-2.duration-text.mar-top-20.hide
+                ="Enter duration"
+              .col-xs-4.duration-field.mar-top-20.hide
+                =f.text_field :duration, class: "form-control"
+              .col-xs-4.duration-option.mar-top-20.hide
+                =select_tag :duration_option,options_for_select(["minutes","hours"]), class: "form-control"
+              .col-xs-2.duration-cancel.hide{style: "margin-top:23px;"}
+                =link_to "#",class: "hide-duration pull-right" do
+                  %span.glyphicon.glyphicon-remove    
+              .col-xs-12.mar-top-20
+                =f.check_box :random
+                ="Randomize quiz questions/order: "    
+              .col-xs-6.mar-top-20
+                ="Show the answers to students: "
+              .col-xs-6.mar-top-20  
+                =f.select :answer,ServedQuiz.answer_options_for_select,{}, {class: "form-control"}  
+                      
+                       
 
 :javascript
   $(document).ready(function(){
@@ -96,14 +98,19 @@
           }
         }
         if(currentIndex == 1){
-          if($(".delete").is(":checked")){
-            check = 0
-            $(".student-cloud").siblings("label.error").remove()
+          if($(".student-group-id").val() == ""){
+            if($(".delete").is(":checked")){
+              check = 0
+              $(".student-cloud").siblings("label.error").remove()
+            }
+            else{
+              check = 1
+              $(".student-cloud").siblings("label.error").remove()
+              $(".student-cloud").before("<label class = 'error'>Select at least one student or group<label>")
+            }
           }
           else{
-            check = 1
-            $(".student-cloud").siblings("label.error").remove()
-            $(".student-cloud").before("<label class = 'error'>Select at least one student<label>")
+            check = 0;
           }
         }
         if(check == 0){
@@ -132,24 +139,6 @@
         }
       })
     })
-    $(".modal-body").on("change", ".student-group-id", function(){
-      if($(this).val() != ""){
-        $(".emails-for-group-div").removeClass("hide")
-        $(".add-user-group-div").removeClass("hide")
-        value = $(this).val()
-        $.ajax({
-          url: "/groups/"+value+"/get_student",
-          method: "get",
-          success: function(data){
-            $(".student-cloud").html($(data).find('.student-cloud').html())
-          }
-        })
-      }
-      else{
-        $(".student-cloud").html("")
-        $(".emails-for-group-div").addClass("hide")
-      }
-    })
     $(".modal-body").on("click", ".select-from-group", function(e){
       e.preventDefault()
       $(".group-dropdown").removeClass("hide")
@@ -166,9 +155,7 @@
       $(".student-thumbnails").html("")
       $(this).addClass("hide")
       $(".select-from-group").removeClass("hide")
-      $(".emails-for-group-div").addClass("hide")
       $(".add-users").removeClass("hide")
-      $(".add-user-group-div").addClass("hide")
       $.ajax({
         url: "/served_quizzes/get_all_students",
         method: "GET",
@@ -192,5 +179,26 @@
         }
       })
     })
+
+    $(".modal-body").on("click","#served_quiz_infinite_duration", function(e){
+      if($(this).is(":checked")){
+        $(".duration-text, .duration-option, .duration-field, .duration-cancel").addClass("hide")
+        $(".infinite").removeClass("hide")
+
+      }
+      else{
+        $(".duration-text, .duration-option, .duration-field, .duration-cancel").removeClass("hide")
+        $(".infinite").addClass("hide")
+      }
+      
+    })
+
+    $(".modal-body").on("click",".hide-duration", function(e){
+      e.preventDefault()
+      $(".duration-text, .duration-option, .duration-field, .duration-cancel").addClass("hide")
+      $(".infinite").removeClass("hide")
+    })
+
+
   })
       

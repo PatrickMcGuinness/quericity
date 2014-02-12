@@ -1,0 +1,35 @@
+%h4 Quiz Instructions
+%input{type: "hidden", value: @quiz_bank.id, class: "quiz-bank-id"}
+.show-instructions
+  -if @quiz_bank.instructions.blank?
+    = "you have no instructions Click here to add one"
+  -else
+    = @quiz_bank.instructions
+.edit-instructions.hide
+  -if @quiz_bank.instructions.blank?
+    = text_area_tag :instructions, nil, class: "form-control inst-edit"
+  -else
+    = text_area_tag :instructions, @quiz_bank.instructions, class: "form-control inst-edit",rows: 7, cols: 25
+
+:javascript
+  $(document).ready(function(){
+    $(".instructions").on("click", ".show-instructions", function(){
+      $(this).addClass("hide")
+      $(".edit-instructions").removeClass("hide")
+    })
+
+    $(".instructions").on("keydown", ".inst-edit", function(key){
+      if(key.keyCode == 13){
+        key.preventDefault()
+        quiz_id = $(".quiz-bank-id").val()
+        $.ajax({
+          url: "/quiz_banks/"+ quiz_id + "/add_instructions",
+          data: {quiz_bank: {instructions: $(".inst-edit").val()}},
+          method: "GET",
+          success: function(data){
+            console.log(data)
+          }
+        })
+      }
+    })
+  })      

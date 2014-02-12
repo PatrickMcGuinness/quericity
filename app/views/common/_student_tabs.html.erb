@@ -1,0 +1,29 @@
+<ul class="nav nav-tabs nav-justified">
+  
+  <li class="<%= controller.class == QuizBanksController ? 'active col-xs-2 padding-zero' : 'col-xs-2 padding-zero' %>">
+    <a href="#">
+      <span class="glyphicon glyphicon-edit"></span>
+      Dashboard
+    </a>
+  </li>
+  
+  <li class=' col-xs-2 padding-zero'>
+    <a href="<%=students_quiz_banks_path%>">
+      <span class="glyphicon glyphicon glyphicon-list-alt"></span>
+      Quiz
+    </a>
+  </li>
+  <li class=' col-xs-2 padding-zero'>
+    <a href="#messages" data-toggle="tab">
+      <span class="glyphicon glyphicon glyphicon-inbox"></span>
+      Notification
+    </a>
+  </li>
+
+  <li class="<%= controller.class == UsersController and controller.action_name == 'profile' ? 'active' : '' %>">
+    <a href="#">
+      <span class="glyphicon glyphicon glyphicon-cog"></span>
+      Settings
+    </a>
+  </li>
+</ul>

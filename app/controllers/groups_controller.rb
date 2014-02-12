@@ -41,6 +41,10 @@ class GroupsController < ApplicationController
     @groups = current_user.groups_to_show
   end
 
+  def get_all_students
+    @student_groups = @group.student_groups
+  end
+
 
   private
 
