@@ -10,23 +10,20 @@
         .row{style: "margin-top:10px;"}       
           .col-xs-12
             =text_field_tag :add_new_users,nil,:class => "form-control add-new-users", :placeholder => "Add more users comma separated emails"
-          .col-xs-2.pull-right{style: "margin-top:10px;"}
+          .col-xs-2.pull-right.mar-top-10
             =link_to "Add More Students","#", class: "btn btn-primary btn-warning add-users" 
-          .student-cloud.col-xs-12{style: "margin-top:10px;"} 
+          .student-cloud.col-xs-12.mar-top-10 
             .student-thumbnails{style:"margin-top:10px;overflow-y: auto;max-height:250px"}
               -if current_user.students.present?  
                 -current_user.students.each do |student|
                   .col-xs-2.student{style: "margin-left:5px;"}
                     .thumbnail.row{style:"width:250px"}
-                      .col-xs-1
+                      .col-xs-1.thumbnail_checkbox
                         =check_box_tag "student_ids[]" ,student.id,false,:class => "delete"
-                      .col-xs-1
-                        %img{src:"/assets/Picupload_bg.png", id:"student-image",style:"width:25px;height:25px;"}
-                      .col-xs-6.offset-1{style:"font-size:10px;"}
-                        -if student.name.present?
-                          = student.name
-                        -else
-                          = "Name not set by Student"    
+                      .col-xs-1.thumbnail_image
+                        =image_tag display_picture(student),:class => 'thumnail_picture'
+                      .col-xs-7.offset-1{style:"font-size:10px;"}
+                        =show_name(student)   
                         =student.email
                       .col-xs-1.pull-right{style:"font-size:10px;"}
                         =link_to "x", "#", class: "already-student"

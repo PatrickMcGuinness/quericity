@@ -96,10 +96,21 @@ QuizLib::Application.routes.draw do
   end
 
   namespace :students do
-    resources :quiz_banks
+    resources :quiz_banks do
+      collection do
+        get "attempted"
+        get "pending"
+      end
+    end
+
+    resources :users do
+      member do
+        get "profile"
+      end
+    end
   end
 
-  post "students/quiz_banks/dashboard", to: "students/quiz_banks#dashboard", as: :students_quiz_banks_dashboard
+  
   # Sample resource route with options:
   #   resources :products do
   #     member do

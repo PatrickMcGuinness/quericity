@@ -1,4 +1,4 @@
-=render 'common/tabs'
+=render 'common/student_tabs'
 .tab-content.padding-top40.tab-container
   .row
     .col-xs-2
@@ -16,4 +16,4 @@
         = "Email: #{current_user.email}"
     .col-xs-3
       = link_to "Change Password",change_password_user_path(current_user), :class => "btn btn-primary"
-      = link_to "Edit Profile", edit_user_path(current_user), :class => "btn btn-primary"      
+      = link_to "Edit Profile", edit_students_user_path(current_user), :class => "btn btn-primary"      

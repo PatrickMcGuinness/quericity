@@ -32,6 +32,7 @@ end
 
 group :development do
   gem 'debugger'
+  gem "rails_best_practices"
 end
 
 gem 'jquery-rails'

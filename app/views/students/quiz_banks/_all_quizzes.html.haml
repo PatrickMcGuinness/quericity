@@ -1,0 +1,28 @@
+.row
+  .col-xs-12.table-responsive.padding-top40
+    -if @sharings.blank?
+      %table.table.table-bordered
+        %tbody
+          %tr
+            = "No quizzes to show"
+    -else
+      %table.table.table-bordered
+        %thead
+          %th Quiz Name
+          %th Teacher Name
+          %th Subject
+          %th Status
+        %tbody
+          -@sharings.each do |sharing|
+            %tr
+              %td
+                =sharing.served_quiz.quiz_bank.title
+              %td
+                =sharing.served_quiz.owner.name
+              %td
+                =sharing.served_quiz.quiz_bank.subject.title
+              %td
+                -if sharing.is_pending?
+                  =link_to "Pending","#"
+                -else
+                  =show_status(sharing)

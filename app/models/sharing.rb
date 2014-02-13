@@ -1,15 +1,43 @@
 class Sharing < ActiveRecord::Base
   
 
-  attr_accessible :user_id, :served_quiz_id
+  attr_accessible :user_id, :served_quiz_id, :status
 
   belongs_to :user, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :served_quiz
 
   validates :user_id, presence: true
   
+  class Status
+    PENDING = 1
+    ATTEMPTED = 2
+    EXPIRED = 3
+  end
   
-  
+  scope :attempted, -> { where(status: Sharing::Status::ATTEMPTED) }
+  scope :pending, -> { where(status: Sharing::Status::PENDING) }
+  scope :expired, -> { where(status: Sharing::Status::EXPIRED) }  
+
+  def self.email_is_user?(email)
+    User.exists?(:email => email)
+  end
+
+  def self.email_is_teacher?(email)
+    User.exists?(:email => email) and User.find_by_email(email).is_professor?   
+  end
+
+  def is_pending?
+    self.status == Sharing::Status::PENDING
+  end
+
+  def is_attempted?
+    self.status = Sharing::Status::ATTEMPTED
+  end
+
+  def is_expired?
+    self.status = Sharing::Status::EXPIRED
+  end
+
   def self.add_more_students(user,emails,quiz_bank_id)
     students = []
     invites = []
@@ -18,20 +46,14 @@ class Sharing < ActiveRecord::Base
         student = User.find_by_email(email)
         unless student.is_professor?
           students << student
+          default_group = user.default_group
+          StudentGroup.create(:group_id => default_group.id, :student_id => student.id)
         end
       else
         invites << Invite.create(:sender_id => user.id, :receiver_email => email, :invitable_id => quiz_bank_id, :invitable_type => "QuizBank")
       end
     end
     [students, invites]
-  end
-
-  def self.email_is_user?(email)
-    User.exists?(:email => email)
-  end
-
-  def self.email_is_teacher?(email)
-    User.exists?(:email => email) and User.find_by_email(email).is_professor?   
   end
 end
 

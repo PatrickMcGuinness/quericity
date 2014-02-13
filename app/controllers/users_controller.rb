@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
-	before_filter :require_login
+	
+
+  before_filter :require_login
 	before_filter :authenticate_user!
-	def profile
+	
+
+  def profile
     @user = User.find(params[:id])
     respond_to do |format|
       format.html

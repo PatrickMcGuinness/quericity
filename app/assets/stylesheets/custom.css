@@ -358,3 +358,16 @@ background-color: #F62217;
 	padding: 10px;
 	margin-bottom: 15px;
 }
+
+.thumnail_picture{
+	width:25px;
+	height:25px;
+}
+.thumbnail_checkbox{
+	margin-top: 5px;
+}
+
+.thumbnail_image{
+	margin-top: 5px;
+	margin-left: -9px;
+}

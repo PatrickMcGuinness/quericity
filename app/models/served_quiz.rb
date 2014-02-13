@@ -7,7 +7,7 @@ class ServedQuiz < ActiveRecord::Base
 
   belongs_to :owner, :class_name => "User", :foreign_key => "owner_id"
   belongs_to :quiz_bank
-  has_many :sharings
+  has_many :sharings, dependent: :destroy
 
   class Random
     YES = 1

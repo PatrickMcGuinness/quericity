@@ -37,15 +37,12 @@
                   -current_user.students.each do |student|
                     .col-xs-2{style: "margin-left:5px;"}
                       .thumbnail.row{style:"width:220px"}
-                        .col-xs-1
+                        .col-xs-1.thumbnail_checkbox
                           =check_box_tag "student_ids[]" ,student.id,false,:class => "delete"
-                        .col-xs-1
-                          %img{src:"/assets/Picupload_bg.png", id:"student-image",style:"width:25px;height:25px;"}
-                        .col-xs-6.offset-1{style:"font-size:10px;"}
-                          -if student.name.blank?
-                            = "Name not set by student"
-                          -else
-                            = student.name
+                        .col-xs-1.thumbnail_image
+                          =image_tag display_picture(student),:class => 'thumnail_picture'
+                        .col-xs-8.offset-1{style:"font-size:10px;"}
+                          =show_name(student)
                           =student.email          
           %h1 Choose Options
           %div

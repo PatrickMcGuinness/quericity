@@ -1,9 +1,9 @@
-=render 'common/tabs_edit'
+=render 'common/student_tabs'
 .tab-content.padding-top40.tab-container
   .mar_top.creat-repo-div 
     %h2 Edit
   .form_edit
-    = form_for @user, :html => { :method => :put, :class => "form-horizontal", :multipart => true } do |f|
+    = form_for @user,url: students_user_path(@user) ,:html => {:method => :put, :class => "form-horizontal", :multipart => true } do |f|
       .form-group
         %h4.lead
           %label.f_w_e.control-label  First Name

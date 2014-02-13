@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212112721) do
+ActiveRecord::Schema.define(:version => 20140213052549) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -145,9 +145,10 @@ ActiveRecord::Schema.define(:version => 20140212112721) do
 
   create_table "sharings", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "served_quiz_id"
+    t.integer  "status",         :default => 1
   end
 
   create_table "student_groups", :force => true do |t|

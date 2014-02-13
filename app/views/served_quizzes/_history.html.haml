@@ -28,7 +28,11 @@
                 %td
                   = show_date(served_quiz.created_at)
                 %td
-                  = "implemented later"    
+                  = "Pending: "
+                  = link_to served_quiz.sharings.pending.count, "#"
+                  = " / "
+                  = "Attempted: "
+                  = link_to served_quiz.sharings.attempted.count, "#"     
 
 
 :javascript

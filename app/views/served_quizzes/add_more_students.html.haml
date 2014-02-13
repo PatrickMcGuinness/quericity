@@ -2,23 +2,20 @@
   -@students.each do |student|
     .col-xs-2.data-students{id: student.id, style: "margin-left:5px;"}
       .thumbnail.row{style:"width:220px"}
-        .col-xs-1
+        .col-xs-1.thumbnail_checkbox
           =check_box_tag "student_ids[]" ,student.id,true,:class => "delete"
-        .col-xs-1
-          %img{src:"/assets/Picupload_bg.png", id:"student-image",style:"width:25px;height:25px;"}
+        .col-xs-1.thumbnail_image
+          =image_tag display_picture(student),:class => 'thumnail_picture'
         .col-xs-6.offset-1{style:"font-size:10px;"}
-          -if student.name.present?
-            = student.name
-          -else
-            = "Name not set by Student"    
-            =student.email    
+          =show_name(student)   
+          =student.email    
   -@invites.each do |invite|
     .col-xs-2.invite-students{id: invite.id,style: "margin-left:5px;"}
       .thumbnail.row{style:"width:220px"}
-        .col-xs-1
+        .col-xs-1.thumbnail_checkbox
           =check_box_tag "invite_ids[]" ,invite.id,true,:class => "delete"
-        .col-xs-1
-          %img{src:"/assets/Picupload_bg.png", id:"student-image",style:"width:25px;height:25px;"}
-        .col-xs-6.offset-1{style:"font-size:10px;"}
+        .col-xs-1.thumbnail_image
+          =image_tag display_picture(nil),:class => 'thumnail_picture'
+        .col-xs-8.offset-1{style:"font-size:10px;"}
           = "Student will be invited"    
           =invite.receiver_email

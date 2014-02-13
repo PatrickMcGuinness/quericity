@@ -1,0 +1,21 @@
+%ul.nav.nav-tabs
+  %li.all-quizzes.col-xs-2.padding-zero
+    =link_to "All Quizzes",students_quiz_banks_path
+  %li.attempted-quizzes.col-xs-2.padding-zero
+    =link_to "Attempted Quizzes",attempted_students_quiz_banks_path
+  %li.pending-quizzes.col-xs-2.padding-zero
+    =link_to "Pending Quizzes",pending_students_quiz_banks_path
+
+
+:javascript
+  $(document).ready(function(){
+    if(window.location.pathname == "/students/quiz_banks"){
+      $("li.all-quizzes").addClass("active")
+    }
+    if(window.location.pathname == "/students/quiz_banks/attempted"){
+      $("li.attempted-quizzes").addClass("active")
+    }
+    if(window.location.pathname == '/students/quiz_banks/pending'){
+      $("li.pending-quizzes").addClass("active")
+    }
+  })    
