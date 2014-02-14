@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140213052549) do
+ActiveRecord::Schema.define(:version => 20140213123752) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -28,6 +28,45 @@ ActiveRecord::Schema.define(:version => 20140213052549) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
+
+  create_table "cloned_question_options", :force => true do |t|
+    t.text     "answer"
+    t.integer  "cloned_question_id"
+    t.boolean  "is_correct"
+    t.integer  "seq"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "cloned_questions", :force => true do |t|
+    t.integer  "seq"
+    t.text     "description"
+    t.integer  "question_type"
+    t.integer  "difficulty_level"
+    t.string   "reference_url"
+    t.integer  "cloned_section_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "cloned_quiz_banks", :force => true do |t|
+    t.integer  "description"
+    t.string   "title"
+    t.integer  "repository_id"
+    t.integer  "subject_id"
+    t.text     "instructions"
+    t.integer  "quiz_bank_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "cloned_sections", :force => true do |t|
+    t.string   "title"
+    t.integer  "seq"
+    t.integer  "cloned_quiz_bank_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0, :null => false
@@ -131,8 +170,8 @@ ActiveRecord::Schema.define(:version => 20140213052549) do
   create_table "served_quizzes", :force => true do |t|
     t.integer  "owner_id"
     t.integer  "quiz_bank_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.datetime "date"
     t.datetime "close_date"
     t.integer  "duration"
@@ -141,6 +180,7 @@ ActiveRecord::Schema.define(:version => 20140213052549) do
     t.text     "instructions"
     t.datetime "start_time"
     t.integer  "infinite_duration"
+    t.integer  "cloned_quiz_bank_id"
   end
 
   create_table "sharings", :force => true do |t|

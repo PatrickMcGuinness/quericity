@@ -1,6 +1,7 @@
 class ServedQuizzesController < ApplicationController
+  
   before_filter :authenticate_user!
-
+  before_filter :clone_quiz_bank, only: [:create]
   def index
     @served_quizzes = current_user.served_quizzes
     @groups = current_user.groups_to_show
@@ -14,7 +15,7 @@ class ServedQuizzesController < ApplicationController
   end
 
   def create
-    @served_quiz = current_user.served_quizzes.create(params[:served_quiz])
+    @served_quiz = current_user.served_quizzes.create(params[:served_quiz], :clone_quiz_bank_id => @cloned_quiz_bank.id)
     @served_quiz.delay.background_job_for_create(params[:group_id],current_user,params[:student_ids],params[:invite_ids])
     @served_quizzes = current_user.served_quizzes
   	render layout:nil
@@ -41,5 +42,9 @@ class ServedQuizzesController < ApplicationController
 
   def get_emails_list(params)
     params[:emails].present? ? params[:emails].split(",") : []
+  end
+
+  def clone_quiz_bank
+    @cloned_quiz_bank = ServedQuiz.create_the_clone(params[:served_quiz][:quiz_bank_id])
   end
 end

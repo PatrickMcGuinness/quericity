@@ -40,7 +40,7 @@
                         .col-xs-1.thumbnail_checkbox
                           =check_box_tag "student_ids[]" ,student.id,false,:class => "delete"
                         .col-xs-1.thumbnail_image
-                          =image_tag display_picture(student),:class => 'thumnail_picture'
+                          =image_tag display_picture(student),:class => 'thumnail_picture pull-left'
                         .col-xs-8.offset-1{style:"font-size:10px;"}
                           =show_name(student)
                           =student.email          

@@ -39,6 +39,11 @@ class ServedQuiz < ActiveRecord::Base
     end
   end
 
+  def self.create_the_clone(quiz_bank_id)
+    quiz_bank = QuizBank.find(quiz_bank_id)
+    ClonedQuizBank.create_the_clone(quiz_bank)
+  end
+
 
   def background_job_for_create(group_id,user,student_ids,invite_ids)
     if group_id.present?
