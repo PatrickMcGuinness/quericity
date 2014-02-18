@@ -18,4 +18,10 @@ class ClonedQuizBank < ActiveRecord::Base
   	cloned_quiz_bank
   end
 
+
+  def cloned_questions
+    cloned_section_ids = self.cloned_sections.pluck(:id)
+    ClonedQuestion.where("cloned_section_id IN (?)",cloned_section_ids)
+  end
+
 end

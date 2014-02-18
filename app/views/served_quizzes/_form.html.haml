@@ -12,7 +12,7 @@
             %legend Select Quiz
             .row
               .col-xs-12{style: "margin-bottom:10px;"}
-                = f.select :quiz_bank_id, current_user.quiz_banks.map{|q| [q.title,q.id]},{prompt: "Select Quiz"},{class: 'form-control'}      
+                = f.select :quiz_bank_id, current_user.quiz_banks.map{|q| [q.title,q.id]},{prompt: "Select Quiz"},{class: 'form-control quiz-bank-dropdown'}      
        
           %h1 Add Students
           %div
@@ -55,7 +55,7 @@
               .col-xs-4
                 =f.text_field :close_date, placeholder: "Close Date", class: "form-control datepicker"
               .col-xs-12.mar-top-20
-                = f.text_area :instructions,rows:10,:placeholder => "Add instructions", class: "form-control"
+                = f.text_area :instructions,rows:10,:placeholder => "Add instructions", class: "form-control serve-instruction"
               .col-xs-12.mar-top-20.infinite  
                 =f.check_box :infinite_duration, {checked:true, value:true}
                 = "Set the duration for quiz to unlimited"
@@ -91,6 +91,13 @@
           }
           else{
             $("#served_quiz_quiz_bank_id").siblings("label.error").remove()
+            $.ajax({
+              url: "/served_quizzes/"+$(".quiz-bank-dropdown").val()+"/get_instructions",
+              method: "GET",
+              success: function(data){
+                $(".serve-instruction").text(data.instructions)
+              }
+            })
             check = 0
           }
         }

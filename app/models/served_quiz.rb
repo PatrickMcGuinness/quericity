@@ -7,13 +7,18 @@ class ServedQuiz < ActiveRecord::Base
 
   belongs_to :owner, :class_name => "User", :foreign_key => "owner_id"
   belongs_to :quiz_bank
+  belongs_to :cloned_quiz_bank
   has_many :sharings, dependent: :destroy
 
   class Random
     YES = 1
-    NO = 2
+    NO = 0
   end
   
+  class Infinite
+    YES = 1
+    NO = 0
+  end
 
   class Answer
     AFTERQUESTION = 1
@@ -24,6 +29,31 @@ class ServedQuiz < ActiveRecord::Base
     end
   end
 
+  def is_infinite?
+    self.infinite_duration == ServedQuiz::Infinite::YES
+  end
+
+  def quiz_is_random?
+    self.random == ServedQuiz::Random::YES
+  end
+
+  def show_answer_after_question?
+    self.answer == ServedQuiz::Answer::AFTERQUESTION
+  end
+
+  def show_answer_after_quiz?
+    self.answer == ServedQuiz::Answer::AFTERQUIZ
+  end
+
+  def dont_show_answer?
+    self.answer == ServedQuiz::Answer::DONTSHOW
+  end
+
+  def question_number(user)
+    count = user.answers.where("served_quiz_id = ?",self.id).count
+    count = count + 1
+  end
+  
   def self.answer_options_for_select
     ServedQuiz::Answer.get_all_answers
   end
@@ -44,6 +74,22 @@ class ServedQuiz < ActiveRecord::Base
     ClonedQuizBank.create_the_clone(quiz_bank)
   end
 
+  def next_question(user)
+    question_ids = user.answers.where("served_quiz_id = ? and student_id = ?",self.id, user.id).pluck(:cloned_question_id)
+    if self.quiz_is_random?
+      unless question_ids.blank?
+        question = self.cloned_quiz_bank.cloned_questions.where("id NOT IN (?)",question_ids).first 
+      else
+        question = self.cloned_quiz_bank.cloned_questions.first
+      end
+    else
+      unless question_ids.blank?
+        question = self.cloned_quiz_bank.cloned_questions.where("id NOT IN (?)",question_ids).order("seq ASC").first
+      else
+        question = self.cloned_quiz_bank.cloned_questions.order("seq ASC").first
+      end
+    end
+  end
 
   def background_job_for_create(group_id,user,student_ids,invite_ids)
     if group_id.present?

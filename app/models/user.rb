@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :student_groups, :class_name => 'StudentGroup', :foreign_key => 'student_id'
   has_many :invites, :class_name => "Invite", :foreign_key => "sender_id"
   has_many :sharings
+  has_many :answers, :class_name => 'Answer', :foreign_key => 'student_id'
   mount_uploader :profile_pic, ImageUploader
 
   after_create :create_default_group

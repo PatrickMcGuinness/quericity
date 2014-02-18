@@ -62,6 +62,7 @@ QuizLib::Application.routes.draw do
     end
     member do
       get "show_all_sharings"
+      get "get_instructions"
     end 
   end
   resources :users do
@@ -100,6 +101,11 @@ QuizLib::Application.routes.draw do
       collection do
         get "attempted"
         get "pending"
+        post "check_answer"
+      end
+      member do
+        get "take_quiz"
+        get "attempt_quiz"
       end
     end
 

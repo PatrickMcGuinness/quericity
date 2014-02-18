@@ -371,3 +371,30 @@ background-color: #F62217;
 	/*margin-top: 5px;
 	margin-left: -9px;*/
 }
+
+.quiz_notice_points{
+	margin-top: 20px;
+}
+
+.quiz-footer{
+	
+	min-height: 100px;
+	/*background-color: #E9E9E9;*/
+	margin-top: 50px;
+}
+
+.quiz-header{
+	/*background-color: #7E7D76;*/
+}
+
+.quiz-body{
+	border: 1px solid;
+	margin-top: 50px;
+	padding-bottom:20px;
+}
+.error-table{
+	border:	1px solid red !important;
+}
+.success-table{
+	border: 1px solid green !important;
+}

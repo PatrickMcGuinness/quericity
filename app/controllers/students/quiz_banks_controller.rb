@@ -1,7 +1,8 @@
 class Students::QuizBanksController < ApplicationController
 
   before_filter :authenticate_user!
-  #skip_before_filter :check_student_and_redirect
+  before_filter :set_quiz_and_sharing, only: [:attempt_quiz,:take_quiz]
+  layout "preview", only: [:take_quiz,:attempt_quiz]
   
   def dashboard
   end
@@ -22,4 +23,26 @@ class Students::QuizBanksController < ApplicationController
   def expired
   	@sharings = current_user.sharings.expired
   end
+
+  def attempt_quiz
+    #@sharing.update_attribute(:status, Sharing::Status::ATTEMPTED)
+    @question = @served_quiz.next_question(current_user)
+    @question_number  = 1 
+  end
+
+  def check_answer
+    @cloned_question = ClonedQuestion.find(params[:question_id])
+    @served_quiz = ServedQuiz.find(params[:served_quiz_id])
+    @answer = Answer.check_answer(current_user,@cloned_question,params[:answer],@served_quiz.id)
+    @question = @served_quiz.next_question(current_user)
+    @question_number = @served_quiz.question_number(current_user)
+  end
+
+  private
+  
+  def set_quiz_and_sharing
+    @served_quiz = ServedQuiz.find(params[:id])
+    @sharing = current_user.sharings.find(params[:sharing_id])
+  end
+
 end

@@ -1,0 +1,17 @@
+.tab-content.padding-top40.tab-container
+  .row.quiz-header
+    .col-xs-4.col-xs-offset-4
+      %h1
+        = @served_quiz.cloned_quiz_bank.title
+    .col-xs-12
+      %h2 Instructions
+      %strong
+        %p
+          = @served_quiz.instructions
+      %input{type: "hidden", value: @served_quiz.id, class: "served-quiz"}    
+  .row.quiz-body            
+    =render partial: "question", :locals => {:@question => @question}
+
+  .row.quiz-footer
+    .col-xs-12.col-xs-offset-5.mar-top-20
+      =link_to "Submit", "#", class: "btn btn-primary btn-success btn-lg submit-answer"

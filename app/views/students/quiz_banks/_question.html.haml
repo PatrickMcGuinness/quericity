@@ -1,0 +1,54 @@
+.col-xs-12.question-html
+  -unless @answer.blank?
+    .answer
+      %h4 The answer for previous question
+      -if @answer.is_correct
+        %table.table.success-table
+          %thead
+            %th Your Answer
+            %th Correct Answer
+            %th Result
+          %tbody
+            %tr
+              %td 
+                = @answer.student_answer
+              %td
+                =@answer.answer
+              %td
+                =@answer.is_correct
+      -else
+        %table.table.error-table 
+          %thead
+            %th Your Answer
+            %th Correct Answer
+            %th Result
+          %tbody
+            %tr
+              %td 
+                = @answer.student_answer
+              %td
+                =@answer.answer
+              %td
+                =@answer.is_correct    
+  
+  .question{data:{id:@question.id}}
+    .question-number
+      %strong
+        = "Question No. #{@question_number}"
+    .question-statement.mar-top-10     
+      = @question.description.html_safe
+  -if @question.is_true_false?
+    %input{type:"hidden", value: Question::QuestionType::TRUEFALSE, class: "question-type"}
+    = check_box_tag "true",nil,false, class: "true-option"
+    ="True"
+    =check_box_tag "false",nil,false,class: "false-option"
+    ="False"
+  -if @question.is_mcq?
+    %input{type:"hidden", value: Question::QuestionType::MCQ, class: "question-type"}
+    -@question.cloned_question_options.each do |question_option|
+      .question_option{data:{id:question_option.id}}
+        =check_box_tag "option",nil,false,class: "mcq-option", data:{answer: question_option.answer}
+        =question_option.answer
+  -if @question.is_fill_in_the_blank?
+    %input{type:"hidden", value: Question::QuestionType::BLANK, class: "question-type"}
+    =text_field_tag :blank, nil, class: "form-control blank-field mar-top-20"      

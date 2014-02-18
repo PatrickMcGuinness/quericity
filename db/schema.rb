@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140213123752) do
+ActiveRecord::Schema.define(:version => 20140214135630) do
+
+  create_table "answers", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "cloned_question_id"
+    t.text     "student_answer"
+    t.text     "answer"
+    t.boolean  "is_correct"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "served_quiz_id"
+  end
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false

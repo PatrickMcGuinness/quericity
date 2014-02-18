@@ -15,7 +15,8 @@ class ServedQuizzesController < ApplicationController
   end
 
   def create
-    @served_quiz = current_user.served_quizzes.create(params[:served_quiz], :clone_quiz_bank_id => @cloned_quiz_bank.id)
+    @served_quiz = current_user.served_quizzes.create(params[:served_quiz])
+    @served_quiz.update_attribute(:cloned_quiz_bank_id,@cloned_quiz_bank.id)
     @served_quiz.delay.background_job_for_create(params[:group_id],current_user,params[:student_ids],params[:invite_ids])
     @served_quizzes = current_user.served_quizzes
   	render layout:nil
@@ -23,6 +24,12 @@ class ServedQuizzesController < ApplicationController
 
   def history_search
     @served_quizzes = current_user.search_served_quizzes(params)
+  end
+
+  def get_instructions
+    @quiz_bank = current_user.quiz_banks.find(params[:id])
+    @instructions = @quiz_bank.instructions
+    render json: {instructions: @instructions}
   end
 
   def add_more_students
