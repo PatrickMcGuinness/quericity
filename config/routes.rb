@@ -102,6 +102,7 @@ QuizLib::Application.routes.draw do
         get "attempted"
         get "pending"
         post "check_answer"
+        get "answer_sheet"
       end
       member do
         get "take_quiz"

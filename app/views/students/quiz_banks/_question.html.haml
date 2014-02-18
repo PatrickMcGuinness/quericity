@@ -1,35 +1,19 @@
 .col-xs-12.question-html
   -unless @answer.blank?
     .answer
-      %h4 The answer for previous question
-      -if @answer.is_correct
-        %table.table.success-table
-          %thead
-            %th Your Answer
-            %th Correct Answer
-            %th Result
-          %tbody
-            %tr
-              %td 
-                = @answer.student_answer
-              %td
-                =@answer.answer
-              %td
-                =@answer.is_correct
+      -unless @answer.cloned_question.is_open_ended?
+        -unless @answer.is_correct?
+          .alert.alert-error.fade.in.mar-top-10{style: "height:50px;"}
+            %button{class: "close",data:{dismiss:"alert"}}×
+            ="Answer for previous question is wrong"
+        -else
+          .alert.alert-success.fade.in.mar-top-10{style: "height:50px;"}
+            %button{class: "close",data:{dismiss:"alert"}}×
+            ="Answer for previous question is right"
       -else
-        %table.table.error-table 
-          %thead
-            %th Your Answer
-            %th Correct Answer
-            %th Result
-          %tbody
-            %tr
-              %td 
-                = @answer.student_answer
-              %td
-                =@answer.answer
-              %td
-                =@answer.is_correct    
+        .alert.alert-warning.fade.in.mar-top-10{style: "height:50px;"}
+          %button{class: "close",data:{dismiss:"alert"}}×
+          ="Answer for previous question will be graded later"                    
   
   .question{data:{id:@question.id}}
     .question-number
@@ -51,4 +35,8 @@
         =question_option.answer
   -if @question.is_fill_in_the_blank?
     %input{type:"hidden", value: Question::QuestionType::BLANK, class: "question-type"}
-    =text_field_tag :blank, nil, class: "form-control blank-field mar-top-20"      
+    =text_field_tag :blank, nil, class: "form-control blank-field mar-top-20"
+  -if @question.is_open_ended?
+    %input{type:"hidden", value: Question::QuestionType::OPENENDED, class: "question-type"}
+    =text_area_tag :open_ended,nil, :placeholder => "You Answer", :class => "form-control open-end-field"
+            

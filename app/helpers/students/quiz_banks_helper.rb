@@ -24,4 +24,16 @@ module Students::QuizBanksHelper
   	end
   end
 
+  def show_result(answer)
+    unless answer.cloned_question.is_open_ended?
+      if answer.is_correct
+        "Correct"
+      else
+        "Wrong"
+      end
+    else
+      "Answer will be graded later"
+    end 
+  end
+
 end

@@ -21,6 +21,9 @@ class ClonedQuestion < ActiveRecord::Base
     self.question_type == Question::QuestionType::BLANK
   end
 
+  def user_answer(user,served_quiz)
+    user.answers.where("cloned_question_id = ? and served_quiz_id = ?",self.id,served_quiz.id).first
+  end
 
   def self.create_the_clone(section,cloned_section)
     section.questions.each do |question|

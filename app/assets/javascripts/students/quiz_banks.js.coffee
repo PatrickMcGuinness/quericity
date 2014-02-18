@@ -5,25 +5,22 @@
 jQuery ->
 
   $(".quiz-footer").on "click",".submit-answer",(e)->
+    e.preventDefault()
     question_id = $(".question").data("id")
     question_type = $(".question-type").val()
     served_quiz_id = $(".served-quiz").val()
     if(question_type == '1')
       if($(".true-option").is(":checked"))
         answer = "true"
-        question_option_id = 0
       if($(".false-option").is(":checked"))
-        answer = "false"
-        question_option_id = 0    
+        answer = "false"    
     if(question_type == '2')
-      question_option_id = $(".mcq-option:checked").parents(".question_option").data("id")
       answer = $(".mcq-option:checked").data("answer")
     if(question_type == '3')
-      console.log $(".question").data("id")
+      answer = $(".open-end-field").val()
     if(question_type == '4')
       answer = $(".blank-field").val()
-      question_option_id = 0
-    params = {question_id: question_id, answer: answer, question_option_id: question_option_id, served_quiz_id: served_quiz_id}
+    params = {question_id: question_id, answer: answer,served_quiz_id: served_quiz_id}
     console.log params
     $.ajax
       url: "/students/quiz_banks/check_answer",

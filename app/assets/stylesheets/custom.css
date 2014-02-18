@@ -392,9 +392,3 @@ background-color: #F62217;
 	margin-top: 50px;
 	padding-bottom:20px;
 }
-.error-table{
-	border:	1px solid red !important;
-}
-.success-table{
-	border: 1px solid green !important;
-}

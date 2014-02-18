@@ -53,7 +53,13 @@ class Answer < ActiveRecord::Base
                   :served_quiz_id => served_quiz_id)
   end
 
-  def self.check_open_ended_question(user,cloned_question,student_answer, question_option_id,served_quiz_id)
+  def self.check_open_ended_question(user,cloned_question,student_answer,served_quiz_id)
+    cloned_question_option = cloned_question.cloned_question_options.first
+    answer = cloned_question_option.answer
+    is_correct = false
+    answer = Answer.create(:student_id => user.id, :cloned_question_id => cloned_question.id, 
+                  :student_answer => student_answer, :answer => answer, :is_correct => is_correct,
+                  :served_quiz_id => served_quiz_id)
   end
 
   def self.is_answer_correct?(student_answer,answer)

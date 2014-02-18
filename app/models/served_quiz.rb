@@ -53,6 +53,10 @@ class ServedQuiz < ActiveRecord::Base
     count = user.answers.where("served_quiz_id = ?",self.id).count
     count = count + 1
   end
+
+  def should_redirect?(user)
+    self.question_number(user) > self.cloned_quiz_bank.cloned_questions.count 
+  end
   
   def self.answer_options_for_select
     ServedQuiz::Answer.get_all_answers
