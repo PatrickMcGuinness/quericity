@@ -8,20 +8,15 @@ class ClonedQuizBank < ActiveRecord::Base
   belongs_to :quiz_bank
   belongs_to :subject
   has_many :cloned_sections, dependent: :destroy
+  has_many :cloned_questions, dependent: :destroy
 
-  def self.create_the_clone(quiz_bank)
+  def self.create_the_clone(quiz_bank,params)
   	cloned_quiz_bank = ClonedQuizBank.create(:description => quiz_bank.description, 
   												:repository_id => quiz_bank.repository_id, :quiz_bank_id => quiz_bank.id,
   												:title => quiz_bank.title, :subject_id => quiz_bank.subject.id,
   												:instructions => quiz_bank.instructions)
-  	ClonedSection.create_the_clone(cloned_quiz_bank)
+  	ClonedQuestion.create_the_clone(cloned_quiz_bank,params)
   	cloned_quiz_bank
-  end
-
-
-  def cloned_questions
-    cloned_section_ids = self.cloned_sections.pluck(:id)
-    ClonedQuestion.where("cloned_section_id IN (?)",cloned_section_ids)
   end
 
 end

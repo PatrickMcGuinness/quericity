@@ -1,8 +1,11 @@
 class ClonedQuestion < ActiveRecord::Base
-  attr_accessible :title,:seq, :description, :question_type,:difficulty_level,:reference_url,:cloned_section_id
+  attr_accessible :title,:seq, :description, :question_type,:difficulty_level,
+                  :reference_url,:cloned_section_id, :cloned_quiz_bank_id
 
   has_many :cloned_question_options
   has_many :answers
+
+  belongs_to :cloned_quiz_bank
  
 
   def is_true_false?
@@ -25,11 +28,13 @@ class ClonedQuestion < ActiveRecord::Base
     user.answers.where("cloned_question_id = ? and served_quiz_id = ?",self.id,served_quiz.id).first
   end
 
-  def self.create_the_clone(section,cloned_section)
-    section.questions.each do |question|
+  def self.create_the_clone(cloned_quiz_bank,params)
+    questions = Question.where("id IN (?)",params[:question_ids])
+    questions.each do |question|
       cloned_question = ClonedQuestion.create(:seq => question.seq, 
-                            :description => question.description, :question_type => question.question_type,
-                            :difficulty_level => question.difficulty_level,:cloned_section_id => cloned_section.id)
+                          :description => question.description, :question_type => question.question_type,
+                          :difficulty_level => question.difficulty_level,
+                          :cloned_quiz_bank_id => cloned_quiz_bank.id)
       ClonedQuestionOption.create_the_clone(question,cloned_question)
     end
   end

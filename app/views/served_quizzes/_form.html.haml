@@ -7,79 +7,132 @@
     = form_for @served_quiz,:class => "form-horizontal", :id => "choose_students", remote: true do |f|  
       .modal-body
         #wizard
-          %h1 Select Quiz
+          %h1 Select Quiz 
           %div
             %legend Select Quiz
             .row
               .col-xs-12{style: "margin-bottom:10px;"}
-                = f.select :quiz_bank_id, current_user.quiz_banks.map{|q| [q.title,q.id]},{prompt: "Select Quiz"},{class: 'form-control quiz-bank-dropdown'}      
-       
+                = f.select :quiz_bank_id, current_user.quiz_banks.map{|q| [q.title,q.id]},{prompt: "Select Quiz"},{class: 'form-control quiz-bank-dropdown'}
+
+          %h1 Questions
+          %div
+            %legend Questions
+            .row
+              .col-xs-12
+                =check_box_tag "select_question",nil,true,:class=> "select-question"
+                ="Select questions"
+              .col-xs-12
+                =f.check_box :random
+                ="Randomize quiz questions/order: "  
+              .col-xs-12.all-questions.mar-top-20
+            .row.mar-top-20.random-options.hide   
+              .col-xs-12
+                =f.label :number_of_questions, "Number of Questions *"
+                =f.text_field :number_of_questions,class: "form-control"
+              .col-xs-12.mar-top-20
+                =f.check_box :same_questions
+                ="Same questions for students: "
+              .col-xs-12.mar-top-20
+                =f.check_box :show_in_sequence
+                ="Show the questions in sequence: "   
+
           %h1 Add Students
           %div
             %legend Select Students
-            .row 
-              .col-xs-12.emails-div     
+            .row
+              .col-xs-8.hide.group-dropdown
+                .dropdown 
+                  -if current_user.groups_to_show.blank?
+                    = "No student group"
+                  -else
+                    =select_tag 'group_id', options_for_select(current_user.groups_to_show.collect{ |u| [u.title, u.id] }), :class => "form-control student-group-id", prompt: "Select Group" 
+                .students-email
+                  .student-cloud{style: "margin-top:10px;"}
+                    .student-thumbnails{style:"margin-top:10px;"} 
+              .col-xs-11.emails-div     
                 =text_field_tag :email_ids, nil, class: "form-control emails", placeholder: "Enter comma separated emails then press enter"
-              .col-xs-2.add-users.pull-right{style: "margin-top:10px;"}
-                =link_to "Add more students", "#", class: "add-more-students btn btn-primary btn-warning" 
-              .col-xs-12.hide.group-dropdown
-                -if current_user.groups_to_show.blank?
-                  = "No student group"
-                -else
-                  =select_tag 'group_id', options_for_select(current_user.groups_to_show.collect{ |u| [u.title, u.id] }), :class => "form-control student-group-id", prompt: "Select Group"
-            .row{style: "margin-top:10px;"}
+              .col-xs-1.add-users
+                =link_to "Add", "#", class: "add-more-students btn btn-primary btn-warning" 
+              
+            .row.mar-top-10
               .col-xs-6
                 =link_to "OR Select from group", "#", class: "select-from-group"
                 =link_to "OR Enter email ids", "#", class: "select-from-email hide"
-            .row.students-email
-              .student-cloud.col-xs-12{style: "margin-top:10px;"}
-                .student-thumbnails{style:"margin-top:10px;"}  
-                  -current_user.students.each do |student|
-                    .col-xs-2{style: "margin-left:5px;"}
-                      .thumbnail.row{style:"width:220px"}
-                        .col-xs-1.thumbnail_checkbox
-                          =check_box_tag "student_ids[]" ,student.id,false,:class => "delete"
-                        .col-xs-1.thumbnail_image
-                          =image_tag display_picture(student),:class => 'thumnail_picture pull-left'
-                        .col-xs-8.offset-1{style:"font-size:10px;"}
-                          =show_name(student)
-                          =student.email          
+            -#.row.students-email
+              -#.student-cloud.col-xs-12{style: "margin-top:10px;"}
+                -#.student-thumbnails{style:"margin-top:10px;"}  
+                  -#-current_user.students.each do |student|
+                    -#.col-xs-2{style: "margin-left:5px;"}
+                      -#.thumbnail.row{style:"width:220px"}
+                        -#.col-xs-1.thumbnail_checkbox
+                          -#=check_box_tag "student_ids[]" ,student.id,false,:class => "delete"
+                        -#.col-xs-1.thumbnail_image
+                          -#=image_tag display_picture(student),:class => 'thumnail_picture pull-left'
+                        -#.col-xs-8.offset-1{style:"font-size:10px;"}
+                          -#=show_name(student)
+                          -#=student.email          
           %h1 Choose Options
           %div
             %legend Choose Options
             .row
-              .col-xs-4
+              .col-xs-6
+                = f.label :date, 'Start Date *'
                 =f.text_field :date,:placeholder => "Start date",class: "form-control datepicker"
-              .col-xs-4
+              .col-xs-6
+                = f.label :start_time ,'Start Time *'
                 =f.text_field :start_time,:placeholder => "Start time",class: 'form-control time-picker'
-              .col-xs-4
+            .row.mar-top-20    
+              .col-xs-6
+                = f.label :date, 'Close Date *'
                 =f.text_field :close_date, placeholder: "Close Date", class: "form-control datepicker"
-              .col-xs-12.mar-top-20
-                = f.text_area :instructions,rows:10,:placeholder => "Add instructions", class: "form-control serve-instruction"
-              .col-xs-12.mar-top-20.infinite  
+              .col-xs-6
+                = f.label :start_time ,'Close Time *'
+                =f.text_field :end_time,:placeholder => "End time",class: 'form-control time-picker'
+              
+            .row.mar-top-20
+              .col-xs-12.infinite  
                 =f.check_box :infinite_duration, {checked:true, value:true}
                 = "Set the duration for quiz to unlimited"
-              .col-xs-2.duration-text.mar-top-20.hide
-                ="Enter duration"
-              .col-xs-4.duration-field.mar-top-20.hide
+              .col-xs-2.duration-text.hide
+                ="Enter quiz duration"
+              .col-xs-4.duration-field.hide
                 =f.text_field :duration, class: "form-control"
-              .col-xs-4.duration-option.mar-top-20.hide
+              .col-xs-3.duration-option.hide
                 =select_tag :duration_option,options_for_select(["minutes","hours"]), class: "form-control"
-              .col-xs-2.duration-cancel.hide{style: "margin-top:23px;"}
+              .col-xs-2.duration-cancel.hide{style: "margin-top:4px;"}
                 =link_to "#",class: "hide-duration pull-right" do
                   %span.glyphicon.glyphicon-remove    
-              .col-xs-12.mar-top-20
-                =f.check_box :random
-                ="Randomize quiz questions/order: "    
-              .col-xs-6.mar-top-20
-                ="Show the answers to students: "
-              .col-xs-6.mar-top-20  
-                =f.select :answer,ServedQuiz.answer_options_for_select,{}, {class: "form-control"}  
+            .row.mar-top-20
+              .col-xs-12
+                = f.label :instructions ,'Instructions'
+                = f.text_area :instructions,rows:10,:placeholder => "Add instructions", class: "form-control serve-instruction"
+            .row.mar-top-20
+              .col-xs-12
+                = f.label :Answer ,'Show Answers'  
+                =f.select :answer,ServedQuiz.answer_options_for_select,{}, {class: "form-control"}    
+                  
+              -#.col-xs-12.mar-top-20
+                -#=f.check_box :random
+                -#="Randomize quiz questions/order: "      
                       
                        
 
 :javascript
   $(document).ready(function(){
+    $(".modal-body").on("click","#served_quiz_random",function(){
+      if($("#served_quiz_random").is(":checked")){
+        $(".all-questions").addClass("hide")
+        $(".random-options").removeClass("hide")
+        $('#select_question').prop('checked', false);
+      }
+    })
+    $(".modal-body").on("click","#select_question",function(){
+      if($("#select_question").is(":checked")){
+        $(".all-questions").removeClass("hide")
+        $(".random-options").addClass("hide")
+        $('#served_quiz_random').prop('checked', false);
+      }
+    })
     $("#wizard").steps({
       onStepChanging: function (event, currentIndex, newIndex){
         check = 0; 
@@ -98,10 +151,18 @@
                 $(".serve-instruction").text(data.instructions)
               }
             })
+            $.ajax({
+              url: "/served_quizzes/"+$(".quiz-bank-dropdown").val()+"/get_all_questions",
+              method: "GET",
+              success: function(data){
+                $(".all-questions").html($(data).find('.all-questions').html())
+
+              }
+            })
             check = 0
           }
         }
-        if(currentIndex == 1){
+        if(currentIndex == 2){
           if($(".student-group-id").val() == ""){
             if($(".delete").is(":checked")){
               check = 0
@@ -146,20 +207,18 @@
     $(".modal-body").on("click", ".select-from-group", function(e){
       e.preventDefault()
       $(".group-dropdown").removeClass("hide")
-      $(".emails-div").addClass("hide")
+      $(".emails-div").addClass("col-xs-8").removeClass("col-xs-12")
       $(".student-thumbnails").html("")
       $(this).addClass("hide")
-      $(".add-users").addClass("hide")
       $(".select-from-email").removeClass("hide")
     })
     $(".modal-body").on("click", ".select-from-email", function(e){
       e.preventDefault()
       $(".group-dropdown").addClass("hide")
-      $(".emails-div").removeClass("hide")
+      $(".emails-div").removeClass("col-xs-8").addClass("col-xs-12")
       $(".student-thumbnails").html("")
       $(this).addClass("hide")
       $(".select-from-group").removeClass("hide")
-      $(".add-users").removeClass("hide")
       $.ajax({
         url: "/served_quizzes/get_all_students",
         method: "GET",
@@ -201,6 +260,19 @@
       e.preventDefault()
       $(".duration-text, .duration-option, .duration-field, .duration-cancel").addClass("hide")
       $(".infinite").removeClass("hide")
+    })
+
+    $(".modal-body").on("click",".student-group-id",function(e){
+      e.preventDefault()
+      _this = this
+      $.ajax({
+        url: "/groups/" + $(_this).val() + "/get_all_students_in_group",
+        method: "GET",
+        success: function(data){
+          console.log(data)
+          $(".student-thumbnails").html($(data).find('.student-thumbnails').html())
+        }
+      })
     })
 
 

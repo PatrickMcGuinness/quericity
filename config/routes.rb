@@ -46,7 +46,8 @@ QuizLib::Application.routes.draw do
     member do
       get "get_student"
       get "edit_title"
-      get "get_all_students" 
+      get "get_all_students"
+      get "get_all_students_in_group" 
     end
     collection do
       get "search_group"
@@ -63,6 +64,7 @@ QuizLib::Application.routes.draw do
     member do
       get "show_all_sharings"
       get "get_instructions"
+      get "get_all_questions"
     end 
   end
   resources :users do

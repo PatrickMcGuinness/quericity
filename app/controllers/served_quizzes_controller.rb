@@ -32,6 +32,11 @@ class ServedQuizzesController < ApplicationController
     render json: {instructions: @instructions}
   end
 
+  def get_all_questions
+    @quiz_bank = current_user.quiz_banks.find(params[:id])
+    @questions = @quiz_bank.questions
+  end
+
   def add_more_students
     @students, @invites = Sharing.add_more_students(current_user,get_emails_list(params),params[:quiz_bank_id])
   end
@@ -39,6 +44,7 @@ class ServedQuizzesController < ApplicationController
   def get_all_students
     @sutdents = current_user.students
   end
+
 
   def show_all_sharings
     @served_quiz = current_user.served_quizzes.find(params[:id])
@@ -52,6 +58,6 @@ class ServedQuizzesController < ApplicationController
   end
 
   def clone_quiz_bank
-    @cloned_quiz_bank = ServedQuiz.create_the_clone(params[:served_quiz][:quiz_bank_id])
+    @cloned_quiz_bank = ServedQuiz.create_the_clone(params)
   end
 end

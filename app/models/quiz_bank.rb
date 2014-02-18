@@ -22,4 +22,9 @@ class QuizBank < ActiveRecord::Base
     self.sections.create(:title => "Default Section")
   end
 
+  def questions
+    section_ids = self.sections.pluck(:id)
+    Question.where("section_id IN (?)",section_ids)
+  end
+
 end

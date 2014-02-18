@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140214135630) do
+ActiveRecord::Schema.define(:version => 20140218101625) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -56,8 +56,9 @@ ActiveRecord::Schema.define(:version => 20140214135630) do
     t.integer  "difficulty_level"
     t.string   "reference_url"
     t.integer  "cloned_section_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "cloned_quiz_bank_id"
   end
 
   create_table "cloned_quiz_banks", :force => true do |t|
@@ -192,6 +193,10 @@ ActiveRecord::Schema.define(:version => 20140214135630) do
     t.datetime "start_time"
     t.integer  "infinite_duration"
     t.integer  "cloned_quiz_bank_id"
+    t.datetime "end_time"
+    t.integer  "number_of_questions"
+    t.integer  "same_questions"
+    t.integer  "show_in_sequence"
   end
 
   create_table "sharings", :force => true do |t|

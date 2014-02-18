@@ -1,5 +1,7 @@
 class ServedQuiz < ActiveRecord::Base
-  attr_accessible :owner_id, :quiz_bank_id,:answer, :duration, :date, :close_date, :instructions,:random,:start_time,:infinite_duration
+  attr_accessible :owner_id, :quiz_bank_id,:answer, :duration, :date, :close_date,:end_time, 
+                  :instructions,:random,:start_time,:infinite_duration,:number_of_questions, 
+                  :same_questions,:show_in_sequence
 
   validates :owner_id, presence:true
   validates :quiz_bank_id, presence: true
@@ -73,9 +75,10 @@ class ServedQuiz < ActiveRecord::Base
     end
   end
 
-  def self.create_the_clone(quiz_bank_id)
+  def self.create_the_clone(params)
+    quiz_bank_id = params[:served_quiz][:quiz_bank_id]
     quiz_bank = QuizBank.find(quiz_bank_id)
-    ClonedQuizBank.create_the_clone(quiz_bank)
+    ClonedQuizBank.create_the_clone(quiz_bank,params)
   end
 
   def next_question(user)

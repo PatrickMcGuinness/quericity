@@ -1,0 +1,13 @@
+.student-thumbnails
+  -@student_groups.each do |student_group|
+    .col-xs-2{id: student_group.id, style: "margin-left:5px;"}
+      .thumbnail.row{style:"width:250px"}
+        .col-xs-1.thumbnail_checkbox
+          =check_box_tag "student_groups_ids[]" ,student_group.id,true,:class => "delete"
+        .col-xs-1.thumbnail_image
+          =image_tag display_picture(student_group.student),:class => 'thumnail_picture'
+        .col-xs-6.offset-1{style:"font-size:10px;"}
+          =show_name(student_group.student)    
+          =student_group.student.email
+        .col-xs-1.pull-right{style:"font-size:10px;"}
+          =link_to "x", "#", class: "student-in-database" 

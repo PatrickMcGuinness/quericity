@@ -23,6 +23,10 @@ class GroupsController < ApplicationController
     @groups = @q.result(:distinct => true)
   end
 
+  def get_all_students_in_group
+    @student_groups = @group.student_groups
+  end
+
   def destroy
     @group.destroy
     @groups = current_user.groups_to_show

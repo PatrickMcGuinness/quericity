@@ -1,0 +1,15 @@
+.col-xs-12.all-questions.mar-top-20
+  %table.table.table-bordered
+    %tbody
+      -@questions.each do |question|
+        %tr
+          %td
+            =check_box_tag "questions_ids[]" ,question.id,true,:class => "delete"
+          %td
+            =question.description.html_safe
+
+
+:javascript
+  $(document).ready(function(){
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub])
+  })            
