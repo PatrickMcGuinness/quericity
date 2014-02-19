@@ -14,4 +14,4 @@
 
   .row.quiz-footer
     .col-xs-12.col-xs-offset-5.mar-top-20
-      =link_to "Submit", "#", class: "btn btn-primary btn-success btn-lg submit-answer"
+      =link_to "Next", answer_sheet_students_quiz_banks_path(served_quiz_id: @served_quiz.id), class: "btn btn-primary btn-success btn-lg submit-answer"

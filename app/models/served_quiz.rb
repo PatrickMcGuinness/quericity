@@ -31,6 +31,13 @@ class ServedQuiz < ActiveRecord::Base
     end
   end
 
+  class Sequence
+    NO = 0
+    YES = 1
+  end
+
+  
+
   def is_infinite?
     self.infinite_duration == ServedQuiz::Infinite::YES
   end
@@ -83,18 +90,10 @@ class ServedQuiz < ActiveRecord::Base
 
   def next_question(user)
     question_ids = user.answers.where("served_quiz_id = ? and student_id = ?",self.id, user.id).pluck(:cloned_question_id)
-    if self.quiz_is_random?
-      unless question_ids.blank?
-        question = self.cloned_quiz_bank.cloned_questions.where("id NOT IN (?)",question_ids).first 
-      else
-        question = self.cloned_quiz_bank.cloned_questions.first
-      end
+    unless question_ids.blank?
+      question = self.cloned_quiz_bank.cloned_questions.where("id NOT IN (?)",question_ids).first 
     else
-      unless question_ids.blank?
-        question = self.cloned_quiz_bank.cloned_questions.where("id NOT IN (?)",question_ids).order("seq ASC").first
-      else
-        question = self.cloned_quiz_bank.cloned_questions.order("seq ASC").first
-      end
+      question = self.cloned_quiz_bank.cloned_questions.first
     end
   end
 

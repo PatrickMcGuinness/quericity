@@ -341,6 +341,18 @@ background-color: #F62217;
 .mar-top-15{
 	margin-top: 15px;
 }
+.mar-bot-15{
+  margin-bottom: 15px;
+}
+
+.mar-left-15
+{
+  margin-left:15px;
+}
+.mar-left-5
+{
+  margin-left:5px;
+}
 
 .serve-quiz{
 	float: right !important;
@@ -391,4 +403,28 @@ background-color: #F62217;
 	border: 1px solid;
 	margin-top: 50px;
 	padding-bottom:20px;
+}
+.group-dropdown{
+  border: 1px solid;
+  padding: 20px;
+  min-height: 300px;
+}
+
+.emails-div{
+  border: 1px solid;
+  padding: 20px;
+  min-height: 300px;
+}
+.arrow-link{
+  border: 1px solid;
+  position: absolute;
+  margin-top: 100px;
+  min-width: 30px;
+  min-height: 30px;
+}
+.thumbnail-large{
+  width: 260px;
+}
+.thumbnail-medium{
+  width: 210px;
 }

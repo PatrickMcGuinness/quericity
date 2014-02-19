@@ -6,8 +6,5 @@
 jQuery ->
 
 
-  $(".serve-quiz").on "click", (e)->
-    $(this).append(get_ajax_loader_html())
-
   $(".add-group").on "click", (e)->
     $(this).append(get_ajax_loader_html())         

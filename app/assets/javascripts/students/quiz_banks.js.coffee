@@ -21,7 +21,6 @@ jQuery ->
     if(question_type == '4')
       answer = $(".blank-field").val()
     params = {question_id: question_id, answer: answer,served_quiz_id: served_quiz_id}
-    console.log params
     $.ajax
       url: "/students/quiz_banks/check_answer",
       data: params,

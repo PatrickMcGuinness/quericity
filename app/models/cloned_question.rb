@@ -29,13 +29,23 @@ class ClonedQuestion < ActiveRecord::Base
   end
 
   def self.create_the_clone(cloned_quiz_bank,params)
-    questions = Question.where("id IN (?)",params[:question_ids])
+    if params[:select_question].present?
+      questions = Question.where("id IN (?)",params[:questions_ids])
+    else
+      number = params[:served_quiz][:number_of_questions].to_i
+      if params[:served_quiz][:show_in_sequence] == ServedQuiz::Sequence::YES
+        questions_array = cloned_quiz_bank.quiz_bank.questions.order("seq ASC")
+      else
+        questions_array = cloned_quiz_bank.quiz_bank.questions
+      end
+      questions = questions_array.sample(number)       
+    end
     questions.each do |question|
       cloned_question = ClonedQuestion.create(:seq => question.seq, 
                           :description => question.description, :question_type => question.question_type,
                           :difficulty_level => question.difficulty_level,
                           :cloned_quiz_bank_id => cloned_quiz_bank.id)
       ClonedQuestionOption.create_the_clone(question,cloned_question)
-    end
+    end  
   end
 end

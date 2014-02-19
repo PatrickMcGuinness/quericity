@@ -20,7 +20,7 @@
         -else
           %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}      
     .style_r.col-xs-4
-      =link_to "Serve Quiz",new_served_quiz_path(:quiz_bank_id => @quiz_bank.id), class: "btn btn-primary", remote: true
+      =link_to "Serve Quiz",new_served_quiz_path(:quiz_bank_id => @quiz_bank.id), class: "btn btn-primary"
       =link_to "Quiz Preview",quiz_preview_repository_quiz_bank_path(@repository,@quiz_bank), class: "btn btn-primary", :target => "_blank"
       -if current_user.can_change_repo?(@quiz_bank.repository)
         =link_to "Add Section", new_repository_quiz_bank_section_path(@repository,@quiz_bank),:class => "btn btn-primary", remote:true  

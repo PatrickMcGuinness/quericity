@@ -12,11 +12,13 @@ class Sharing < ActiveRecord::Base
     PENDING = 1
     ATTEMPTED = 2
     EXPIRED = 3
+    STARTED = 4
   end
   
   scope :attempted, -> { where(status: Sharing::Status::ATTEMPTED) }
   scope :pending, -> { where(status: Sharing::Status::PENDING) }
-  scope :expired, -> { where(status: Sharing::Status::EXPIRED) }  
+  scope :expired, -> { where(status: Sharing::Status::EXPIRED) }
+  scope :started, -> { where(status: Sharing::Status::STARTED) }
 
   def self.email_is_user?(email)
     User.exists?(:email => email)
@@ -31,11 +33,19 @@ class Sharing < ActiveRecord::Base
   end
 
   def is_attempted?
-    self.status = Sharing::Status::ATTEMPTED
+    self.status == Sharing::Status::ATTEMPTED
   end
 
   def is_expired?
-    self.status = Sharing::Status::EXPIRED
+    self.status == Sharing::Status::EXPIRED
+  end
+
+  def is_started?
+    self.status == Sharing::Status::STARTED
+  end
+
+  def self.get_sharing(served_quiz,user)
+    user.sharings.where("served_quiz_bank_id = ?",served_quiz.id).first
   end
 
   def self.add_more_students(user,emails,quiz_bank_id)

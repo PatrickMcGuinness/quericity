@@ -1,21 +1,25 @@
 .student-thumbnails{style:"margin-top:10px;overflow-y: auto;max-height:250px"}
   -@students.each do |student|
-    .col-xs-2.data-students{id: student.id, style: "margin-left:5px;"}
-      .thumbnail.row{style:"width:220px"}
-        .col-xs-1.thumbnail_checkbox
-          =check_box_tag "student_ids[]" ,student.id,true,:class => "delete"
+    .col-xs-2.thumb.mar-left-15{id: student.id}
+      .thumbnail.thumbnail-medium.row{style:"width:210px"}
+        .col-xs-1.thumbnail_checkbox.hide
+          =check_box_tag "student_ids[]" ,student.id,true,:class => "student-selected"
         .col-xs-1.thumbnail_image
           =image_tag display_picture(student),:class => 'thumnail_picture'
-        .col-xs-6.offset-1{style:"font-size:10px;"}
+        .col-xs-7.offset-1{style:"font-size:10px;"}
           =show_name(student)   
-          =student.email    
+          =student.email
+        .col-xs-1.pull-right.cross{style:"font-size:10px;"}
+          =link_to "x", "#", class: "student-in-database"      
   -@invites.each do |invite|
-    .col-xs-2.invite-students{id: invite.id,style: "margin-left:5px;"}
-      .thumbnail.row{style:"width:220px"}
-        .col-xs-1.thumbnail_checkbox
-          =check_box_tag "invite_ids[]" ,invite.id,true,:class => "delete"
+    .col-xs-2.thumb.mar-left-15{id: invite.id}
+      .thumbnail.thumbnail-medium.row
+        .col-xs-1.thumbnail_checkbox.hide
+          =check_box_tag "invite_ids[]" ,invite.id,true,:class => "student-selected"
         .col-xs-1.thumbnail_image
           =image_tag display_picture(nil),:class => 'thumnail_picture'
-        .col-xs-8.offset-1{style:"font-size:10px;"}
-          = "Student will be invited"    
+        .col-xs-7.offset-1{style:"font-size:10px;"}
+          = "Student invited"    
           =invite.receiver_email
+        .col-xs-1.pull-right.cross{style:"font-size:10px;"}
+          =link_to "x", "#", class: "student-in-database"  

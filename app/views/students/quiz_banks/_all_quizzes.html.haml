@@ -23,6 +23,8 @@
                 =sharing.served_quiz.cloned_quiz_bank.subject.title
               %td
                 -if sharing.is_pending?
+                  =link_to "Invited",take_quiz_students_quiz_bank_path(sharing.served_quiz,sharing_id: sharing.id), :target => "_blank"
+                -elsif sharing.is_started?
                   =link_to "Pending",take_quiz_students_quiz_bank_path(sharing.served_quiz,sharing_id: sharing.id), :target => "_blank"
-                -else
+                -else 
                   =show_status(sharing)

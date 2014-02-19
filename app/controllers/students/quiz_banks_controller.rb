@@ -25,7 +25,7 @@ class Students::QuizBanksController < ApplicationController
   end
 
   def attempt_quiz
-    #@sharing.update_attribute(:status, Sharing::Status::ATTEMPTED)
+    @sharing.update_attribute(:status, Sharing::Status::STARTED)
     @question = @served_quiz.next_question(current_user)
     @question_number  = @served_quiz.question_number(current_user)
     if @served_quiz.should_redirect?(current_user)
@@ -46,6 +46,8 @@ class Students::QuizBanksController < ApplicationController
 
   def answer_sheet
     @served_quiz = ServedQuiz.find(params[:served_quiz_id])
+    @sharing = Sharing.get_sharing(@served_quiz,current_user)
+    @sharing.update_attribute(:status, Sharing::Status::ATTEMPTED)
   end
 
   private

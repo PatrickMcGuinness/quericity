@@ -65,6 +65,10 @@ QuizLib::Application.routes.draw do
       get "show_all_sharings"
       get "get_instructions"
       get "get_all_questions"
+      get "get_status"
+      get "invited_students"
+      get "completed_students"
+      get "pending_students"
     end 
   end
   resources :users do

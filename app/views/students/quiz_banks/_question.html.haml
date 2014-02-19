@@ -19,6 +19,8 @@
     .question-number
       %strong
         = "Question No. #{@question_number}"
+      %input{type:"hidden",value:@question_number, class: "question-number-text"}
+      %input{type:"hidden", value:@question.cloned_quiz_bank.cloned_questions.count, class: "total-questions-text"}   
     .question-statement.mar-top-10     
       = @question.description.html_safe
   -if @question.is_true_false?
@@ -39,4 +41,3 @@
   -if @question.is_open_ended?
     %input{type:"hidden", value: Question::QuestionType::OPENENDED, class: "question-type"}
     =text_area_tag :open_ended,nil, :placeholder => "You Answer", :class => "form-control open-end-field"
-            

@@ -15,7 +15,7 @@
           %thead
             %th Quiz Title
             %th Students
-            %th Served Date
+            %th Served Status
             %th Status
           %tbody
             -@served_quizzes.each do |served_quiz|
@@ -26,13 +26,16 @@
                   = "Students: "
                   = link_to "#{served_quiz.sharings.count}", show_all_sharings_served_quiz_path(served_quiz), remote: true  
                 %td
-                  = show_date(served_quiz.created_at)
+                  = show_served_quiz_status(served_quiz)
                 %td
-                  = "Pending: "
-                  = link_to served_quiz.sharings.pending.count, "#"
+                  = "Invited: "
+                  = link_to served_quiz.sharings.pending.count, invited_students_served_quiz_path(served_quiz), remote:true
                   = " / "
-                  = "Attempted: "
-                  = link_to served_quiz.sharings.attempted.count, "#"     
+                  = "Pending: "
+                  = link_to served_quiz.sharings.started.count, pending_students_served_quiz_path(served_quiz), remote:true
+                  = "/" 
+                  = "Completed: "
+                  = link_to served_quiz.sharings.attempted.count, completed_students_served_quiz_path(served_quiz), remote:true   
 
 
 :javascript

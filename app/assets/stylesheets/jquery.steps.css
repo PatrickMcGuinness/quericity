@@ -73,7 +73,7 @@
 
 .wizard > .steps > ul > li
 {
-    width: 30%;
+    width: 20%;
 }
 
 .wizard > .steps > ul > li,
@@ -142,7 +142,7 @@
     /*background: #eee;*/
     display: block;
     margin: 0.5em;
-    min-height: 300px;
+    min-height: 400px;
     /*overflow: hidden;*/
     overflow: overlay;
     position: relative;
@@ -238,6 +238,7 @@
 {
     display: inline-block;
     text-align: right;
+    margin-right: 80px;
 }
 
 .wizard > .actions > ul > li
