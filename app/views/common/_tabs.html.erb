@@ -17,18 +17,6 @@
       Serve
     </a>
   </li>
-  <li class=' col-xs-2 padding-zero'>
-    <a href="#messages" data-toggle="tab">
-      <span class="glyphicon glyphicon glyphicon-list-alt"></span>
-      Grade
-    </a>
-  </li>
-  <li class=' col-xs-2 padding-zero'>
-    <a href="#messages" data-toggle="tab">
-      <span class="glyphicon glyphicon glyphicon-inbox"></span>
-      Reports
-    </a>
-  </li>
 
   <li class="<%= controller.class == UsersController and controller.action_name == 'profile' ? 'active' : '' %>">
     <a href="<%= profile_user_path(current_user)%>">
