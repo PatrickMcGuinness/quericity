@@ -4,11 +4,8 @@
     .col-xs-2
       =image_tag display_picture(current_user),:class => 'big_thumb pos_img_prof', :id => "logo2"
     .col-xs-7
-      -if current_user.first_name.present?
-        = current_user.first_name
-      %br
-      -if current_user.last_name.present?
-        = current_user.last_name
+      -if current_user.name.present?
+        = current_user.name
       %br   
       = "Profession: #{current_user.role}"
       %br

@@ -13,19 +13,20 @@
           .form-group
             %label{for: "title-field"}Edit Title
             %input{type:"text", class:"form-control",id:"title-field",placeholder:"Enter Title", value: @repository.title}       
-    .tags.col-xs-8
+    .tags.col-xs-7
       -@repository.question_tags.each do |question_topic|
         -if current_user.can_change_repo?(@repository)
           %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase} <a href="#{question_topic_path(question_topic.id)}" data-remote = true data-method = "delete" data-confirm = "Are you sure?" rel= "tooltip" title = "Remove Tag">x</a>
         -else
           %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}     
-    .style_r.col-xs-4
+    .style_r.col-xs-5
+      = link_to "Back to Repos", repositories_path, class: "btn btn-primary"
       -if current_user.can_change_repo?(@repository)
         =link_to "Edit",edit_repository_path(@repository), class: "btn btn-primary edit-repo", remote: true  
       -if @repository.is_admin? current_user or  @repository.is_owner? current_user
         =link_to "Share",repository_collaborators_path(@repository),class: "btn btn-primary share-repo",remote: true
       -if current_user.can_change_repo?(@repository)
-        =link_to "Add Quiz", new_repository_quiz_bank_path(@repository), class: "btn btn-primary add-quiz", remote: true
+        =link_to "Add Quiz Bank", new_repository_quiz_bank_path(@repository), class: "btn btn-primary add-quiz", remote: true
   .row
     .top_bar_ss.col-xs-12
       %span.mar_l_30
@@ -51,7 +52,7 @@
     .col-xs-12      
       %ul.breadcrumb.top_bar_s
         %li
-          = link_to "My Repo", repositories_path
+          = link_to "My Repos", repositories_path
         %li.active
           = @repository.title
   = form_tag repository_path, :method => 'get' do

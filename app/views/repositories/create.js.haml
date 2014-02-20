@@ -1,7 +1,4 @@
-$(".repo-header").addClass("hide")
-$(".quiz-bank-header").removeClass("hide")
-$(".repo-form").addClass("hide")
-$(".quiz-bank-form").append(' #{j(render(partial: 'quiz_banks/simple_form'))} ')
+$('#base-modal').modal('hide');
 if(window.location.pathname == "/repositories"){
 if($('.no-record').length > 0){
 $('.no-record').remove()
@@ -12,46 +9,4 @@ else{
 $("tbody").append(' #{j(render(partial: 'repository'))} ')
 }
 }
-
-
-$("#quiz_form").validate({
-onkeyup: false,
-onclick: false,
-onfocusout: false,
-rules: {
-"quiz_bank[title]": {
-required: true,
-minlength: 5,
-maxlength: 50
-},
-"quiz_bank[description]": {
-required: true
-},
-"quiz_bank[repository_id]":{
-required: true
-}
-},
-messages: {
-"quiz_bank[title]": {
-required: "Please enter title",
-minlength: "Please enter minimum 5 characters",
-maxlength: "Please enter maximum 50 characters"
-},
-
-"quiz_bank[description]": {
-required: "Please enter description"
-},
-"quiz_bank[repository_id]":{
-required: "Please enter repository"
-}
-},
-highlight: function(element) {
-$(element).siblings('label.error').remove();
-$(element).closest('.control_validate').removeClass('success').addClass('error');
-},
-// Success function accepts lable as an argument
-success: function(element) {
-$(element).remove();
-$(element).closest('.control_validate').removeClass('error').addClass('success');
-}
-});
+window.location = '/repositories/#{@repository.id}'

@@ -4,10 +4,7 @@
       %h1
         = @quiz_bank.title
       %strong
-        = "from: #{@quiz_bank.repository.owner.name}"
-      %br  
-      %strong  
-        = "email: #{@quiz_bank.repository.owner.email}"  
+        = "from: #{@quiz_bank.repository.owner.name}" 
     .col-xs-2.pull-right
       =link_to "Hide Sections", "#", class: "btn btn-primary hide-section"
     .row
@@ -22,7 +19,7 @@
         -section.questions.order("seq ASC").each_with_index do |question, index|
           .col-xs-12
             .col-xs-2
-              = "Question No. #{(index + 1)})"
+              = "#{(index + 1)})"
             .col-xs-10
               .question{style: "margin-bottom:20px;"} 
                 = question.description.html_safe
@@ -44,7 +41,7 @@
       -@questions_without_sections.each_with_index do |question,index|     
         .col-xs-12
           .col-xs-2
-            = "Question No. #{(index + 1)})"
+            = "#{(index + 1)})"
           .col-xs-10
             .question{style: "margin-bottom:20px;"} 
               = question.description.html_safe
