@@ -10,11 +10,11 @@
       -else
         %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}
   %td
-    ="Collarborators:"
+    ="Collaborators:"
     =link_to "#{@repository.collaborators.count}", get_all_collaborators_repository_path(@repository),remote:true
   %td
-    = link_to edit_repository_path(@repository), remote:true, rel: "tooltip", title: "Edit" do
-      %span.glyphicon.glyphicon-pencil
+    -#= link_to edit_repository_path(@repository), remote:true, rel: "tooltip", title: "Edit" do
+      -#%span.glyphicon.glyphicon-pencil
     =link_to repository_path(@repository),data:{method: :delete, confirm: "Are you sure?"}, remote:true,rel: "tooltip",title: "Delete Repo" do
       %span.glyphicon.glyphicon-trash
     =link_to repository_collaborators_path(@repository), remote:true, rel: "tooltip", title: "share" do

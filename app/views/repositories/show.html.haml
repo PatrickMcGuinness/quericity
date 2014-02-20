@@ -3,16 +3,17 @@
   .mar_top.creat-repo-div.row
     .col-xs-12
       %h2.repo-title-show
-        %span.title
+        %span.title.col-xs-3
           = @repository.title
-        %span  
-          =link_to "#",rel: "popover",data:{content: @repository.description}, style: "margin-left:15px",id: "description-popover" do
+        %span.repo-title-edit.hide.col-xs-3{data:{id: @repository.id}}
+          %form.form-inline
+            .form-group
+              %label{for: "title-field"}Edit Title
+              %input{type:"text", class:"form-control",id:"title-field",placeholder:"Enter Title", value: @repository.title}  
+        %span.col-xs-4.pull-left  
+          =link_to "#",rel: "popover",data:{content: @repository.description,trigger:"manual"}, style: "margin-left:15px",id: "description-popover" do
             %span.glyphicon.glyphicon-comment
-      %h2.repo-title-edit.hide{data:{id: @repository.id}}
-        %form.form-inline
-          .form-group
-            %label{for: "title-field"}Edit Title
-            %input{type:"text", class:"form-control",id:"title-field",placeholder:"Enter Title", value: @repository.title}       
+      
     .tags.col-xs-7
       -@repository.question_tags.each do |question_topic|
         -if current_user.can_change_repo?(@repository)
@@ -21,8 +22,8 @@
           %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}     
     .style_r.col-xs-5
       = link_to "Back to Repos", repositories_path, class: "btn btn-primary"
-      -if current_user.can_change_repo?(@repository)
-        =link_to "Edit",edit_repository_path(@repository), class: "btn btn-primary edit-repo", remote: true  
+      -#-if current_user.can_change_repo?(@repository)
+        -#=link_to "Edit",edit_repository_path(@repository), class: "btn btn-primary edit-repo", remote: true
       -if @repository.is_admin? current_user or  @repository.is_owner? current_user
         =link_to "Share",repository_collaborators_path(@repository),class: "btn btn-primary share-repo",remote: true
       -if current_user.can_change_repo?(@repository)
@@ -54,7 +55,7 @@
         %li
           = link_to "My Repos", repositories_path
         %li.active
-          = @repository.title
+          = @repository.title      
   = form_tag repository_path, :method => 'get' do
     %p
       = text_field_tag :search, params[:search], :placeholder => "Search", :class => "form-control cust_wid search-text"

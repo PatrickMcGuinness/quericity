@@ -50,6 +50,11 @@ class RepositoriesController < ApplicationController
     render json:{title: @repository.title}
   end
 
+  def update_description
+    @repository.update_attribute(:description,params[:description])
+    render json:{description: @repository.description}
+  end
+
 
   private
 

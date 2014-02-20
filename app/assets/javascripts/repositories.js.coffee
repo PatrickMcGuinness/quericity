@@ -29,7 +29,7 @@ jQuery ->
   $(".add-quiz").on "click", (e)->
     $(this).append(get_ajax_loader_html())
 
-  $(".repo-title-show").on "click", (e)->
+  $(".title").on "click", (e)->
     $(this).addClass("hide")
     $(".repo-title-edit").removeClass("hide")
 
@@ -44,11 +44,22 @@ jQuery ->
           success: (data)->
             $(".repo-title-edit").addClass("hide")
             $(".repo-title-show").find(".title").html(data.title)
-            $(".repo-title-show").removeClass("hide")
+            $(".title").removeClass("hide")
 
-  $(".glyphicon-comment").hover(
-    ()->
-      $("#description-popover").popover('show')
-    ()->
-      $("#description-popover").popover('hide')
-    )          
+  $(".glyphicon-comment").on "click",(e)->
+    $("#description-popover").popover('toggle')
+
+  $(".tab-content").on "click",".popover-content",(e)->
+    if $(".popover-textarea").length == 0
+      $(".popover-content").html("<textarea class = 'popover-textarea' rows='4' cols='15'>"+$(this).html()+"</textarea>")
+
+  $(".tab-content").on "keydown",".popover-textarea",(key)->
+    _this = this
+    repo_id = $(".repo-title-edit").data("id") 
+    if key.keyCode == 13
+      key.preventDefault()
+      $.ajax
+        url: "/repositories/"+repo_id+"/update_description",
+        data:{description:$(_this).val()},
+        success: (data)->
+          $(".popover-content").html(data.description) 
