@@ -30,30 +30,23 @@
         =link_to "Add Quiz Bank", new_repository_quiz_bank_path(@repository), class: "btn btn-primary add-quiz", remote: true     
 
 
-  .row
-    .top_bar_ss.col-xs-12
-      %span.mar_l_30
-        %b Owned by 
-        =@repository.owner.name
-      %font.mar_l_30 |
-      %span.mar_l_30
-        %b Created on:
-        =@repository.created_at.to_date
-      %font.mar_l_30 |
-      %span.mar_l_30
-        %b Quiz Banks:
-        =@quiz_banks.blank? ? 0:@repository.quiz_banks.count
-      %font.mar_l_30 |
-      %span.mar_l_30
-        %b Collaborators:
-        = @repository.collaborators.count
-  .row
-    .col-xs-12      
-      %ul.breadcrumb.top_bar_s
-        %li
-          = link_to "My Repos", repositories_path
-        %li.active
-          = @repository.title
+  -#.row
+    -#.top_bar_ss.col-xs-12
+      -#%span.mar_l_30
+        -#%b Owned by 
+        -#=@repository.owner.name
+      -#%font.mar_l_30 |
+      -#%span.mar_l_30
+        -#%b Created on:
+        -#=@repository.created_at.to_date
+      -#%font.mar_l_30 |
+      -#%span.mar_l_30
+        -#%b Quiz Banks:
+        -#=@quiz_banks.blank? ? 0:@repository.quiz_banks.count
+      -#%font.mar_l_30 |
+      -#%span.mar_l_30
+        -#%b Collaborators:
+        -#= @repository.collaborators.count
   .row
     .col-xs-12
       %h4 Description
@@ -63,7 +56,17 @@
         -else
           = @repository.description
       .description-edit.hide
-        =text_area_tag :description, @repository.description,:class => "form-control description-text"              
+        =text_area_tag :description, @repository.description,:class => "form-control description-text", rows:6
+
+
+  .row
+    .col-xs-12      
+      %ul.breadcrumb.top_bar_s
+        %li
+          = link_to "My Repos", repositories_path
+        %li.active
+          = @repository.title
+                
   .row
     .col-xs-12.mar-top-20
       = form_tag repository_path, :method => 'get' do

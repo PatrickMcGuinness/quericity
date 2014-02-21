@@ -39,11 +39,11 @@
     .col-xs-12
       %ul.breadcrumb.top_bar_s
         %li
-          = link_to "My Repo", repositories_path
-        %li.active
-          = @repository.title
+          = link_to "My Repos", repositories_path
+        -#%li.active
+          -#= @repository.title
         %li
-          = link_to "My Quiz Bank", repository_path(@repository)
+          = link_to "My Quiz Banks", repository_path(@repository)
         %li.active
           = @quiz_bank.title
   .row
