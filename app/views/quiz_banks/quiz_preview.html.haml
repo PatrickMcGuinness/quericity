@@ -37,8 +37,12 @@
                 .options
                   -question.question_options.each do |option|
                     %p
-                      = check_box_tag :answer, nil, false, class: "form_contorl", disabled: true 
+                      = check_box_tag :answer, nil, false, class: "form_contorl", disabled: true  
                       = option.answer
+              -if question.is_fill_in_the_blank?
+                .options
+                  %p
+                    %input{type:"text",class: "form-control", disabled: "disabled"}        
     .row.questions-without-sections.hide   
       -@questions_without_sections.each_with_index do |question,index|     
         .col-xs-12
