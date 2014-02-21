@@ -1,14 +1,14 @@
 class RepositoriesController < ApplicationController
   
   before_filter :authenticate_user!
-  before_filter :set_variables, :except => [:index,:shared,:new,:create]
+  before_filter :set_variables, :except => [:index,:all,:new,:create]
   
   def index
     @repositories  = current_user.own_repositories.page(params[:page])
   end
   
-  def shared
-    @shared_repositories  = current_user.shared_repositories
+  def all
+    @shared_repositories  = current_user.repositories
   end
   
   def show
@@ -45,14 +45,9 @@ class RepositoriesController < ApplicationController
     render layout:nil
   end
 
-  def update_title
-    @repository.update_attribute(:title,params[:title])
-    render json:{title: @repository.title}
-  end
-
-  def update_description
-    @repository.update_attribute(:description,params[:description])
-    render json:{description: @repository.description}
+  def update_title_description
+    @repository.update_attributes(params[:repository])
+    render json:{description: @repository.description, title: @repository.title}
   end
 
 

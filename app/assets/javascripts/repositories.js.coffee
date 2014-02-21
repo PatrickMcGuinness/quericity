@@ -19,9 +19,6 @@ jQuery ->
 
   $(".create-repo").on "click", (e)->
     $(this).append(get_ajax_loader_html())
-
-  $(".edit-repo").on "click", (e)->
-    $(this).append(get_ajax_loader_html())
     
   $(".share-repo").on "click", (e)->
     $(this).append(get_ajax_loader_html())
@@ -29,37 +26,69 @@ jQuery ->
   $(".add-quiz").on "click", (e)->
     $(this).append(get_ajax_loader_html())
 
-  $(".title").on "click", (e)->
-    $(this).addClass("hide")
-    $(".repo-title-edit").removeClass("hide")
+  ###
+    TODO: This is commented. Should remove after the page is passed by client
 
-  $(".tab-content").on "keydown","#title-field",(key)->
+    $(".title").on "click", (e)->
+      $(this).addClass("hide")
+      $(".repo-title-edit").removeClass("hide")
+
+    $(".tab-content").on "keydown","#title-field",(key)->
+        _this = this
+        repo_id = $(".repo-title-edit").data("id")
+        if(key.keyCode == 13)
+          key.preventDefault()
+          $.ajax
+            url: "/repositories/"+repo_id+"/update_title",
+            data: {title: $(_this).val()},
+            success: (data)->
+              $(".repo-title-edit").addClass("hide")
+              $(".repo-title-show").find(".title").html(data.title)
+              $(".title").removeClass("hide")
+
+    $(".glyphicon-comment").on "click",(e)->
+      $("#description-popover").popover('toggle')
+
+    $(".tab-content").on "click",".popover-content",(e)->
+      if $(".popover-textarea").length == 0
+        $(".popover-content").html("<textarea class = 'popover-textarea' rows='4' cols='15'>"+$(this).html()+"</textarea>")
+
+    $(".tab-content").on "keydown",".popover-textarea",(key)->
       _this = this
-      repo_id = $(".repo-title-edit").data("id")
-      if(key.keyCode == 13)
+      repo_id = $(".repo-title-edit").data("id") 
+      if key.keyCode == 13
         key.preventDefault()
         $.ajax
-          url: "/repositories/"+repo_id+"/update_title",
-          data: {title: $(_this).val()},
+          url: "/repositories/"+repo_id+"/update_description",
+          data:{description:$(_this).val()},
           success: (data)->
-            $(".repo-title-edit").addClass("hide")
-            $(".repo-title-show").find(".title").html(data.title)
-            $(".title").removeClass("hide")
+            $(".popover-content").html(data.description)
 
-  $(".glyphicon-comment").on "click",(e)->
-    $("#description-popover").popover('toggle')
+    TODO: The commented region ends here        
+  ###          
 
-  $(".tab-content").on "click",".popover-content",(e)->
-    if $(".popover-textarea").length == 0
-      $(".popover-content").html("<textarea class = 'popover-textarea' rows='4' cols='15'>"+$(this).html()+"</textarea>")
+  $(".tab-content").on "click", ".edit-repo",(e)->
+    e.preventDefault()
+    $(this).addClass("save-repo").removeClass("edit-repo").html("Save")
+    $(".description-edit").removeClass("hide")
+    $(".description-show").addClass("hide")
+    $(".title").addClass("hide")
+    $(".repo-title-edit").removeClass("hide")
 
-  $(".tab-content").on "keydown",".popover-textarea",(key)->
+
+  $(".tab-content").on "click", ".save-repo",(e)->
+    e.preventDefault()
     _this = this
-    repo_id = $(".repo-title-edit").data("id") 
-    if key.keyCode == 13
-      key.preventDefault()
-      $.ajax
-        url: "/repositories/"+repo_id+"/update_description",
-        data:{description:$(_this).val()},
-        success: (data)->
-          $(".popover-content").html(data.description) 
+    repo_id = $(".repo-title-edit").data("id")
+    $.ajax
+      url: "/repositories/"+repo_id+"/update_title_description"
+      method: "GET",
+      data: {repository:{title:$("#title-field").val(),description: $(".description-text").val()}}
+      success: (data)->
+        console.log data
+        $(".description-edit").addClass("hide")
+        $(".description-show").removeClass("hide")
+        $(".description-show").html(data.description)
+        $(".title").removeClass("hide").html(data.title)
+        $(".repo-title-edit").addClass("hide")
+        $(_this).addClass("edit-repo").removeClass("save-repo").html("Edit")          

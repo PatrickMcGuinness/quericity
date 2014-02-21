@@ -27,4 +27,28 @@ class QuizBank < ActiveRecord::Base
     Question.where("section_id IN (?)",section_ids)
   end
 
+  def json_for_update_quiz_bank
+    common = {quiz_bank: self,question_topics: []}
+    self.question_topics.each do |question_topic|
+      common[:question_topics] << {id: question_topic.id, title: question_topic.topic.title}
+    end
+    common
+  end
+
+  def update_tags(question_topics)
+    tags = []
+    QuizBank.transaction do
+      self.question_topics.destroy_all
+      topic_arrays = question_topics.split(",")
+      topic_arrays.each do |question_topic|
+        topic = Topic.find_by_title(question_topic)
+        if topic.blank?
+          topic = Topic.create(:title => question_topic)
+        end
+        tags << self.question_topics.create(:topic_id => topic.id)
+      end
+    end
+    tags
+  end
+
 end

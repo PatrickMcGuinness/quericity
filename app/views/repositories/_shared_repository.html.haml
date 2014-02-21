@@ -14,3 +14,9 @@
       =repository.owner.name
     -else
       =repository.owner.email
+  %td
+    -if current_user.can_change_repo?(repository)
+      =link_to repository_path(repository),data:{method: :delete, confirm: "Are you sure?"}, remote:true,rel: "tooltip",title: "Delete Repo" do
+        %span.glyphicon.glyphicon-trash
+      =link_to repository_collaborators_path(repository), remote:true, rel: "tooltip", title: "share" do
+        %span.glyphicon.glyphicon-share-alt    

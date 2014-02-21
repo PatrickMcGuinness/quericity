@@ -55,10 +55,11 @@ class QuizBanksController < ApplicationController
     end
   end
 
-  def update_title
+  def update_quiz_bank
     @quiz_bank = QuizBank.find(params[:id])
-    @quiz_bank.update_attribute(:title, params[:title])
-    render json: {title: @quiz_bank.title}
+    @quiz_bank.update_attributes(params[:quiz_bank])
+    @question_topics = @quiz_bank.update_tags(params[:question_topics])
+    render json: @quiz_bank.json_for_update_quiz_bank
   end
 
   private

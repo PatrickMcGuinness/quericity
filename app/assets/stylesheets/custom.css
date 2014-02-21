@@ -186,14 +186,14 @@ margin-bottom: 7px;
 	margin-right: 55px;
 }
 .big_thumb{
-	width: 90px;
+  width: 90px;
   height: 90px;
   border: 1px solid #B6B6B4;
   border-radius: 5px;
 }
 .small_thumb{
   width: 70px;
-  height: 80px;
+  height: 70px;
   border-radius: 5px;	
 }
 .pos_img_prof{

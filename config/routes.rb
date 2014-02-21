@@ -25,10 +25,9 @@ QuizLib::Application.routes.draw do
   get "/questions/open_ended_edit", to: "questions#open_ended_edit", as: :open_ended_edit
   get "/questions/fill_in_the_blank_edit", to: "questions#fill_in_the_blank_edit", as: :fill_in_the_blank_edit
   get "/questions/mcq_edit", to: "questions#mcq_edit", as: :mcq_edit
-  get "quiz_banks/:id/update_title", to: "quiz_banks#update_title", as: :update_title
+  get "quiz_banks/:id/update_quiz_bank", to: "quiz_banks#update_quiz_bank", as: :update_quiz_bank
   get "quiz_banks/:id/add_instructions", to: "quiz_banks#add_instructions", as: :add_instructions
-  get "repositories/:id/update_title", to: "repositories#update_title", as: :repo_update_title
-  get "repositories/:id/update_description", to: "repositories#update_description", as: :repo_update_description
+  get "repositories/:id/update_title_description", to: "repositories#update_title_description", as: :repo_update_title_description
   get "sections/:id/update_title", to: "sections#update_title", as: :section_update_title
   post "sections/change_question_positions", to: "sections#change_question_positions", as: :change_question_positions
   post "sections/change_question_section", to: "sections#change_question_section", as: :change_question_section
@@ -84,7 +83,7 @@ QuizLib::Application.routes.draw do
   resources :topics
   resources :repositories do
     collection do
-      get 'shared'
+      get 'all'
     end
     member do
       get 'get_all_collaborators'

@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   after_create :create_default_group
   after_create :confirm_the_user
 
+  
+
   def create_default_group
     self.groups.create(:title => "default") if self.is_professor?
   end
