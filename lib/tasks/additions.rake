@@ -4,6 +4,7 @@ namespace :additions do
     # This task add new countries and new cities from the csv files to the databases
   	puts "Add slug to all repos"
     Repository.find_each(&:save)
+    QuizBank.find_each(&:save)
     puts "done"
   end
 end

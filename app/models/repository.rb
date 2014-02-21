@@ -1,6 +1,6 @@
 class Repository < ActiveRecord::Base
   
-  paginates_per 5
+  paginates_per 20
   extend FriendlyId
   friendly_id :title, use: :slugged
 
