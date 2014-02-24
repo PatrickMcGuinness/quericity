@@ -115,5 +115,5 @@ class ServedQuiz < ActiveRecord::Base
       Invite.where("invitable_id = ? and invitable_type = ?",self.quiz_bank_id,"QuizBank").destroy_all
     end
   end
-  handle_asynchronously :background_job_for_create, :run_at => Proc.new { Time.now }
+  #handle_asynchronously :background_job_for_create, :run_at => Proc.new { Time.now }
 end
