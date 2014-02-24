@@ -38,6 +38,6 @@ class QuestionsController < ApplicationController
   end
 
   def set_question
-    @question = params[:id].present? ? @section.questions.find(params[:id]) : @section.questions.new
+    @question = params[:id].present? ? @section.questions.find(params[:id]) : @section.questions.new(:difficulty_level => Question::Difficulty::EASY)
   end
 end
