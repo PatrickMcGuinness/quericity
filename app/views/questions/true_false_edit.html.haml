@@ -1,7 +1,10 @@
 .row.true_false
+  .col-xs-14
+    %strong
+      = "Select correct answer"
   .cols-xs-14
     =check_box_tag :truequestion,nil, false,:class => "true-or-false",:style => "margin-top:15px;"
-    = "Is the question true?"
+    = "True"
   .col-xs-14
     =check_box_tag :falsequestion,nil, false,:class => "true-or-false",:style => "margin-top:15px;"
-    = "Is the question false?"
+    = "False"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140221123753) do
+ActiveRecord::Schema.define(:version => 20140224052649) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(:version => 20140221123753) do
     t.integer  "quiz_banks_count", :default => 0
     t.datetime "deleted_at"
     t.string   "slug"
+    t.integer  "public",           :default => 0
   end
 
   add_index "repositories", ["slug"], :name => "index_repositories_on_slug", :unique => true

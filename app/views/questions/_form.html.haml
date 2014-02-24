@@ -19,7 +19,8 @@
           .col-xs-12
             .alert.alert-warning.fade.in{style: "height:50px;margin-top:20px;"}
               -#%button{class: "close",data:{dismiss:"alert"}}×
-              Enter description and answer    
+
+              = show_alert_text(@question)    
         .row.description
           .col-xs-12  
             = f.input :description, :as => :ckeditor, :input_html => { :ckeditor => {:toolbar => 'mini'} }, :label => "Question"
@@ -40,6 +41,7 @@
           success: function(data){
             $(".description, .alert-div").show()
             $('.question-add').html($(data).find('.true_false').html())
+            $(".alert.alert-warning").html("Enter question and select correct answer")
             
           }
         });
@@ -51,6 +53,7 @@
           success: function(data){
             $(".description, .alert-div").show()
             $('.question-add').html($(data).find('.mcq').html())
+            $(".alert.alert-warning").html("Enter question and select correct answer")
           }
         });
       }

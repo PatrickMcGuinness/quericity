@@ -1,25 +1,27 @@
 %tr.section-row{id: "section_#{@section.id}"}
   %td{style:"width:1500px;"}
-    .well.well-sm.section.col-xs-12{id:@section.id}
-      .col-xs-10
-        .section-title-show{id:@section.id}
-          =@section.title
-        .section-title-edit{id:@section.id}
-          %form.form-inline
-            .form-group
-              %input{type:"text", class:"form-control",id:"section-field",placeholder:"Enter Title", value: @section.title}  
-      .col-xs-2.pull-right
-        -if current_user.can_change_repo?(@section.quiz_bank.repository)
-          =link_to "#", rel:"tooltip", title: "Hide Questions" do
-            %span.glyphicon.glyphicon-chevron-up
-          =link_to new_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section),remote: true, rel: "tooltip", title: "Create Question in this section" do
-            %span.glyphicon.glyphicon-plus-sign
-          = link_to edit_repository_quiz_bank_section_path(@repository,@quiz_bank,@section),remote:true, rel: "tooltip", title: "Edit Section Title" do
-            %span.glyphicon.glyphicon-pencil
-          = link_to section_before_destroy_repository_quiz_bank_section_path(@repository,@quiz_bank,@section),remote:true,rel: "tooltip",title: "Delete Section" do
-            %span.glyphicon.glyphicon-trash      
-    .questions{id:@section.id}
-      =render partial: "questions/index", :locals => {:@section => @section}
+    .row
+      .well.well-sm.section.col-xs-12{id:@section.id}
+        .col-xs-10
+          .section-title-show{id:@section.id}
+            =@section.title
+          .section-title-edit{id:@section.id}
+            %form.form-inline
+              .form-group
+                %input{type:"text", class:"form-control",id:"section-field",placeholder:"Enter Title", value: @section.title}  
+        .col-xs-2.pull-right
+          -if current_user.can_change_repo?(@section.quiz_bank.repository)
+            =link_to "#", rel:"tooltip", title: "Hide questions" do
+              %span.glyphicon.glyphicon-chevron-up
+            =link_to new_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section),remote: true, rel: "tooltip", title: "Add another question in this section" do
+              %span.glyphicon.glyphicon-plus-sign
+            = link_to edit_repository_quiz_bank_section_path(@repository,@quiz_bank,@section),remote:true, rel: "tooltip", title: "Edit section title" do
+              %span.glyphicon.glyphicon-pencil
+            = link_to section_before_destroy_repository_quiz_bank_section_path(@repository,@quiz_bank,@section),remote:true,rel: "tooltip",title: "Delete section" do
+              %span.glyphicon.glyphicon-trash
+    .row                
+      .questions{id:@section.id}
+        =render partial: "questions/index", :locals => {:@section => @section}
 
 
 :javascript

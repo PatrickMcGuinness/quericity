@@ -4,7 +4,7 @@ class Repository < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
 
-  attr_accessible :description, :title
+  attr_accessible :description, :title,:public
   validates :title, :presence => true, :length => { minimum: 5 }
   
   has_many :users, :through => :user_repositories 
@@ -14,6 +14,16 @@ class Repository < ActiveRecord::Base
   has_many :quiz_banks, dependent: :destroy
 
   default_scope { where("deleted_at IS NULL") }
+
+
+  class Public
+    NO = 0
+    YES = 1
+  end
+
+  def is_public?
+    self.public == Repository::Public::YES
+  end
 
   def owner
     self.user_repositories.find_by_permission("Owner").user
@@ -41,6 +51,11 @@ class Repository < ActiveRecord::Base
   def question_tags
     quiz_banks_ids = QuizBank.where("repository_id = ?",self.id).pluck(:id)
     QuestionTopic.where("quiz_bank_id IN (?)",quiz_banks_ids) 
+  end
+
+  def make_public
+    self.update_attribute(:public, Repository::Public::YES)
+    all_teachers = User.select{|u| u.is_professor?}.map(&:id)
   end
   def add_collaborator user , permission
     if is_collaborator? user

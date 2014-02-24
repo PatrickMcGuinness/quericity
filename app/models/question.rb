@@ -36,11 +36,13 @@ class Question < ActiveRecord::Base
   end
   def create_mcq_option(params)
     params["options"].to_i.times.each do |i|
-      question_option = self.question_options.new
-      question_option.answer = params["answer#{i+1}"]
-      question_option.is_correct = true if params["option#{i+1}"] == "on"
-      question_option.is_correct = false unless params["option#{i+1}"] == "on"
-      question_option.save
+      unless params["answer#{i+1}"].blank?
+        question_option = self.question_options.new
+        question_option.answer = params["answer#{i+1}"]
+        question_option.is_correct = true if params["option#{i+1}"] == "on"
+        question_option.is_correct = false unless params["option#{i+1}"] == "on"
+        question_option.save
+      end
     end
   end
 

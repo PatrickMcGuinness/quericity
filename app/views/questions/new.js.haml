@@ -1,10 +1,12 @@
 $('#base-modal').html(' #{j(render(partial: 'new'))} ').modal()
 $(".description, .alert-div").hide()
-$(".modal-body").on('click','.add-answer',function(e){
+$(".modal-body").on('focus','.answer-field',function(e){
+if($(".answer-field").last()[0] == this){
 e.preventDefault()
 rows = $("table.mcq tbody tr").length
 $("table.mcq tbody").append('<tr><td class = "col-xs-1"><input class="delete" id="delete1" name="delete1" type="checkbox"></td><td class="col-xs-7"><input class="form-control answer-field" id="answer'+(rows+1)+'" name="answer'+(rows+1)+'" type="text"></td><td class="col-xs-4"><input class="option-1" id="option'+(rows+1)+'" name="option'+(rows+1)+'" type="checkbox">Correct?</td></tr>')	
 $('.option-rows').val(rows+1)
+}
 })
 $(".modal-body").on("click",'.remove-answer', function(e){
 e.preventDefault()

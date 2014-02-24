@@ -88,7 +88,11 @@ QuizLib::Application.routes.draw do
     member do
       get 'get_all_collaborators'
     end
-    resources :collaborators
+    resources :collaborators do
+      collection do
+        get 'public'
+      end
+    end
     resources :quiz_banks, :except => :index do
       member do
         get "quiz_preview"

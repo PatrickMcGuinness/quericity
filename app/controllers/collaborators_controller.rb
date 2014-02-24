@@ -2,15 +2,18 @@ class CollaboratorsController < ApplicationController
 
   before_filter :verify_owner, :only => :create
   before_filter :authenticate_user!
+  before_filter :set_variables, except: [:destroy]
 
-  def index
-    @repository = current_user.repositories.find(params[:repository_id])
+  def index 
     @user_repository = current_user.user_repositories.where(:repository_id => params[:repository_id]) 
+  end
+
+  def public
+    @repository.make_public
   end
 
   
   def create
-    @repository = current_user.repositories.find(params[:repository_id])
     user = User.find_by_email(params[:email])
     if user.present?
       if user.is_professor?
@@ -29,6 +32,11 @@ class CollaboratorsController < ApplicationController
     @user_repository.destroy 
   end
 
+  private
+
+  def set_variables
+    @repository = current_user.repositories.find(params[:repository_id])
+  end
 
   def verify_owner
     @repository = Repository.find(params[:repository_id])
