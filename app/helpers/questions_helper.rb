@@ -13,4 +13,10 @@ module QuestionsHelper
     text
   end
 
+  def show_blank(question)
+    first_description = question.get_first_description.chomp
+    second_description = question.get_second_description.chomp
+    description = first_description + "_______" + second_description
+  end
+
 end

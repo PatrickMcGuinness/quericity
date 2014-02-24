@@ -63,7 +63,7 @@ class Question < ActiveRecord::Base
   end
   
   def self.create_fill_in_the_blank(params,section)
-    description = "#{params[:description]} _______ #{params[:description2]}" 
+    description = "#{params[:question][:description]} _______ #{params[:description2][:info]}" 
     question = section.questions.new(:difficulty_level => params[:question][:difficulty_level],
                                     :question_type => params[:question][:question_type], :description => description)
     question.save
@@ -111,10 +111,12 @@ class Question < ActiveRecord::Base
       end
     end
     if self.is_fill_in_the_blank?
-      description = "#{params[:description]} _______ #{params[:description2]}" 
+      description = "#{params[:description][:info]} _______ #{params[:description2][:info]}" 
       self.update_attributes(:difficulty_level => params[:question][:difficulty_level],
-                                    :question_type => params[:question][:question_type], :description => description)
-      self.question_options.first.answer = params[:answer]
+                                    :question_type => Question::QuestionType::BLANK, :description => description)
+      option = self.question_options.first 
+      option.answer = params[:answer]
+      option.save
     end
     self
   end

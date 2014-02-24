@@ -65,11 +65,12 @@
         });
       }
       if($(this).val() == 4){
-        $(".description, .alert-div").hide()
         $.ajax({
           url: "/questions/fill_in_the_blank_edit",
           success: function(data){
+            $(".description, .alert-div").show()
             $('.question-add').html($(data).find('.fill_in_the_blank').html())
+            $(".alert.alert-warning").html("Enter question and answer")
           }
         });
       }

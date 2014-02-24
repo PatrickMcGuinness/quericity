@@ -7,8 +7,11 @@
             .col-xs-2.question-number
               %strong 
                 = "Question No. #{@index}"
-            .col-xs-9     
-              =@question.description.html_safe
+            .col-xs-9
+              -unless @question.is_fill_in_the_blank?     
+                =@question.description.html_safe
+              -else  
+                =show_blank(@question).html_safe
       .col-xs-10.options
         -unless @question.question_options.first.answer.blank? 
           -if @question.question_options.first.answer != ""
