@@ -51,13 +51,13 @@
 
     $(".section").on("click",".glyphicon-chevron-up",function(e){
       e.preventDefault()
-      $(this).parents("td").children(".questions").hide()
+      $(this).parents("td").children(".row").children(".questions").hide()
       $(this).removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down")
     })
 
     $(".section").on("click",".glyphicon-chevron-down",function(e){
       e.preventDefault()
-      $(this).parents("td").children(".questions").show()
+      $(this).parents("td").children(".row").children(".questions").show()
       $(this).removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up")
     })
     $(".sections-table tbody").sortable({

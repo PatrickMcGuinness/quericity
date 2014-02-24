@@ -39,8 +39,8 @@ class Question < ActiveRecord::Base
       unless params["answer#{i+1}"].blank?
         question_option = self.question_options.new
         question_option.answer = params["answer#{i+1}"]
-        question_option.is_correct = true if params["option#{i+1}"] == "on"
-        question_option.is_correct = false unless params["option#{i+1}"] == "on"
+        question_option.is_correct = true if params[:option] == "option#{i+1}"
+        question_option.is_correct = false unless params[:option] == "option#{i+1}"
         question_option.save
       end
     end

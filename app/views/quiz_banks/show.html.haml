@@ -10,7 +10,8 @@
       %h2.quiz-bank-title-edit.hide{data:{id: @quiz_bank.id}}
         %form.form-inline
           .form-group
-            %label{for: "title-field"}Edit Title
+            %h4
+              Edit Title
             %input{type:"text", class:"form-control",id:"title-field",placeholder:"Enter Title", value: @quiz_bank.title}
     .tags.col-xs-7.tags-show
       -@quiz_bank.question_topics.each do |question_topic|
@@ -19,7 +20,9 @@
         -else
           %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}
     .col-xs-7.tags-edit.hide
-      %input{type: "text",class: "form-control tags-text", value: get_comma_separated_tags(@quiz_bank)}            
+      %h4 
+        Edit Tags
+      %input{type: "text",class: "form-control tags-text", value: get_comma_separated_tags(@quiz_bank),placeholder: "Enter comma separated tags"}            
     .style_r.col-xs-5
       =link_to "Edit", "#", class: "btn btn-primary edit-quiz-bank"
       =link_to "Serve Quiz",new_served_quiz_path(:quiz_bank_id => @quiz_bank.id), class: "btn btn-primary"

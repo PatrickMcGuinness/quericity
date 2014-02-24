@@ -3,19 +3,20 @@ $(".modal-body").on('focus','.answer-field',function(e){
 if($(".answer-field").last()[0] == this){
 e.preventDefault()
 rows = $("table.mcq tbody tr").length
-$("table.mcq tbody").append('<tr><td class = "col-xs-1"><input class="delete" id="delete1" name="delete1" type="checkbox"></td><td class="col-xs-7"><input class="form-control answer-field" id="answer'+(rows+1)+'" name="answer'+(rows+1)+'" type="text"></td><td class="col-xs-4"><input class="option-1" id="option'+(rows+1)+'" name="option'+(rows+1)+'" type="checkbox">Correct?</td></tr>')
+$("table.mcq tbody").append('<tr><td class="col-xs-7"><input class="form-control answer-field" id="answer'+(rows+1)+'" name="answer'+(rows+1)+'" type="text"></td><td class="col-xs-4"><input class= "radio-option" id="option_option'+(rows+1)+'" name="option" type="radio" value="option'+(rows+1)+'"> Correct</td><td class="col-xs-1"><a href="#"><span class="glyphicon glyphicon-remove remove-option" style="color:red;"></span></a></td></tr>')
 $('.option-rows').val(rows+1)
 }
 })
 
-$(".modal-body").on('click',".remove-answer",function(e){
+$(".modal-body").on("click",".glyphicon-remove",function(e){
 e.preventDefault()
-if($(".delete").is(":checked")){
-if($(".option-rows").val() >= 2){
-$(".delete:checked").each(function(){
-rows = $('.option-rows').val()
+if($(".answer-field").length > 2){
 $(this).parents("tr").remove()
+rows = $('.option-rows').val()
 $('.option-rows').val(rows-1)
+$(".radio-option").each(function(index){
+$(this).attr('value',"option"+(index+1))
+$(this).attr('id',"option_option"+(index+1))
 })
 $(".answer-field").each(function(index){
 $(this).attr('name',"answer"+(index+1))
@@ -23,11 +24,7 @@ $(this).attr('id',"answer"+(index+1))
 })
 }
 else{
-alert("Can not remove last 2 answer")
-}
-}
-else{
-alert("select an answer to remove")
+alert("Cann't remove last two options")
 }
 })
 
