@@ -45,7 +45,7 @@ class Sharing < ActiveRecord::Base
   end
 
   def self.get_sharing(served_quiz,user)
-    user.sharings.where("served_quiz_bank_id = ?",served_quiz.id).first
+    user.sharings.where("served_quiz_id = ?",served_quiz.id).first
   end
 
   def self.add_more_students(user,emails,quiz_bank_id)

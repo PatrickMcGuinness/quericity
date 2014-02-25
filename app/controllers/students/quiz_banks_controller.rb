@@ -39,9 +39,6 @@ class Students::QuizBanksController < ApplicationController
     @answer = Answer.check_answer(current_user,@cloned_question,params[:answer],@served_quiz.id)
     @question = @served_quiz.next_question(current_user)
     @question_number = @served_quiz.question_number(current_user)
-    if @served_quiz.should_redirect?(current_user)
-      redirect_to answer_sheet_students_quiz_banks_path(served_quiz_id: @served_quiz.id)
-    end
   end
 
   def answer_sheet

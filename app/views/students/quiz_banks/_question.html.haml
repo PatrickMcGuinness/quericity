@@ -13,31 +13,32 @@
       -else
         .alert.alert-warning.fade.in.mar-top-10{style: "height:50px;"}
           %button{class: "close",data:{dismiss:"alert"}}×
-          ="Answer for previous question will be graded later"                    
-  
-  .question{data:{id:@question.id}}
-    .question-number
-      %strong
-        = "Question No. #{@question_number}"
-      %input{type:"hidden",value:@question_number, class: "question-number-text"}
-      %input{type:"hidden", value:@question.cloned_quiz_bank.cloned_questions.count, class: "total-questions-text"}   
-    .question-statement.mar-top-10     
-      = @question.description.html_safe
-  -if @question.is_true_false?
-    %input{type:"hidden", value: Question::QuestionType::TRUEFALSE, class: "question-type"}
-    = check_box_tag "true",nil,false, class: "true-option"
-    ="True"
-    =check_box_tag "false",nil,false,class: "false-option"
-    ="False"
-  -if @question.is_mcq?
-    %input{type:"hidden", value: Question::QuestionType::MCQ, class: "question-type"}
-    -@question.cloned_question_options.each do |question_option|
-      .question_option{data:{id:question_option.id}}
-        =check_box_tag "option",nil,false,class: "mcq-option", data:{answer: question_option.answer}
-        =question_option.answer
-  -if @question.is_fill_in_the_blank?
-    %input{type:"hidden", value: Question::QuestionType::BLANK, class: "question-type"}
-    =text_field_tag :blank, nil, class: "form-control blank-field mar-top-20"
-  -if @question.is_open_ended?
-    %input{type:"hidden", value: Question::QuestionType::OPENENDED, class: "question-type"}
-    =text_area_tag :open_ended,nil, :placeholder => "You Answer", :class => "form-control open-end-field"
+          ="Answer for previous question will be graded later"
+
+  -unless @question.blank?                            
+    .question{data:{id:@question.id}}
+      .question-number
+        %strong
+          = "Question No. #{@question_number}"
+        %input{type:"hidden",value:@question_number, class: "question-number-text"}
+        %input{type:"hidden", value:@question.cloned_quiz_bank.cloned_questions.count, class: "total-questions-text"}   
+      .question-statement.mar-top-10     
+        = @question.description.html_safe
+    -if @question.is_true_false?
+      %input{type:"hidden", value: Question::QuestionType::TRUEFALSE, class: "question-type"}
+      = check_box_tag "true",nil,false, class: "true-option"
+      ="True"
+      =check_box_tag "false",nil,false,class: "false-option"
+      ="False"
+    -if @question.is_mcq?
+      %input{type:"hidden", value: Question::QuestionType::MCQ, class: "question-type"}
+      -@question.cloned_question_options.each do |question_option|
+        .question_option{data:{id:question_option.id}}
+          =check_box_tag "option",nil,false,class: "mcq-option", data:{answer: question_option.answer}
+          =question_option.answer
+    -if @question.is_fill_in_the_blank?
+      %input{type:"hidden", value: Question::QuestionType::BLANK, class: "question-type"}
+      =text_field_tag :blank, nil, class: "form-control blank-field mar-top-20"
+    -if @question.is_open_ended?
+      %input{type:"hidden", value: Question::QuestionType::OPENENDED, class: "question-type"}
+      =text_area_tag :open_ended,nil, :placeholder => "You Answer", :class => "form-control open-end-field"
