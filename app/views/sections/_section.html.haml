@@ -13,12 +13,6 @@
           -if current_user.can_change_repo?(@section.quiz_bank.repository)
             =link_to "#", rel:"tooltip", title: "Hide questions" do
               %span.glyphicon.glyphicon-chevron-up
-            =link_to new_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section),remote: true, rel: "tooltip", title: "Add another question in this section" do
-              %span.glyphicon.glyphicon-plus-sign
-            = link_to edit_repository_quiz_bank_section_path(@repository,@quiz_bank,@section),remote:true, rel: "tooltip", title: "Edit section title" do
-              %span.glyphicon.glyphicon-pencil
-            = link_to section_before_destroy_repository_quiz_bank_section_path(@repository,@quiz_bank,@section),remote:true,rel: "tooltip",title: "Delete section" do
-              %span.glyphicon.glyphicon-trash
     .row                
       .questions{id:@section.id}
         =render partial: "questions/index", :locals => {:@section => @section}

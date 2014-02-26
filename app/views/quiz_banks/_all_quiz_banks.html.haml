@@ -1,17 +1,22 @@
 -if @quiz_banks.present?
-  %table.table.table-bordered.table_with_margin
+  %table.table.table_with_margin
     %thead
       %tr
         %th Title
-        %th Description
-        %th Subject
-        %th Topics
+        %th
+          %span.glyphicon.glyphicon-user 
+          %span Owner
+        %th
+          %span.glyphicon.glyphicon-tags 
+          %span Tags
+        %th 
+          %span.glyphicon.glyphicon-share 
+          %span Sharing
+        %th 
         %th
     %tbody
       -@quiz_banks.each do |q|
         =render partial: "quiz_banks/quiz_bank", :locals => {:@repository => q.repository,:@quiz_bank => q }
 -else
   .top_bar_s.no-record
-    There is no quiz bank
-
-=paginate @quiz_banks, :window => 2,:remote => true   
+    There is no quiz bank  

@@ -1,14 +1,8 @@
 <ul class="nav nav-tabs nav-justified">
-  <li class="<%= controller.class == RepositoriesController ? 'active col-xs-2 padding-zero' : 'col-xs-2 padding-zero' %>">
-    <a href="<%= repositories_path %>">
+  <li class="<%= controller.class == ManagersController ? 'active col-xs-2 padding-zero' : 'col-xs-2 padding-zero' %>">
+    <a href="<%= managers_path %>">
       <span class="glyphicon glyphicon-align-justify"></span>
-      Repository
-    </a>
-  </li>
-  <li class="<%= controller.class == QuizBanksController ? 'active col-xs-2 padding-zero' : 'col-xs-2 padding-zero' %>">
-    <a href="<%= quiz_banks_path%>">
-      <span class="glyphicon glyphicon-edit"></span>
-      Quiz
+      Manage
     </a>
   </li>
   <li class="<%= controller.class == ServedQuizzesController ? 'active col-xs-2 padding-zero' : 'col-xs-2 padding-zero' %>">
@@ -17,11 +11,17 @@
       Serve
     </a>
   </li>
+  <li class="">
+    <a href="#">
+      <span class="glyphicon glyphicon-edit"></span>
+      Grade
+    </a>
+  </li>
 
-  <li class="<%= controller.class == UsersController and controller.action_name == 'profile' ? 'active' : '' %>">
-    <a href="<%= profile_user_path(current_user)%>">
+  <li class="">
+    <a href="#">
       <span class="glyphicon glyphicon glyphicon-cog"></span>
-      Settings
+      Reports
     </a>
   </li>
 </ul>

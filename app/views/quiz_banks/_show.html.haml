@@ -1,0 +1,54 @@
+.row
+  .col-xs-12
+    %ul.breadcrumb
+      %li
+        = link_to "My Assessments", managers_path, remote: true
+      %li
+        = link_to "Repo", repository_path(@quiz_bank.repository), remote: true
+      %li.active
+        = @quiz_bank.title
+.row
+  .col-xs-6.col-xs-offset-4
+    %h2.quiz-bank-title-show
+      = @quiz_bank.title
+  .tags.col-xs-6.col-xs-offset-3
+    -@quiz_bank.question_topics.each do |question_topic|
+      .tag.col-xs-2
+        %span.glyphicon.glyphicon-tag
+        %span
+          =question_topic.topic.title.downcase            
+.row.mar-top-20
+  .top_bar_ss.col-xs-12
+    %span.mar_l_30
+      %b Created on:
+      = @quiz_bank.created_at.to_date
+    %span.mar_l_30
+      %b Subject:
+      =@quiz_bank.subject.title
+    %span.mar_l_30
+      %b Last edited:
+      =@quiz_bank.updated_at.to_date
+    %span.mar_l_30
+      %b Sharing:
+      Private
+    %span.mar_l_30
+      %b Repo:
+      = @quiz_bank.repository.title    
+
+
+.row.mar-top-20
+  .col-xs-12
+    %h4 Description
+    .description-show
+      -if @quiz_bank.description.blank?
+        = "Quiz Bank does not has any description"
+      -else
+        = @quiz_bank.description
+    .description-edit.hide
+      =text_area_tag :description, @quiz_bank.description,:class => "form-control description-text"           
+.row
+  .instructions.col-xs-12.mar-top-20
+    =render partial: "quiz_banks/add_instructions", :locals => {:@quiz_bank => @quiz_bank}             
+.row        
+  .sections.col-xs-12
+    =render partial: "sections/sections", :locals => {:@quiz_bank => @quiz_bank}

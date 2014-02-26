@@ -30,6 +30,10 @@ class QuizBank < ActiveRecord::Base
     Question.where("section_id IN (?)",section_ids)
   end
 
+  def owner
+    self.repository.owner
+  end
+
   def json_for_update_quiz_bank
     common = {quiz_bank: self,question_topics: []}
     self.question_topics.each do |question_topic|

@@ -1,0 +1,10 @@
+.col-xs-4.search-bar
+  .input-group
+    %input{type:"text",class:"form-control",placeholder:"Search",name:"srch-term",id:"srch-term"}
+    .input-group-btn
+      %button.btn.btn-default{type:"submit"}
+        %i.glyphicon.glyphicon-search
+.col-xs-2.option-buttons.pull-right
+  =link_to "#", class: "btn btn-primary btn-top-button btn-lg" do
+    %span.glyphicon.glyphicon-plus-sign
+    Create

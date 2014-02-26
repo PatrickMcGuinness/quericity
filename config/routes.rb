@@ -34,6 +34,9 @@ QuizLib::Application.routes.draw do
   post "sections/change_section_positions", to: "sections#change_section_positions", as: :change_section_positions
   post "sections/update_section_before_destroy", to: "sections#update_section_before_destroy", as: :update_section_before_destroy
 
+  
+
+  resources :managers
   resources :question_topics
   resources :student_groups 
   resources :invites

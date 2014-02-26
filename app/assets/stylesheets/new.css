@@ -1,0 +1,13 @@
+.top-options{
+	margin-top: 40px;
+	border-bottom: 1px solid #E4E3E1;
+	padding: 10px;
+}
+.btn-top-button{
+	background-color: #E61610 !important;
+	border-color: #E61610 !important;
+	color: #ffffff !important;
+}
+.contents{
+	margin-top:20px;
+}

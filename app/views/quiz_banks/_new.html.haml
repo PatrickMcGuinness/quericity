@@ -1,1 +1,101 @@
-=render 'form'
+.row
+  .col-xs-12    
+    =simple_form_for ([@repository,@quiz_bank]), format: :js, remote: true, html:{class: "form-horizontal",id:"quiz_form"} do |f|
+      .modal-body
+        .row
+          .col-xs-12
+            = f.input :title,:placeholder => "Enter Title", input_html: { class: 'form-control' },:label => false  
+          .col-xs-12.mar-top-10.subject-dropdown
+            = f.input :repository_id,input_html:{class: 'hide'}, :label => false
+            = f.input :subject_id, collection: Subject.for_select, prompt: "Select Subject", input_html:{class: 'form-control subject-id'}, :label => false  
+          .col-xs-12.mar-top-10.subject-field.hide
+            = text_field_tag :new_subject, nil, :placeholder => "Enter the Subject", class: "form-control new-subject-text"
+          .col-xs-12.mar-top-10   
+            = f.input :description,:placeholder => "Description", :as => :text, input_html: {class: 'form-control',style:"height:200px"}, :label => false
+
+        .row
+          .col-xs-12    
+            Add new Tag
+            %input{type:"text", class: "form-control tag-field",data:{quiz_id: @quiz_bank.id}}
+            = hidden_field_tag("tags", "", :id => "submit_tag")
+            .tag-list-div
+              %h4 Tag List
+              %ul.tag-list
+            .tag-badges
+              .tag-badges-list
+                -if @quiz_bank.question_topics.present?
+                  %h4
+                    Quiz Bank Tags
+                -unless @quiz_bank.new_record?
+                  -@topics.each do |t|
+                    %span.badge.badge-success #{t.title.downcase}
+
+
+:javascript
+  $(document).ready(function(){
+    $(".tag-list-div").hide()
+    $(".math-div").hide()
+    $(window).keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        if($(".tag-field").val().length > 0){
+          value = $(".tag-field").val()
+          $(".tag-field").val("")
+          $(".tag-badges-list").append("<span class = 'badge badge-warning'>"+value+"</span>")
+          value = value + ","+ $("#submit_tag").val()
+          $("#submit_tag").val(value)
+        }
+        return false;
+      }
+    });
+    $(".tag-field").on("keyup",function(){
+      _this = this
+      $(".tag-list").html("")
+      if($(this).val().length > 0){
+        $(".tag-list-div").show()
+        value = $(this).val()
+        $.ajax({
+          url: "/topics/search",
+          data: {search:value},
+          success: function(data){
+            if(data.topics.length > 0){
+              $.each(data.topics,function(index,value){
+                $(".tag-list").append("<a class= 'tag-title' href = '#'><li>"+value.title+"</li></a>")
+              })
+            }
+            else{
+              $(".tag-list").html("")
+              $(".tag-list").append("No Result found. Create new topic by pressing enter")
+            }
+          }
+        })
+      }
+      else{
+        $(".tag-list-div").hide()
+      }
+    })
+    $(".tag-list").on("click",".tag-title",function(e){
+      e.preventDefault()
+      $(".tag-list-div").hide()
+      value = $(this).children("li").html()
+      $(".tag-field").val(value)
+      $(".tag-badges-list").append("<span class = 'badge badge-warning'>"+value+"</span>")
+      value = value + ","+ $("#submit_tag").val()
+      $("#submit_tag").val(value) 
+    })
+    $(".modal-body").on("change",".subject-id",function(){
+      if($(this).val() == 'other'){
+        $(".subject-field").removeClass("hide")
+      }
+      else{
+        $(".subject-field").addClass("hide")
+        $(".new-subject-text").val("")
+      }
+      
+    })
+  })
+      
+      
+
+      
+      

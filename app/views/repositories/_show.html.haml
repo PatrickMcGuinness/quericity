@@ -1,0 +1,11 @@
+.row
+  .col-xs-12
+    %ul.breadcrumb
+      %li
+        = link_to "My Assessments", managers_path, remote: true
+      %li.active
+        = @repository.title
+.row             
+  .col-xs-12.right-list
+    = render partial: "quiz_banks/all_quiz_banks", locals: {:@quiz_banks => @quiz_banks}
+        

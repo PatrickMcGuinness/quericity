@@ -1,19 +1,16 @@
 %tr{id: @quiz_bank.id}
   %td.col-xs-2
-    =link_to @quiz_bank.title, repository_quiz_bank_path(@repository,@quiz_bank)
-  %td.col-xs-5
-    =@quiz_bank.description.html_safe
+    =link_to @quiz_bank.title, repository_quiz_bank_path(@repository,@quiz_bank), remote: true
   %td.col-xs-2
-    =@quiz_bank.subject.title  
-  %td.col-xs-2
+    =@quiz_bank.owner.name  
+  %td.col-xs-4
     - @quiz_bank.question_topics.each do |question_topic|
-      -if current_user.can_change_repo?(@quiz_bank.repository)
-        %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase} <a href="#{question_topic_path(question_topic.id)}" data-remote = true data-method = "delete" data-confirm = "Are you sure?" rel= "tooltip" title = "Remove Tag">x</a>
-      -else
-        %span.badge.badge-warning{id: question_topic.id} #{question_topic.topic.title.downcase}
+      = render partial: "question_topics/tag", locals: {:question_topic => question_topic}
+  %td.col-xs-2
+    = "Private"
   %td.col-xs-1
-    -if current_user.can_change_repo?(@quiz_bank.repository)
-      -#=link_to edit_repository_quiz_bank_path(@repository,@quiz_bank), remote: true, rel: "tooltip", title: "Edit QuizBank"do
-        -#%span.glyphicon.glyphicon-pencil
-      =link_to  repository_quiz_bank_path(@repository,@quiz_bank), data:{method: :delete, confirm: "Are you sure?"},remote: true, rel: "tooltip", title: "Delete QuizBank" do
-        %span.glyphicon.glyphicon-trash
+    -#-if current_user.can_change_repo?(@quiz_bank.repository)
+    =link_to edit_repository_quiz_bank_path(@repository,@quiz_bank), remote: true, rel: "tooltip", title: "Edit QuizBank"do
+      %span.glyphicon.glyphicon-pencil
+    =link_to  repository_quiz_bank_path(@repository,@quiz_bank), data:{method: :delete, confirm: "Are you sure?"},remote: true, rel: "tooltip", title: "Delete QuizBank" do
+      %span.glyphicon.glyphicon-trash
