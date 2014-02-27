@@ -4,10 +4,65 @@
 	padding: 10px;
 }
 .btn-top-button{
-	background-color: #E61610 !important;
-	border-color: #E61610 !important;
+	background-color: #9B2D20 !important;
+	border-color: #9B2D20 !important;
 	color: #ffffff !important;
+}
+.my-badge{
+	background-color: green !important
 }
 .contents{
 	margin-top:20px;
+}
+.my-nav-bar{
+	background-color: #9B2D20 !important;
+}
+.my-header-nav li a{
+	color: white!important;
+}
+.my-header-nav li a span.custom-size{
+	font-size: 20px;
+}
+.initial-header{
+	background-color: white;
+	color: #9B2D20;
+	padding-top: 19px;
+	padding-bottom: 19px;
+	padding-left: 27px;
+	padding-right: 8px;
+	font-size: 20px;
+}
+.final-header{
+	color: white;
+}
+.footer{
+	min-height: 100px;
+	background-color: #100201;
+	margin-top: 50px;
+	/*bottom: 0;*/
+}
+ul.navigation{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+ul.navigation li{
+	margin-top:20px;
+}
+ul.navigation li span a{
+	color: inherit;
+}
+ul.navigation li span a:hover{
+	font-size:20px;
+}
+ul.navigation li ul{
+	list-style: none;
+	margin: 0px;
+	padding-left: 20px;
+}
+ul.navigation li ul li a{
+	color: inherit;
+}
+ul.navigation li ul li a:hover{
+	font-size: 20px;
 }

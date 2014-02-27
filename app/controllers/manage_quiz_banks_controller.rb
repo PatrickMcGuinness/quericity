@@ -1,4 +1,4 @@
-class ManagersController < ApplicationController
+class ManageQuizBanksController < ApplicationController
 
 	before_filter :authenticate_user!
 
@@ -6,5 +6,5 @@ class ManagersController < ApplicationController
     @repositories = current_user.repositories
     @quiz_banks = current_user.quiz_banks
   end
-
+  
 end

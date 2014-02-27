@@ -36,7 +36,7 @@ QuizLib::Application.routes.draw do
 
   
 
-  resources :managers
+  resources :manage_quiz_banks
   resources :question_topics
   resources :student_groups 
   resources :invites

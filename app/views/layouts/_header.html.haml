@@ -1,0 +1,31 @@
+%header.navbar.my-nav-bar.navbar-fixed-top{role:"banner"}
+  .container
+    .navbar-header
+      %button.navbar-toggle{type:"button",data:{toggle:"collapse",target:".bs-navbar-collapse"}}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a{href:"/",class:"navbar-brand red-color"}
+        %span.initial-header Quiz
+        %span.final-header Lib
+    %nav.collapse.navbar-collapse.bs-navbar-collapse{role:"navigation"}
+      %ul.nav.navbar-nav.navbar-right.my-header-nav
+        -if user_signed_in?
+          -if current_user.is_professor?
+            %li
+              =link_to profile_user_path(current_user) do 
+                %span.glyphicon.glyphicon-user.custom-size
+          -else
+            %li
+              =link_to profile_students_user_path(current_user) do
+                %span.glyphicon.glyphicon-user.custom-size  
+        
+          %li
+            =link_to destroy_user_session_path, :method => "delete" do
+              %span.glyphicon.glyphicon-off.custom-size
+        -else
+          %li
+            =link_to 'Sign up' , new_user_registration_path
+          %li
+            =link_to 'Log in' , new_user_session_path
