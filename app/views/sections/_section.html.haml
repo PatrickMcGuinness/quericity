@@ -4,11 +4,7 @@
       .well.well-sm.section.col-xs-12{id:@section.id}
         .col-xs-10
           .section-title-show{id:@section.id}
-            =@section.title
-          .section-title-edit{id:@section.id}
-            %form.form-inline
-              .form-group
-                %input{type:"text", class:"form-control",id:"section-field",placeholder:"Enter Title", value: @section.title}  
+            =@section.title  
         .col-xs-2.pull-right
           -if current_user.can_change_repo?(@section.quiz_bank.repository)
             =link_to "#", rel:"tooltip", title: "Hide questions" do
@@ -20,28 +16,6 @@
 
 :javascript
   $(document).ready(function(){
-    $(".section-title-edit").hide()
-    $(".section-title-show").click(function(){
-      id = $(this).attr("id")
-      $(this).hide()
-      $("#"+id+".section-title-edit").show()
-    })
-    $(".section").on("keydown","#section-field",function(key){
-      _this = this
-      section_id = $(this).parents(".section-title-edit").attr("id")
-      if(key.keyCode == 13){
-        key.preventDefault()
-        $.ajax({
-          url: "/sections/"+section_id+"/update_title",
-          data: {title: $(_this).val()},
-          success: function(data){
-            $(_this).parents(".section-title-edit").hide()
-            $(_this).parents(".section-title-edit").prev().html(data.title).show()
-
-          }
-        })
-      }
-    })
 
     $(".section").on("click",".glyphicon-chevron-up",function(e){
       e.preventDefault()

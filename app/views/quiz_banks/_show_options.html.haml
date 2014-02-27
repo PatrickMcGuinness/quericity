@@ -1,13 +1,12 @@
-.col-xs-2.option-buttons.pull-right
-  =link_to edit_repository_quiz_bank_path(@quiz_bank.repository,@quiz_bank), class: "btn btn-primary btn-top-button", remote: true do
-    %span.glyphicon.glyphicon-edit
-    Edit
-  =link_to "#", class: "btn btn-primary btn-top-button" do
-    %span.glyphicon.glyphicon-play
-    Preview
-  =link_to "#", class: "btn btn-primary btn-top-button" do
-    %span.glyphicon.glyphicon-print
-    Print
-  =link_to "#", class: "btn btn-primary btn-top-button" do
-    %span.glyphicon.glyphicon-floppy-disk
-    Clone
+=link_to edit_repository_quiz_bank_path(@quiz_bank.repository,@quiz_bank), class: "btn btn-primary btn-top-button", remote: true do
+  %span.glyphicon.glyphicon-edit
+  Edit
+=link_to "#", class: "btn btn-primary btn-top-button" do
+  %span.glyphicon.glyphicon-play
+  Preview
+=link_to "#", class: "btn btn-primary btn-top-button" do
+  %span.glyphicon.glyphicon-print
+  Print
+=link_to "#", class: "btn btn-primary btn-top-button" do
+  %span.glyphicon.glyphicon-floppy-disk
+  Clone
