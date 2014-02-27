@@ -13,6 +13,7 @@ class RepositoriesController < ApplicationController
   
   def show
     @quiz_banks = @repository.quiz_banks.search(params[:q]).result(:distinct => true).page(params[:page])
+    @repositories = current_user.repositories
   end
   
   def new

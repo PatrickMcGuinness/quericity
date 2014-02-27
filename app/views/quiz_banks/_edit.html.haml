@@ -1,1 +1,39 @@
- 
+.row
+  .col-xs-12
+    %ul.breadcrumb
+      %li
+        = link_to "My Assessments", manage_quiz_banks_path, remote: true
+      %li
+        = link_to "Repo", repository_path(@quiz_bank.repository), remote: true
+      %li.active
+        = @quiz_bank.title
+=simple_form_for ([@repository,@quiz_bank]), format: :js, remote: true, html:{class: "form-horizontal",id:"quiz_form"} do |f|
+  .row
+    .col-xs-6.col-xs-offset-4
+      %h2.quiz-bank-title-show
+        = @quiz_bank.title
+    .tags.col-xs-6.col-xs-offset-3
+      -@quiz_bank.question_topics.each do |question_topic|
+        .tag.col-xs-2
+          %span.glyphicon.glyphicon-tag
+          %span
+            =question_topic.topic.title.downcase
+  .row.mar-top-20
+    .col-xs-12
+      %h4 Title
+      = f.input :title,:placeholder => "Title", input_html: {class: 'form-control'}, :label => false
+  .row.mar-top-20
+    .col-xs-12
+      %h4 Tags
+      = text_field_tag :tags, get_comma_separated_tags(@quiz_bank), :placeholder => "Enter comma separated tags", :class => "form-control"                         
+  .row.mar-top-20
+    .col-xs-12
+      %h4 Description
+      = f.input :description,:placeholder => "Description", :as => :text, input_html: {class: 'form-control',style:"height:100px"}, :label => false
+  .row.mar-top-20
+    .col-xs-12
+      %h4 Quiz Instructions    
+      = f.input :instructions,:placeholder => "Quiz Instructions", :as => :text, input_html: {class: 'form-control',style:"height:100px"}, :label => false        
+.row        
+  .sections.col-xs-12
+    =render partial: "sections/sections", :locals => {:@quiz_bank => @quiz_bank}

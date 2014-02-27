@@ -4,7 +4,8 @@
 %li
   -unless @repositories.blank?
     %span.glyphicon.glyphicon-plus-sign
-    %span My Assessments
+    %span 
+      = link_to "My Assessments", manage_quiz_banks_path,remote: true
     %span.badge 
       = @repositories.count
     %ul.assessments.hide

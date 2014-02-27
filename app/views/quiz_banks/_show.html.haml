@@ -39,13 +39,10 @@
 .row.mar-top-20
   .col-xs-12
     %h4 Description
-    .description-show
-      -if @quiz_bank.description.blank?
-        = "Quiz Bank does not has any description"
-      -else
-        = @quiz_bank.description
-    .description-edit.hide
-      =text_area_tag :description, @quiz_bank.description,:class => "form-control description-text"           
+    -if @quiz_bank.description.blank?
+      = "Quiz Bank does not has any description"
+    -else
+      = @quiz_bank.description           
 .row
   .instructions.col-xs-12.mar-top-20
     =render partial: "quiz_banks/add_instructions", :locals => {:@quiz_bank => @quiz_bank}             

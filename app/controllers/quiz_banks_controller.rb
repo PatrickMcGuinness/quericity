@@ -20,7 +20,12 @@ class QuizBanksController < ApplicationController
 
   def edit
     @topics = @quiz_bank.topics
+    @repositories = current_user.repositories
     render layout:nil
+  end
+
+  def show
+    @repositories = current_user.repositories
   end
 
   def update
@@ -39,20 +44,14 @@ class QuizBanksController < ApplicationController
     @quiz_bank.update_attributes(params[:quiz_bank])
   end
 
-  def without_repo
-    @quiz_bank = QuizBank.new
-    @repository = Repository.first
-    render layout:nil
-  end
-
   def create
     @repository = current_user.repositories.find(params[:quiz_bank][:repository_id])
     @quiz_bank = @repository.quiz_banks.create(params[:quiz_bank])
     @topics = QuestionTopic.add_tags(params[:tags],@quiz_bank)
+    @quiz_banks = @repository.quiz_banks
   	respond_to do |format|
       format.html{redirect_to repository_quiz_bank_path(@repository,@quiz_bank)}
-      format.js{render :create}
-    @quiz_banks = @repository.quiz_banks  
+      format.js{render :create}  
     end
   end
 

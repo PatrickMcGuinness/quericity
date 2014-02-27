@@ -3,12 +3,12 @@
     =link_to @quiz_bank.title, repository_quiz_bank_path(@repository,@quiz_bank), remote: true
   %td.col-xs-2
     =@quiz_bank.owner.name  
-  %td.col-xs-4
+  %td.col-xs-2
     - @quiz_bank.question_topics.limit(1).each do |question_topic|
       = render partial: "question_topics/tag", locals: {:question_topic => question_topic}  
   %td.col-xs-2
     = "Private"
-  %td.col-xs-1
+  %td.col-xs-2
     -#-if current_user.can_change_repo?(@quiz_bank.repository)
     =link_to edit_repository_quiz_bank_path(@repository,@quiz_bank), remote: true, rel: "tooltip", title: "Edit QuizBank"do
       %span.glyphicon.glyphicon-pencil
