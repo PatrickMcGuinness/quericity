@@ -52,6 +52,7 @@ class QuizBanksController < ApplicationController
   	respond_to do |format|
       format.html{redirect_to repository_quiz_bank_path(@repository,@quiz_bank)}
       format.js{render :create}
+    @quiz_banks = @repository.quiz_banks  
     end
   end
 

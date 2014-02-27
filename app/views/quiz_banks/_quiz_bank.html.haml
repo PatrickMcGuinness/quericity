@@ -4,8 +4,8 @@
   %td.col-xs-2
     =@quiz_bank.owner.name  
   %td.col-xs-4
-    - @quiz_bank.question_topics.each do |question_topic|
-      = render partial: "question_topics/tag", locals: {:question_topic => question_topic}
+    - @quiz_bank.question_topics.limit(1).each do |question_topic|
+      = render partial: "question_topics/tag", locals: {:question_topic => question_topic}  
   %td.col-xs-2
     = "Private"
   %td.col-xs-1

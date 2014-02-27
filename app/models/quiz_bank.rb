@@ -2,8 +2,8 @@ class QuizBank < ActiveRecord::Base
   
   paginates_per 20
 
-  extend FriendlyId
-  friendly_id :title, use: :slugged
+  #extend FriendlyId
+  #friendly_id :title, use: :slugged
   
   attr_accessible :description, :title, :repository_id, :subject_id, :instructions
   validates :title,:repository_id,:subject_id, :presence => true 

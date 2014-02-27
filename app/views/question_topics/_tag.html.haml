@@ -1,4 +1,7 @@
-.tag.col-xs-6
+.tag.col-xs-6.col-xs-offset-1
   -#%span.glyphicon.glyphicon-tag
   %span.badge.my-badge
-    =question_topic.topic.title.downcase
+    -if question_topic.quiz_bank.question_topics.count > 1
+      =question_topic.topic.title.downcase + "..."
+    -else
+      =question_topic.topic.title.downcase  

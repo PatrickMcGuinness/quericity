@@ -4,7 +4,7 @@ class UserRepository < ActiveRecord::Base
   belongs_to :user
   belongs_to :repository
   
-  after_create :send_email
+  #after_create :send_email
   
   def send_email
   	if self.send_email?
@@ -12,7 +12,7 @@ class UserRepository < ActiveRecord::Base
     end
   end
 
-  def send_email?
-  	self.permission != "Owner"
-  end
+  #def send_email?
+  	#self.permission != "Owner"
+  #end
 end

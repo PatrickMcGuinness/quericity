@@ -1,8 +1,9 @@
 class Repository < ActiveRecord::Base
   
   paginates_per 20
-  extend FriendlyId
-  friendly_id :title, use: :slugged
+  
+  #extend FriendlyId
+  #friendly_id :title, use: :slugged
 
   attr_accessible :description, :title,:public
   validates :title, :presence => true, :length => { minimum: 5 }

@@ -2,6 +2,63 @@ $('.right-list').html(' #{j(render(partial: 'new'))} ')
 $(".top-options").html(' #{j(render(partial: 'new_options'))} ')
 
 
+$(".new-form").on("change",".subject-id",function(){
+if($(this).val() == 'other'){
+$(".subject-field").removeClass("hide")
+}
+else{
+$(".subject-field").addClass("hide")
+$(".new-subject-text").val("")
+}      
+})
+
+
+$(".new-form").on("keyup",".tag-field",function(){
+_this = this
+$(".tag-list").html("")
+if($(this).val().length > 0){
+$(".tag-list-div").removeClass("hide")
+value = $(this).val()
+$.ajax({
+url: "/topics/search",
+data: {search:value},
+success: function(data){
+if(data.topics.length > 0){
+$.each(data.topics,function(index,value){
+$(".tag-list").append("<a class= 'tag-title' href = '#'><li>"+value.title+"</li></a>")
+})
+}
+else{
+$(".tag-list").html("")
+$(".tag-list").append("No Result found. Create new topic by pressing enter")
+}
+}
+})
+}
+else{
+$(".tag-list-div").addClass("hide")
+}
+})
+
+
+$(".new-form").on("click",".tag-title",function(e){
+e.preventDefault()
+$(".tag-list-div").addClass("hide")
+value = $(this).children("li").html()
+$(".tag-field").val(value)
+$(".tag-badges-list").removeClass("hide")
+$(".tag-badges-list").append("<span class = 'badge my-badge'>"+value+"</span>")
+value = value + ","+ $("#submit_tag").val()
+$("#submit_tag").val(value) 
+})
+
+$(".top-options").on("click",".create-quiz-bank",function(e){
+e.preventDefault()
+$("form").submit()
+})
+
+
+
 $("#quiz_form").validate({
 onkeyup: false,
 onclick: false,

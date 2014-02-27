@@ -4,41 +4,8 @@
     =render partial: "my_assessment_options"
   .row.contents
     .col-xs-3.left-bar
-      =link_to "#", class: "btn btn-primary btn-top-button btn-sm" do
-        %span.glyphicon.glyphicon-plus-sign
-        Create Repo
       %ul.navigation
-        %li
-          -unless @repositories.blank?
-            %span.glyphicon.glyphicon-plus-sign
-            %span My Assessments
-            %span.badge 
-              = @repositories.count
-            %ul.assessments.hide
-              -@repositories.each do |repo|
-                %li
-                  -unless repo.quiz_banks.blank?
-                    %span.glyphicon.glyphicon-plus-sign
-                    %span
-                      = link_to "#{repo.title}", repository_path(repo), remote:true
-                    %span.badge
-                      = repo.quiz_banks.count
-                    %ul.repo.hide
-                      -repo.quiz_banks.each do |quiz_bank|
-                        %li
-                          = link_to "#{quiz_bank.title}", repository_quiz_bank_path(repo, quiz_bank), remote:true
-
-                  -else
-                    %span.glyphicon.glyphicon-minus-sign
-                    %span
-                      =link_to "#{repo.title}",repository_path(repo),remote: true
-                    %span.badge
-                      = repo.quiz_banks.count
-          -else
-            %span.glyphicon.glyphicon-minus-sign
-            %span My Assessments
-            %span.badge
-              = @repositories.count            
+        =render partial: "navigation", locals: {:@repositories => @repositories}            
 
                   
             
@@ -46,19 +13,3 @@
     .col-xs-9.right-list
       = render partial: "quiz_banks/all_quiz_banks", locals: {:@quiz_banks => @quiz_banks}
 
-:javascript
-  $(document).ready(function(){
-    $(".navigation").on("click",".glyphicon-plus-sign",function(e){
-      e.preventDefault()
-      $(this).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign")
-      $(this).siblings("ul").removeClass("hide")
-    })
-    $(".navigation").on("click",".glyphicon-minus-sign",function(e){
-      e.preventDefault()
-      if($(this).siblings("ul").length > 0){      
-        $(this).removeClass("glyphicon-minus-sign").addClass("glyphicon-plus-sign")
-        $(this).siblings("ul").addClass("hide")
-      }
-    })
-
-  })

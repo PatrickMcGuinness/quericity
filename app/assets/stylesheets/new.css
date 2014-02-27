@@ -1,5 +1,5 @@
 .top-options{
-	margin-top: 40px;
+	margin-top: 20px;
 	border-bottom: 1px solid #E4E3E1;
 	padding: 10px;
 }
@@ -55,9 +55,6 @@ ul.navigation li{
 ul.navigation li span a{
 	color: inherit;
 }
-ul.navigation li span a:hover{
-	font-size:20px;
-}
 ul.navigation li ul{
 	list-style: none;
 	margin: 0px;
@@ -65,7 +62,4 @@ ul.navigation li ul{
 }
 ul.navigation li ul li a{
 	color: inherit;
-}
-ul.navigation li ul li a:hover{
-	font-size: 20px;
 }
