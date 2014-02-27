@@ -8,6 +8,9 @@
 	border-color: #9B2D20 !important;
 	color: #ffffff !important;
 }
+.option-buttons a {
+	margin-left: 2px;
+}
 .my-badge{
 	background-color: green !important
 }
