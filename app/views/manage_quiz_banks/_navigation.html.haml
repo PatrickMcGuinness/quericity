@@ -51,19 +51,32 @@
   })
   $(".navigation").on("click",".create-repo",function(e){
     e.preventDefault()
+    e.stopPropagation();
     $("li.add-repo").removeClass("hide")
   })
+  
   $(".navigation").on("keydown",".add-repo-field",function(e){
     if(e.keyCode == 13){
       $(".add-repo").addClass("hide")
-      e.preventDefault()
-      $.ajax({
-        url: "/repositories",
-        method: "POST",
-        data: {repository:{title:$(".add-repo-field").val()}},
-        success: function(data){
-          $("ul.assessments").prepend("<li><span class='glyphicon glyphicon-minus-sign'></span><span><a href='/repositories/'"+data.id+" data-remote='true'>"+data.title+"</a></span><span class='badge'>0</span></li>")
-        }
-      })
+      if($(".add-repo-field").val() != ""){
+        e.preventDefault()
+        $.ajax({
+          url: "/repositories",
+          method: "POST",
+          data: {repository:{title:$(".add-repo-field").val()}},
+          success: function(data){
+            $(".add-repo-field").val("")
+            $("ul.assessments").append("<li><span class='glyphicon glyphicon-minus-sign'></span><span><a href='/repositories/"+data.id+"' data-remote='true'>"+data.title+"</a></span><span class='badge'>0</span></li>")
+          }
+        })
+      }
     }
+  })
+
+  $(".navigation").on("click",".add-repo-field",function(e){
+    e.stopPropagation()
+  })
+
+  $(window).on("click",function(){
+    $(".add-repo").addClass("hide")
   })
