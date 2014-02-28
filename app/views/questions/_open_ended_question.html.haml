@@ -12,6 +12,10 @@
                 =@question.description.html_safe
               -else  
                 =show_blank(@question).html_safe
+            -if action_name == 'edit' or action_name == 'update'
+              .col-xs-1.pull-right
+                =link_to edit_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question), remote:true do
+                  %span.glyphicon.glyphicon-pencil    
       .col-xs-10.options
         -unless @question.question_options.first.answer.blank? 
           -if @question.question_options.first.answer != ""
