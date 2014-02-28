@@ -1,7 +1,7 @@
 =link_to edit_repository_quiz_bank_path(@quiz_bank.repository,@quiz_bank), class: "btn btn-primary btn-top-button", remote: true do
   %span.glyphicon.glyphicon-edit
   Edit
-=link_to "#", class: "btn btn-primary btn-top-button" do
+=link_to quiz_preview_repository_quiz_bank_path(@quiz_bank.repository,@quiz_bank), class: "btn btn-primary btn-top-button",target: "_blank" do
   %span.glyphicon.glyphicon-play
   Preview
 =link_to "#", class: "btn btn-primary btn-top-button" do

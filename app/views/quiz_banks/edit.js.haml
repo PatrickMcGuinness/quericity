@@ -1,7 +1,11 @@
 $('.right-list').html(' #{j(render(partial: 'edit'))} ')
 $(".top-options").html(' #{j(render(partial: 'edit_options'))} ')
 
-
+$(".top-options").on("click",".update-quiz-bank",function(e){
+console.log("hello")
+e.preventDefault()
+$("form").submit()
+})
 
 
 

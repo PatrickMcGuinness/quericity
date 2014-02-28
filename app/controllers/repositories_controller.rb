@@ -38,6 +38,7 @@ class RepositoriesController < ApplicationController
   end
   def update
     @repository.update_attributes(params[:repository])
+    @repositories = current_user.repositories
     render layout:nil
   end
   

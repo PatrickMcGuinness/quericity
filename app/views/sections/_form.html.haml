@@ -11,5 +11,5 @@
             = f.input :title,:placeholder => "Enter Title", input_html: { class: 'form-control' }
       .modal-footer
         -@section.new_record? ? display = "Create Section" : display = "Update Section"
-        = f.submit display, :class => "btn btn-primary"
+        = f.submit display, :class => "btn btn-primary btn-top-button"
       

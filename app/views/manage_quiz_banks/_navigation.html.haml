@@ -2,7 +2,7 @@
   %span.glyphicon.glyphicon-plus-sign
   Create Repo
 %li
-  -unless @repositories.blank?
+  -unless current_user.repositories.blank?
     %span.glyphicon.glyphicon-plus-sign
     %span 
       = link_to "My Assessments", manage_quiz_banks_path,remote: true
@@ -121,10 +121,10 @@
             $(".add-repo-field").val("")
             $("ul.assessments").append("<li class = 'repos' data-id = '"+data.id+"'><span class='glyphicon glyphicon-minus-sign'></span><span><a href='/repositories/"+data.id+"' data-remote='true'>"+data.title+"</a></span><span class='badge'>0</span></li>")
             $(".navigation").popover({content:"Repository Added", placement: 'top' })
-    $(".navigation").popover('show')
-    setTimeout(function(){
-      $(".navigation").popover('destroy')
-    }, 2000)
+            $(".navigation").popover('show')
+            setTimeout(function(){
+              $(".navigation").popover('destroy')
+            }, 2000)
           }
         })
       }

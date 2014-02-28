@@ -6,11 +6,14 @@
       %strong
         = "from: #{@quiz_bank.repository.owner.name}" 
     .col-xs-2.pull-right
-      =link_to "Hide Sections", "#", class: "btn btn-primary hide-section"
+      =link_to "Hide Sections", "#", class: "btn btn-primary hide-section btn-top-button"
     .row
       .instructions.col-xs-12
         %h4 Quiz Instructions
-        = @quiz_bank.instructions
+        -if @quiz_bank.present?
+          = @quiz_bank.instructions
+        -else
+          "No Quiz Instructions"  
         -#=render partial: "quiz_banks/add_instructions", :locals => {:@quiz_bank => @quiz_bank}      
     .row.questions-with-sections.mar-top-20   
       -@sections.each_with_index do |section,index|     
