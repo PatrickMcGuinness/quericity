@@ -12,22 +12,22 @@
       %li.add-repo.hide
         %input{type:"text", class: "add-repo-field form-control",placeholder: "Add Title"}
       -@repositories.each do |repo|
-        %li
+        %li.repos{data:{id: repo.id}}
           -unless repo.quiz_banks.blank?
             %span.glyphicon.glyphicon-plus-sign
             %span
               = link_to "#{repo.title}", repository_path(repo), remote:true
-            %span.badge
+            %span.badge{data:{count:repo.quiz_banks.count}}
               = repo.quiz_banks.count
             %ul.repo.hide
               -repo.quiz_banks.each do |quiz_bank|
-                %li
+                %li.quiz-bank{data:{id:quiz_bank.id}}
                   = link_to "#{quiz_bank.title}", repository_quiz_bank_path(repo, quiz_bank), remote:true           
           -else
             %span.glyphicon.glyphicon-minus-sign
             %span
               =link_to "#{repo.title}",repository_path(repo),remote: true
-            %span.badge
+            %span.badge{data:{count:repo.quiz_banks.count}}
               = repo.quiz_banks.count
                
   -else
@@ -35,8 +35,56 @@
     %span My Assessments
     %span.badge
       = @repositories.count
+:css
+  .dropping{
+    background-color: #ccc;
+  }
 
 :javascript
+
+  $("ul.repo li.quiz-bank").draggable({
+    appendTo: "body",
+    helper: "clone"
+  })
+  
+  $( "li.repos" ).droppable({
+    activeClass: "ui-state-default",
+    hoverClass: "dropping",
+    accept: ".quiz-bank",
+    drop: function( event, ui ) {
+      $repo = $(this)
+      $quiz_bank = ui.draggable
+      $previous_repo = $(ui.draggable).parents(".repos")
+      params = {quiz_bank_id: $quiz_bank.data("id"), repo_id: $repo.data("id"), previous_repo_id: $previous_repo.data("id")}
+      _this = this
+      $.ajax({
+        url: "/quiz_banks/change_repo",
+        method: "POST",
+        data: params,
+        success: function(data){
+          if ($(_this).children("ul.repo").length == 0){
+            $(_this).append("<ul class = 'repo'></ul>")
+          }
+          if($previous_repo.data('id') != $repo.data('id')){
+            $(_this).children(".repo").append("<li class = 'quiz-bank' data-id = '"+data.quiz_bank.id+"'><a href='/repositories/"+$repo.data('id')+"/quiz_banks/"+$quiz_bank.data('id')+"' data-remote='true'>"+data.quiz_bank.title+"</a></li>")
+            $(_this).find(".quiz-bank").draggable({
+              appendTo: "body",
+              helper: "clone"
+            })
+            $(_this).children(".badge").html(data.repo_count)
+            $previous_repo.children(".badge").html(data.prev_repo_count)
+            $quiz_bank.remove()
+            $repo.popover({content:data.quiz_bank.title + " Moved", placement: 'top' })
+              $repo.popover('show')
+              setTimeout(function(){
+                $repo.popover('destroy')
+              }, 2000)
+          }
+
+        }
+      });
+    }
+  })
   $(".navigation").on("click",".glyphicon-plus-sign",function(e){
     e.preventDefault()
     $(this).removeClass("glyphicon-plus-sign").addClass("glyphicon-minus-sign")
@@ -53,6 +101,11 @@
     e.preventDefault()
     e.stopPropagation();
     $("li.add-repo").removeClass("hide")
+    $("li.add-repo").popover({content:"Enter Title and press Enter", placement: 'top' })
+    $("li.add-repo").popover('show')
+    setTimeout(function(){
+      $("li.add-repo").popover('destroy')
+    }, 2000)
   })
   
   $(".navigation").on("keydown",".add-repo-field",function(e){
@@ -66,7 +119,12 @@
           data: {repository:{title:$(".add-repo-field").val()}},
           success: function(data){
             $(".add-repo-field").val("")
-            $("ul.assessments").append("<li><span class='glyphicon glyphicon-minus-sign'></span><span><a href='/repositories/"+data.id+"' data-remote='true'>"+data.title+"</a></span><span class='badge'>0</span></li>")
+            $("ul.assessments").append("<li class = 'repos' data-id = '"+data.id+"'><span class='glyphicon glyphicon-minus-sign'></span><span><a href='/repositories/"+data.id+"' data-remote='true'>"+data.title+"</a></span><span class='badge'>0</span></li>")
+            $(".navigation").popover({content:"Repository Added", placement: 'top' })
+    $(".navigation").popover('show')
+    setTimeout(function(){
+      $(".navigation").popover('destroy')
+    }, 2000)
           }
         })
       }

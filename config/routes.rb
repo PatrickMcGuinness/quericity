@@ -18,8 +18,6 @@ QuizLib::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  get "/quiz_banks" ,to:"quiz_banks#index" ,as: :quiz_banks
-  get "/quiz_banks/without_repo" ,to:"quiz_banks#without_repo", as: :quiz_banks_without_repo
   get "/topics/search",to:"topics#search",as: :topics_search
   get "/questions/true_false_edit", to:"questions#true_false_edit",as: :true_false_edit
   get "/questions/open_ended_edit", to: "questions#open_ended_edit", as: :open_ended_edit
@@ -33,7 +31,7 @@ QuizLib::Application.routes.draw do
   post "sections/change_question_section", to: "sections#change_question_section", as: :change_question_section
   post "sections/change_section_positions", to: "sections#change_section_positions", as: :change_section_positions
   post "sections/update_section_before_destroy", to: "sections#update_section_before_destroy", as: :update_section_before_destroy
-
+  post "/quiz_banks/change_repo", to: "quiz_banks#change_repo", as: :change_repo
   
 
   resources :manage_quiz_banks

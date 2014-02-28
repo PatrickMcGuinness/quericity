@@ -22,12 +22,20 @@ class User < ActiveRecord::Base
   mount_uploader :profile_pic, ImageUploader
 
   after_create :create_default_group
+  after_create :create_default_repo
   after_create :confirm_the_user
 
   
 
   def create_default_group
     self.groups.create(:title => "default") if self.is_professor?
+  end
+
+  def create_default_repo
+    if self.is_professor?
+      repo = Repository.create(:title => "Archive")
+      self.user_repositories.create(:repository_id => repo.id, :permission => "Owner")
+    end
   end
 
   def confirm_the_user
@@ -41,6 +49,7 @@ class User < ActiveRecord::Base
   def name
     "#{self.first_name} #{self.last_name}"
   end
+  
   def any_repository_present?
     self.repositories.count > 0
   end
@@ -81,6 +90,10 @@ class User < ActiveRecord::Base
 
   def default_group
     self.groups.find_by_title("default")
+  end
+
+  def default_repo
+    self.repositories.find_by_title("Archive")
   end
 
   def groups_to_show

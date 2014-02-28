@@ -58,13 +58,13 @@ class Repository < ActiveRecord::Base
     self.update_attribute(:public, Repository::Public::YES)
     all_teachers = User.select{|u| u.is_professor?}.map(&:id)
   end
-  def add_collaborator user , permission
-    if is_collaborator? user
-      user_repo = self.user_repositories.where(:user_id => user.id).first
-      user_repo.update_attribute(:permission , permission)
-      user_repo
-    else
-      UserRepository.create(:repository_id => self.id , :user_id => user.id , :permission => permission)
-    end  
-  end
+  #def add_collaborator user , permission
+    #if is_collaborator? user
+      #user_repo = self.user_repositories.where(:user_id => user.id).first
+      #user_repo.update_attribute(:permission , permission)
+      #user_repo
+    #else
+      #UserRepository.create(:repository_id => self.id , :user_id => user.id , :permission => permission)
+    #end  
+  #end
 end

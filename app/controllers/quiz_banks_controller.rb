@@ -44,6 +44,15 @@ class QuizBanksController < ApplicationController
     @quiz_bank.update_attributes(params[:quiz_bank])
   end
 
+  def change_repo
+    @quiz_bank = current_user.quiz_banks.find(params[:quiz_bank_id])
+    @quiz_bank.update_attribute(:repository_id,params[:repo_id])
+    @previous_repo = current_user.repositories.find(params[:previous_repo_id])
+    @repository = current_user.repositories.find(params[:repo_id])
+    render json:{quiz_bank: @quiz_bank,previous_repo: @previous_repo,
+      repo_count: @repository.quiz_banks.count, prev_repo_count: @previous_repo.quiz_banks.count}
+  end
+
   def create
     @repository = current_user.repositories.find(params[:quiz_bank][:repository_id])
     @quiz_bank = @repository.quiz_banks.create(params[:quiz_bank])

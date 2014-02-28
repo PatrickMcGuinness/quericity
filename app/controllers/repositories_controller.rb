@@ -22,8 +22,8 @@ class RepositoriesController < ApplicationController
   end
   
   def create
-    @repository = current_user.repositories.create(params[:repository])
-    #@user_respository = current_user.user_repositories.create(:repository_id => @repository.id, :permission => "Owner")
+    @repository = Repository.create(params[:repository])
+    @user_respository = current_user.user_repositories.create(:repository_id => @repository.id, :permission => "Owner")
     #@quiz_bank = @repository.quiz_banks.new(:title => "My Quiz Bank")
     render json:{title: @repository.title, id:@repository.id}
   end
