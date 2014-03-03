@@ -4,9 +4,9 @@ class SharesController < ApplicationController
   before_filter :get_shareable
 
 	def index
-    #unless @shareable.is_public?
-      #@share = current_user.shares.find(@shareable.id)
-    #end
+    unless @shareable.is_public?
+      @share = current_user.shares.find(@shareable.id)
+    end
 	end
 
   private
