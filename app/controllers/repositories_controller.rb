@@ -3,13 +3,6 @@ class RepositoriesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :set_variables, :except => [:index,:all,:new,:create]
   
-  def index
-    @repositories  = current_user.own_repositories.page(params[:page])
-  end
-  
-  def all
-    @shared_repositories  = current_user.repositories
-  end
   
   def show
     @quiz_banks = @repository.quiz_banks.search(params[:q]).result(:distinct => true).page(params[:page])
@@ -31,11 +24,7 @@ class RepositoriesController < ApplicationController
   def edit
     render layout: nil
   end
-  
-  def get_all_collaborators
-    @collaborators = @repository.collaborators
-    render layout:nil
-  end
+
   def update
     @repository.update_attributes(params[:repository])
     @repositories = current_user.repositories
@@ -46,12 +35,6 @@ class RepositoriesController < ApplicationController
     @repository.update_attribute(:deleted_at, Time.now)
     render layout:nil
   end
-
-  def update_title_description
-    @repository.update_attributes(params[:repository])
-    render json:{description: @repository.description, title: @repository.title}
-  end
-
 
   private
 

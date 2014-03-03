@@ -1,3 +1,5 @@
 $(".top-options").html(' #{j(render(partial: 'my_repo_options.html'))} ')
 $(".right-list").html(' #{j(render(partial: 'show'))} ')
 $(".navigation").html(' #{j(render(partial: 'manage_quiz_banks/navigation'))} ')
+
+history.pushState({show_repository: 1}, "show_repository", "/repositoies/#{@repository.id}");

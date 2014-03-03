@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140228072053) do
+ActiveRecord::Schema.define(:version => 20140303110714) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -159,19 +159,18 @@ ActiveRecord::Schema.define(:version => 20140228072053) do
     t.datetime "deleted_at"
     t.text     "instructions"
     t.string   "slug"
+    t.integer  "public"
   end
 
   add_index "quiz_banks", ["slug"], :name => "index_quiz_banks_on_slug", :unique => true
 
   create_table "repositories", :force => true do |t|
     t.string   "title"
-    t.text     "description"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.integer  "quiz_banks_count", :default => 0
     t.datetime "deleted_at"
     t.string   "slug"
-    t.integer  "public",           :default => 0
   end
 
   add_index "repositories", ["slug"], :name => "index_repositories_on_slug", :unique => true
@@ -204,6 +203,16 @@ ActiveRecord::Schema.define(:version => 20140228072053) do
     t.integer  "number_of_questions"
     t.integer  "same_questions"
     t.integer  "show_in_sequence"
+  end
+
+  create_table "shares", :force => true do |t|
+    t.integer  "shareable_id"
+    t.string   "shareable_type"
+    t.integer  "teacher_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "owner_id"
+    t.integer  "permissions"
   end
 
   create_table "sharings", :force => true do |t|

@@ -13,3 +13,13 @@
     .col-xs-9.right-list
       = render partial: "quiz_banks/all_quiz_banks", locals: {:@quiz_banks => @quiz_banks}
 
+
+:javascript
+  $(document).ready(function(){
+    window.onpopstate = function(event) {
+      console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
+      console.log("location: " + document.location.hash + ", state: " + JSON.stringify(event.state));
+    }
+    history.pushState({manage_quiz_banks: 1}, "manage_quiz_banks", "");
+  })      
+

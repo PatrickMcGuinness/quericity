@@ -5,7 +5,7 @@ class QuizBank < ActiveRecord::Base
   #extend FriendlyId
   #friendly_id :title, use: :slugged
   
-  attr_accessible :description, :title, :repository_id, :subject_id, :instructions
+  attr_accessible :description, :title, :repository_id, :subject_id, :instructions,:public
   validates :title,:repository_id,:subject_id, :presence => true 
 
   belongs_to :repository, :counter_cache => true
@@ -15,11 +15,23 @@ class QuizBank < ActiveRecord::Base
   has_many :question_topics, dependent: :destroy
   has_many :topics, :through => :question_topics
   has_many :served_quizzes
-  has_many :invites, as: :invitable 
+  has_many :invites, as: :invitable
+  has_many :shares, as: :shareable 
 
   after_create :create_section
   
   default_scope { where("deleted_at IS NULL") }
+
+  class Public
+    YES = 1
+    NO = 0
+  end
+
+  def is_public?
+    self.public == QuizBank::Public::YES
+  end
+    
+  end
 
   def create_section
     self.sections.create(:title => "Default Section")

@@ -5,13 +5,13 @@
   -unless current_user.repositories.blank?
     %span.glyphicon.glyphicon-plus-sign
     %span 
-      = link_to "My Assessments", manage_quiz_banks_path,remote: true
+      = link_to " My Assessments", manage_quiz_banks_path,remote: true
     %span.badge 
-      = @repositories.count
+      = current_user.repositories.count
     %ul.assessments.hide
       %li.add-repo.hide
         %input{type:"text", class: "add-repo-field form-control",placeholder: "Add Title"}
-      -@repositories.each do |repo|
+      -current_user.repositories.each do |repo|
         %li.repos{data:{id: repo.id}}
           -unless repo.quiz_banks.blank?
             %span.glyphicon.glyphicon-plus-sign
@@ -34,7 +34,25 @@
     %span.glyphicon.glyphicon-minus-sign
     %span My Assessments
     %span.badge
-      = @repositories.count
+      = current_user.repositories.count
+
+%li
+  %span.glyphicon.glyphicon-minus-sign
+    %span 
+      = link_to "Shared Assessments", "#"
+    %span.badge 
+      = "0"
+%li
+  %span.glyphicon.glyphicon-minus-sign
+    %span 
+      = link_to "Starred Assessments", "#"
+    %span.badge 
+      = "0"       
+
+
+
+
+
 :css
   .dropping{
     background-color: #ccc;
@@ -113,12 +131,13 @@
       $(".add-repo").addClass("hide")
       if($(".add-repo-field").val() != ""){
         e.preventDefault()
+        value = $(".add-repo-field").val()
+        $(".add-repo-field").val("")
         $.ajax({
           url: "/repositories",
           method: "POST",
-          data: {repository:{title:$(".add-repo-field").val()}},
+          data: {repository:{title:value}},
           success: function(data){
-            $(".add-repo-field").val("")
             $("ul.assessments").append("<li class = 'repos' data-id = '"+data.id+"'><span class='glyphicon glyphicon-minus-sign'></span><span><a href='/repositories/"+data.id+"' data-remote='true'>"+data.title+"</a></span><span class='badge'>0</span></li>")
             $(".navigation").popover({content:"Repository Added", placement: 'top' })
             $(".navigation").popover('show')

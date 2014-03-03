@@ -25,7 +25,6 @@ QuizLib::Application.routes.draw do
   get "/questions/mcq_edit", to: "questions#mcq_edit", as: :mcq_edit
   get "quiz_banks/:id/update_quiz_bank", to: "quiz_banks#update_quiz_bank", as: :update_quiz_bank
   get "quiz_banks/:id/add_instructions", to: "quiz_banks#add_instructions", as: :add_instructions
-  get "repositories/:id/update_title_description", to: "repositories#update_title_description", as: :repo_update_title_description
   get "sections/:id/update_title", to: "sections#update_title", as: :section_update_title
   post "sections/change_question_positions", to: "sections#change_question_positions", as: :change_question_positions
   post "sections/change_question_section", to: "sections#change_question_section", as: :change_question_section
@@ -38,11 +37,6 @@ QuizLib::Application.routes.draw do
   resources :question_topics
   resources :student_groups 
   resources :invites
-  resources :contacts do
-    collection do
-      post "create_new_contacts"
-    end
-  end
   resources :groups do
     member do
       get "get_student"
@@ -83,12 +77,6 @@ QuizLib::Application.routes.draw do
   end
   resources :topics
   resources :repositories do
-    collection do
-      get 'all'
-    end
-    member do
-      get 'get_all_collaborators'
-    end
     resources :collaborators do
       collection do
         get 'public'
