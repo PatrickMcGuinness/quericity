@@ -27,9 +27,9 @@ class QuizBank < ActiveRecord::Base
     NO = 0
   end
 
-  def is_public?
-    self.public == QuizBank::Public::YES
-  end
+  #def is_public?
+    #self.public == QuizBank::Public::YES
+  #end
     
   end
 
