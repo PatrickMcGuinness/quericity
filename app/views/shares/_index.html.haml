@@ -1,0 +1,16 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4
+        Access List
+    .modal-body
+      -unless @shareable.is_public?
+        -if current_user.shares.find_by_shareable_id(@shareable.id).present?
+          = "Shared"
+        -else
+          %p
+            = "This Quiz Bank appears to be Private"
+      -else
+        %p
+          = "This Quiz Bank appears to be Public"      

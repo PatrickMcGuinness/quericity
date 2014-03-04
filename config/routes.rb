@@ -33,6 +33,7 @@ QuizLib::Application.routes.draw do
   post "/quiz_banks/change_repo", to: "quiz_banks#change_repo", as: :change_repo
   
 
+  resources :shares
   resources :manage_quiz_banks
   resources :question_topics
   resources :student_groups 
