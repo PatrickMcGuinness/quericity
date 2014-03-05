@@ -12,6 +12,7 @@
             %th Photo
             %th Name
             %th Email
+            %th Analyze
           %tbody
             -@sharings.each do |sharing|
               %tr
@@ -21,5 +22,9 @@
                   =sharing.user.name.blank? ? "Name not set" : sharing.user.name 
                 %td
                   = sharing.user.email
+                %td
+                  = link_to "#" do
+                    %span.glyphicon.glyphicon-th-list
+                    Analyze  
       -else
         No students to show            

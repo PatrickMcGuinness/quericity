@@ -45,6 +45,8 @@ class ServedQuiz < ActiveRecord::Base
     self.cloned_quiz_bank.cloned_questions.joins(:answers).where("cloned_questions.question_type = ? and answers.graded_by_teacher = ?", Question::QuestionType::OPENENDED, 0)
   end
 
+  
+
   def graded_by_system
     self.cloned_quiz_bank.cloned_questions.joins(:answers).count - self.open_ended_questions_to_grade.count
   end

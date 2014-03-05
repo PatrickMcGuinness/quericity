@@ -2,7 +2,7 @@ class ServedQuizzesController < ApplicationController
   
   before_filter :authenticate_user!
   before_filter :clone_quiz_bank, only: [:create]
-  before_filter :set_served_quiz, only: [:show_all_sharings,:get_status,:invited_students,:pending_students,:completed_students]
+  before_filter :set_served_quiz, only: [:show_questions_to_grade,:show_all_sharings,:get_status,:invited_students,:pending_students,:completed_students]
   def index
     @served_quizzes = current_user.served_quizzes
     @groups = current_user.groups_to_show
@@ -36,6 +36,12 @@ class ServedQuizzesController < ApplicationController
     @quiz_bank = current_user.quiz_banks.find(params[:id])
     @questions = @quiz_bank.questions
   end
+
+  def show_questions_to_grade
+    @answers = Answer.open_ended_answers(@served_quiz)
+  end
+
+  
 
   def add_more_students
     @students, @invites = Sharing.add_more_students(current_user,get_emails_list(params),params[:quiz_bank_id])

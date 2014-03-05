@@ -1,0 +1,38 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h4
+        Grade Questions
+    .modal-body
+      -@answers.each do |answer|
+        .row
+          .col-xs-12.well-header.mar-top-10
+            .col-xs-4
+              %span.glyphicon.glyphicon-list
+              %span
+                = answer.cloned_question.cloned_quiz_bank.title
+            .col-xs-4
+              %span.glyphicon.glyphicon-user
+              %span
+                = answer.student.name    
+            .col-xs-2.pull-right.check-option{data:{id: answer.id}}
+              =link_to "#", class: "correct" do
+                %span.glyphicon.glyphicon-ok
+              =link_to "#", class: "wrong" do
+                %span.glyphicon.glyphicon-remove            
+          .col-xs-12.well.well-sm
+            .col-xs-12.mar-top-10
+              = answer.cloned_question.description.html_safe
+            .col.xs-12.mar-top-10
+              .col-xs-10
+                %strong
+                  Student Answer
+            .col-xs-12.mar-top-10
+              =text_area_tag :answer, answer.student_answer, :placeholder => "student answer", :class => "form-control", disabled: true
+            .col-xs-12.mar-top-10
+              %strong
+                Correct Answer  
+            .col-xs-12.mar-top-10
+              =text_area_tag :answer, answer.answer, :placeholder => "teacher answer", :class => "form-control", disabled: "true"                
+            

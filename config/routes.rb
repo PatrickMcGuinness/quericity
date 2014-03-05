@@ -34,7 +34,12 @@ QuizLib::Application.routes.draw do
   
 
   resources :shares
-  resources :grade_quizzes
+  resources :grade_quizzes do
+    member do
+      get "manual_check_the_answer"
+      get "completed_students"
+    end
+  end
   resources :manage_quiz_banks
   resources :question_topics
   resources :student_groups 
@@ -66,6 +71,7 @@ QuizLib::Application.routes.draw do
       get "invited_students"
       get "completed_students"
       get "pending_students"
+      get "show_questions_to_grade"
     end 
   end
   resources :users do

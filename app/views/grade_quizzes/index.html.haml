@@ -7,8 +7,9 @@
           %th.col-xs-2 Served Quiz
           %th.col-xs-3 Served At
           %th.col-xs-3 Status
-          %th.col-xs-2 Questions To Grade
-          %th.col-xs-2 Questions Graded
+          %th.col-xs-1 Grade
+          %th.col-xs-1 Graded
+          %th.col-xs-2 Analytics
         -@served_quizzes.each do |served_quiz|
           %tbody
             %tr
@@ -24,11 +25,19 @@
                 = link_to served_quiz.sharings.started.count, pending_students_served_quiz_path(served_quiz), remote:true
                 = "/" 
                 = "Completed: "
-                = link_to served_quiz.sharings.attempted.count,completed_students_served_quiz_path(served_quiz), remote:true
+                = link_to served_quiz.sharings.attempted.count,completed_students_grade_quiz_path(served_quiz), remote:true
+              %td.col-xs-1.grade-pending{id: "served_quiz_#{served_quiz.id}"}
+                -unless served_quiz.open_ended_questions_to_grade.count == 0
+                  = link_to served_quiz.open_ended_questions_to_grade.count,  show_questions_to_grade_served_quiz_path(served_quiz),remote: true,rel:"tooltip", title:"Grade Pending Questions"
+                -else
+                  %span.badge{rel: "tooltip", title: "No Answer to Grade"}0   
+              %td.col-xs-1.grade-system{id: "served_quiz_#{served_quiz.id}"}
+                %span.badge
+                  = served_quiz.graded_by_system
               %td.col-xs-2
-                = served_quiz.open_ended_questions_to_grade.count
-              %td.col-xs-2
-                = served_quiz.graded_by_system
+                = link_to "#" do
+                  %span.glyphicon.glyphicon-th-list
+                  Analyze     
     -else            
       %table.table
         %tbody

@@ -2,7 +2,7 @@ class Answer < ActiveRecord::Base
   attr_accessible :student_id, :cloned_question_id, :student_answer, :answer, :is_correct, :served_quiz_id, :graded_by_teacher
 
 
-  belongs_to :user, :class_name => "User", :foreign_key => "student_id"
+  belongs_to :student, :class_name => "User", :foreign_key => "student_id"
   belongs_to :cloned_question
   belongs_to :served_quiz
 
@@ -19,6 +19,10 @@ class Answer < ActiveRecord::Base
 
   def is_not_graded_by_teacher?
     self.graded_by_teacher == Answer::Graded::NO 
+  end
+
+  def self.open_ended_answers(served_quiz)
+    Answer.joins(:cloned_question).where("cloned_questions.question_type = ? and answers.graded_by_teacher = ? and served_quiz_id = ?",Question::QuestionType::OPENENDED,0, served_quiz.id)
   end
 
 
@@ -69,6 +73,13 @@ class Answer < ActiveRecord::Base
     answer = Answer.create(:student_id => user.id, :cloned_question_id => cloned_question.id, 
                   :student_answer => student_answer, :answer => answer, :is_correct => is_correct,
                   :served_quiz_id => served_quiz_id)
+  end
+
+  def manual_check_the_answer(string)
+    self.is_correct = true if string == "correct"
+    self.is_correct = false if string == "wrong"
+    self.graded_by_teacher = Answer::Graded::YES
+    self.save
   end
 
   def self.is_answer_correct?(student_answer,answer)
