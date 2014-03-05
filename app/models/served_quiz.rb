@@ -11,7 +11,7 @@ class ServedQuiz < ActiveRecord::Base
   belongs_to :quiz_bank
   belongs_to :cloned_quiz_bank
   has_many :sharings, dependent: :destroy
-  has_many :answers, dependent: :destroy
+  #has_many :answers, dependent: :destroy
 
   class Random
     YES = 1

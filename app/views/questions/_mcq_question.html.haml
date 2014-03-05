@@ -2,17 +2,19 @@
   %td.col-xs-11
     .col-xs-12
       .row
-        .col-xs-11
+        .col-xs-12
           .row
             .col-xs-2.question-number
               %strong 
                 = "Question No. #{@index}"
             .col-xs-8     
               =@question.description.html_safe
-            -if action_name == 'edit' or action_name == 'update'
-              .col-xs-1.pull-right
-                =link_to edit_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question), remote:true do
-                  %span.glyphicon.glyphicon-pencil  
+            -if action_name == 'edit' or action_name == 'delete' or action_name == 'create'
+              .col-xs-2.pull-right
+                = link_to repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question), remote:true,data:{method:"delete",confirm: "Are you sure"},rel:"tooltip", title:"Delete Question" do
+                  %span.glyphicon.glyphicon-trash.pull-right 
+                = link_to edit_repository_quiz_bank_section_question_path(@repository,@quiz_bank,@section,@question),remote:true,rel:"tooltip", title:"Edit Question" do
+                  %span.glyphicon.glyphicon-edit.pull-right   
       .col-xs-10.options
         -@question.question_options.each do |option|
           .col-xs-8
