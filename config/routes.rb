@@ -34,6 +34,7 @@ QuizLib::Application.routes.draw do
   
 
   resources :shares
+  resources :analytics
   resources :grade_quizzes do
     member do
       get "manual_check_the_answer"

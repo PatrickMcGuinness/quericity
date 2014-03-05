@@ -77,3 +77,23 @@ ul.navigation li ul li a{
 height: 50px;
 border-radius: 5px;
 }
+.quiz-analyze .heading{
+	background-color: #4B78B6;
+	padding: 16px;
+	color: white;
+}
+.quiz-analyze .student-detail{
+	background-color: #B7CAE2;
+	padding: 16px;
+}
+.badge.success{
+	background-color: #A1DB2D !important;
+}
+
+.badge.wrong{
+	background-color: #DD2660 !important;
+}
+
+.badge.warning{
+	background-color: #EEBCE2 !important;
+}

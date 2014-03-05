@@ -28,6 +28,28 @@ class ClonedQuestion < ActiveRecord::Base
     user.answers.where("cloned_question_id = ? and served_quiz_id = ?",self.id,served_quiz.id).first
   end
 
+  def get_correct_answer
+    answer = nil
+    if self.is_true_false?
+      cloned_question_option = self.cloned_question_options.first
+      answer = "True" if cloned_question_option.is_correct == true
+      answer = "False" unless cloned_question_option.is_correct == true
+    end
+    if self.is_mcq?
+      cloned_question_option = self.cloned_question_options.where("is_correct = ?",true).first
+      answer = cloned_question_option.answer
+    end
+    if self.is_open_ended?
+      cloned_question_option = self.cloned_question_options.first
+      answer = cloned_question_option.answer if cloned_question_option.answer.present?
+      answer = "Nothing added" if cloned_question_option.answer.blank?
+    end
+    if self.is_fill_in_the_blank?
+      cloned_question_option = self.cloned_question_options.first
+      answer = cloned_question_option.answer
+    end
+  end
+
   def self.create_the_clone(cloned_quiz_bank,params)
     if params[:select_question].present?
       questions = Question.where("id IN (?)",params[:questions_ids])

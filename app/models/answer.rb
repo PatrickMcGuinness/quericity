@@ -25,6 +25,10 @@ class Answer < ActiveRecord::Base
     Answer.joins(:cloned_question).where("cloned_questions.question_type = ? and answers.graded_by_teacher = ? and served_quiz_id = ?",Question::QuestionType::OPENENDED,0, served_quiz.id)
   end
 
+  def self.find_answer_by_student_and_question(student,cloned_question)
+    Answer.where("student_id = ? and cloned_question_id = ?", student.id, cloned_question.id).first
+  end
+
 
   def self.check_answer(user,cloned_question, student_answer,served_quiz_id)
     if cloned_question.is_true_false?
