@@ -1,12 +1,12 @@
-=link_to edit_repository_quiz_bank_path(@quiz_bank.repository,@quiz_bank), class: "btn btn-primary btn-top-button", remote: true do
+=link_to edit_repository_quiz_bank_path(@quiz_bank.repository,@quiz_bank), class: "btn btn-primary btn-top-button", remote: true,rel:"tooltip", title:"Edit Quiz Bank" do
   %span.glyphicon.glyphicon-edit
   Edit
-=link_to quiz_preview_repository_quiz_bank_path(@quiz_bank.repository,@quiz_bank), class: "btn btn-primary btn-top-button",target: "_blank" do
+=link_to quiz_preview_repository_quiz_bank_path(@quiz_bank.repository,@quiz_bank), class: "btn btn-primary btn-top-button",target: "_blank", rel:"tooltip", title:"Preview Quiz Bank" do
   %span.glyphicon.glyphicon-play
   Preview
-=link_to "#", class: "btn btn-primary btn-top-button" do
+=link_to "#", class: "btn btn-primary btn-top-button", rel:"tooltip", title:"Print Quiz Bank" do
   %span.glyphicon.glyphicon-print
   Print
-=link_to "#", class: "btn btn-primary btn-top-button" do
+=link_to "#", class: "btn btn-primary btn-top-button", rel:"tooltip", title:"Clone Quiz Bank" do
   %span.glyphicon.glyphicon-hdd
   Clone

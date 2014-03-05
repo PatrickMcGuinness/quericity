@@ -19,4 +19,9 @@ module QuestionsHelper
     description = first_description + "_______" + second_description
   end
 
+  def show_options?
+    action_name == 'edit' or action_name == 'delete' or action_name == 'create' or (controller.class == QuestionsController and action_name == 'update')
+  end
+
+
 end

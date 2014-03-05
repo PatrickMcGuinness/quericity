@@ -1,7 +1,7 @@
 .col-xs-2.option-buttons.pull-right
-  =link_to "#", class: "btn btn-primary btn-top-button update-quiz-bank" do
+  =link_to "#", class: "btn btn-primary btn-top-button update-quiz-bank",rel:"tooltip", title:"Update Quiz Bank" do
     %span.glyphicon.glyphicon-floppy-disk
     Update
-  =link_to repository_quiz_bank_path(@repository,@quiz_bank), class: "btn btn-primary btn-top-button", remote: true do
+  =link_to repository_quiz_bank_path(@repository,@quiz_bank), class: "btn btn-primary btn-top-button", remote: true,rel:"tooltip", title:"Not Save Quiz Bank" do
     %span.glyphicon.glyphicon-minus-sign
     Cancel    
