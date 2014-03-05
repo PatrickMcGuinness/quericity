@@ -42,7 +42,8 @@
 	min-height: 100px;
 	background-color: #100201;
 	margin-top: 50px;
-	/*bottom: 0;*/
+   	bottom:0;
+   	width:100%;
 }
 ul.navigation{
 	list-style: none;

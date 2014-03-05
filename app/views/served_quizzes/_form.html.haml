@@ -39,8 +39,6 @@
               = "No student group"
             -else
               =select_tag 'group_id', options_for_select(current_user.groups_to_show.collect{ |u| [u.title, u.id] }), :class => "form-control student-group-id", prompt: "Select Group" 
-          .hide-group
-            =link_to "Hide Group Selection", "#", class: "select-from-email"
           .students-group
             .student-cloud.mar-top-10
               .student-group-thumbnails.mar-top-10
@@ -110,6 +108,8 @@
     $(".tab-content").on("click",".arrow-link",function(e){
       e.preventDefault()
       $(".student-in-group:checked").each(function(index,student){
+        $(student).attr("id","student_ids_")
+        $(student).attr("name","student_ids[]")
         $(student).parents(".thumbnail_checkbox").addClass("hide")
         $(student).parents(".thumbnail_checkbox").siblings(".cross").removeClass("hide")
         $(student).parents(".thumb").addClass("mar-left-15").removeClass("mar-left-5")
@@ -207,22 +207,7 @@
         }
       })
     })
-    $(".tab-content").on("click", ".select-from-group", function(e){
-      e.preventDefault()
-      $(".group-dropdown").removeClass("hide")
-      $(".emails-div").addClass("col-xs-6").removeClass("col-xs-12")
-      $(this).addClass("hide")
-      $(".select-from-email").removeClass("hide")
-      $(".arrow").removeClass("hide")
-    })
-    $(".tab-content").on("click", ".select-from-email", function(e){
-      e.preventDefault()
-      $(".group-dropdown").addClass("hide")
-      $(".emails-div").removeClass("col-xs-6").addClass("col-xs-12")
-      $(this).addClass("hide")
-      $(".select-from-group").removeClass("hide")
-      $(".arrow").addClass("hide")
-    })
+
 
     $(".tab-content").on("click", ".add-user-group", function(e){
       e.preventDefault()

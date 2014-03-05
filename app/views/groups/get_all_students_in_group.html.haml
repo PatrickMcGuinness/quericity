@@ -3,7 +3,7 @@
     .col-xs-2.thumb.mar-left-5{id: student_group.id}
       .thumbnail.thumbnail-large.row
         .col-xs-1.thumbnail_checkbox
-          =check_box_tag "student_ids[]" ,student_group.student.id,true,:class => "student-in-group"
+          =check_box_tag "student_group_ids[]" ,student_group.student.id,true,:class => "student-in-group"
         .col-xs-1.thumbnail_image
           =image_tag display_picture(student_group.student),:class => 'thumnail_picture'
         .col-xs-7.offset-1{style:"font-size:10px;"}

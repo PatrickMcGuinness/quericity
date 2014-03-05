@@ -11,6 +11,7 @@ class ServedQuiz < ActiveRecord::Base
   belongs_to :quiz_bank
   belongs_to :cloned_quiz_bank
   has_many :sharings, dependent: :destroy
+  has_many :answers, dependent: :destroy
 
   class Random
     YES = 1
@@ -36,7 +37,17 @@ class ServedQuiz < ActiveRecord::Base
     YES = 1
   end
 
-  
+  def open_ended_questions_in_answered_questions
+    self.cloned_quiz_bank.cloned_questions.joins(:answers).where("cloned_questions.question_type = ?",Question::QuestionType::OPENENDED)
+  end
+
+  def open_ended_questions_to_grade
+    self.cloned_quiz_bank.cloned_questions.joins(:answers).where("cloned_questions.question_type = ? and answers.graded_by_teacher = ?", Question::QuestionType::OPENENDED, 0)
+  end
+
+  def graded_by_system
+    self.cloned_quiz_bank.cloned_questions.joins(:answers).count - self.open_ended_questions_to_grade.count
+  end
 
   def is_infinite?
     self.infinite_duration == ServedQuiz::Infinite::YES
@@ -76,6 +87,8 @@ class ServedQuiz < ActiveRecord::Base
     self.share_with_student_ids(student_ids)
   end
 
+
+
   def share_with_student_ids(student_ids)
     student_ids.each do |student_id|
       Sharing.create(:user_id => student_id, :served_quiz_id => self.id)
@@ -97,23 +110,18 @@ class ServedQuiz < ActiveRecord::Base
     end
   end
 
-  def background_job_for_create(group_id,user,student_ids,invite_ids)
-    if group_id.present?
-      group = Group.find(group_id)
-      self.serve_to_group(group)
-    else
-      if student_ids.present?
-        self.share_with_student_ids(student_ids)
-      end
-      invites = Invite.find_by_list(invite_ids)
-      default_group = user.default_group
-      invites.each do |invite|
-        new_user = User.invite!({:email => invite.receiver_email, :role => "Student"},user)
-        Sharing.create(:user_id => new_user.id,:served_quiz_id => self.id)
-        StudentGroup.create(:group_id => default_group.id, :student_id => new_user.id)
-      end
-      Invite.where("invitable_id = ? and invitable_type = ?",self.quiz_bank_id,"QuizBank").destroy_all
+  def background_job_for_create(user,student_ids,invite_ids)
+    if student_ids.present?
+      self.share_with_student_ids(student_ids)
     end
+    invites = Invite.find_by_list(invite_ids)
+    default_group = user.default_group
+    invites.each do |invite|
+      new_user = User.invite!({:email => invite.receiver_email, :role => "Student"},user)
+      Sharing.create(:user_id => new_user.id,:served_quiz_id => self.id)
+      StudentGroup.create(:group_id => default_group.id, :student_id => new_user.id)
+    end
+    Invite.where("invitable_id = ? and invitable_type = ?",self.quiz_bank_id,"QuizBank").destroy_all
   end
   #handle_asynchronously :background_job_for_create, :run_at => Proc.new { Time.now }
 end

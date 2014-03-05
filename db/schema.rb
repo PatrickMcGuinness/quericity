@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140303110714) do
+ActiveRecord::Schema.define(:version => 20140304104006) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -19,9 +19,10 @@ ActiveRecord::Schema.define(:version => 20140303110714) do
     t.text     "student_answer"
     t.text     "answer"
     t.boolean  "is_correct"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.integer  "served_quiz_id"
+    t.integer  "graded_by_teacher",  :default => 0
   end
 
   create_table "ckeditor_assets", :force => true do |t|

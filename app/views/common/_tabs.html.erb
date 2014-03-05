@@ -11,16 +11,16 @@
       Serve
     </a>
   </li>
-  <li class="">
-    <a href="#">
-      <span class="glyphicon glyphicon-edit"></span>
+  <li class="<%= controller.class == GradeQuizzesController ? 'active col-xs-2 padding-zero' : 'col-xs-2 padding-zero' %>">
+    <a href=<%=grade_quizzes_path%>>
+      <span class="glyphicon glyphicon-signal"></span>
       Grade
     </a>
   </li>
 
   <li class="">
     <a href="#">
-      <span class="glyphicon glyphicon glyphicon-cog"></span>
+      <span class="glyphicon glyphicon glyphicon-edit"></span>
       Reports
     </a>
   </li>

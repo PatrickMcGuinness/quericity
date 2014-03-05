@@ -1,16 +1,25 @@
 class Answer < ActiveRecord::Base
-  attr_accessible :student_id, :cloned_question_id, :student_answer, :answer, :is_correct, :served_quiz_id
-
-
-  #validates :student_id, presence: true
-  #validates :cloned_question_id, presence: true
-  #validates :student_answer, presence: true
-  #validates :answer, presence: true
-  #validates :is_correct, presence: true
+  attr_accessible :student_id, :cloned_question_id, :student_answer, :answer, :is_correct, :served_quiz_id, :graded_by_teacher
 
 
   belongs_to :user, :class_name => "User", :foreign_key => "student_id"
   belongs_to :cloned_question
+  belongs_to :served_quiz
+
+
+  class Graded
+    NO = 0
+    YES = 1
+  end
+
+
+  def is_graded_by_teacher?
+    self.graded_by_teacher == Answer::Graded::YES 
+  end
+
+  def is_not_graded_by_teacher?
+    self.graded_by_teacher == Answer::Graded::NO 
+  end
 
 
   def self.check_answer(user,cloned_question, student_answer,served_quiz_id)

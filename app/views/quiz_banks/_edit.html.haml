@@ -8,16 +8,6 @@
       %li.active
         = @quiz_bank.title
 =simple_form_for ([@repository,@quiz_bank]), format: :js, remote: true, html:{class: "form-horizontal",id:"quiz_form"} do |f|
-  .row
-    .col-xs-6.col-xs-offset-4
-      %h2.quiz-bank-title-show
-        = @quiz_bank.title
-    .tags.col-xs-6.col-xs-offset-3
-      -@quiz_bank.question_topics.each do |question_topic|
-        .tag.col-xs-2
-          %span.glyphicon.glyphicon-tag
-          %span
-            =question_topic.topic.title.downcase
   .row.mar-top-20
     .col-xs-12
       %h4 Title

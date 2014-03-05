@@ -34,6 +34,7 @@ QuizLib::Application.routes.draw do
   
 
   resources :shares
+  resources :grade_quizzes
   resources :manage_quiz_banks
   resources :question_topics
   resources :student_groups 

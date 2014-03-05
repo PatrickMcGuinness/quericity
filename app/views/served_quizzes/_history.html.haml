@@ -21,7 +21,7 @@
             -@served_quizzes.each do |served_quiz|
               %tr
                 %td 
-                  = served_quiz.quiz_bank.title
+                  = served_quiz.cloned_quiz_bank.title
                 %td
                   = "Students: "
                   = link_to "#{served_quiz.sharings.count}", show_all_sharings_served_quiz_path(served_quiz), remote: true  

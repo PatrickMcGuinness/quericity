@@ -17,7 +17,7 @@ class ServedQuizzesController < ApplicationController
   def create
     @served_quiz = current_user.served_quizzes.create(params[:served_quiz])
     @served_quiz.update_attribute(:cloned_quiz_bank_id,@cloned_quiz_bank.id)
-    @served_quiz.background_job_for_create(params[:group_id],current_user,params[:student_ids],params[:invite_ids])
+    @served_quiz.background_job_for_create(current_user,params[:student_ids],params[:invite_ids])
     @served_quizzes = current_user.served_quizzes
     redirect_to served_quizzes_path
   end

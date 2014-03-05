@@ -1,0 +1,30 @@
+=render 'common/tabs'
+.tab-content.padding-top40.tab-container
+  .row
+    %table.table
+      %thead
+        %th.col-xs-2 Served Quiz
+        %th.col-xs-3 Served At
+        %th.col-xs-3 Status
+        %th.col-xs-2 Questions To Grade
+        %th.col-xs-2 Questions Graded
+      -@served_quizzes.each do |served_quiz|
+        %tbody
+          %tr
+            %td.col-xs-2
+              = served_quiz.cloned_quiz_bank.title
+            %td.col-xs-3
+              = served_quiz.date
+            %td.col-xs-3
+              = "Invited: "
+              = link_to served_quiz.sharings.pending.count, invited_students_served_quiz_path(served_quiz), remote:true
+              = " / "
+              = "Pending: "
+              = link_to served_quiz.sharings.started.count, pending_students_served_quiz_path(served_quiz), remote:true
+              = "/" 
+              = "Completed: "
+              = link_to served_quiz.sharings.attempted.count,completed_students_served_quiz_path(served_quiz), remote:true
+            %td.col-xs-2
+              = served_quiz.open_ended_questions_to_grade.count
+            %td.col-xs-2
+              = served_quiz.graded_by_system
