@@ -4,49 +4,42 @@
     .col-xs-3.left-panel
       = render partial: "analytics/left_panel"
     .col-xs-8.right-panel
-      -if @served_quiz.present?
+      -if @served_quizzes.present?
         .col-xs-4.col-xs-offset-4
-          %h1
-            =@served_quiz.cloned_quiz_bank.title
+          %h3
+            Percentages By Questions
         .col-xs-10.mar-top-10.col-xs-offset-1
           %img{src:"/assets/chart.gif",id:"up_logo_file2",style:"cursor:pointer;"}
         .col-xs-10.mar-top-20.col-xs-offset-1.analytics-table
           %table.table.table-striped
             %thead
               %th
-                %span.glyphicon.glyphicon-user
+                %span.glyphicon.glyphicon-text-width
                 %span 
-                  Student
+                  Title
               %th
-                %span.glyphicon.glyphicon-ok
+                %span.glyphicon.glyphicon-calendar
                 %span
-                  Correct
-              %th
-                %span.glyphicon.glyphicon-remove
-                %span
-                  Wrong
+                  Serve Data
+                  
               %th
                 %span.glyphicon.glyphicon-th-list
                 %span
                   Average
             %tbody
-              -@served_quiz.sharings.each do |sharing|
+              -@served_quizzes.each do |served_quiz|
                 %tr
                   %td
-                    -if sharing.user.name.blank?
-                      =sharing.user.email
-                    -else
-                      =sharing.user.name 
+                    = served_quiz.cloned_quiz_bank.title
                   %td
-                    = sharing.get_correct_answers_count
+                    = get_date_and_time(served_quiz)
                   %td
-                    = sharing.get_wrong_answers_count
-                  %td
-                    = sharing.get_average
-      -else                               
+                    = served_quiz.get_average
+      -else
         %table.table
           %tbody
             %tr
               %td
-                No Served Quiz
+                No Quiz Bank Served                                 
+
             

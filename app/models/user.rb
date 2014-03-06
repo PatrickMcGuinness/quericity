@@ -75,6 +75,10 @@ class User < ActiveRecord::Base
     self.user_repositories.find_by_repository_id(repo.id).permission != "Read"
   end
 
+  def get_average
+    self.sharings.map{|s| s.get_average}.blank? ? 0 : self.sharings.map{|s| s.get_average}.inject(:+)/self.sharings.count
+  end
+
   def quiz_banks
     repo_ids = self.repositories.pluck(:id)
     QuizBank.where("repository_id IN (?)", repo_ids)

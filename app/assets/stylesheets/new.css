@@ -45,6 +45,37 @@
    	bottom:0;
    	width:100%;
 }
+.left-panel{
+  border: 1px solid;
+  border-radius: 3px;
+  -webkit-box-shadow: 1px 1px 1px #6D6D6D;
+  -moz-box-shadow: 1px 1px 1px #6D6D6D;
+  box-shadow: 1px 1px 1px #6D6D6D;
+}
+ul.list{
+	list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+ul.list li{
+  padding: 9px;
+}
+ul.list li .list-detils:hover{
+  background-color: grey;
+}
+ul.list li ul{
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.analytics-table{
+  border: 1px solid;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 1px #6D6D6D;
+  -moz-box-shadow: 1px 1px 1px #6D6D6D;
+  box-shadow: 1px 1px 1px #6D6D6D;
+}
 ul.navigation{
 	list-style: none;
 	margin: 0px;
@@ -78,6 +109,13 @@ ul.navigation li ul li a{
 	border-radius: 5px;
 	border: 1px solid;
 	border-radius: 5px;
+}
+.grade-quizzes{
+	border: 1px solid;
+	border-radius: 5px;
+	-webkit-box-shadow: 2px 0px 0px #6D6D6D;
+	-moz-box-shadow: 2px 0px 0px #6D6D6D;
+	box-shadow: 2px 0px 0px #6D6D6D;
 }
 .quiz-analyze .heading{
 	background-color: #4B78B6;

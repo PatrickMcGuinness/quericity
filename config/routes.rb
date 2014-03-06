@@ -35,8 +35,16 @@ QuizLib::Application.routes.draw do
 
   resources :shares
   resources :analytics do
+    collection do
+      get "all_quizzes"
+      get "all_students"
+      get "all_subjects"
+    end
     member do
       get "student_grades"
+      get "one_quiz"
+      get "one_subject"
+      get "one_student"
     end
   end
   resources :grade_quizzes do

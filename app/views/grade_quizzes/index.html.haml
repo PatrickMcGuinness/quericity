@@ -1,8 +1,8 @@
 =render 'common/tabs'
 .tab-content.padding-top40.tab-container
-  .row
+  .row.grade-quizzes
     -unless @served_quizzes.blank?
-      %table.table
+      %table.table.table-striped
         %thead
           %th.col-xs-2 Served Quiz
           %th.col-xs-3 Served At

@@ -1,0 +1,50 @@
+%ul.list
+  %li
+    .list-details
+      %span.name
+        = link_to "Latest Served Quiz", analytics_path
+  %li
+    .list-details
+      %span.name
+        =link_to "Quizzes List",all_quizzes_analytics_path
+      %span.glyphicon.glyphicon-chevron-right
+    %ul.quiz-list.hide    
+      -current_user.served_quizzes.each do |served_quiz|
+        %li
+          =link_to served_quiz.cloned_quiz_bank.title,one_quiz_analytic_path(served_quiz)
+  %li
+    .list-details
+      %span.name
+        = link_to "Student List",all_students_analytics_path
+      %span.glyphicon.glyphicon-chevron-right  
+    %ul.student-list.hide
+      -current_user.students.each do |student|
+        %li
+          -if student.name.blank?
+            = link_to student.email,one_student_analytic_path(student)
+          -else
+            = link_to student.name,one_student_analytic_path(student)
+  %li
+    .list-details
+      %span.name
+        =link_to "Subject List",all_subjects_analytics_path
+      %span.glyphicon.glyphicon-chevron-right
+    %ul.subject-list.hide
+      -Subject.for_left_panel.each do |subject|
+        %li
+          =link_to subject.title,one_subject_analytic_path(subject)
+
+:javascript
+  $(document).ready(function(){
+    $(".list-details").on("click",".glyphicon-chevron-right",function(e){
+      e.preventDefault()
+      $(this).addClass("glyphicon-chevron-down").removeClass("glyphicon-chevron-right")
+      $(this).parents(".list-details").siblings("ul").removeClass("hide")
+    })
+    $(".list-details").on("click",".glyphicon-chevron-down",function(e){
+      e.preventDefault()
+      $(this).removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-right")
+      $(this).parents(".list-details").siblings("ul").addClass("hide")
+    })
+  })                                  
+

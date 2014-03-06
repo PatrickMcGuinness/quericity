@@ -14,4 +14,8 @@ module AnalyticsHelper
 		ans
 	end
 
+  def get_date_and_time(served_quiz)
+    "#{served_quiz.date.day}-#{served_quiz.date.month}-#{served_quiz.date.year}"
+  end
+
 end
