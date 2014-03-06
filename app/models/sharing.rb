@@ -48,6 +48,34 @@ class Sharing < ActiveRecord::Base
     user.sharings.where("served_quiz_id = ?",served_quiz.id).first
   end
 
+  def get_correct_answers
+    Answer.where("student_id = ? and served_quiz_id = ? and is_correct = ? and graded_by_teacher = ?",self.user_id,self.served_quiz_id,true,Answer::Graded::YES)
+  end
+
+  def get_correct_answers_count
+    self.get_correct_answers.count
+  end
+
+  def get_wrong_answers
+    Answer.where("student_id = ? and served_quiz_id = ? and is_correct = ? and graded_by_teacher = ?", self.user_id, self.served_quiz_id,false, Answer::Graded::YES)
+  end
+  
+  def get_wrong_answers_count
+    self.get_wrong_answers.count
+  end
+
+  def get_attempted_answers
+    Answer.where("student_id = ? and served_quiz_id = ?",self.user_id, self.served_quiz_id)
+  end
+
+  def get_attempted_answers_count
+    self.get_attempted_answers.count
+  end
+
+  def get_average
+    (self.get_correct_answers_count * 100)/(self.served_quiz.cloned_quiz_bank.cloned_questions.count)
+  end  
+
   def self.add_more_students(user,emails,quiz_bank_id)
     students = []
     invites = []

@@ -83,6 +83,12 @@ class ServedQuiz < ActiveRecord::Base
   def self.answer_options_for_select
     ServedQuiz::Answer.get_all_answers
   end
+
+  def get_average
+    total_sharing = self.sharings.count
+    sum = self.sharings.map{|s| s.get_average}.inject(:+)
+    average = (sum/total_sharing)
+  end
   
   def serve_to_group(group)
     student_ids = group.student_groups.pluck(:student_id)

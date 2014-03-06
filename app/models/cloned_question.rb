@@ -48,6 +48,7 @@ class ClonedQuestion < ActiveRecord::Base
       cloned_question_option = self.cloned_question_options.first
       answer = cloned_question_option.answer
     end
+    answer
   end
 
   def self.create_the_clone(cloned_quiz_bank,params)

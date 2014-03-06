@@ -34,7 +34,11 @@ QuizLib::Application.routes.draw do
   
 
   resources :shares
-  resources :analytics
+  resources :analytics do
+    member do
+      get "student_grades"
+    end
+  end
   resources :grade_quizzes do
     member do
       get "manual_check_the_answer"

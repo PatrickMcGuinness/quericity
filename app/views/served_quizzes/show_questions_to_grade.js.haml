@@ -9,9 +9,8 @@ url: "/grade_quizzes/"+$answer_id+"/manual_check_the_answer",
 method: "GET",
 data: {score: "correct"},
 success: function(data){
-console.log(data)
 $(_this).parents(".row").remove()
-$(".grade-pending#served_quiz_"+data.served_quiz_id+" a").html(#{@count})
+$(".grade-pending#served_quiz_"+data.served_quiz_id+" a").html("#{@count}")
 }
 })
 })
@@ -19,4 +18,15 @@ $(".grade-pending#served_quiz_"+data.served_quiz_id+" a").html(#{@count})
 $(".modal-body").on("click",".wrong",function(e){
 e.preventDefault()
 $answer_id = $(this).parents(".check-option").data("id")
+_this = this
+$.ajax({
+url: "/grade_quizzes/"+$answer_id+"/manual_check_the_answer",
+method: "GET",
+data: {score: "wrong"},
+success: function(data){
+console.log(data)
+$(_this).parents(".row").remove()
+$(".grade-pending#served_quiz_"+data.served_quiz_id+" a").html("#{@count}")
+}
+})
 })

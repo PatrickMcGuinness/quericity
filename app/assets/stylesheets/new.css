@@ -74,17 +74,34 @@ ul.navigation li ul li a{
 }
 .mini_thumb{
 	width: 50px;
-height: 50px;
-border-radius: 5px;
+	height: 50px;
+	border-radius: 5px;
+	border: 1px solid;
+	border-radius: 5px;
 }
 .quiz-analyze .heading{
 	background-color: #4B78B6;
 	padding: 16px;
 	color: white;
+	border: 1px solid;
+	border-radius: 5px;
 }
 .quiz-analyze .student-detail{
 	background-color: #B7CAE2;
 	padding: 16px;
+	border: 1px solid;
+	border-radius: 5px;
+	-webkit-box-shadow: 2px 0px 0px #6D6D6D;
+	-moz-box-shadow: 2px 0px 0px #6D6D6D;
+	box-shadow: 2px 0px 0px #6D6D6D;
+}
+.quiz-analyze .student-questions-detail
+{
+	border: 1px solid;
+	border-radius: 6px;
+	-webkit-box-shadow: 2px 2px 2px #6D6D6D;
+	-moz-box-shadow: 2px 2px 2px #6D6D6D;
+	box-shadow: 2px 2px 2px #6D6D6D;
 }
 .badge.success{
 	background-color: #A1DB2D !important;

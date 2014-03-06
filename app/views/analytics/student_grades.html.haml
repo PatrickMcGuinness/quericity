@@ -1,0 +1,54 @@
+=render 'common/tabs'
+.tab-content.padding-top40.tab-container
+  .row.quiz-analyze
+    .col-xs-12.student-detail.mar-top-10
+      .col-xs-3
+        -unless @sharing.user.name.blank?
+          %span.glyphicon.glyphicon-user
+          %span
+            =@sharing.user.name
+        -else
+          %span.glyphicon.glyphicon-user
+          %span
+            =@sharing.user.email  
+      .col-xs-5
+        %span
+          ="Attempted: "
+        %span.badge.warning
+          = @sharing.get_attempted_answers_count   
+        %span
+          ="Correct: "
+        %span.badge.success
+          = @sharing.get_correct_answers_count
+        %span
+          = "Wrong: "
+        %span.badge.wrong
+          = @sharing.get_wrong_answers_count
+      .col-xs-3
+        %span
+          = "Current Average: "
+        %span.badge
+          = "#{@sharing.get_average}%"
+      .col-xs-2
+        = link_to "Back", request.referer, class: "btn btn-default"           
+    .col-xs-12.student-questions-detail
+      %table.table.table-striped
+        %thead
+          %th.col-xs-3 Question
+          %th.col-xs-4 Answer
+          %th.col-xs-4 Student Answer
+          %th.col-xs-2 Grade
+        %tbody  
+          -@sharing.served_quiz.cloned_quiz_bank.cloned_questions.each do |cloned_question|
+            %tr
+              %td.col-xs-3
+                = cloned_question.description.html_safe      
+              %td.col-xs-4
+                = cloned_question.get_correct_answer
+              %td.col-xs-4
+                -@answer = Answer.find_answer_by_student_and_question(@sharing.user,cloned_question)
+                = @answer.student_answer if @answer.present?
+                = "Not Attempted" if @answer.blank?
+              %td.col-xs-2
+                = show_correct(@answer) if @answer.present?
+                = "Not Graded" if @answer.blank?

@@ -49,7 +49,7 @@ class Answer < ActiveRecord::Base
     is_correct = Answer.is_answer_correct?(student_answer, answer)
     answer = Answer.create(:student_id => user.id, :cloned_question_id => cloned_question.id, 
                   :student_answer => student_answer, :answer => answer, :is_correct => is_correct,
-                  :served_quiz_id => served_quiz_id)
+                  :served_quiz_id => served_quiz_id, :graded_by_teacher => Answer::Graded::YES)
   end
 
   def self.check_mcq_question(user,cloned_question,student_answer,served_quiz_id)
@@ -58,7 +58,7 @@ class Answer < ActiveRecord::Base
     is_correct = cloned_question.cloned_question_options.find_by_answer(student_answer).is_correct
     answer = Answer.create(:student_id => user.id, :cloned_question_id => cloned_question.id, 
                   :student_answer => student_answer, :answer => answer, :is_correct => is_correct,
-                  :served_quiz_id => served_quiz_id)
+                  :served_quiz_id => served_quiz_id, :graded_by_teacher => Answer::Graded::YES)
   end
 
   def self.check_fill_in_the_blank_question(user,cloned_question,student_answer,served_quiz_id)
@@ -67,7 +67,7 @@ class Answer < ActiveRecord::Base
     is_correct = Answer.is_answer_correct?(student_answer, answer)
     answer = Answer.create(:student_id => user.id, :cloned_question_id => cloned_question.id, 
                   :student_answer => student_answer, :answer => answer, :is_correct => is_correct,
-                  :served_quiz_id => served_quiz_id)
+                  :served_quiz_id => served_quiz_id, :graded_by_teacher => Answer::Graded::YES)
   end
 
   def self.check_open_ended_question(user,cloned_question,student_answer,served_quiz_id)

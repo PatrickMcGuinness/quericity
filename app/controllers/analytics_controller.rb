@@ -8,4 +8,8 @@ class AnalyticsController < ApplicationController
   def show
     @served_quiz = current_user.served_quizzes.find(params[:id])
   end
+
+  def student_grades
+    @sharing = Sharing.find(params[:id])
+  end
 end

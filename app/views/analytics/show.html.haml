@@ -6,50 +6,57 @@
         = @served_quiz.cloned_quiz_bank.title
       .col-xs-3
       .col-xs-3
+        %span
+          = "Current Average: "
+        %span.badge
+          = "#{@served_quiz.get_average}%"  
     -@served_quiz.sharings.each do |sharing|  
-      .col-xs-12.student-detail
+      .col-xs-12.student-detail.mar-top-10
         .col-xs-3
           -unless sharing.user.name.blank?
             %span.glyphicon.glyphicon-user
             %span
-              =sharing.user.name
+              = link_to sharing.user.name, student_grades_analytic_path(sharing)
           -else
             %span.glyphicon.glyphicon-user
             %span
-              =sharing.user.email  
+              = link_to sharing.user.email, student_grades_analytic_path(sharing)  
         .col-xs-5
           %span
             ="Attempted: "
           %span.badge.warning
-            = 0   
+            = sharing.get_attempted_answers_count   
           %span
             ="Correct: "
           %span.badge.success
-            = 0
+            = sharing.get_correct_answers_count
           %span
             = "Wrong: "
           %span.badge.wrong
-            = 0
+            = sharing.get_wrong_answers_count
         .col-xs-4
-          Average    
+          %span
+            = "Current Average: "
+          %span.badge
+            = "#{sharing.get_average}%"      
       .col-xs-12.student-questions-detail
-        %table.table
+        %table.table.table-striped
           %thead
-            %th Question
-            %th Answer
-            %th Student Answer
-            %th Grade
+            %th.col-xs-3 Question
+            %th.col-xs-4 Answer
+            %th.col-xs-4 Student Answer
+            %th.col-xs-2 Grade
           %tbody  
             -@served_quiz.cloned_quiz_bank.cloned_questions.each do |cloned_question|
               %tr
-                %td
-                  = cloned_question.description.html_safe
-                %td
-                  = Answer
-                %td
+                %td.col-xs-3
+                  = cloned_question.description.html_safe      
+                %td.col-xs-4
+                  = cloned_question.get_correct_answer
+                %td.col-xs-4
                   -@answer = Answer.find_answer_by_student_and_question(sharing.user,cloned_question)
                   = @answer.student_answer if @answer.present?
                   = "Not Attempted" if @answer.blank?
-                %td
+                %td.col-xs-2
                   = show_correct(@answer) if @answer.present?
                   = "Not Graded" if @answer.blank?
