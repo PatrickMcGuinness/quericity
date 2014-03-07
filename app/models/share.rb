@@ -11,6 +11,9 @@ class Share < ActiveRecord::Base
   	READ = 1
   	WRITE = 2
   	ADMIN = 3
+    def self.get_all_permissions
+      [["Read",1],["Write",2],["Admin",3]]
+    end
   end
 
   def has_read_permissions?
@@ -24,5 +27,18 @@ class Share < ActiveRecord::Base
   def has_admin_permissions?
     self.permissions == Share.Permissions::ADMIN
   end
+
+  def self.permissions_for_select
+    Share::Permissions.get_all_permissions
+  end
+
+  def self.get_quiz_bank_shares(user,quiz_bank)
+    user.shares.where("shareable_id = ?",quiz_bank.id)
+  end
+
+  def self.get_quiz_bank_shares_count(user,quiz_bank)
+    Share.get_quiz_bank_shares(user,quiz_bank).count
+  end
+
 
 end

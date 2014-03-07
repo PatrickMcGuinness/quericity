@@ -22,7 +22,7 @@
             #add-collaborator-panel.custom_b_s  
               =form_for UserRepository.new , :url => repository_collaborators_path(@repository) ,:html=>{ :class=>"form-inline"}  , :remote => true do |f|
                 .form-group.width
-                  %input{name:"email",type:"email",class:"form-control",id:"exampleInputEmail2",placeholder:"email address"}
+                  %input{name:"email",type:"email",class:"form-control teacher-email",placeholder:"email address"}
                 .form-group
                   = f.select :permission, ['Read', 'Write', 'Admin'] , {} , {:class => 'form-control size_area_pop'}
                 %button{type:"submit",class:"btn btn-default",id:"add_b"}Add

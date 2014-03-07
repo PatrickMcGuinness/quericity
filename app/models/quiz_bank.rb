@@ -17,6 +17,7 @@ class QuizBank < ActiveRecord::Base
   has_many :served_quizzes
   has_many :invites, as: :invitable
   has_many :shares, as: :shareable 
+  has_many :favourite_quiz_banks, dependent: :destroy
 
   after_create :create_section
   
@@ -30,7 +31,10 @@ class QuizBank < ActiveRecord::Base
   def is_public?
     self.public == QuizBank::Public::YES
   end
-    
+
+  def is_favourite?(user)
+    user.favourite_quiz_banks.find_by_quiz_bank_id(self.id).present?
+  end    
 
   def create_section
     self.sections.create(:title => "Default Section")

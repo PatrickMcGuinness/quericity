@@ -1,1 +1,16 @@
 $('#base-modal').html(' #{j(render(partial: 'index'))} ').modal()
+
+
+
+$(".modal-body").on("click",".add-button",function(e){
+console.log("hello")
+e.preventDefault()
+$.ajax({
+url: "/shares",
+method: "POST",
+data: {email: $(".teacher-email").val(),permissions: $(".permissions-dropdown").val(),shareable_id: $(".shareable-id").val()},
+success: function(data){
+console.log(data)
+}
+})
+})

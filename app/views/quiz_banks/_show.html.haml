@@ -1,12 +1,12 @@
-.row
-  .col-xs-12
-    %ul.breadcrumb
-      %li
-        = link_to "My Assessments", manage_quiz_banks_path, remote: true
-      %li
-        = link_to "Repo", repository_path(@quiz_bank.repository), remote: true
-      %li.active
-        = @quiz_bank.title
+-#.row
+  -#.col-xs-12
+    -#%ul.breadcrumb
+      -#%li
+        -#= link_to "My Assessments", manage_quiz_banks_path, remote: true
+      -#%li
+        -#= link_to "Repo", repository_path(@quiz_bank.repository), remote: true
+      -#%li.active
+        -#= @quiz_bank.title
 .row
   .col-xs-6.col-xs-offset-4
     %h2.quiz-bank-title-show

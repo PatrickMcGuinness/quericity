@@ -5,12 +5,36 @@
       %h4
         Access List
     .modal-body
-      -unless @shareable.is_public?
-        -if current_user.shares.find_by_shareable_id(@shareable.id).present?
-          = "Shared"
-        -else
-          %p
-            = "This Quiz Bank appears to be Private"
-      -else
-        %p
-          = "This Quiz Bank appears to be Public"      
+      .row
+        .col-xs-12
+          .show-individual-form.mar-top-10  
+            #add-collaborator-panel.custom_b_s  
+              =form_for Share.new ,:html=>{ :class=>"form-inline"}  , :remote => true do |f|
+                .form-group.width
+                  %input{name:"email",type:"email",class:"form-control teacher-email",placeholder:"email address"}
+                  %input{name:"shareable_id",type:"hidden",class:"form-control shareable-id",value: @quiz_bank.id}
+                .form-group
+                  = f.select :permissions, Share.permissions_for_select , {} , {:class => 'form-control size_area_pop permissions-dropdown'}
+                %button{type:"submit",class:"btn btn-default add-button"}Add
+                %img{src:"/assets/loading.gif",id:"loading-indicator",style:"display:none",class:"load_pos"}
+                
+          .show-access-list
+            -if current_user.shares.find_by_shareable_id(@quiz_bank.id).present?
+              %table.table.table-striped
+                %thead
+                  %th Email
+                  %th Permissions
+                  %th Action
+                %tbody
+                  -Share.get_quiz_bank_shares(user,quiz_bank).each do |share|
+                    %tr
+                      %td
+                        = show_user(share)
+                      %td
+                        = show_permissions(share)
+                      %td
+                        = link_to "#" do
+                          %span.glyphicon.glyphicon-trash  
+                                
+
+

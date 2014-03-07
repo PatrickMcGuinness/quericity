@@ -37,17 +37,40 @@
       = current_user.repositories.count
 
 %li
-  %span.glyphicon.glyphicon-minus-sign
+  -if current_user.shared_quiz_banks.blank?
+    %span.glyphicon.glyphicon-minus-sign
     %span 
-      = link_to "Shared Assessments", "#"
+      = link_to "Shared Assessments", shared_assessments_manage_quiz_banks_path, remote: true
     %span.badge 
-      = "0"
+      = current_user.shared_quiz_banks.count
+  -else
+    %span.glyphicon.glyphicon-plus-sign
+    %span 
+      = link_to "Shared Assessments", shared_assessments_manage_quiz_banks_path, remote: true
+    %span.badge 
+      = current_user.shared_quiz_banks.count
+    %ul.quiz-banks.hide
+      -current_user.shared_quiz_banks.each do |quiz_bank|
+        %li.quiz-bank{data:{id:quiz_bank.id}}
+          = link_to "#{quiz_bank.title}", repository_quiz_bank_path(quiz_bank.repository,quiz_bank), remote:true  
+
 %li
-  %span.glyphicon.glyphicon-minus-sign
+  -if current_user.favourite_quiz_banks.blank?
+    %span.glyphicon.glyphicon-minus-sign
     %span 
-      = link_to "Starred Assessments", "#"
+      = link_to "Starred Assessments", starred_assessments_manage_quiz_banks_path, remote: true
     %span.badge 
-      = "0"       
+      = current_user.favourite_quiz_banks.count
+  -else
+    %span.glyphicon.glyphicon-plus-sign
+    %span 
+      = link_to "Starred Assessments", starred_assessments_manage_quiz_banks_path, remote: true
+    %span.badge 
+      = current_user.favourite_quiz_banks.count
+    %ul.quiz-banks.hide
+      -current_user.favourite_quiz_banks.each do |favourite_quiz_bank|
+        %li.quiz-bank{data:{id:favourite_quiz_bank.quiz_bank.id}}
+          = link_to "#{favourite_quiz_bank.quiz_bank.title}", repository_quiz_bank_path(favourite_quiz_bank.quiz_bank.repository, favourite_quiz_bank.quiz_bank), remote:true                 
 
 
 

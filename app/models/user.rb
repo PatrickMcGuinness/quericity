@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
   has_many :shares, :class_name => 'Share', :foreign_key => 'owner_id'
 
   has_many :shared_withs, :class_name => 'Share', :foreign_key => 'teacher_id'
+
+  has_many :favourite_quiz_banks, dependent: :destroy
+
+  has_many :favourite_quizzes, through: :favourite_quiz_banks, :source => :quiz_bank
   
   mount_uploader :profile_pic, ImageUploader
 
@@ -83,6 +87,11 @@ class User < ActiveRecord::Base
     repo_ids = self.repositories.pluck(:id)
     QuizBank.where("repository_id IN (?)", repo_ids)
   end
+
+  def shared_quiz_banks
+    QuizBank.where("public = ?",QuizBank::Public::YES)
+  end
+
 
   def search_served_quizzes(params)
     quiz_ids = self.quiz_banks.search(params[:q]).result(:distinct => true).pluck(:id)

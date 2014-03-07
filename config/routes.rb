@@ -32,8 +32,18 @@ QuizLib::Application.routes.draw do
   post "sections/update_section_before_destroy", to: "sections#update_section_before_destroy", as: :update_section_before_destroy
   post "/quiz_banks/change_repo", to: "quiz_banks#change_repo", as: :change_repo
   
-
-  resources :shares
+  resources :favourite_quiz_banks do
+    member do
+      get "make_favourite"
+      get "make_unfavourite"
+    end
+  end
+  resources :shares do
+    member do
+      get "make_public"
+      get "make_private" 
+    end 
+  end
   resources :analytics do
     collection do
       get "all_quizzes"
@@ -53,7 +63,12 @@ QuizLib::Application.routes.draw do
       get "completed_students"
     end
   end
-  resources :manage_quiz_banks
+  resources :manage_quiz_banks do
+    collection do
+      get "starred_assessments"
+      get "shared_assessments"
+    end
+  end
   resources :question_topics
   resources :student_groups 
   resources :invites
