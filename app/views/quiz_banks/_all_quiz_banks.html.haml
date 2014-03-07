@@ -20,10 +20,10 @@
       -@quiz_banks.each do |q|
         -if action_name == 'index' or action_name == "make_favourite" or action_name == "make_unfavourite" or action_name == "make_public" or action_name == "make_private" or action_name == "show"
           =render partial: "quiz_banks/quiz_bank", :locals => {:@repository => q.repository,:@quiz_bank => q }
-        -if action_name == 'starred_assessments'or action_name == "make_starred_favourite" or action_name == "make_starred_unfavourite" or action_name == "make_stared_private" or action_name == "make_stared_public"
+        -if action_name == 'starred_assessments'or action_name == "make_stared_favourite" or action_name == "make_stared_unfavourite" or action_name == "make_stared_private" or action_name == "make_stared_public"
           = render partial: "quiz_banks/stared_quiz_bank", :locals => {:@repository => q.repository,:@quiz_bank => q }
         -if action_name == 'shared_assessments' or action_name == "make_shared_favourite" or action_name == "make_shared_unfavourite" or action_name == "make_shared_private" or action_name == "make_shared_public"
-          = render partial: "quiz_banks/stared_quiz_bank", :locals => {:@repository => q.repository, :@quiz_bank => q} 
+          = render partial: "quiz_banks/shared_quiz_bank", :locals => {:@repository => q.repository, :@quiz_bank => q} 
 -else
   .top_bar_s.no-record
     There is no quiz bank  
