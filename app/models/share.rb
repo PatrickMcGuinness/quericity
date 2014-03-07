@@ -25,7 +25,7 @@ class Share < ActiveRecord::Base
   end
 
   def has_admin_permissions?
-    self.permissions == Share.Permissions::ADMIN
+    self.permissions == Share::Permissions::ADMIN
   end
 
   def self.permissions_for_select

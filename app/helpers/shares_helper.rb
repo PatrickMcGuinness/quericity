@@ -15,10 +15,10 @@ module SharesHelper
     if share.has_read_permissions?
       permissions = "Read"
     end
-    if share.has_write_permissions
+    if share.has_write_permissions?
       permissions = "Write"
     end
-    if share.has_admin_permissions
+    if share.has_admin_permissions?
       permissions = "Admin"
     end
     permissions

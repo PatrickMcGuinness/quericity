@@ -22,11 +22,11 @@
             -if current_user.shares.find_by_shareable_id(@quiz_bank.id).present?
               %table.table.table-striped
                 %thead
-                  %th Email
+                  %th User
                   %th Permissions
                   %th Action
                 %tbody
-                  -Share.get_quiz_bank_shares(user,quiz_bank).each do |share|
+                  -Share.get_quiz_bank_shares(current_user,@quiz_bank).each do |share|
                     %tr
                       %td
                         = show_user(share)
