@@ -36,12 +36,20 @@ QuizLib::Application.routes.draw do
     member do
       get "make_favourite"
       get "make_unfavourite"
+      get "make_stared_favourite"
+      get "make_stared_unfavourite"
+      get "make_shared_favourite"
+      get "make_shared_unfavourite"
     end
   end
   resources :shares do
     member do
       get "make_public"
-      get "make_private" 
+      get "make_private"
+      get "make_stared_private"
+      get "make_stared_public"
+      get "make_shared_private"
+      get "make_shared_private" 
     end 
   end
   resources :analytics do
