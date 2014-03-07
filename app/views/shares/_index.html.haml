@@ -33,7 +33,7 @@
                       %td
                         = show_permissions(share)
                       %td
-                        = link_to "#" do
+                        =link_to share_path(share), data:{method: :delete, confirm: "Are you sure?"},remote: true, rel: "tooltip", title: "Remove the user from list" do
                           %span.glyphicon.glyphicon-trash  
                                 
 

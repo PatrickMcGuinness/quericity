@@ -34,6 +34,10 @@ class QuizBank < ActiveRecord::Base
 
   def is_favourite?(user)
     user.favourite_quiz_banks.find_by_quiz_bank_id(self.id).present?
+  end
+
+  def is_user_quiz_bank?(user)
+    user.quiz_banks.find(self.id).present?
   end    
 
   def create_section

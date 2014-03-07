@@ -1,7 +1,7 @@
 class SharesController < ApplicationController
 
 	before_filter :authenticate_user!
-  before_filter :set_variables, except: [:create]
+  before_filter :set_variables, except: [:create, :destroy]
 
 	def index
 	end
@@ -21,7 +21,6 @@ class SharesController < ApplicationController
 
   def make_private
     @quiz_bank.update_attribute(:public, QuizBank::Public::NO)
-    #@shares = current_user.shares.where("shareable_id = ?",@quiz_bank.id).destroy_all
     @quiz_banks = current_user.quiz_banks
     render layout:nil
   end
@@ -34,9 +33,13 @@ class SharesController < ApplicationController
 
   def make_stared_private
     @quiz_bank.update_attribute(:public, QuizBank::Public::NO)
-    #@shares = current_user.shares.where("shareable_id = ?",@quiz_bank.id).destroy_all
     @quiz_banks = current_user.favourite_quizzes
     render layout:nil
+  end
+
+  def destroy
+    @share = current_user.shares.find(params[:id])
+    @share.destroy
   end
 
   private
