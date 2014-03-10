@@ -10,10 +10,10 @@ module ServedQuizzesHelper
 
 	def show_served_quiz_status(served_quiz)
 		status = "Not Served"
-		if served_quiz.date.day <= Date.today.day and served_quiz.start_time < Time.now
+		if served_quiz.is_served?
 			status = "Served"
 		end
-		if served_quiz.close_date.day <= Date.today.day and served_quiz.end_time < Time.now
+		if served_quiz.is_expired?
 			status = "Expired"
 		end
 		link_to status, get_status_served_quiz_path(served_quiz), remote:true

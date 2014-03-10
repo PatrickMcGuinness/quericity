@@ -63,6 +63,19 @@ class ServedQuiz < ActiveRecord::Base
     self.answer == ServedQuiz::Answer::AFTERQUESTION
   end
 
+  def is_expired?
+    self.close_date.day <= Date.today.day and self.end_time < Time.now
+  end
+
+  def is_not_served?
+    self.date.day >= Date.today.day and self.start_time > Time.now
+  end
+
+
+  def is_served?
+    self.date.day <= Date.today.day and self.start_time < Time.now
+  end
+
   def show_answer_after_quiz?
     self.answer == ServedQuiz::Answer::AFTERQUIZ
   end

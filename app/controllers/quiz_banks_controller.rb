@@ -74,7 +74,7 @@ class QuizBanksController < ApplicationController
   private
 
   def set_variables
-    @repository = current_user.repositories.find(params[:repository_id])
+    @repository = Repository.find(params[:repository_id])
     @quiz_bank = params[:id].present? ? @repository.quiz_banks.find(params[:id]) : @repository.quiz_banks.new
     @sections = @quiz_bank.sections
   end

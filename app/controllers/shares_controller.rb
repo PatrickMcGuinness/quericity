@@ -37,6 +37,18 @@ class SharesController < ApplicationController
     render layout:nil
   end
 
+  def make_shared_public
+    @quiz_bank.update_attribute(:public, QuizBank::Public::YES)
+    @quiz_banks = current_user.shared_quiz_banks
+    render layout:nil
+  end
+
+  def make_shared_private
+    @quiz_bank.update_attribute(:public, QuizBank::Public::NO)
+    @quiz_banks = current_user.shared_quiz_banks
+    render layout:nil
+  end
+
   def destroy
     @share = current_user.shares.find(params[:id])
     @share.destroy

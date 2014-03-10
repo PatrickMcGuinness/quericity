@@ -36,4 +36,12 @@ module Students::QuizBanksHelper
     end 
   end
 
+  def quiz_serve_time_and_date(served_quiz)
+    "Quiz will be served on #{served_quiz.date.day}-#{served_quiz.date.month}-#{served_quiz.date.year} at #{served_quiz.start_time.hour}/#{served_quiz.start_time.min}/#{served_quiz.start_time.sec}"
+  end
+
+  def quiz_expire_time_and_date(served_quiz)
+    "Quiz expired on #{served_quiz.close_date.day}-#{served_quiz.close_date.month}-#{served_quiz.close_date.year} at #{served_quiz.end_time.hour}/#{served_quiz.end_time.min}/#{served_quiz.end_time.sec}"
+  end
+
 end

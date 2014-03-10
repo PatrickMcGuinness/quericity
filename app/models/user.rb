@@ -92,6 +92,10 @@ class User < ActiveRecord::Base
     QuizBank.where("public = ?",QuizBank::Public::YES)
   end
 
+  def is_owner_of_quiz_bank?(quiz_bank)
+    self.user_repositories.find_by_repository_id(quiz_bank.repository_id).present?
+  end
+
 
   def search_served_quizzes(params)
     quiz_ids = self.quiz_banks.search(params[:q]).result(:distinct => true).pluck(:id)

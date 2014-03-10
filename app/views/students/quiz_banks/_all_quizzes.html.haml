@@ -22,9 +22,14 @@
               %td
                 =sharing.served_quiz.cloned_quiz_bank.subject.title
               %td
-                -if sharing.is_pending?
-                  =link_to "Invited",take_quiz_students_quiz_bank_path(sharing.served_quiz,sharing_id: sharing.id), :target => "_blank"
-                -elsif sharing.is_started?
-                  =link_to "Pending",take_quiz_students_quiz_bank_path(sharing.served_quiz,sharing_id: sharing.id), :target => "_blank"
-                -else 
-                  =show_status(sharing)
+                -if sharing.served_quiz.is_served?
+                  -if sharing.is_pending?
+                    =link_to "Invited",take_quiz_students_quiz_bank_path(sharing.served_quiz,sharing_id: sharing.id), :target => "_blank"
+                  -elsif sharing.is_started?
+                    =link_to "Pending",take_quiz_students_quiz_bank_path(sharing.served_quiz,sharing_id: sharing.id), :target => "_blank"
+                  -else 
+                    =show_status(sharing)
+                -if sharing.served_quiz.is_not_served?
+                  = quiz_serve_time_and_date(sharing.served_quiz)
+                -if sharing.served_quiz.is_expired?
+                  = quiz_expire_time_and_date(sharing.served_quiz)     
