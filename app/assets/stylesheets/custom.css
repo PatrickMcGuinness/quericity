@@ -404,24 +404,7 @@ background-color: #F62217;
 	margin-top: 50px;
 	padding-bottom:20px;
 }
-.group-dropdown{
-  border: 1px solid;
-  padding: 20px;
-  min-height: 300px;
-}
 
-.emails-div{
-  border: 1px solid;
-  padding: 20px;
-  min-height: 300px;
-}
-.arrow-link{
-  border: 1px solid;
-  position: absolute;
-  margin-top: 100px;
-  min-width: 30px;
-  min-height: 30px;
-}
 .thumbnail-large{
   width: 260px;
 }

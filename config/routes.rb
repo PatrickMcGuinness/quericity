@@ -113,6 +113,7 @@ QuizLib::Application.routes.draw do
   resources :users do
     collection do
       post 'update_change_password'
+      post "search_name_email_id"
     end 
     member do
       get 'profile'

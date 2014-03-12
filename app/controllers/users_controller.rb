@@ -38,4 +38,10 @@ class UsersController < ApplicationController
     @user.update_attribute(:password, params[:new_password])
     redirect_to profile_user_path(@user)
   end
+
+  def search_name_email_id
+    @users_names = User.search_by_name(params[:search])
+    @users_emails = User.search_by_email(params[:search])
+    render json: {names: @users_names, emails: @users_emails}
+  end
 end

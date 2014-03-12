@@ -5,13 +5,10 @@ class Repository < ActiveRecord::Base
   #extend FriendlyId
   #friendly_id :title, use: :slugged
 
-  attr_accessible :description, :title,:public
+  attr_accessible :description, :title,:public,:user_id
   validates :title, :presence => true, :length => { minimum: 5 }
   
-  has_many :users, :through => :user_repositories 
-  has_many :invitations
-  has_many :user_repositories, dependent: :destroy
-  has_many :collaborators , :through => :user_repositories , :source => :user 
+  belongs_to :user  
   has_many :quiz_banks, dependent: :destroy
 
   default_scope { where("deleted_at IS NULL") }
@@ -22,31 +19,20 @@ class Repository < ActiveRecord::Base
     YES = 1
   end
 
+  class DefaultRepo
+    NAME = "Main"
+  end
+
   def is_public?
     self.public == Repository::Public::YES
   end
 
   def owner
-    self.user_repositories.find_by_permission("Owner").user
-  end
-  def is_collaborator? user
-    self.collaborators.where(:id => user.id).present?
-  end
-  
-  def is_admin? user
-    self.user_repositories.where(:user_id => user.id , :permission => 'Admin').present?
-  end
-  
-  def can_write? user
-    self.user_repositories.where(:user_id => user.id , :permission => 'Write').present?
-  end
-
-  def is_owner? user
-    self.user_repositories.where(:user_id => user.id , :permission => 'Owner').present?
+    self.user
   end
 
   def self.for_select(user)
-    user.can_change_repositories.map{|r| [r.title, r.id]}
+    user.repositories.map{|r| [r.title, r.id]}
   end
 
   def question_tags

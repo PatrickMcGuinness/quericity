@@ -18,6 +18,8 @@
 //= require jquery.steps
 //= require helper_functions
 //= require jquery.timepicker.min
+//= require bootstrap-datepicker
+//= require bootstrap-timepicker.min
 //= require custom
 
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140307081310) do
+ActiveRecord::Schema.define(:version => 20140312105147) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -111,14 +111,6 @@ ActiveRecord::Schema.define(:version => 20140307081310) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "invitations", :force => true do |t|
-    t.string   "email"
-    t.string   "permission"
-    t.integer  "repository_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
   create_table "invites", :force => true do |t|
     t.integer  "sender_id"
     t.string   "receiver_email"
@@ -179,6 +171,7 @@ ActiveRecord::Schema.define(:version => 20140307081310) do
     t.integer  "quiz_banks_count", :default => 0
     t.datetime "deleted_at"
     t.string   "slug"
+    t.integer  "user_id"
   end
 
   add_index "repositories", ["slug"], :name => "index_repositories_on_slug", :unique => true
@@ -248,14 +241,6 @@ ActiveRecord::Schema.define(:version => 20140307081310) do
     t.string   "title"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "user_repositories", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "repository_id"
-    t.string   "permission"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
   end
 
   create_table "users", :force => true do |t|

@@ -4,7 +4,6 @@
       %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
       %h4
         =@quiz_bank.new_record? ? "Add New Quiz Bank" : "Update Quiz Bank"
-    -#=render partial: "quiz_banks/simple_form", :locals => {:@repository => @repository,:@quiz_bank => @quiz_bank }
     - if current_user.any_repository_present? 
       =simple_form_for ([@repository,@quiz_bank]), format: :js, remote: true, html:{class: "form-horizontal",id:"quiz_form"} do |f|
         .modal-body

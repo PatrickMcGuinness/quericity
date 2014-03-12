@@ -11,8 +11,7 @@ class User < ActiveRecord::Base
   :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip,:confirmation_token,
   :confirmed_at, :confirmation_sent_at, :unconfirmed_email
   
-  has_many :repositories, :through => :user_repositories
-  has_many :user_repositories, dependent: :destroy 
+  has_many :repositories 
   has_many :served_quizzes, :class_name => 'ServedQuiz', :foreign_key => 'owner_id'
   has_many :groups, :class_name => 'Group', :foreign_key => 'owner_id'  
   has_many :student_groups, :class_name => 'StudentGroup', :foreign_key => 'student_id'
@@ -34,6 +33,8 @@ class User < ActiveRecord::Base
   after_create :create_default_repo
   after_create :confirm_the_user
 
+
+
   
 
   def create_default_group
@@ -41,10 +42,7 @@ class User < ActiveRecord::Base
   end
 
   def create_default_repo
-    if self.is_professor?
-      repo = Repository.create(:title => "Archive")
-      self.user_repositories.create(:repository_id => repo.id, :permission => "Owner")
-    end
+    self.repositories.create(:title => Repository::DefaultRepo)
   end
 
   def confirm_the_user
@@ -60,24 +58,9 @@ class User < ActiveRecord::Base
   end
   
   def any_repository_present?
-    self.repositories.count > 0
+    self.repositories.present?
   end
 
-  def own_repositories
-    Repository.joins(:user_repositories).where("user_id = ? and permission = ?",self.id,"Owner")
-  end
-
-  def shared_repositories
-    Repository.joins(:user_repositories).where("user_id = ? and permission != ?", self.id,"Owner")
-  end
-
-  def can_change_repositories
-    Repository.joins(:user_repositories).where("user_id = ? and permission IN (?)",self.id, ["Owner","Write","Admin"])
-  end
-
-  def can_change_repo?(repo)
-    self.user_repositories.find_by_repository_id(repo.id).permission != "Read"
-  end
 
   def get_average
     self.sharings.map{|s| s.get_average}.blank? ? 0 : self.sharings.map{|s| s.get_average}.inject(:+)/self.sharings.count
@@ -93,7 +76,7 @@ class User < ActiveRecord::Base
   end
 
   def is_owner_of_quiz_bank?(quiz_bank)
-    self.user_repositories.find_by_repository_id(quiz_bank.repository_id).present?
+    self.repositories.find(quiz_bank.repository_id).present?
   end
 
 
@@ -115,7 +98,7 @@ class User < ActiveRecord::Base
   end
 
   def default_repo
-    self.repositories.find_by_title("Archive")
+    self.repositories.find_by_title(Repository::DefaultRepo::NAME)
   end
 
   def groups_to_show
@@ -126,6 +109,14 @@ class User < ActiveRecord::Base
     group_ids = self.groups.pluck(:id)
     student_ids = StudentGroup.where("group_id IN (?)",group_ids).pluck(:student_id)
     User.where("id IN (?)", student_ids)
+  end
+
+  def self.search_by_name(search)
+    User.where('role = ? and first_name ILIKE ?', "Student","%#{search}%").limit(5)
+  end
+
+  def self.search_by_email(search)
+    User.where('role = ? and email ILIKE ?',"Student", "%#{search}%").limit(5)
   end
 
   def self.find_for_facebook_oauth(auth)
