@@ -1,7 +1,7 @@
 class ServedQuiz < ActiveRecord::Base
   attr_accessible :owner_id, :quiz_bank_id,:answer, :duration, :date, :close_date,:end_time, 
                   :instructions,:random,:start_time,:infinite_duration,:number_of_questions, 
-                  :same_questions,:show_in_sequence
+                  :same_questions,:show_in_sequence, :show_all_questions, :questions_per_page
 
   validates :owner_id, presence:true
   validates :quiz_bank_id, presence: true
@@ -35,6 +35,15 @@ class ServedQuiz < ActiveRecord::Base
   class Sequence
     NO = 0
     YES = 1
+  end
+
+  class ShowAllQuestions
+    NO = 0
+    YES = 1
+  end
+
+  def show_all_questions_in_preview?
+    self.show_all_questions == ServedQuiz::ShowAllQuestions::YES
   end
 
   def open_ended_questions_in_answered_questions

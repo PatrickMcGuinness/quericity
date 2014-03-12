@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140312105147) do
+ActiveRecord::Schema.define(:version => 20140312114311) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -189,8 +189,8 @@ ActiveRecord::Schema.define(:version => 20140312105147) do
   create_table "served_quizzes", :force => true do |t|
     t.integer  "owner_id"
     t.integer  "quiz_bank_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.datetime "date"
     t.datetime "close_date"
     t.integer  "duration"
@@ -204,6 +204,8 @@ ActiveRecord::Schema.define(:version => 20140312105147) do
     t.integer  "number_of_questions"
     t.integer  "same_questions"
     t.integer  "show_in_sequence"
+    t.integer  "show_all_questions",  :default => 0
+    t.integer  "questions_per_page"
   end
 
   create_table "shares", :force => true do |t|
