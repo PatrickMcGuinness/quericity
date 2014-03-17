@@ -1,43 +1,35 @@
 class RepositoriesController < ApplicationController
   
-  before_filter :authenticate_user!
-  before_filter :set_variables, :except => [:index,:all,:new,:create]
-  
-  
+  #before_filter :authenticate_user!
+
+  respond_to :json
+
+  def index
+    render json: current_user.repositories
+  end
+
   def show
-    @quiz_banks = @repository.quiz_banks.search(params[:q]).result(:distinct => true).page(params[:page])
-    @repositories = current_user.repositories
+    render json: current_user.repositories.find(params[:id])
   end
-  
-  def new
-    @repository = Repository.new
-    render layout: nil
-  end
-  
-  def create
-    @repository = current_user.repositories.create(params[:repository])
-    render json:{title: @repository.title, id:@repository.id}
-  end
-  
+
   def edit
-    render layout: nil
+    render json: current_user.repositories.find(params[:id])
   end
 
   def update
-    @repository.update_attributes(params[:repository])
-    @repositories = current_user.repositories
-    render layout:nil
+    render json: current_user.repositories.find(params[:id]).update_attributes(param[:repository])
   end
-  
+
   def destroy
-    @repository.update_attribute(:deleted_at, Time.now)
-    render layout:nil
+    render json: current_user.repositories.find(params[:id]).destroy
   end
 
-  private
+  def create 
+    render json: current_user.repositories.create(params[:repository])
+  end
 
-  def set_variables
-    @repository = current_user.repositories.find(params[:id])
+  def default_repo
+    render json: {repo:current_user.default_repo}
   end
 
 end

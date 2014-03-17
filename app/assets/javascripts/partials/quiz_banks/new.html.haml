@@ -1,0 +1,84 @@
+%nav.my-sub-header.navbar
+  .container
+    .collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li
+          %a{"ng-href" => '#/manage_quiz_banks'}Manage
+        %li
+          %a{href: "#"} Serve
+        %li
+          %a{href: "#"} Grade
+        %li
+          %a{href: "#"} Analyze
+.row
+  .col-xs-12.top-options
+    .container
+      %ul
+        %li.col-xs-1
+          %span.glyphicon.glyphicon-floppy-disk
+          %span
+            %a{"ng-click" => 'saveQuiz()'} Save
+        %li.col-xs-1
+          %span.glyphicon.glyphicon-remove
+          %span 
+            %a{"ng-href" => '#/manage_quiz_banks'}Cancel
+        %li.col-xs-2
+          %span.glyphicon.glyphicon-plus-sign
+          %span
+            %a{"ng-click" => 'addNewSection()'}Add Section
+            
+.row
+  .col-xs-12
+    .container
+      .row
+        .col-xs-3.left-panel
+          %ul.navigation
+            %li
+              .row
+                .col-xs-12
+                  %h3 Search
+                .col-xs-12
+                  %input{type:"Search",class: "form-control", placeholder: "Search"}
+            %li      
+              .row
+                .col-xs-12
+                  %h3 Questions
+                .col-xs-12
+                  %ul
+                    %li Add Fill in Blank
+                    %li Add MCQ
+                    %li Add True False
+                    %li Add Open Ended        
+
+        .col-xs-8.right-list.mar-top-20
+          .row
+            .col-xs-3
+              %input{type:"text", "ng-model" => "newQuiz.title", class: "form-control", placeholder: "Enter Title"}
+            .col-xs-3.from-label
+              %strong
+                = "From: Abdullah Khan"
+            .col-xs-6
+              %input{type:"text","ng-model" => "newQuiz.tags",class: "form-control", placeholder: "Enter Comma separated Tags"}
+          .row.mar-top-20
+            .col-xs-3
+              = "Created on: Today"
+            .col-xs-3
+              = "Last Edited: Today"
+            .col-xs-3
+              = "Sharing Status: Private"
+            .col-xs-3
+              = "Subject:" 
+          .row.mar-top-20
+            .col-xs-12
+              %strong
+                = "Description:"
+            .col-xs-12
+              %textarea{"ng-model"=>"newQuiz.description", "required" => true, "ng-minlength"=> "10","ng-maxlength" => "50", class: "form-control", rows: 2}
+          .row.mar-top-10    
+            .col-xs-12
+              %strong
+                = "Instruction:"  
+            .col-xs-12
+              %textarea{"ng-model"=>"newQuiz.instructions", "required" => true, "ng-minlength"=> "10","ng-maxlength" => "50", class: "form-control", rows: 2}
+          .row.mar-top-10      
+

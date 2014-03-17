@@ -6,7 +6,7 @@ class QuizBank < ActiveRecord::Base
   #friendly_id :title, use: :slugged
   
   attr_accessible :description, :title, :repository_id, :subject_id, :instructions,:public
-  validates :title,:repository_id,:subject_id, :presence => true 
+  validates :title,:repository_id,:presence => true 
 
   belongs_to :repository, :counter_cache => true
   belongs_to :subject

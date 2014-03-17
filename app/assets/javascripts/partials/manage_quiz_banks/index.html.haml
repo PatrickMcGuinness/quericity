@@ -1,0 +1,24 @@
+%nav.my-sub-header.navbar
+  .container
+    .collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li
+          %a{"ng-href" => '#/manage_quiz_banks/index'}Manage
+        %li
+          %a{href: "#"} Serve
+        %li
+          %a{href: "#"} Grade
+        %li
+          %a{href: "#"} Analyze
+.row
+  .col-xs-12.top-options
+    .container
+      %ul
+        %li.col-xs-2
+          %span.glyphicon.glyphicon-plus-sign
+          %span Create Repo
+        %li.col-xs-2
+          %span.glyphicon.glyphicon-plus-sign
+          %span 
+            %a{"ng-href" => '#/quiz_banks/new'}Create Quiz  
+  .col-xs-9.right-list          

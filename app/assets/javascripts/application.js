@@ -17,10 +17,10 @@
 //= require jquery.validate
 //= require jquery.steps
 //= require helper_functions
-//= require jquery.timepicker.min
-//= require bootstrap-datepicker
-//= require bootstrap-timepicker.min
-//= require custom
+//= require angular
+//= require angular-resource
+//= require angular-route
+//= require ui-bootstrap-tpls-0.10.0.min
 
 
 loadingimage =  "<img alt='Please wait' src='/assets/loading.gif' style='margin-left:5px;' class='loading-img'>"

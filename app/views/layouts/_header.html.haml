@@ -1,31 +1,40 @@
-%header.navbar.my-nav-bar.navbar-fixed-top{role:"banner"}
-  .container
-    .navbar-header
-      %button.navbar-toggle{type:"button",data:{toggle:"collapse",target:".bs-navbar-collapse"}}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a{href:"/",class:"navbar-brand red-color"}
-        %span.initial-header Quiz
-        %span.final-header Lib
-    %nav.collapse.navbar-collapse.bs-navbar-collapse{role:"navigation"}
-      %ul.nav.navbar-nav.navbar-right.my-header-nav
-        -if user_signed_in?
-          -if current_user.is_professor?
-            %li
-              =link_to profile_user_path(current_user) do 
-                %span.glyphicon.glyphicon-user.custom-size
+%header
+  .navbar.my-nav-bar{role:"banner"}
+    .container
+      .navbar-header
+        %button.navbar-toggle{type:"button",data:{toggle:"collapse",target:".bs-navbar-collapse"}}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar      
+        %a{href:"/",class:"navbar-brand",style:"margin-left:12px;"}
+          %span.header-image
+            %img{src: "/assets/quiz.png"}
+          %span.initial-header Quiz Lib
+      %nav.collapse.navbar-collapse.bs-navbar-collapse{role:"navigation"}
+        %ul.nav.navbar-nav.navbar-right.my-header-nav
+          -if user_signed_in?
+            .dropdown
+              %a{id:"dLabel",role:"button",href:"#",data:{toggle:"dropdown",target:"#"}}
+                =current_user.name 
+                %span.caret
+              %ul.dropdown-menu{role:"menu"}
+                %li
+                  -if current_user.is_professor?
+                    %span.glyphicon.glyphicon-cog
+                    %span
+                      =link_to "Settings","#"
+                  -else
+                    %span.glyphicon.glyphicon-user
+                    %span 
+                      =link_to "Settings",profile_students_user_path(current_user) 
+                %li
+                  %span.glyphicon.glyphicon-off.custom-size
+                  %span 
+                    =link_to "Log out", destroy_user_session_path, :method => "delete"
+                
           -else
             %li
-              =link_to profile_students_user_path(current_user) do
-                %span.glyphicon.glyphicon-user.custom-size  
-        
-          %li
-            =link_to destroy_user_session_path, :method => "delete" do
-              %span.glyphicon.glyphicon-off.custom-size
-        -else
-          %li
-            =link_to 'Sign up' , new_user_registration_path
-          %li
-            =link_to 'Log in' , new_user_session_path
+              =link_to 'Sign up' , new_user_registration_path
+            %li
+              =link_to 'Log in' , new_user_session_path           

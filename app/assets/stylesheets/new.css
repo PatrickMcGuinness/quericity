@@ -1,43 +1,124 @@
-.top-options{
-	margin-top: 20px;
-	border-bottom: 1px solid #E4E3E1;
-	padding: 10px;
-}
-.btn-top-button{
-	background-color: #9B2D20 !important;
-	border-color: #9B2D20 !important;
-	color: #ffffff !important;
-}
-.option-buttons a {
-	margin-left: 2px;
-}
+
 .my-badge{
 	background-color: green !important
 }
 .contents{
 	margin-top:20px;
 }
-.my-nav-bar{
-	background-color: #9B2D20 !important;
+.mar-top-10{
+	margin-top: 10px;
 }
-.my-header-nav li a{
-	color: white!important;
+.mar-top-20{
+	margin-top: 20px;
+}
+
+/***************** For Header ********************/
+
+.my-nav-bar{
+	background-color: #ffffff !important;
+	min-height: 70px;
+	margin-bottom: 0px !important;
+}
+
+.my-header-nav {
+	font-size: inherit;
+	margin-top: 10px;
+	color: black;
+	padding: 20px;
+font-size: 18px;
+}
+.my-header-nav li span{
+	font-size: 20px;
+	padding: 10px;
+	
 }
 .my-header-nav li a span.custom-size{
 	font-size: 20px;
 }
-.initial-header{
-	background-color: white;
-	color: #9B2D20;
-	padding-top: 19px;
-	padding-bottom: 19px;
-	padding-left: 27px;
-	padding-right: 8px;
-	font-size: 20px;
+
+.my-sub-header{
+	background-color: #707070;
+	min-height: 30px;
+	border-radius: 0px !important;
+	margin-bottom: 0px !important;
 }
-.final-header{
+ul.my-sub-header-list{
+	list-style: none;
+}
+
+/***********************************for sub navigation ****************/
+.top-options{
+	border: 1px solid #E4E3E1;
+	padding: 23px;
+	background-color: #F7F6F6;
+}
+.top-options .container ul{
+	list-style: none;
+	padding: 12px;
+}
+.top-options-icon{
+	color: #F7F6F6 !important;
+} 
+.btn-top-button{
+	background-color: #9B2D20 !important;
+	border-color: #9B2D20 !important;
+	color: #ffffff !important;
+}
+
+/************ For Login Page *****************************************/
+
+.login-box{
+	background-color: #f7f7f6;
+	border: 1px solid;
+	margin-top: 50px;
+}
+.login-heading{
+	font-size: 30px;
+	background-color: #3D6DAE;
 	color: white;
 }
+.form-row{
+	margin-top: 20px;
+}
+.form-row span.form-label{
+	margin-top: 6px;
+}
+
+/******************************** left navigation ************************************/
+
+.left-panel{
+  border: 1px solid;
+  background-color: #9B2D20 !important;
+  margin-left: 39px;
+  min-height: 400px;
+}
+ul.navigation{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+ul.navigation li{
+	margin-top:10px;
+}
+ul.navigation li span a{
+	color: inherit;
+}
+ul.navigation li ul{
+	list-style: none;
+	margin: 0px;
+	padding-left: 20px;
+}
+ul.navigation li ul li a{
+	color: inherit;
+}
+
+/***************************** new quiz_bank ****************************/
+.from-label{
+	margin-top: 6px;
+}
+
+/****************************************************************/
+
 .footer{
 	min-height: 100px;
 	background-color: #100201;
@@ -45,15 +126,9 @@
    	bottom:0;
    	width:100%;
 }
-.left-panel{
-  border: 1px solid;
-  border-radius: 3px;
-  -webkit-box-shadow: 1px 1px 1px #6D6D6D;
-  -moz-box-shadow: 1px 1px 1px #6D6D6D;
-  box-shadow: 1px 1px 1px #6D6D6D;
-}
+
 ul.list{
-	list-style: none;
+  list-style: none;
   margin: 0px;
   padding: 0px;
 }
@@ -76,25 +151,7 @@ ul.list li ul{
   -moz-box-shadow: 1px 1px 1px #6D6D6D;
   box-shadow: 1px 1px 1px #6D6D6D;
 }
-ul.navigation{
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
-}
-ul.navigation li{
-	margin-top:10px;
-}
-ul.navigation li span a{
-	color: inherit;
-}
-ul.navigation li ul{
-	list-style: none;
-	margin: 0px;
-	padding-left: 20px;
-}
-ul.navigation li ul li a{
-	color: inherit;
-}
+
 .well-header{
 	background-color: #9B2D20;
 	padding: 6px;

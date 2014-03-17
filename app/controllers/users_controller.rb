@@ -1,47 +1,34 @@
 class UsersController < ApplicationController
 	
+  #before_filter :authenticate_user!
 
-  before_filter :require_login
-	before_filter :authenticate_user!
-	
+  respond_to :json
 
-  def profile
-    @user = User.find(params[:id])
-    respond_to do |format|
-      format.html
-    end
+  def index
+    render json: User.all
   end
 
-
-  def require_login
-    unless current_user
-      redirect_to new_user_session_path, :notice => "Please log in to access this page."
-    end
+  def show
+    render json: User.find(params[:id])
   end
 
   def edit
-    @user = User.find(params[:id])
-  end
-
-  def change_password
-    @user = User.find(params[:id])
+    render json: User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
-    @user.update_attributes(params[:user])
-    redirect_to profile_user_path(@user)
+    render json: User.find(params[:id]).update_attributes(param[:quiz_bank])
   end
 
-  def update_change_password
-    @user = User.find(params[:user_id])
-    @user.update_attribute(:password, params[:new_password])
-    redirect_to profile_user_path(@user)
+  def destroy
+    render json: User.find(params[:id]).destroy
   end
 
-  def search_name_email_id
-    @users_names = User.search_by_name(params[:search])
-    @users_emails = User.search_by_email(params[:search])
-    render json: {names: @users_names, emails: @users_emails}
+  def create 
+    render json: User.create(params[:quiz_bank])
+  end
+
+  def get_current_user
+    render json: {user:current_user}
   end
 end

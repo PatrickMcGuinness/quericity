@@ -7,15 +7,20 @@
     <%= javascript_include_tag "ckeditor/init" %>
     <%= javascript_include_tag "ckeditor/config" %>
     <%= javascript_include_tag "dialogpatch" %>
+    <%= javascript_include_tag "main" %>
+    <%= javascript_include_tag "AppFactory" %>
+    <%= javascript_include_tag "controllers" %>
     <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <%=render "layouts/header"%>
-    <div class="container main-container">
-        <%= yield %>
-    </div> 
+    <div ng-app="quizlib">
+      <ng-view>
+          <%= yield %>
+      </ng-view>
+    </div>   
     
   </body>
 </html>

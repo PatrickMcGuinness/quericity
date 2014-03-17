@@ -1,37 +1,51 @@
 <div class = "container">
-	<div class="hero-unit">
-		<div style="text-align:center;">
-			<div style="display:inline-block;">
-				<h2 class="lead loc">Log in</h2>
+	<div class = "row">
+		<div class = "col-xs-5 col-xs-offset-3">
+			<div class="login-box">
+				<div class="login-heading">
+					<div class= "row">
+						<div class = "col-xs-4 col-xs-offset-4">
+							Log in
+						</div>	
+					</div>
+				</div>
+				<div class = "row">
+					<div class = "col-xs-12">
+						<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
+						
+							<div class = "row">
+								<div class = "col-xs-12 form-row">
+						  		<span class  = "col-xs-2 form-label">Email:</span>
+						  		<span class = "col-xs-10">
+										<%= f.email_field :email,:class => "form-control size_area_s",:autofocus => "true",:placeholder => "Email" %>
+									</span>
+								</div>
+							</div>
+							<div class = "row">
+								<div class = "col-xs-12 form-row">
+						  		<span class  = "col-xs-2 form-label">Password:</span>
+						  		<span class = "col-xs-10">
+										<%= f.password_field :password,:class => "form-control size_area_s",:placeholder =>"Password" %>
+									</span>
+								</div>
+							</div>
+							<div class = "row">
+								<div class = "col-xs-12 form-row">
+						  		<span class = "col-xs-4 col-xs-offset-4">
+										<%= f.submit "Log in", :class => "btn btn-primary lead btn_s_i" %>
+									</span>
+								</div>
+							</div>
 
-				<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
-				 
-				  <div class="control-group">
-				  	<h4 class = "lead"><label class="f_w control-label" for="inputEmail">Email</label><h4>
-				  	<div class="signin_email controls">
-				      <%= f.email_field :email,:class => "form-control size_area_s",:autofocus => "true",:placeholder => "Email" %>
-				    </div>  
-				  </div>
-				  <div class="form-group">
-				  	<h4 class = "lead"><label class="f_w_p control-label" for="inputPassword">Password</label><h4>
-				  	<div class="signin_password col-sm-10">
-				      <%= f.password_field :password,:class => "form-control size_area_s",:placeholder =>"Password" %>
-				    </div>
-				  </div>
-
-				  <%# if devise_mapping.rememberable? -%>
-				    <div><%#= f.check_box :remember_me %> <%#= f.label :remember_me %></div>
-				  <%# end -%>
-
-				  <div><%= f.submit "Log in", :class => "btn btn-primary lead btn_s_i" %></div>
-				  <div class = "link_p">
-				  	<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-			        <%= link_to "Forgot your password?", new_password_path(resource_name), :class => 'link_s' %><br />
-			      <% end -%>
-				  </div>	
-			    
-				</br>
-				<% end %>
+						  
+						  <div class = "link_p">
+						  	<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+					        <%= link_to "Forgot your password?", new_password_path(resource_name), :class => 'link_s' %><br />
+					      <% end -%>
+						  </div>	
+						<% end %>
+					</div>
+				</div>	
 				  
 				 <div class="or_s">or</div>
 				<%= link_to "Log In with Facebook", user_omniauth_authorize_path(:facebook), :class => "size_area_s btn btn-default btn-lg active size_drop padd"%>
@@ -46,7 +60,7 @@
 			    <% end -%>
 			  </div>  
 		  </div>
-	  </div>
-  </div>  
+		</div>
+	</div>    
 </div>
 

@@ -31,7 +31,7 @@ QuizLib::Application.routes.draw do
   post "sections/change_section_positions", to: "sections#change_section_positions", as: :change_section_positions
   post "sections/update_section_before_destroy", to: "sections#update_section_before_destroy", as: :update_section_before_destroy
   post "/quiz_banks/change_repo", to: "quiz_banks#change_repo", as: :change_repo
-  
+  get "/quiz_banks/user_quiz_banks", to: "quiz_banks#user_quiz_banks", as: :user_quiz_banks
   resources :favourite_quiz_banks do
     member do
       get "make_favourite"
@@ -112,33 +112,17 @@ QuizLib::Application.routes.draw do
   end
   resources :users do
     collection do
-      post 'update_change_password'
-      post "search_name_email_id"
+      get 'get_current_user'
     end 
-    member do
-      get 'profile'
-      get 'change_password'
-    end
   end
   resources :topics
   resources :repositories do
-    resources :collaborators do
-      collection do
-        get 'public'
-      end
-    end
-    resources :quiz_banks, :except => :index do
-      member do
-        get "quiz_preview"
-      end
-      resources :sections do
-        resources :questions
-        member do
-          get "section_before_destroy"
-        end
-      end
+    collection do
+      get "default_repo"
     end
   end
+
+  resources :quiz_banks
 
   namespace :students do
     resources :quiz_banks do
