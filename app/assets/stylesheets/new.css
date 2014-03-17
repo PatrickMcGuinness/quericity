@@ -83,6 +83,9 @@ ul.my-sub-header-list{
 .form-row span.form-label{
 	margin-top: 6px;
 }
+.pass-link{
+	margin-left: 10px;
+}
 
 /******************************** left navigation ************************************/
 
@@ -115,6 +118,11 @@ ul.navigation li ul li a{
 /***************************** new quiz_bank ****************************/
 .from-label{
 	margin-top: 6px;
+}
+.new-section-box{
+	border: 1px solid;
+	padding: 10px;
+	background-color: #D6D6D6
 }
 
 /****************************************************************/

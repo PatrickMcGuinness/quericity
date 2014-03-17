@@ -67,7 +67,10 @@
             .col-xs-3
               = "Sharing Status: Private"
             .col-xs-3
-              = "Subject:" 
+              %span.col-xs-4
+                = "Subject:"
+              %span.col-xs-8
+                %select{"ng-model" => "selectedItem","ng-options" => "subject as subject.title for subject in subjects",class: "form-control"}   
           .row.mar-top-20
             .col-xs-12
               %strong
@@ -80,5 +83,15 @@
                 = "Instruction:"  
             .col-xs-12
               %textarea{"ng-model"=>"newQuiz.instructions", "required" => true, "ng-minlength"=> "10","ng-maxlength" => "50", class: "form-control", rows: 2}
-          .row.mar-top-10      
+          .row.mar-top-10.new-section-box{"ng-Show" => "show_new_section"}
+            .col-xs-12
+              %span.col-xs-1
+                = "Title:"
+              %span.col-xs-9
+                %input{type: "text", class: "form-control"}
+              %span.col-xs-2.pull-right
+                %a{"ng-Click" => "SaveSection()"} Save
+                %a{"ng-Click" => "CancelSection()"} Cancel
+              
+
 

@@ -26,15 +26,26 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank',function($scope, QuizBank){
   $scope.quiz_banks = QuizBank.all()
 }])
 
-quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository',function($scope, $http,QuizBank, Repository){
+quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','Subject',function($scope, $http,QuizBank, Repository, Subject){
   var quiz_bank = null
+  $scope.show_new_section = false
+  $scope.subjects = Subject.all()
+  $scope.selectedquiz = null
+  
+  $scope.addNewSection = function(){
+    $scope.show_new_section = true
+  }
+  $scope.CancelSection = function(){
+    $scope.show_new_section = false
+  }
+
+
+/*
   $http.get('/repositories/default_repo.json').
     success(function(data) {
-      QuizBank.save({title: "My Quiz Bank",repository_id: data.repo.id})
+      quiz_bank = QuizBank.save({title: "My Quiz Bank",repository_id: data.repo.id})
     })
     console.log(quiz_bank)
-  
-  
-
+    */
 
 }])

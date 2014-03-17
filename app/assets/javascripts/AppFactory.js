@@ -45,7 +45,7 @@ quizlib.factory('Repository', ['$resource', function($resource,$http) {
     return this.service.get({id: RepoId})
   }
   Repository.prototype.default_repo = function(){
-    return $resource('repositories/default_repo').get()
+    return $resource('/repositories/default_repo').get()
   }
   return new Repository;
 }]);
@@ -68,4 +68,39 @@ quizlib.factory('User', ['$resource', function($resource) {
     return this.service.get({id: UserId})
   }
   return new User;
+}]);
+
+quizlib.factory('Subject', ['$resource', function($resource) {
+  function Subject() {
+    this.service = $resource('/subjects/:id', {id: '@id'});
+  };
+  
+  Subject.prototype.all = function() {
+    return this.service.query();
+  };
+  return new Subject;
+}]);
+
+
+quizlib.factory('Section', ['$resource', function($resource) {
+  function Section() {
+    this.service = $resource('/quiz_banks/:quiz_bank_id/sections/:id', {quiz_bank_id:'@quiz_bank_id',id: '@id'});
+  };
+  
+  Section.prototype.all = function(QuizId) {
+    return this.service.query({quiz_bank_id: QuizId});
+  };
+  Section.prototype.delete = function(QuizId,SectionId) {
+    this.service.remove({quiz_bank_id: QuizId, id: SectionId});
+  };
+  Section.prototype.save = function(Section){
+    return this.service.save(Section)
+  }
+  Section.prototype.updateQuiz = function(Section){
+    return this.service.update()
+  }
+  Section.prototype.get = function(QuizId,SectionId){
+    return this.service.get({quiz_bank_id: QuizId,id: SectionId})
+  }
+  return new Subject;
 }]);

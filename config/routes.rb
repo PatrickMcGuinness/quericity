@@ -32,6 +32,7 @@ QuizLib::Application.routes.draw do
   post "sections/update_section_before_destroy", to: "sections#update_section_before_destroy", as: :update_section_before_destroy
   post "/quiz_banks/change_repo", to: "quiz_banks#change_repo", as: :change_repo
   get "/quiz_banks/user_quiz_banks", to: "quiz_banks#user_quiz_banks", as: :user_quiz_banks
+  get "/subjects", to: "subjects#index", as: :subjects
   resources :favourite_quiz_banks do
     member do
       get "make_favourite"
@@ -122,7 +123,9 @@ QuizLib::Application.routes.draw do
     end
   end
 
-  resources :quiz_banks
+  resources :quiz_banks do
+    resources :sections 
+  end
 
   namespace :students do
     resources :quiz_banks do
