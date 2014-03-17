@@ -22,6 +22,7 @@ class SectionsController < ApplicationController
 
   def destroy
     render json: QuizBank.find(params[:quiz_bank_id]).sections.find(params[:id]).destroy
+  end
 
   def create 
     render json: QuizBank.find(params[:quiz_bank_id]).sections.create(params[:section])
