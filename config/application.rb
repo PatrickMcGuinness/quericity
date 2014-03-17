@@ -62,6 +62,7 @@ module QuizLib
     config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
     config.assets.precompile += Ckeditor.assets
     config.assets.precompile += %w(ckeditor/*)
+    config.assets.precompile << %w(paritals/*)
     config.assets.precompile << %w(main.js AppFactory.js controllers.js dialogpatch.js)
   end
 end
