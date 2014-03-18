@@ -29,7 +29,7 @@ class RepositoriesController < ApplicationController
   end
 
   def default_repo
-    render json: {repo:current_user.default_repo}
+    render json: current_user.default_repo
   end
 
 end

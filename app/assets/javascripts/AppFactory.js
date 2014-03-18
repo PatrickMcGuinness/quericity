@@ -1,7 +1,7 @@
 quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
   function QuizBank() {
-    this.service = $resource('/quiz_banks/:id', {id: '@id'},{update:{method:"PUT",isArray:false},
-                    new:{method:"GET",isArray:true}});
+    this.service = $resource('/quiz_banks/:id', {id: '@id'},
+                  {update:{method:"PUT",isArray:false}});
   };
   QuizBank.prototype.new = function(){
     return this.service.new()
@@ -15,8 +15,8 @@ quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
   QuizBank.prototype.save = function(newQuiz){
     return this.service.save(newQuiz)
   }
-  QuizBank.prototype.updateQuiz = function(Quiz){
-    return this.service.update()
+  QuizBank.prototype.updateQuiz = function(QuizId,Quiz){
+    return this.service.update({id: QuizId},Quiz)
   }
   QuizBank.prototype.get = function(QuizId){
     return this.service.get({id: QuizId})
@@ -27,7 +27,10 @@ quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
 
 quizlib.factory('Repository', ['$resource', function($resource,$http) {
   function Repository() {
-    this.service = $resource('/repositories/:id', {id: '@id'});
+    this.service = $resource('/repositories/:id:default_repo', {id: '@id',default_repo: "@default_repo"},
+                      {get_default_repo:{method:"GET",params:{default_repo: "default_repo"},transformResponse: [function (data, headersGetter) {
+                      return { result: JSON.parse(data) };
+            }]}});
   };
   Repository.prototype.all = function() {
     return this.service.query();
@@ -45,7 +48,7 @@ quizlib.factory('Repository', ['$resource', function($resource,$http) {
     return this.service.get({id: RepoId})
   }
   Repository.prototype.default_repo = function(){
-    return $resource('/repositories/default_repo').get()
+    return this.service.get_default_repo()
   }
   return new Repository;
 }]);
@@ -84,7 +87,9 @@ quizlib.factory('Subject', ['$resource', function($resource) {
 
 quizlib.factory('Section', ['$resource', function($resource) {
   function Section() {
-    this.service = $resource('/quiz_banks/:quiz_bank_id/sections/:id', {quiz_bank_id:'@quiz_bank_id',id: '@id'});
+    this.service = $resource('/quiz_banks/:quiz_bank_id/sections/:id', 
+                    {quiz_bank_id:'@quiz_bank_id',id: '@id'},
+                    {update:{method:"PUT"}});
   };
   
   Section.prototype.all = function(QuizId) {
@@ -93,14 +98,14 @@ quizlib.factory('Section', ['$resource', function($resource) {
   Section.prototype.delete = function(QuizId,SectionId) {
     this.service.remove({quiz_bank_id: QuizId, id: SectionId});
   };
-  Section.prototype.save = function(Section){
-    return this.service.save(Section)
+  Section.prototype.save = function(QuizId,Section){
+    return this.service.save({quiz_bank_id: QuizId},Section)
   }
-  Section.prototype.updateQuiz = function(Section){
-    return this.service.update()
+  Section.prototype.update = function(QuizId,SectionId,Section){
+    return this.service.update({quiz_bank_id: QuizId, id: SectionId},Section)
   }
   Section.prototype.get = function(QuizId,SectionId){
     return this.service.get({quiz_bank_id: QuizId,id: SectionId})
   }
-  return new Subject;
+  return new Section;
 }]);

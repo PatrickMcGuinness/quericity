@@ -17,7 +17,7 @@ class SectionsController < ApplicationController
   end
 
   def update
-    render json: QuizBank.find(params[:quiz_bank_id]).sections.find(params[:id]).update_attribute(params[:section])
+    render json: QuizBank.find(params[:quiz_bank_id]).sections.find(params[:id]).update_attributes(params[:section])
   end
 
   def destroy

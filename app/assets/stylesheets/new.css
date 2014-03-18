@@ -11,6 +11,15 @@
 .mar-top-20{
 	margin-top: 20px;
 }
+.mar-bot-10{
+	margin-bottom: 10px;
+}
+.mar-bot-20{
+	margin-bottom: 20px;
+}
+a{
+	cursor: pointer;
+}
 
 /***************** For Header ********************/
 

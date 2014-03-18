@@ -17,7 +17,7 @@ class QuizBanksController < ApplicationController
   end
 
   def update
-    render json: current_user.quiz_banks.find(params[:id]).update_attributes(param[:quiz_bank])
+    render json: current_user.quiz_banks.find(params[:id]).update_attributes(params[:quiz_bank])
   end
 
   def destroy
