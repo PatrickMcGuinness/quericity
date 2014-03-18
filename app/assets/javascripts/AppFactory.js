@@ -1,7 +1,10 @@
 quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
   function QuizBank() {
     this.service = $resource('/quiz_banks/:id', {id: '@id'},
-                  {update:{method:"PUT",isArray:false}});
+                  {update:{method:"PUT",isArray:false},
+                   query:{method:"GET",transformResponse: [function(data,headersGetter){
+                    return {result: JSON.parse(data)}
+                   }]}});
   };
   QuizBank.prototype.new = function(){
     return this.service.new()
@@ -29,8 +32,8 @@ quizlib.factory('Repository', ['$resource', function($resource,$http) {
   function Repository() {
     this.service = $resource('/repositories/:id:default_repo', {id: '@id',default_repo: "@default_repo"},
                       {get_default_repo:{method:"GET",params:{default_repo: "default_repo"},transformResponse: [function (data, headersGetter) {
-                      return { result: JSON.parse(data) };
-            }]}});
+                      return { result: JSON.parse(data) };}]
+                    }});
   };
   Repository.prototype.all = function() {
     return this.service.query();

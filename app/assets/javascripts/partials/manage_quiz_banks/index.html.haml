@@ -2,7 +2,7 @@
   .container
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
-        %li
+        %li.active
           %a{"ng-href" => '#/manage_quiz_banks/index'}Manage
         %li
           %a{href: "#"} Serve
@@ -20,5 +20,45 @@
         %li.col-xs-2
           %span.glyphicon.glyphicon-plus-sign
           %span 
-            %a{"ng-href" => '#/quiz_banks/new'}Create Quiz  
-  .col-xs-9.right-list          
+            %a{"ng-href" => '#/quiz_banks/new'}Create Quiz 
+.row
+  .col-xs-12
+    .container
+      .row
+        .col-xs-3.left-panel
+        .col-xs-8.right-list.mar-top-20
+          .row
+            .col-xs-12.column-header
+              .col-xs-2
+                Title
+              .col-xs-3
+                Owner
+              .col-xs-3
+                Tags
+              .col-xs-2
+                Sharing
+          .row
+            .col-xs-12.mar-top-20
+              %table.table
+                %tbody
+                  %tr{"ng-repeat" => "quiz_bank in quiz_banks"}
+                    %td.col-xs-2
+                      %a{"Popover-animation" => "true","popover" => "{{quiz_bank.name}}"} 
+                        {{quiz_bank.title}}
+                    %td.col-xs-3 {{quiz_bank.name}}
+                    %td.col-xs-3
+                    %td.col-xs-2
+                      %span{"ng-if" => "quiz_bank.public == 1"}
+                        = "Public"
+                      %span{"ng-if" => "quiz_bank.public != 1"}
+                        = "Private"
+                    %td.col-xs-2
+                      %a{}
+                        %span.glyphicon.glyphicon-cloud.pull-right
+                      %a{}
+                        %span.glyphicon.glyphicon-star-empty.pull-right
+                      %a{}
+                        %span.glyphicon.glyphicon-transfer.pull-right    
+
+
+

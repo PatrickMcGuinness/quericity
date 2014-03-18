@@ -21,8 +21,19 @@ quizlib.controller('QuizBankCtrl', ['$scope', 'QuizBank', function($scope, QuizB
 
 }]);
 
-quizlib.controller("ManageCtrl",['$scope','QuizBank',function($scope, QuizBank){
-  $scope.quiz_banks = QuizBank.all()
+quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User',function($scope, QuizBank, Repository, User){
+  $scope.quiz_banks = [] 
+  
+  QuizBank.all().$promise.then(function(data){
+    angular.forEach(data.result, function(value, key){
+      Repository.get(value.repository_id).$promise.then(function(data){
+        User.get(data.user_id).$promise.then(function(data){
+          name = data.first_name +" " + data.last_name
+          $scope.quiz_banks.push({title: value.title,id:value.id, name: name, public: value.public})
+        })
+      })
+     });
+  })
 }])
 
 quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','Subject','Section',function($scope, $http,QuizBank, Repository, Subject,Section){
@@ -33,7 +44,7 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
   // Values to create new quiz
   $scope.subjects = Subject.all()
 
-  
+
   Repository.default_repo().
       $promise.then(
         function(data){ 
