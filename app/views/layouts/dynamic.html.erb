@@ -8,8 +8,14 @@
     <%= javascript_include_tag "ckeditor/config" %>
     <%= javascript_include_tag "dialogpatch" %>
     <%= javascript_include_tag "main" %>
-    <%= javascript_include_tag "AppFactory" %>
+    <%= javascript_include_tag "factory/quiz_bank" %>
+    <%= javascript_include_tag "factory/repository" %>
+    <%= javascript_include_tag "factory/subject" %>
+    <%= javascript_include_tag "factory/section" %>
+    <%= javascript_include_tag "factory/topic" %>
+    <%= javascript_include_tag "factory/user" %>
     <%= javascript_include_tag "controllers" %>
+    <%= javascript_include_tag "autocomplete" %>
     <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +26,8 @@
       <ng-view>
           <%= yield %>
       </ng-view>
-    </div>   
+    </div>
+    <%=render "layouts/footer"%>   
     
   </body>
 </html>

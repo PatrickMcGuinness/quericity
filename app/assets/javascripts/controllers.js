@@ -36,14 +36,22 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User',functio
   })
 }])
 
-quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','Subject','Section',function($scope, $http,QuizBank, Repository, Subject,Section){
+
+quizlib.controller("SectionCtrl",['$scope','QuizBank','Section',function($scope, QuizBank,Section){
+  
+
+}])
+
+
+quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','Subject','Section','Topic',function($scope, $http,QuizBank, Repository, Subject,Section, Topic){
   // Variables for view show hide
   $scope.show_new_section = false
   $scope.section_edit = null
+  $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
   
   // Values to create new quiz
   $scope.subjects = Subject.all()
-
+  $scope.topics = Topic.all()
 
   Repository.default_repo().
       $promise.then(
@@ -60,7 +68,6 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
               }
             ) 
         })
-  
   //Click event handlers
   
   $scope.cancelQuiz = function(){
@@ -95,6 +102,49 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
   $scope.updateSection = function(section_edit){
     updated_section = Section.update($scope.quiz_bank_id, section_edit.id, section_edit)
     $scope.section_edit = null
+  }
+
+  $scope.difficulties = [{name: "Easy"},{name: "Medium"},{name: "Hard"}]
+  $scope.show_true_false = false
+  $scope.show_mcq = false
+  $scope.show_blank = false
+  $scope.show_open_ended = false
+  $scope.selected_section = null
+  $scope.addNewQuestion = function(question_type, section){
+    $scope.selected_section = section
+    if(question_type == "True False"){
+      console.log("hello")
+      $scope.show_true_false = true
+      $scope.show_mcq = false
+      $scope.show_blank = false
+      $scope.show_open_ended = false
+    }
+    if(question_type == "Mcq"){
+      $scope.show_true_false = false
+      $scope.show_mcq = true
+      $scope.show_blank = false
+      $scope.show_open_ended = false
+    }
+    if(question_type == "Fill in blank"){
+      $scope.show_true_false = false
+      $scope.show_mcq = false
+      $scope.show_blank = true
+      $scope.show_open_ended = false
+    }
+    if(question_type == "Open Ended"){
+      $scope.show_true_false = false
+      $scope.show_mcq = false
+      $scope.show_blank = false
+      $scope.show_open_ended = true
+    }
+
+    $scope.hideQuestion = function(){
+      $scope.show_true_false = false
+      $scope.show_mcq = false
+      $scope.show_blank = false
+      $scope.show_open_ended = false
+    }
+
   }
 
 

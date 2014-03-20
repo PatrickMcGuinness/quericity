@@ -2,7 +2,7 @@
   <div class = "container">
     <div class = "collapse navbar-collapse">
       <ul class = "nav navbar-nav">
-        <li>
+        <li class = "active">
           <a ng-href = '#/manage_quiz_banks'>Manage</a>
         </li>
         <li>
@@ -24,7 +24,7 @@
     <div class = "container">
       <ul>
         <li class = "col-xs-1">
-          <span class = glyphicon glyphicon-floppy-disk></span>
+          <span class = "glyphicon glyphicon-floppy-disk"></span>
           <span>
             <a ng-click = 'saveQuiz()' ng-href = '#/manage_quiz_banks'> Save</a>
           </span>
@@ -53,71 +53,50 @@
         <div class = "col-xs-3 left-panel">
           <ul class = "navigation">
             <li>
-              <div class = "row">
+              <div class = "row"> 
                 <div class = "col-xs-12">
-                  <h3> Search</h3>
-                </div>  
-                <div class = "col-xs-12">
-                  <input type = "Search" class = "form-control" ng-model = "titleFilter",placeholder = "Search">
+                  <input type = "Search" class = "form-control" ng-model = "titleFilter",placeholder = "Search Sections">
                 </div>
               </div>
             </li> 
-            <li>      
-              <div class = "row">
-                <div class = "col-xs-12">
-                  <h3> Questions </h3>
-                </div>
-                <div class = "col-xs-12">
-                  <ul>
-                    <li>
-                      <a ng-Click = "addBlank()"> Add Fill in Blank </a>
-                    </li>  
-                    <li>
-                      <a ng-Click = "addMcq()"> Add Mcq </a>
-                    </li>  
-                    <li>
-                      <a ng-Click = "addTrueFasle()"> Add True False </a>
-                    </li>
-                    <li>
-                      <a ng-Click = "addOpenEnded()"> Add Open Ended </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </li>
+            
           </ul>
         </div>              
 
         <div class = "col-xs-8 right-list mar-top-20">
           <div class = "row">
-            <div class = "col-xs-3">
+            <div class = "col-xs-12">
               <input type = "text"  ng-model = "quiz_bank.title"  class = "form-control"  placeholder = "Enter Title">
-            </div>  
-            <div class = "col-xs-3 from-label">
-              <strong> "From: Abdullah Khan"
-              </strong>
             </div>
-            <div class = "col-xs-6">
-              <input type = "text" class = "form-control"  placeholder = "Enter Comma separated Tags">
+          </div>
+          <div class = "row mar-top-10">    
+            <div class = "col-xs-8">
+              <div class = "col-xs-6">
+              </div>
+              <div class = "col-xs-6">
+                <div class = "col-xs-4">
+                  <span class = "mar-top-10">Tags:</span>
+                </div>
+                <div class = "col-xs-8">
+                 <input type = "text" placeholder = "Enter Tag" class = "form-control col-xs-4" >
+                </div>  
+              </div>
             </div>
-          </div>    
-          <div class = "row mar-top-20">
-            <span class = "col-xs-2">Created: Today</span>
-            <span class = "col-xs-2">Edited: Today</span>
-            <span class = "col-xs-3">Sharing Status: Private</span>
-            <span class = "col-xs-5">
-              <span class = "col-xs-3">Subject:</span>
-              <span class = "col-xs-9">  
-                <select ng-model = "selectedsubject" ng-options = "subject as subject.title for subject in subjects" class = "form-control"></select>
-              </span>
-            </span>
-          </div>           
+            <div class = "col-xs-4">
+              <div class = "col-xs-3">Subject:</div>
+              <div class = "col-xs-9">  
+                <select ng-model = "selectedsubject" ng-options = "subject as subject.title for subject in subjects">
+                  <option value= "">Select Subject </option>
+                </select>   
+              </div>
+            </div>
+          </div>              
           <div class = "row mar-top-20">
             <div class = "col-xs-12">
               <strong> Description: </strong>
             </div>  
             <div class = "col-xs-12">
-              <textarea ng-model = "quiz_bank.description" required = true  ng-minlength = "10" ng-maxlength = "50" class =  "form-control"  rows = 2></textarea>
+              <textarea ng-model = "quiz_bank.description" required = true  ng-minlength = "10" ng-maxlength = "50" class =  "form-control"  rows = 1></textarea>
             </div>
           </div>    
           <div class = "row mar-top-10">    
@@ -126,7 +105,7 @@
               </strong>
             </div>  
             <div class = "col-xs-12">
-              <textarea ng-model = "quiz_bank.instructions" required = true ng-minlength= "10" ng-maxlength = "50" class = "form-control"  rows = 2></textarea>
+              <textarea ng-model = "quiz_bank.instructions" required = true ng-minlength= "10" ng-maxlength = "50" class = "form-control"  rows = 1></textarea>
           <div class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter">
             <div class = "col-xs-12 well well-sm">
               <div class = "col-xs-4">
@@ -139,8 +118,18 @@
                 <a ng-Click = "deleteSection(section.id,$index)">
                   <span class = "glyphicon glyphicon-trash pull-right"></span>
                 </a>
+                <div class="dropdown">
+                  <a class="dropdown-toggle" ng-Click = "AddQuestion(section.id,$index)">
+                    <span class = "glyphicon glyphicon-plus-sign pull-right"></span>
+                  </a>
+                  <ul class="dropdown-menu pull-right mar-top-20">
+                    <li ng-repeat="question in question_types">
+                      <a ng-Click = "addNewQuestion(question,section)">{{question}}</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>      
+            </div>
             <div class = "col-xs-12 new-section-box mar-top-10 mar-bot-10" ng-if = "section == section_edit" ng-show = "section_edit">
               <span class = "col-xs-1">Title:</span>
               <span class = "col-xs-9">
@@ -151,6 +140,17 @@
                 <a ng-Click = "cancelEditSection()"> Cancel</a>
               </span>
             </div>
+            <div>
+              <div  ng-if = "section == selected_section" ng-Show = "show_true_false" ng-include src="'/assets/partials/questions/true_false_edit.html'">
+              </div>  
+              <div  ng-if = "section == selected_section" ng-Show = "show_mcq" ng-include src="'/assets/partials/questions/mcq_edit.html'">
+              </div>
+              <div ng-if = "section == selected_section" ng-Show = "show_blank" ng-include src="'/assets/partials/questions/fill_in_the_blank_edit.html'">
+              </div>
+              <div  ng-if = "section == selected_section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_edit.html'">
+              </div>
+            </div>      
+            
           </div>                  
           <div class = "mar-top-10" ng-Show = "show_new_section">
             <div class = "col-xs-12 new-section-box">
@@ -170,5 +170,3 @@
   </div>
 </div>                
               
-
-

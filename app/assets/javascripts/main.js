@@ -1,4 +1,4 @@
-var quizlib = angular.module('quizlib', ['ngResource', 'ngRoute','ui.bootstrap']);
+var quizlib = angular.module('quizlib', ['ngResource', 'ngRoute','ui.bootstrap','autocomplete']);
  
 quizlib.config(['$routeProvider',function($routeProvider) {
     $routeProvider.

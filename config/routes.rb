@@ -18,21 +18,17 @@ QuizLib::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  get "/topics/search",to:"topics#search",as: :topics_search
   get "/questions/true_false_edit", to:"questions#true_false_edit",as: :true_false_edit
   get "/questions/open_ended_edit", to: "questions#open_ended_edit", as: :open_ended_edit
   get "/questions/fill_in_the_blank_edit", to: "questions#fill_in_the_blank_edit", as: :fill_in_the_blank_edit
   get "/questions/mcq_edit", to: "questions#mcq_edit", as: :mcq_edit
-  get "quiz_banks/:id/update_quiz_bank", to: "quiz_banks#update_quiz_bank", as: :update_quiz_bank
-  get "quiz_banks/:id/add_instructions", to: "quiz_banks#add_instructions", as: :add_instructions
   get "sections/:id/update_title", to: "sections#update_title", as: :section_update_title
   post "sections/change_question_positions", to: "sections#change_question_positions", as: :change_question_positions
   post "sections/change_question_section", to: "sections#change_question_section", as: :change_question_section
   post "sections/change_section_positions", to: "sections#change_section_positions", as: :change_section_positions
   post "sections/update_section_before_destroy", to: "sections#update_section_before_destroy", as: :update_section_before_destroy
-  post "/quiz_banks/change_repo", to: "quiz_banks#change_repo", as: :change_repo
-  get "/quiz_banks/user_quiz_banks", to: "quiz_banks#user_quiz_banks", as: :user_quiz_banks
   get "/subjects", to: "subjects#index", as: :subjects
+  get "/topics", to: "topics#index", as: :topics
   resources :favourite_quiz_banks do
     member do
       get "make_favourite"

@@ -1,8 +1,10 @@
 class TopicsController < ApplicationController
-  before_filter :authenticate_user!
   
-  def search
-    @topics = Topic.search(params[:search])
-    render json:{topics:@topics}
+  before_filter :authenticate_user!
+  respond_to :json
+  
+  def index
+  	render json: Topic.all
   end
+
 end
