@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip,:confirmation_token,
   :confirmed_at, :confirmation_sent_at, :unconfirmed_email
   
-  has_many :repositories 
+  has_many :repositories, dependent: :destroy 
   has_many :served_quizzes, :class_name => 'ServedQuiz', :foreign_key => 'owner_id'
   has_many :groups, :class_name => 'Group', :foreign_key => 'owner_id'  
   has_many :student_groups, :class_name => 'StudentGroup', :foreign_key => 'student_id'
@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   end
 
   def create_default_repo
-    self.repositories.create(:title => Repository::DefaultRepo::NAME)
+    Repository.create(:title => Repository::DefaultRepo::NAME, :user_id => self.id)
   end
 
   def confirm_the_user
