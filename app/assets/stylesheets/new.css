@@ -46,8 +46,8 @@ font-size: 18px;
 }
 
 .my-sub-header{
-	background-color: #707070;
-	min-height: 30px;
+	background-color: #003656;
+	min-height: 20px;
 	border-radius: 0px !important;
 	margin-bottom: 0px !important;
 }
@@ -103,7 +103,7 @@ ul.my-sub-header-list{
 
 .left-panel{
   border: 1px solid;
-  background-color: #9B2D20 !important;
+  background-color: #22A2DC !important;
   margin-left: 39px;
   min-height: 400px;
 }

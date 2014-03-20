@@ -6,7 +6,7 @@ class Repository < ActiveRecord::Base
   #friendly_id :title, use: :slugged
 
   attr_accessible :description, :title,:public,:user_id
-  validates :title, :presence => true, :length => { minimum: 5 }
+  validates :title, :presence => true
   
   belongs_to :user  
   has_many :quiz_banks, dependent: :destroy
