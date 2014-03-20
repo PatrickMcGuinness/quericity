@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   end
 
   def create_default_repo
-    self.repositories.create(:title => Repository::DefaultRepo::Name)
+    self.repositories.create(:title => Repository::DefaultRepo::NAME)
   end
 
   def confirm_the_user
