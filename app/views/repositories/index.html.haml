@@ -1,7 +1,0 @@
-=render 'common/tabs'
-.tab-content.padding-top40.tab-container
-  =link_to "Create Repo", new_repository_path, class: "btn btn-primary create-repo float-right", remote: true, rel: "tooltip", title: "Create Repo"
-  =render 'repositories/repo_tabs'
-  .table-responsive.padding-top40
-    =render 'repositories/all_repos', :locals => {:@repositories => @repositories}         
-

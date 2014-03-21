@@ -18,11 +18,7 @@ QuizLib::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  get "/questions/true_false_edit", to:"questions#true_false_edit",as: :true_false_edit
-  get "/questions/open_ended_edit", to: "questions#open_ended_edit", as: :open_ended_edit
-  get "/questions/fill_in_the_blank_edit", to: "questions#fill_in_the_blank_edit", as: :fill_in_the_blank_edit
-  get "/questions/mcq_edit", to: "questions#mcq_edit", as: :mcq_edit
-  get "sections/:id/update_title", to: "sections#update_title", as: :section_update_title
+  
   post "sections/change_question_positions", to: "sections#change_question_positions", as: :change_question_positions
   post "sections/change_question_section", to: "sections#change_question_section", as: :change_question_section
   post "sections/change_section_positions", to: "sections#change_section_positions", as: :change_section_positions
@@ -49,31 +45,8 @@ QuizLib::Application.routes.draw do
       get "make_shared_private" 
     end 
   end
-  resources :analytics do
-    collection do
-      get "all_quizzes"
-      get "all_students"
-      get "all_subjects"
-    end
-    member do
-      get "student_grades"
-      get "one_quiz"
-      get "one_subject"
-      get "one_student"
-    end
-  end
-  resources :grade_quizzes do
-    member do
-      get "manual_check_the_answer"
-      get "completed_students"
-    end
-  end
-  resources :manage_quiz_banks do
-    collection do
-      get "starred_assessments"
-      get "shared_assessments"
-    end
-  end
+  
+  
   resources :question_topics
   resources :student_groups 
   resources :invites
@@ -90,23 +63,6 @@ QuizLib::Application.routes.draw do
       get "add_students_edit"
     end 
   end
-  resources :served_quizzes do
-    collection do
-      get "history_search"
-      get "get_all_students"
-      get "add_more_students" 
-    end
-    member do
-      get "show_all_sharings"
-      get "get_instructions"
-      get "get_all_questions"
-      get "get_status"
-      get "invited_students"
-      get "completed_students"
-      get "pending_students"
-      get "show_questions_to_grade"
-    end 
-  end
   resources :users do
     collection do
       get 'get_current_user'
@@ -120,7 +76,11 @@ QuizLib::Application.routes.draw do
   end
 
   resources :quiz_banks do
-    resources :sections 
+    resources :sections do
+      resources :questions do
+        resources :question_options
+      end
+    end
   end
 
   namespace :students do

@@ -84,10 +84,11 @@
             </div>
             <div class = "col-xs-4">
               <div class = "col-xs-3">Subject:</div>
-              <div class = "col-xs-9">  
-                <select ng-model = "selectedsubject" ng-options = "subject as subject.title for subject in subjects">
+              <div class = "col-xs-9">
+                <input type = "text" ng-model = "quiz_bank.subject" class = "form-control"> 
+                <!-- <select ng-model = "selectedsubject" ng-options = "subject as subject.title for subject in subjects">
                   <option value= "">Select Subject </option>
-                </select>   
+                </select>  -->  
               </div>
             </div>
           </div>              
@@ -109,6 +110,7 @@
           <div class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter">
             <div class = "col-xs-12 well well-sm">
               <div class = "col-xs-4">
+                <input type="hidden" ng-model="section_id" ng-init="section_id= section.id" value="{{section.id}}">
                 {{section.title}}
               </div>
               <div class = "col-xs-4 pull-right">
@@ -140,6 +142,9 @@
                 <a ng-Click = "cancelEditSection()"> Cancel</a>
               </span>
             </div>
+            <div class = "section-questions" ng-controller = "viewQuestionCtrl">
+              <div ng-include src="'/assets/partials/questions/all_questions.html'"></div>
+            </div>
             <div>
               <div  ng-if = "section == selected_section" ng-Show = "show_true_false" ng-include src="'/assets/partials/questions/true_false_edit.html'">
               </div>  
@@ -149,7 +154,7 @@
               </div>
               <div  ng-if = "section == selected_section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_edit.html'">
               </div>
-            </div>      
+            </div>     
             
           </div>                  
           <div class = "mar-top-10" ng-Show = "show_new_section">

@@ -1,43 +1,31 @@
 class QuestionsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :set_variables, :only => [:new,:create,:edit, :destroy, :update]
-  before_filter :set_question, :only => [:edit, :update, :new, :destroy]
-
-  def new
-    @question_option = @question.question_options.build
-  end
+  before_filter :set_variables
+  respond_to :json
 
   def create
-    @question = Question.create_question(params,@section)
-    @question_option = @question.create_option(params)
-    render layout:nil
+    render json: @section.questions.create(params[:question])
   end
   
-  def edit
-    @question_options = @question.question_options
-    render layout:nil
+  def index
+    render json: @section.questions
+  end
+  def show
+    render json: @section.questions.find(params[:id])
   end
 
   def destroy
-    @question.update_attribute(:deleted_at, Time.now)
-    render layout:nil
+    render json: @section.questions.find(params[:id]).destroy
   end
 
   def update
-    @question.update_question(params)
+    render json: @section.questions.find(params[:id]).update_question(params)
   end
-
 
   private
-
-  def set_variables
-    @repository = current_user.repositories.find(params[:repository_id])
-    @quiz_bank = @repository.quiz_banks.find(params[:quiz_bank_id])
-    @section = @quiz_bank.sections.find(params[:section_id])
-  end
-
-  def set_question
-    @question = params[:id].present? ? @section.questions.find(params[:id]) : @section.questions.new(:difficulty_level => Question::Difficulty::EASY)
-  end
+    def set_variables
+      @quiz_bank = current_user.quiz_banks.find(params[:quiz_bank_id])
+      @section = @quiz_bank.sections.find(params[:section_id])
+    end
 end

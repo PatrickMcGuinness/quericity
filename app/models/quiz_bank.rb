@@ -5,11 +5,10 @@ class QuizBank < ActiveRecord::Base
   #extend FriendlyId
   #friendly_id :title, use: :slugged
   
-  attr_accessible :description, :title, :repository_id, :subject_id, :instructions,:public
+  attr_accessible :description, :title, :repository_id, :subject, :instructions,:public
   validates :title,:repository_id,:presence => true 
 
   belongs_to :repository, :counter_cache => true
-  belongs_to :subject
   
   has_many :sections, dependent: :destroy
   has_many :question_topics, dependent: :destroy

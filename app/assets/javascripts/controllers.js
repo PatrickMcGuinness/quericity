@@ -36,22 +36,72 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User',functio
   })
 }])
 
+quizlib.controller("viewQuestionCtrl",['$scope','Question','GlobalScope','QuestionOption',function($scope, Question,GlobalScope,QuestionOption){
+  $scope.$on('quiz_bank_id_Changed', function(event, quiz_bank_id) {
+    $scope.quiz_bank_id = quiz_bank_id;
+  });
+  $scope.$on("section_id_Changed",function(event,section_id){
+    $scope.section_id = section_id;
+    $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
+  })
+  $scope.$on("question_id_Changed",function(event,question_id){
+    $scope.question_id = question_id;
+    $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
+  })
 
-quizlib.controller("SectionCtrl",['$scope','QuizBank','Section',function($scope, QuizBank,Section){
+}])
+
+quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','QuestionOption',function($scope, Question, GlobalScope,QuestionOption){
   
+  $scope.$on('quiz_bank_id_Changed', function(event, quiz_bank_id) {
+    $scope.quiz_bank_id = quiz_bank_id;
+  });
+
+  $scope.$on("section_id_Changed",function(event,section_id){
+    $scope.section_id = section_id;
+  })
+  $scope.create_true_false = function(){
+    Question.save($scope.quiz_bank_id, $scope.section_id,
+      {description: $scope.true_false_question_statement,section_id: $scope.section_id,
+      question_type: 1,difficult_level: 1}).$promise.then(function(data){
+        $scope.question_id  = data.id
+        GlobalScope.set_question_id($scope.question_id)
+        QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
+        {question_id: $scope.question_id, is_correct:$scope.selected_true_false_option})
+      })
+  }
+  $scope.create_open_ended = function(){
+    Question.save($scope.quiz_bank_id, $scope.section_id,
+      {description: $scope.open_ended_statement,section_id: $scope.section_id,
+      question_type: 3,difficult_level: 1}).$promise.then(function(data){
+        $scope.question_id  = data.id
+        GlobalScope.set_question_id($scope.question_id)
+        QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
+        {question_id: $scope.question_id, answer:$scope.open_ended_answer})
+      })
+  }
+  $scope.create_blank = function(){
+    $scope.blank_statement = $scope.first_statement +"_______"+$scope.second_statement
+    Question.save($scope.quiz_bank_id, $scope.section_id,
+      {description: $scope.blank_statement,section_id: $scope.section_id,
+      question_type: 4,difficult_level: 1}).$promise.then(function(data){
+        $scope.question_id  = data.id
+        GlobalScope.set_question_id($scope.question_id)
+        QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
+        {question_id: $scope.question_id, answer:$scope.blank})
+      })
+  }
 
 }])
 
 
-quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','Subject','Section','Topic',function($scope, $http,QuizBank, Repository, Subject,Section, Topic){
+quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','Section','GlobalScope',function($scope, $http,QuizBank, Repository,Section, GlobalScope){
   // Variables for view show hide
   $scope.show_new_section = false
   $scope.section_edit = null
   $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
   
   // Values to create new quiz
-  $scope.subjects = Subject.all()
-  $scope.topics = Topic.all()
 
   Repository.default_repo().
       $promise.then(
@@ -63,6 +113,7 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
             $promise.then(
               function(data){
                 $scope.quiz_bank_id = data.id;
+                GlobalScope.set_quiz_bank_id($scope.quiz_bank_id)
                 $scope.quiz_bank = data
                 $scope.quiz_sections = Section.all($scope.quiz_bank_id)
               }
@@ -74,7 +125,6 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
     QuizBank.delete($scope.quiz_bank_id)
   }
   $scope.saveQuiz = function(){
-    $scope.quiz_bank.subject_id = $scope.selectedsubject.id
     QuizBank.updateQuiz($scope.quiz_bank_id, $scope.quiz_bank)
   }
   $scope.addNewSection = function(){
@@ -85,6 +135,7 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
   }
   $scope.addSection = function(title){
     section = Section.save($scope.quiz_bank_id,{title: title})
+    GlobalScope.set_section_id(section.id)
     $scope.quiz_sections.push(section)
     $scope.newSection = {}
     $scope.show_new_section = false
@@ -113,7 +164,6 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
   $scope.addNewQuestion = function(question_type, section){
     $scope.selected_section = section
     if(question_type == "True False"){
-      console.log("hello")
       $scope.show_true_false = true
       $scope.show_mcq = false
       $scope.show_blank = false

@@ -1,10 +1,10 @@
 class Question < ActiveRecord::Base
   
   attr_accessible :seq,:description,:question_type,:difficulty_level,:reference_url,:section_id
-  validates :description, :section_id, :difficulty_level, :question_type, :presence => true
+  validates :description, :section_id, :question_type, :presence => true
   
   belongs_to :section, :counter_cache => true
-  has_many :question_options
+  has_many :question_options, dependent: :destroy
 
   default_scope { where("deleted_at IS NULL") }
 
