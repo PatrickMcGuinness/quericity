@@ -95,14 +95,18 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
 }])
 
 
-quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','Section','GlobalScope',function($scope, $http,QuizBank, Repository,Section, GlobalScope){
+quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','Section','GlobalScope','Topic',function($scope, $http,QuizBank, Repository,Section, GlobalScope,Topic){
   // Variables for view show hide
   $scope.show_new_section = false
   $scope.section_edit = null
   $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
-  
+  $scope.tags = Topic.all()
+  $scope.show_tags = []
   // Values to create new quiz
-
+  $scope.$watch('selected_tag', function (oldValue, newValue) {
+    console.log(newValue)
+    $scope.show_tags.push(newValue)
+  })
   Repository.default_repo().
       $promise.then(
         function(data){ 
