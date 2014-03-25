@@ -1,26 +1,3 @@
-quizlib.controller('QuizBankCtrl', ['$scope', 'QuizBank', function($scope, QuizBank) {
-  $scope.entries = QuizBank.all()
-
-  $scope.addQuiz= function(){
-    quiz_bank = QuizBank.save($scope.newEntry)
-    $scope.entries.push(quiz_bank)
-    $scope.newEntry = {}
-  }
-  $scope.deleteQuiz = function(id,idx) {
-    $scope.entries.splice(idx, 1);
-    QuizBank.delete(id);
-  };
-  $scope.publicQuiz = function(quiz_bank){
-    quiz_bank.public = true
-    QuizBank.updateQuiz(quiz_bank)
-  }
-  $scope.privateQuiz = function(quiz_bank){
-    quiz_bank.public = false
-    QuizBank.updateQuiz(quiz_bank)
-  }
-
-}]);
-
 quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section', function($scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section) {
   $scope.my_assessments = Repository.all()
   $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
@@ -298,7 +275,7 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
     QuizBank.delete($scope.quiz_bank_id)
   }
   $scope.saveQuiz = function(){
-    QuizBank.updateQuiz($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
+    QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
       angular.forEach($scope.show_tags, function(value, key){
         console.log(value)
         QuestionTopic.save($scope.quiz_bank_id,{title: value})
