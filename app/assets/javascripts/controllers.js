@@ -25,11 +25,21 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
   $scope.my_assessments = Repository.all()
   $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
   $scope.quiz_bank = QuizBank.get($routeParams.id)
+  $scope.tags = []
   QuizBank.get($routeParams.id).$promise.then(function(data){
     var obj = new Date(data.created_at)
     var obj2 = new Date(data.updated_at)
     $scope.created_at = obj.getDate() +"-" + obj.getMonth() +"-"+obj.getFullYear()
     $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()
+    $scope.quiz_sections = Section.all(data.id)
+  })
+
+  QuestionTopic.all($routeParams.id).$promise.then(function(data){
+    angular.forEach(data.result,function(value,key){
+      Topic.get(value.topic_id).$promise.then(function(data){
+        $scope.tags.push(data.title)
+      })
+    })
   })
 }]);
 
@@ -47,6 +57,7 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
 
   $scope.addRepo = function(){
     $scope.show_new_repo_div = false
+    console.log($scope.repository)
     Repository.save($scope.repository)
     $scope.my_assessments.push($scope.repository)
   }

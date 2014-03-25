@@ -37,7 +37,38 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-3 left_section">
-      <div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'"></div>
+      <ul>
+        <li ng-show = "show_new_repo_div">
+            <h4>Create new Repo</h4>
+            <input type = "text", ng-model = "repository.title" class = "form-control input-sm" enter = "addRepo()" placeholder = "Enter title and press enter">
+        </li>
+        <li>
+          <a class = "clickunfold">
+            My Assessments
+          </a>
+          <ul class = "hide">
+            <li ng-repeat = "repo in my_assessments">
+              <a href="#">{{repo.title}}</a></li>
+            
+          </ul>
+        </li>
+        <li>
+          <a class = "clickunfold">
+            Shared Assessments
+          </a>
+          <ul class = "hide">
+            <li ng-repeat = "shared_quiz in shared_quiz_banks">
+              <a href = "#">{{shared_quiz.title}}</a>
+            </li>
+            <li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">
+            Starred Assessments
+          </a>
+        </li>
+      </ul>
       
     </div>
     <div class="col-xs-9 right_section">

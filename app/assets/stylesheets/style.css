@@ -107,7 +107,7 @@ body{
 .left_section ul li a:hover{
 	color:#003656;
 	position: relative;
-	background-image:url(images/left_nav_hover.png);
+	background-image:url(/assets/left_nav_hover.png);
 	background-repeat:no-repeat;
 	}
 	

@@ -12,11 +12,11 @@
 	<div class="container">
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
-      <span class="sub_nav_link"><a href="#">Create</a></span>
+      <span class="sub_nav_link"><a ng-href  ='#/quiz_banks/new'>Create</a></span>
 		</div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/edit_icon.png" /></span>
-      <span class="sub_nav_link"><a href="#">Edit</a></span>
+      <span class="sub_nav_link"><a ng-href  ='#/quiz_banks/{{quiz_bank.id}}/edit'>Edit</a></span>
 		</div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/clone_icon.png" /></span>
@@ -41,7 +41,38 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-3 left_section">
-			<div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'"></div>
+			<ul>
+        <li ng-show = "show_new_repo_div">
+            <h4>Create new Repo</h4>
+            <input type = "text", ng-model = "repository.title" class = "form-control input-sm" enter = "addRepo()" placeholder = "Enter title and press enter">
+        </li>
+        <li>
+          <a class = "clickunfold">
+            My Assessments
+          </a>
+          <ul class = "hide">
+            <li ng-repeat = "repo in my_assessments">
+              <a href="#">{{repo.title}}</a></li>
+            
+          </ul>
+        </li>
+        <li>
+          <a class = "clickunfold">
+            Shared Assessments
+          </a>
+          <ul class = "hide">
+            <li ng-repeat = "shared_quiz in shared_quiz_banks">
+              <a href = "#">{{shared_quiz.title}}</a>
+            </li>
+            <li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">
+            Starred Assessments
+          </a>
+        </li>
+      </ul>
 		</div>
 		<div class="col-xs-8 right_section_view_page">
       <div class="col-xs-12 row_space">
@@ -49,10 +80,11 @@
         <img style="float:right;" src="/assets/info_icon.png" />
       </div>
     	<div class="col-xs-12 row_space">
-        <span class = "glyphicon glyphicon-tag" style="color: red;"></span>
-        <span>&nbsp;&nbsp;Tag 1 </span>
-        <span class = "glyphicon glyphicon-tag" style="color: green;"></span>
-        <span>&nbsp;&nbsp;Geometry </span>
+        <span ng-repeat = "topic in tags">
+          <span class = "glyphicon glyphicon-tag" style="color: red;"></span>
+          <span>&nbsp;&nbsp;{{topic}}</span>
+        </span>
+          
 			</div>
       <div class="col-xs-12 row_space">
 				<b>Created on:</b> {{created_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -66,30 +98,12 @@
         <b>Subject:</b> {{quiz_bank.subject}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
       <div class="col-xs-12 row_space">
-        <table class="table table-striped">
-          <thead>
-            <th class="col-xs-2 manage_section">
-							<span style=" float:left;">Default Section</span>
-						</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-							 <a href="#"><img src="images/question_square_icon.png"/>&nbsp;&nbsp;&nbsp;Question No 1?
-                  <span style="float:right;"><img src="images/arrow.png"/></span>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <ul>
+          <li ng-repeat = "section in quiz_sections">
+            <div class = "well well-sm">{{section.title}}</div>
+          </li>
+        </ul>
       </div>
 		</div>
 	</div>
-</div>
-<div class="container">
-	<div class="row">
-    	<div class="col-xs-12 footer">
-            © 2014 QuizLib, Inc. Terms Privacy  |  Security  |  Contact
-        </div>
-    </div>
 </div>

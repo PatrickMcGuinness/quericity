@@ -9,5 +9,7 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/quiz_banks/new.html',controller: 'NewQuizBankCtrl'}).
       when('/quiz_banks/:id/show',
       {templateUrl: 'assets/partials/quiz_banks/show.html',controller: 'ShowQuizBankCtrl'}).
+      when('/quiz_banks/:id/edit',
+      {templateUrl: 'assets/partials/quiz_banks/edit.html',controller: 'EditQuizBankCtrl'}).
       otherwise({redirectTo: '/manage_quiz_banks'})
   }]);
