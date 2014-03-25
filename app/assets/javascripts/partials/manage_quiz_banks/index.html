@@ -1,103 +1,83 @@
-<div class = "nav my-sub-header navbar">
-  <div class = "container">
-    <div class = "collapse navbar-collapse">
-      <ul class = "nav navbar-nav">
-        <li class = "active">
-          <a ng-href = '#/manage_quiz_banks/index'>Manage</a>
-        </li>
-        <li>
-          <a href = "#"> Serve </a>
-        </li>  
-        <li>
-          <a href = "#"> Grade</a>
-        </li>
-        <li>
-          <a href = "#"> Analyze </a>
-        </li>
-      </ul>
+<div class="menu">
+  <div class="container">
+    <ul>
+      <li class="active"><a href="#">MANAGE</a></li>
+      <li><a href="#">SERVE</a></li>
+      <li><a href="#">GRADE</a></li>
+      <li><a href="#">ANALYZE</a></li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="row_bottom">
+  <div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
+      <span class="sub_nav_link">
+        <a ng-href  ='#/quiz_banks/new'>Create Quiz</a>
+      </span>
+    </div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
+      <span class="sub_nav_link">
+        <a ng-click = "newRepo()">Create Repo</a>
+      </span>
+    </div>
+    <div class="input-group col-xs-2 pull-right">
+      <input type="Search" placeholder="Search..." class="form-control search" ng-model = "titleFilter"/>
+        <div class="input-group-btn">
+          <span class="search"></span>
+        </div>
     </div>
   </div>
 </div>
-<div class = "row">
-  <div class = "col-xs-12 top-options">
-    <div class = "container">
-      <ul>
-        <li class = "col-xs-2">
-          <span class = "glyphicon glyphicon-plus-sign"></span>
-          <span> Create Repo </span>
-        </li>  
-        <li class = "col-xs-2">
-          <span class = "glyphicon glyphicon-plus-sign"></span>
-          <span> 
-            <a ng-href  ='#/quiz_banks/new'>Create Quiz</a>
-          </span>
-        </li>
-      </ul>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-3 left_section">
+      <div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'"></div>
+      
+    </div>
+    <div class="col-xs-9 right_section">
+      <table class="table table-striped">
+        <thead>
+          <th class="col-xs-2 manage_section">Title</th>
+          <th class="col-xs-2 manage_section">Owner</th>
+          <th class="col-xs-2 manage_section">Tags</th>
+          <th class="col-xs-2 manage_section">Sharing</th>
+          <th class="col-xs-2 manage_section">Action</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat = "quiz_bank in quiz_banks | filter: titleFilter">
+            <td>
+              <a ng-href = "#/quiz_banks/{{quiz_bank.id}}/show">
+                {{quiz_bank.title}}
+              </a>  
+            </td>
+            <td>{{quiz_bank.name}}</td>
+            <td>
+              <span class = "glyphicon glyphicon-tag" style = "color: red;"></span>
+              <span>&nbsp;&nbsp;{{quiz_bank.tag}}</span>
+            </td>
+            <td ng-hide = "quiz_bank.public">Private</td>
+            <td ng-show = "quiz_bank.public">Public</td>
+            <td>
+              <a ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)">
+                <span class = "glyphicon glyphicon-cloud"></span>
+              </a>
+              <a ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)">
+                <span  class = "glyphicon glyphicon-user"></span>
+              </a>  
+              <span class = "glyphicon glyphicon-star-empty"></span>
+              <span class = "glyphicon glyphicon-transfer"> </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-</div>           
-<div class = "row">
-  <div class = "col-xs-12">
-    <div class = "container">
-      <div class = "row">
-        <div class = "col-xs-3 left-panel">
-          
-        </div>
-        <div class = "col-xs-8 right-list mar-top-20">
-          <div class = "row">
-            <div class = "col-xs-12 column-header">
-              <div class = "col-xs-2">
-                Title
-              </div>
-              <div class = "col-xs-3">
-                Owner
-              </div>
-              <div class = "col-xs-3">
-                Tags
-              </div>
-              <div class = "col-xs-2">
-                Sharing
-              </div>
-            </div>
-          </div>      
-
-          <div class = "row">
-            <div class = "col-xs-12 mar-top-20">
-              <table class = "table">
-                <tbody>
-                  <tr ng-repeat = "quiz_bank in quiz_banks">
-                    <td class = "col-xs-2">
-                      <a Popover-animation = true,popover = {{quiz_bank.name}}> 
-                        {{quiz_bank.title}}
-                      </a>
-                    </td>    
-                    <td class = "col-xs-3"> {{quiz_bank.name}}</td>
-                    <td class = "col-xs-3"></td>
-                    <td class = "col-xs-2">
-                      <span ng-if = "quiz_bank.public == 1">Public</span>
-                      <span ng-if = "quiz_bank.public != 1">Private</span>
-                    </td>
-                    <td class = "col-xs-2">
-                      <a>
-                        <span class = "glyphicon glyphicon-cloud pull-right"></span>
-                      </a>
-                      <a>
-                        <span class = "glyphicon glyphicon-star-empty pull-right"></span>
-                      </a>
-                      <a>
-                        <span class = "glyphicon glyphicon-transfer pull-right"></span>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>                          
-
+</div>
 
 

@@ -7,5 +7,7 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       controller: 'ManageCtrl'}).
       when('/quiz_banks/new',
       {templateUrl: 'assets/partials/quiz_banks/new.html',controller: 'NewQuizBankCtrl'}).
+      when('/quiz_banks/:id/show',
+      {templateUrl: 'assets/partials/quiz_banks/show.html',controller: 'ShowQuizBankCtrl'}).
       otherwise({redirectTo: '/manage_quiz_banks'})
   }]);

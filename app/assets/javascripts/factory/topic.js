@@ -8,6 +8,9 @@ quizlib.factory('Topic', ['$resource', function($resource) {
   Topic.prototype.all = function() {
     return this.service.query();
   };
+  Topic.prototype.get = function(TopicId){
+  	return this.service.get({id: TopicId})
+  }
   
   return new Topic;
 }]);

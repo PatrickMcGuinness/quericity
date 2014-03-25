@@ -1,0 +1,95 @@
+<div class="menu row">
+  <div class="container">
+    <ul>
+      <li class="active"><a href="#">MANAGE</a></li>
+      <li><a href="#">SERVE</a></li>
+      <li><a href="#">GRADE</a></li>
+      <li><a href="#">ANALYZE</a></li>
+	 </ul>
+  </div>
+</div>
+<div class="row_bottom">
+	<div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#">Create</a></span>
+		</div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/edit_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#">Edit</a></span>
+		</div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/clone_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#">Clone</a></span>
+		</div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/preview_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#">Preview</a></span>
+		</div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/delete_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#">Delete</a></span>
+		</div>
+    <div class="input-group col-xs-2 pull-right">
+			<input type="Search" placeholder="Search..." class="form-control search" />
+      <div class="input-group-btn">
+        <span class="search"></span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-3 left_section">
+			<div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'"></div>
+		</div>
+		<div class="col-xs-8 right_section_view_page">
+      <div class="col-xs-12 row_space">
+        <span class="heading">{{quiz_bank.title}}</span>&nbsp;&nbsp;&nbsp;by Abdullah Khan 
+        <img style="float:right;" src="/assets/info_icon.png" />
+      </div>
+    	<div class="col-xs-12 row_space">
+        <span class = "glyphicon glyphicon-tag" style="color: red;"></span>
+        <span>&nbsp;&nbsp;Tag 1 </span>
+        <span class = "glyphicon glyphicon-tag" style="color: green;"></span>
+        <span>&nbsp;&nbsp;Geometry </span>
+			</div>
+      <div class="col-xs-12 row_space">
+				<b>Created on:</b> {{created_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <b>Last Edited:</b> {{updated_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span ng-hide = "quiz_bank.public">
+          <b>Sharing Status:</b> Private&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <span ng-show = "quiz_bank.public">
+          <b>Sharing Status:</b> Public&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <b>Subject:</b> {{quiz_bank.subject}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+      <div class="col-xs-12 row_space">
+        <table class="table table-striped">
+          <thead>
+            <th class="col-xs-2 manage_section">
+							<span style=" float:left;">Default Section</span>
+						</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+							 <a href="#"><img src="images/question_square_icon.png"/>&nbsp;&nbsp;&nbsp;Question No 1?
+                  <span style="float:right;"><img src="images/arrow.png"/></span>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+    	<div class="col-xs-12 footer">
+            © 2014 QuizLib, Inc. Terms Privacy  |  Security  |  Contact
+        </div>
+    </div>
+</div>

@@ -8,16 +8,14 @@
           %span.icon-bar
           %span.icon-bar      
         %a{href:"/",class:"navbar-brand",style:"margin-left:12px;"}
-          %span.header-image
-            %img{src: "/assets/quiz.png"}
-          %span.initial-header Quiz Lib
+          %span.header
+            %img{src: "/assets/logo.png"}
       %nav.collapse.navbar-collapse.bs-navbar-collapse{role:"navigation"}
         %ul.nav.navbar-nav.navbar-right.my-header-nav
           -if user_signed_in?
-            .dropdown
+            .dropdown.name
               %a{id:"dLabel",role:"button",href:"#",data:{toggle:"dropdown",target:"#"}}
                 =current_user.name 
-                %span.caret
               %ul.dropdown-menu{role:"menu"}
                 %li
                   -if current_user.is_professor?
@@ -37,4 +35,5 @@
             %li
               =link_to 'Sign up' , new_user_registration_path
             %li
-              =link_to 'Log in' , new_user_session_path           
+              =link_to 'Log in' , new_user_session_path
+        

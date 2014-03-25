@@ -32,6 +32,10 @@ class QuizBanksController < ApplicationController
     @default_repo = current_user.default_repo
     render json: QuizBank.new(:title => "My Quiz Bank", :repo => @default_repo.id) 
   end
+
+  def shared_quiz_banks
+    render json: current_user.shared_quiz_banks
+  end
   
   
 

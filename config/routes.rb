@@ -47,7 +47,7 @@ QuizLib::Application.routes.draw do
   end
   
   
-  resources :question_topics
+  
   resources :student_groups 
   resources :invites
   resources :groups do
@@ -76,6 +76,10 @@ QuizLib::Application.routes.draw do
   end
 
   resources :quiz_banks do
+    collection do
+      get "shared_quiz_banks"
+    end
+    resources :question_topics
     resources :sections do
       resources :questions do
         resources :question_options

@@ -1,7 +1,7 @@
-<div class = "col-xs-12 new-question-box mar-top-10 mar-bot-10">
+<div class = "col-xs-12 new-question-box mar-top-10 mar-bot-10" ng-controller = "newQuestionCtrl">
   <div class = "heading">
-    <span>Update a Question</span>
-    <a ng-click = "hide_update()">
+    <span>Add a Questions</span>
+    <a ng-click = "hideQuestion()">
       <span class = "glyphicon glyphicon-remove pull-right" style = "color:red;"></span>
     </a>
   </div>
@@ -10,7 +10,7 @@
     </textarea>
   </div>
   <div class = "col-xs-12 mar-top-10">
-    <textarea name="blank" id="blank" rows="2" class = "form-control" ng-model = "question_option.answer">
+    <textarea name="blank" id="blank" rows="2" class = "form-control" ng-model = "blank">
     </textarea>
   </div>
   <div class = "col-xs-12 mar-top-10">
@@ -18,6 +18,6 @@
     </textarea>
   </div>
   <div class = "col-xs-12 question-footer mar-top-10">
-    <button ng-click = "edit_blank(section.id,question.id,question)" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;"> Save Question </button>
+    <button ng-click = "create_blank()" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;"> Save & Close </button>
   </div>
 </div>  

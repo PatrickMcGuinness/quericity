@@ -6,25 +6,15 @@ class QuestionTopic < ActiveRecord::Base
   belongs_to :quiz_bank
   belongs_to :topic
 
-  def self.create_topics(tags,quiz_bank)
-    tags.each do |t|
-      unless Topic.exists?(:title => t.downcase)
-        topic = Topic.create(:title => t.downcase)
-        QuestionTopic.create(:topic_id => topic.id, :quiz_bank_id => quiz_bank.id)
-      else
-        topic = Topic.find_by_title(t.downcase)
-        unless quiz_bank.question_topics.exists?(:topic_id => topic.id)
-          QuestionTopic.create(:quiz_bank_id => quiz_bank.id, :topic_id => topic.id)
-        end
+  def self.create_topic(title,quiz_bank)
+    unless Topic.exists?(:title => title.downcase)
+      topic = Topic.create(:title => title.downcase)
+      QuestionTopic.create(:topic_id => topic.id, :quiz_bank_id => quiz_bank.id)
+    else
+      topic = Topic.find_by_title(title.downcase)
+      unless quiz_bank.question_topics.exists?(:topic_id => topic.id)
+        QuestionTopic.create(:quiz_bank_id => quiz_bank.id, :topic_id => topic.id)
       end
     end
-  end
-  def self.parsestring(tagstring)
-    tags = tagstring.split(",")
-    tags
-  end
-  def self.add_tags(tagstring,quiz_bank)
-    tags = QuestionTopic.parsestring(tagstring)
-    QuestionTopic.create_topics(tags,quiz_bank)
   end
 end

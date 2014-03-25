@@ -1,0 +1,170 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{
+	margin:0 auto;
+	padding: 0;
+	}
+
+body{
+	background-color:#f9f9f9;
+	}
+
+.header{
+	padding:10px 0;
+	}
+
+.name{
+	float:right;
+	font-size:20px;
+	color:#003656;
+	padding-top:33px;
+	}
+	
+.menu{
+	background-color:#003656;
+	height:45px;
+	padding-top:12px;
+	}
+	
+.menu ul li{
+	display:inline;
+	padding:23px; 0;
+	}
+	
+.menu ul li a{
+	text-decoration: none;
+	color:#ffffff;
+	}
+	
+.menu ul li a:hover{
+	color:#b1cdde;
+	display:inline;
+	}
+	
+.menu ul li.active{
+	background-color:#999;
+	padding:13px 15px 15px 15px;	
+	}
+	
+.row_bottom{
+	height:45px;
+	color:#003656;
+	font-size:14px;
+	border-bottom: 2px solid #e1e1e1
+	
+	}
+
+.sub_nav{
+	padding-top:10px;
+	float:left;
+	
+	}
+.sub_nav_icon{
+	margin-left:10px;
+	}	
+	
+.sub_nav_link{
+	padding:0px 5px;
+	}
+.sub_nav_link a{
+	text-decoration:none;
+	color:#003656;
+	}
+.sub_nav_link a:hover{
+	text-decoration:none;
+	color:#b1cdde;
+	}
+	
+.search{
+	width:210px;
+	height:30px;
+	margin-top:5px;
+	padding:5px;
+	
+	}
+	
+.left_section{
+	height:500px;
+	background-color:#22a2dc;
+	margin-top:20px;
+	padding-top:20px;
+	color:#FFF;
+	font-size:16px;
+	line-height:32px;
+	}
+	
+.left_section ul li{
+	display:block;
+	}
+	
+.left_section ul li a{
+	text-decoration:none;
+	color:#fff;
+	padding:7px 20px 20px 30px;
+	}
+	
+.left_section ul li a:hover{
+	color:#003656;
+	position: relative;
+	background-image:url(images/left_nav_hover.png);
+	background-repeat:no-repeat;
+	}
+	
+.left_section ul li ul{
+	padding-left:20px;
+	}
+	
+.right_section{
+	margin-top:20px;
+	}
+	
+.right_section_view_page{
+	margin-top:20px;
+	margin-left:20px;
+	
+	}
+.right_section table tbody tr td{
+	text-align:center;
+	}	
+
+.manage_section{
+	border:1px solid #FFF;
+	height:40px;
+	font-size:16px;
+	font-weight:bold;
+	color:#6a6a6a;
+	text-align:center;
+	background-color:#eeeeee;
+	padding-top:9px;
+	}
+	
+.footer{
+	border-top: 1px solid #e1e1e1;
+	padding-top:30px;
+	margin-top:30px;
+	margin-bottom:30px;
+	font-size:12px;
+	}
+
+.heading{
+	font-size:30px;
+	color:#000;
+	
+	}
+
+.row_space{
+	padding:10px 0;
+	
+	}
+
+.row_space tbody tr td a{
+	text-decoration:none;
+	color:#6a6a6a;
+	
+	}
+
+.row_space tbody tr td a:hover{
+	color:#b1cdde;
+	
+	}

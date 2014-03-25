@@ -17,6 +17,12 @@
 .mar-bot-20{
 	margin-bottom: 20px;
 }
+.mar-left-5{
+	margin-left: 5px;
+}
+.mar-left-10{
+	margin-left: 10px;
+}
 a{
 	cursor: pointer;
 }
@@ -152,6 +158,21 @@ ul.navigation li ul li a{
 .question-footer{
 	background-color: grey;
 	min-height: 44px;
+}
+ul.tag-list{
+	list-style: none;
+}
+ul.tag-list li{
+	display: inline;
+}
+ul.questions-list{
+	padding: 0px;
+	list-style: none;
+}
+ul.questions-list li{
+	border: 1px solid;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 /***************************************** manage quiz bank**********************/

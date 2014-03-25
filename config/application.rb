@@ -65,6 +65,7 @@ module QuizLib
     config.assets.precompile += %w(ckeditor/*)
     config.assets.precompile += %w(factory/*)
     config.assets.precompile += %w(services/*)
+    config.assets.precompile += %w(directives/*)
     config.assets.precompile << %w(main.js controllers.js dialogpatch.js)
   end
 end
