@@ -85,7 +85,7 @@ body{
 	}
 	
 .left_section{
-	height:500px;
+	min-height:500px;
 	background-color:#22a2dc;
 	margin-top:20px;
 	padding-top:20px;
@@ -96,6 +96,7 @@ body{
 	
 .left_section ul li{
 	display:block;
+	color:black;
 	}
 	
 .left_section ul li a{
@@ -103,6 +104,14 @@ body{
 	color:#fff;
 	padding:7px 20px 20px 30px;
 	}
+.left_section ul li a.black{
+	text-decoration:none;
+	color:black;
+	padding: 0px !important;
+	}
+.left_section ul li a.black:hover{
+	background-image: none;
+	}		
 	
 .left_section ul li a:hover{
 	color:#003656;

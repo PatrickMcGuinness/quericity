@@ -36,6 +36,10 @@ class QuizBanksController < ApplicationController
   def shared_quiz_banks
     render json: current_user.shared_quiz_banks
   end
+
+  def repo_quiz_banks
+    render json: current_user.repositories.find(params[:id]).quiz_banks
+  end
   
   
 

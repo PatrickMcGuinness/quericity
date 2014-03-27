@@ -1,4 +1,10 @@
-
+.over{
+	color:red;
+}
+.bin{
+	border: 1px solid;
+	padding: 20px;
+}
 .my-badge{
 	background-color: green !important
 }
@@ -25,6 +31,10 @@
 }
 a{
 	cursor: pointer;
+}
+.option-row{
+	border: 1px solid;
+	padding: 10px;
 }
 
 /***************** For Header ********************/

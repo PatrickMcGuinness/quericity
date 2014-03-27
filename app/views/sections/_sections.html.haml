@@ -1,9 +1,0 @@
-%h4 Sections    
--if @quiz_bank.sections.blank?
-  .top_bar_s.no-record
-    = "There are no sections."
--else
-  %table.sections-table{style: "width:100%"}
-    %tbody
-      -@quiz_bank.sections.order("seq ASC").each do |s|
-        =render partial: "sections/section", :locals => {:@section => s}

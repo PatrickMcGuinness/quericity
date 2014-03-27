@@ -1,4 +1,4 @@
-<div class = "col-xs-12 new-question-box mar-top-10 mar-bot-10">
+<div class = "col-xs-12 new-question-box mar-top-10 mar-bot-10" ng-controller = "newQuestionCtrl">
   <div class = "heading col-xs-12">
     <span>Add a Questions</span>
     <a ng-click = "hideQuestion()">
@@ -6,7 +6,7 @@
     </a>
   </div>
   <div class = "col-xs-12 mar-top-10">
-    <textarea name="editor1" id="editor1" rows="3" class = "form-control">
+    <textarea name="description" rows="3" class = "form-control" ng-model = "question.description">
     </textarea>
   </div>
   <div class = "col-xs-12 mar-top-10">
@@ -14,43 +14,46 @@
       <thead>
         <th class = "col-xs-10">Answers</th>
         <th class = "col-xs-1">Correct</th>
-        <th class = "col-xs-1"></th>
       </thead>
       <tbody>
         <tr>
           <td>
-            <input type = "text", class = "form-control" id = "1" >
+            <input type = "text", class = "form-control" ng-model = "input_0">
           </td>
           <td>
-            <input type="radio" name="correct" value="1">
+            <input type="radio" name="correct" ng-model = "radio" value = "0">
           </td>
-          <td></td>
         </tr>
         <tr>
           <td>
-            <input type = "text", class = "form-control" id = "2">
+            <input type = "text", class = "form-control" ng-model = "input_1">
           </td>
           <td>
-            <input type="radio" name="correct" value="2">
+            <input type="radio" name="correct" ng-model = "radio" value = "1">
           </td>
-          <td></td>
         </tr>
         <tr>
           <td>
-            <input type = "text", class = "form-control" id = "3">
+            <input type = "text", class = "form-control" ng-model = "input_2">
           </td>
           <td>
-            <input type="radio" name="correct" value="3">
-          </td>
-          <td>
-            <span class = "glyphicon glyphicon-remove" style = "color:red;"></span>
+            <input type="radio" name="correct" ng-model = "radio" value = "2">
           </td>
         </tr>
+        <tr>
+          <td>
+            <input type = "text", class = "form-control" ng-model = "input_3">
+          </td>
+          <td>
+            <input type="radio" name="correct" ng-model = "radio" value = "3">
+          </td>
+        </tr>
+
+
       </tbody>
     </table>
   </div>
   <div class = "col-xs-12 question-footer">
-    <button class= "btn btn-primary col-xs-3" style = "margin-top: 5px;">Save & Add Another</button>
-    <button class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;"> Save & Close </button>
+    <button ng-click = "create_mcq()" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;"> Save Question</button>
   </div>
 </div>

@@ -6,9 +6,9 @@
     <span class = "col-xs-9">Easy</span>
     <span class = "col-xs-1">
       <a ng-click= "show_blank_edit(question)">
-        <span class = "glyphicon glyphicon-edit pull-right"></span>
+        <span ng-hide = "is_quiz_view" class = "glyphicon glyphicon-edit pull-right"></span>
       </a>
-      <a>  
+      <a ng-hide = "is_quiz_view" ng-click = "delete_question(section.id,question.id,$index)">  
         <span class = "glyphicon glyphicon-trash pull-right"></span>
       </a>
     </span>

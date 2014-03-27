@@ -1,11 +1,12 @@
 quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
   function QuizBank() {
-    this.service = $resource('/quiz_banks/:id:shared_quiz_banks', {id: '@id'},
+    this.service = $resource('/quiz_banks/:id:shared_quiz_banks/:repo_quiz_banks:change_quiz_bank_repo', {id: '@id'},
                   {update:{method:"PUT",isArray:false},
                    query:{method:"GET",transformResponse: [function(data,headersGetter){
                     return {result: JSON.parse(data)}
                    }]},
-                   shared_quiz_banks:{method:"GET",isArray:true}
+                   shared_quiz_banks:{method:"GET",isArray:true},
+                   repo_quiz_banks:{method:"GET",isArray:true}
                  });
   };
   QuizBank.prototype.new = function(){
@@ -15,8 +16,7 @@ quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
     return this.service.query();
   };
   QuizBank.prototype.shared_quiz_banks = function() {
-    console.log("hello")
-    return this.service.shared_quiz_banks();
+    return this.service.shared_quiz_banks({shared_quiz_banks: "shared_quiz_banks"});
   };
   QuizBank.prototype.delete = function(QuizId) {
     this.service.remove({id: QuizId});
@@ -30,5 +30,9 @@ quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
   QuizBank.prototype.get = function(QuizId){
     return this.service.get({id: QuizId})
   }
+  QuizBank.prototype.repo_quiz_banks = function(RepoId){
+    return this.service.repo_quiz_banks({id: RepoId,repo_quiz_banks:"repo_quiz_banks"})
+  }
+
   return new QuizBank;
 }]);

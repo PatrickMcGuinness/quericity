@@ -16,6 +16,14 @@ class FavouriteQuizBanksController < ApplicationController
     render json: current_user.favourite_quiz_banks.find(params[:id]).update_attributes(params[:favourite_quiz_bank])
   end
 
+  def is_favourite
+    render json: current_user.favourite_quiz_banks.find_by_quiz_bank_id(params[:id]).present?
+  end
+
+  def destroy
+    render json: current_user.favourite_quiz_banks.find_by_quiz_bank_id(params[:id]).destroy
+  end
+
   
 
 

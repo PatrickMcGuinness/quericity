@@ -27,12 +27,8 @@ QuizLib::Application.routes.draw do
   get "/topics", to: "topics#index", as: :topics
   resources :favourite_quiz_banks do
     member do
-      get "make_favourite"
-      get "make_unfavourite"
-      get "make_stared_favourite"
-      get "make_stared_unfavourite"
-      get "make_shared_favourite"
-      get "make_shared_unfavourite"
+      get "is_favourite"
+      
     end
   end
   resources :shares do
@@ -78,6 +74,9 @@ QuizLib::Application.routes.draw do
   resources :quiz_banks do
     collection do
       get "shared_quiz_banks"
+    end
+    member do
+      get "repo_quiz_banks"
     end
     resources :question_topics
     resources :sections do

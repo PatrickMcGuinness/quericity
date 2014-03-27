@@ -11,5 +11,7 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/quiz_banks/show.html',controller: 'ShowQuizBankCtrl'}).
       when('/quiz_banks/:id/edit',
       {templateUrl: 'assets/partials/quiz_banks/edit.html',controller: 'EditQuizBankCtrl'}).
+      when('/serve_quizzes/serve_list',
+      {templateUrl: 'assets/partials/serve_quiz/serve_list.html',controller: 'ServeQuizCtrl'}).
       otherwise({redirectTo: '/manage_quiz_banks'})
   }]);

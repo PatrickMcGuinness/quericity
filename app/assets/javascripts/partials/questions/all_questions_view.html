@@ -3,7 +3,7 @@
     <div class = "col-xs-1">
       <span ng-if = "question.question_type == 1" class = "glyphicon glyphicon-ok" style = "color:blue;"></span>
       <span ng-if = "question.question_type == 4" class = "glyphicon glyphicon-stop" style = "color:blue;"></span>
-      <span ng-if = "question.question_type == 2" class = "glyphicon glyphicon-play" style = "color:blue;"></span>
+      <span ng-if = "question.question_type == 2" class = "glyphicon glyphicon-edit" style = "color:blue;"></span>
       <span ng-if = "question.question_type == 3" class = "glyphicon glyphicon-edit" style = "color:blue;"></span>  
     </div>
     <div class = "col-xs-9">{{question.description}}</div>
@@ -15,10 +15,6 @@
       <div  ng-show = "show_details_view" ng-if = "question.question_type == 1" ng-include src="'/assets/partials/questions/true_false_view.html'">
       </div>
       <div  ng-hide = "show_details_view" ng-if = "question.question_type == 1" ng-include src="'/assets/partials/questions/true_false_edit.html'">
-      </div>
-      <div  ng-show = "show_details_view" ng-if = "question.question_type == 2" ng-include src="'/assets/partials/questions/mcq_view.html'">
-      </div>
-      <div  ng-hide = "show_details_view" ng-if = "question.question_type == 2" ng-include src="'/assets/partials/questions/mcq_edit.html'">
       </div>
       <div  ng-show = "show_details_view" ng-if = "question.question_type == 3" ng-include src="'/assets/partials/questions/open_ended_view.html'">
       </div>

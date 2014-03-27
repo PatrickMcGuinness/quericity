@@ -9,30 +9,29 @@
   </div>
 </div>        
 
-<div class="row_bottom">
-  <div class="container">
-    <div class="sub_nav">
-      <span class="sub_nav_icon">
-        <span class = "glyphicon glyphicon-floppy-disk">
-        </span>
-      </span>
-      <span class="sub_nav_link">
-        <a ng-click = 'saveQuiz()' ng-href = '#/manage_quiz_banks'> Save</a>
-      </span>
-    </div>
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><span class = "glyphicon glyphicon-remove"></span>
-      </span>
-      <span class="sub_nav_link">
-        <a ng-Click = "cancelQuiz()" ng-href = '#/manage_quiz_banks'>Cancel</a>
-      </span>
-    </div>
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><span class = "glyphicon glyphicon-plus-sign"></span></span>
-      </span>
-      <span class="sub_nav_link">
-        <a class = "shownewsection">Add Section</a>
-      </span>
+<div>
+  <div class = "col-xs-12 top-options">
+    <div class = "container">
+      <ul>
+        <li class = "col-xs-1">
+          <span class = "glyphicon glyphicon-floppy-disk"></span>
+          <span>
+            <a ng-click = 'saveQuiz()' ng-href = '#/manage_quiz_banks'> Save</a>
+          </span>
+        </li>
+        <li class = "col-xs-1">
+          <span class = "glyphicon glyphicon-remove"></span>
+          <span> 
+            <a ng-href = '#/manage_quiz_banks'>Cancel</a>
+          </span>
+        </li>  
+        <li class = "col-xs-2">
+          <span class = "glyphicon glyphicon-plus-sign"></span>
+          <span>
+            <a ng-click = 'addNewSection()'>Add Section</a>
+          </span>
+        </li>
+      </ul>
     </div>
   </div>
 </div>          
@@ -176,15 +175,15 @@
             </div>     
             
           </div>                  
-          <div class = "mar-top-20 new-section-div hide">
+          <div class = "mar-top-10" ng-Show = "show_new_section">
             <div class = "col-xs-12 new-section-box">
               <span class = "col-xs-1">Title:</span>
               <span class = "col-xs-9">
                 <input ng-model = "newSection.title" type= "text" class= "form-control">
               </span>
               <span class = "col-xs-2 pull-right">
-                <a class = "hidenewsectiom" ng-Click = "addSection(newSection.title)"> Save</a>
-                <a class = "hidenewsection"> Cancel</a>
+                <a ng-Click = "addSection(newSection.title)"> Save</a>
+                <a ng-Click = "CancelSection()"> Cancel</a>
               </span>
             </div>
           </div>

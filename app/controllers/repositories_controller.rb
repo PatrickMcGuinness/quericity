@@ -1,11 +1,11 @@
 class RepositoriesController < ApplicationController
   
-  #before_filter :authenticate_user!
+  before_filter :authenticate_user!
 
   respond_to :json
 
   def index
-    render json: current_user.repositories
+    render json: current_user.repositories.where("id != ?",current_user.default_repo.id)
   end
 
   def show

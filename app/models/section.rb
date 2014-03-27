@@ -5,7 +5,7 @@ class Section < ActiveRecord::Base
   validates :title, :presence => true, :length => { minimum: 5, maximum: 50 }
   
   belongs_to :quiz_bank
-  has_many :questions
+  has_many :questions, dependent: :destroy
 
   default_scope { where("deleted_at IS NULL") }
 
