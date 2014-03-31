@@ -15,6 +15,8 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/quiz_banks/clone.html',controller: 'CloneQuizBankCtrl'}).
       when('/served_quizzes',
       {templateUrl: 'assets/partials/serve_quiz/index.html',controller: 'ServeQuizCtrl'}).
+      when('/serve_quiz/new',
+      {templateUrl: 'assets/partials/serve_quiz/options.html',controller: 'NewServeQuizCtrl'}).
       when('/groups',
       {templateUrl: 'assets/partials/groups/index.html',controller: 'GroupListCtrl'}).
       when('/groups/new',

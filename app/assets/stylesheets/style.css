@@ -108,6 +108,10 @@ body{
 	color:#fff;
 	padding:7px 20px 20px 30px;
 	}
+.left_section ul li a.black{
+	color:black;
+	padding: 0px;
+	}	
 	
 .left_section ul li a:hover{
 	color:#003656;

@@ -176,7 +176,8 @@ quizlib.directive('droppable', function() {
           var binId = this.id;
           this.classList.remove('over');
           var item = document.getElementById(e.dataTransfer.getData('Text'));
-          $(this).parents("li").children('ul').append("<li></li>").children("li").last().append($(item))
+          $(this).parent("li").children('ul').append("<li></li>")
+          $(this).parent("li").children("ul").children("li").last().append($(item))
           scope.$apply(function(scope) {
             var fn = scope.drop();
             if ('undefined' !== typeof fn) {

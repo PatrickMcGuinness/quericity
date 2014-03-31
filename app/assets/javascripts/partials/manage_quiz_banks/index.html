@@ -36,7 +36,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-xs-3 left_section hidecreaterepo">
+    <div class="col-xs-3 left_section">
       <ul>
         <li class = "hide" id = "create-repo-div">
           <h4>Create new Repo</h4>
@@ -48,7 +48,7 @@
           </a>
           <ul class = "hide">
             <li ng-repeat = "repo in my_assessments">
-              <a custom-popover popover-html="<span class = 'glyphicon glyphicon-edit'></span><span style = 'margin-left:2px'><a class = 'black'>Edit</a></span><span class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;'></span><span style = 'margin-left:2px'><a ng-click = 'deleteRepo(repo)' class = 'black'>Delete</a></span>" popover-placement="top" class = "rightclickunfold li" ng-right-click = "$event.stopPropagation()" droppable drop= "handleDrop" id ="{{repo.id}}">
+              <a custom-popover popover-html="<span class = 'glyphicon glyphicon-edit' style= 'color:black;'></span><span style = 'margin-left:2px'><a class = 'black'>Edit</a></span><span class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;color:black'></span><span style = 'margin-left:2px'><a ng-click = 'deleteRepo(repo)' class = 'black'>Delete</a></span>" popover-placement="top" class = "rightclickunfold li" ng-right-click = "$event.stopPropagation()" droppable drop= "handleDrop" id ="{{repo.id}}">
               {{repo.title}}
               </a>
               <ul class = "hide ul" >

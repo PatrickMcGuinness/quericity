@@ -1,6 +1,10 @@
 quizlib.controller('ServeQuizCtrl', ['$scope', function($scope){
 
 }]);
+
+quizlib.controller('NewServeQuizCtrl', ['$scope', function($scope){
+
+}]);
 quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',function($scope,User,Group,StudentGroup){
   $scope.groups = []
   Group.all().$promise.then(function(data){

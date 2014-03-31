@@ -1,0 +1,157 @@
+<div class="menu">
+  <div class="container">
+    <ul>
+      <li><a href="#/manage_quiz_banks">MANAGE</a></li>
+      <li class="active"><a ng-href='#/served_quizzes'>SERVE</a></li>
+      <li><a href="#">GRADE</a></li>
+      <li><a href="#">ANALYZE</a></li>
+    </ul>
+  </div>
+</div>
+<div class="row_bottom">
+  <div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#/serve_quiz/new">Serve Quiz</a></span>
+    </div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
+      <span class="sub_nav_link"><a href="#/groups">Student Groups</a></span>
+    </div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
+      <span class="sub_nav_link"><a href="#/groups/new">Add Groups</a></span>
+    </div>  
+  </div>
+</div>
+<div class="container">
+	<div class="row">
+  	<div class="col-xs-12">
+    	<div class="row">
+        <div class="col-xs-3 btn_section">
+          <button type="button" class="btn btn_blue">Options</button>
+          <button type="button" class="btn btn_grey">Select Students</button>
+        </div>
+        <div class = "col-xs-12">
+          <select class="form-control form_section">
+            <option>Select Quiz</option>
+            <option>Select Quiz #1</option>
+            <option>Select Quiz #2</option>
+          </select>
+        </div>
+	    </div>
+      <div class="row">
+        <div class="col-xs-2 form_section">
+        	<span class="label_text">Start Date:</span>
+          <span><input type="text" class="label_field form-control" /></span>
+        </div>
+        <div class="col-xs-2 form_section">
+        	<span class="label_text">Start Time:</span>
+          <span><input type="text" class="label_field form-control" /></span>
+        </div>
+        <div class="col-xs-2 form_section">
+        	<span class="label_text">End Date:</span>
+          <span><input type="text" class="label_field form-control" /></span>
+        </div>
+        <div class="col-xs-2 form_section">
+        	<span class="label_text">End Time:</span>
+          <span><input type="text" class="label_field form-control" /></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2 radio_contorl form_section">
+          <input type="radio" name="radio">&nbsp;&nbsp;Time Limit:
+        </div>
+        <div class="col-xs-2 form_section ">
+          <span><input type="text" class="label_field form-control" /></span>
+        </div>
+        <div class="col-xs-3">
+          <select class="form-control form_section">
+            <option>Minutes</option>
+            <option>Hours</option>
+          </select>
+        </div>
+        <span class="form_section">&nbsp;&nbsp;&nbsp;or</span>
+        <div class="col-xs-2 radio_contorl form_section">
+          <input type="radio" name="radio">&nbsp;&nbsp;Unlimited Time 
+        </div>
+      </div>
+      <div class="row line_bg">
+      </div>
+      <div class="row">
+	      <span class="form_section">Question Per Page:</span>
+      </div>
+      <div class="row">
+        <div class="col-xs-3 radio_contorl form_section">
+          <input type="radio" name="radio">&nbsp;&nbsp;All Questions on one page 
+        </div>
+        <div class="col-xs-0 radio_contorl form_section">
+          <input type="radio" name="radio"> 
+        </div>
+        <div class="col-xs-2 form_section">
+          <span><input type="text" class="label_field form-control" /></span>
+        </div>
+        <div class="col-xs-3">
+          <span class="form_section">Question Per Page:</span>
+        </div>
+      </div>
+      <div class="row line_bg"></div>
+      <div class="row">
+        <div class="col-xs-2 form_section">
+          <span>Instrucations</span>
+        </div>
+        <div class="col-xs-9 form_section">
+          <span><textarea type="text" placeholder="These are the instructions" class="label_field form-control"></textarea></span>
+        </div>
+        <div class="col-xs-2 form_section">
+          <span>Show Answers:</span>
+        </div>
+        <div class="col-xs-9 form_section">
+          <select class="form-control ">
+            <option>After Questions</option>
+            <option>After Quiz</option>
+            <option>Dont Show Answers</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4 form_section">
+          <span class="form_section"><input type="checkbox" name="checkbox" /></span>
+          <span>Select from questions list</span>
+        </div>  
+        <span class="form_section"><input type="checkbox" name="checkbox" /></span>
+        <div class="col-xs-4 form_section">
+          <span>Randomize the questions</span>
+        </div>
+      </div>
+      <div class="row">
+      	<div class="col-xs-12">
+          <div class="col-xs-12 strip form_section ">
+            <div class="col-xs-0 pull-left">
+              <input type="checkbox" name="checkbox" />
+            </div>
+            <div class="col-xs-3 ">
+              <span style="float:left; margin-left:10px;">Question No.1</span>
+			      </div>
+          </div>
+          <div class="col-xs-12 strip">
+            <div class="col-xs-0 pull-left">
+              <input type="checkbox" name="checkbox" />
+            </div>
+            <div class="col-xs-3 ">
+              <span style="float:left; margin-left:10px;">Question No.2</span>
+			      </div>
+          </div>
+          <div class="col-xs-12 strip">
+            <div class="col-xs-0 pull-left">
+              <input type="checkbox" name="checkbox" />
+            </div>
+            <div class="col-xs-3 ">
+              <span style="float:left; margin-left:10px;">Question No.3</span>
+			      </div>
+          </div>
+        </div>
+      </div>
+		</div>
+	</div>
+</div>
