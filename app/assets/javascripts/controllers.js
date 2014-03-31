@@ -75,11 +75,11 @@ quizlib.controller('EditGroupCtrl', ['$scope','$routeParams','User','Group','Stu
   $scope.selected_students = []
   $scope.group = Group.get($routeParams.id)
   Group.get_student_groups($routeParams.id).$promise.then(function(data){
+    $scope.student_groups = data
     angular.forEach(data,function(value,key){
       User.get(value.student_id).$promise.then(function(data){
         $scope.students.push(data)
       })
-
     })
   })
   
@@ -90,15 +90,16 @@ quizlib.controller('EditGroupCtrl', ['$scope','$routeParams','User','Group','Stu
   }
   $scope.saveGroup = function(){
     Group.update($scope.group.id,$scope.group).$promise.then(function(data){
-      
-      console.log($scope.selected_students)
+      angular.forEach($scope.student_groups,function(value,key){
+        StudentGroup.delete(value.id)
+      })
       angular.forEach($scope.selected_students,function(value,key){
-        console.log(value.id)
-        StudentGroup.save({student_id: value.id,group_id: data.id})
+        StudentGroup.save({student_id: value.id,group_id: $scope.group.id})
       })
     })
   }
   $scope.selected_student = function(student){
+    console.log(student)
     index = $scope.selected_students.indexOf(student);
     if(index == -1){
       $scope.selected_students.push(student)
