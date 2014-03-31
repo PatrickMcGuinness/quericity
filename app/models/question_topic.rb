@@ -6,6 +6,11 @@ class QuestionTopic < ActiveRecord::Base
   belongs_to :quiz_bank
   belongs_to :topic
 
+  
+  def clone_the_question_topic(new_quiz_bank)
+    new_quiz_bank.question_topics.create(:topic_id => self.topic_id)
+  end
+
   def self.create_topic(title,quiz_bank)
     unless Topic.exists?(:title => title.downcase)
       topic = Topic.create(:title => title.downcase)

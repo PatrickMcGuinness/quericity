@@ -26,6 +26,15 @@ class Question < ActiveRecord::Base
       [["True False",1],["MCQ",2],["Open Ended",3],["Fill In Blank",4]]
     end
   end
+
+   def clone_the_question(new_section)
+      new_question = new_section.questions.create(:seq => self.seq, :description => self.description,
+        :question_type => self.question_type, :difficulty_level => self.difficulty_level,
+         :section_id => self.section_id)
+      self.question_options.each do |question_option|
+        question_option.clone_the_question_option(new_question)
+      end
+   end
   
   def self.create_true_false(params,section)
     section.questions.create(params[:question])
@@ -54,6 +63,7 @@ class Question < ActiveRecord::Base
     question_option
   end
   
+
   def self.create_open_ended(params,section)
     section.questions.create(params[:question])
   end

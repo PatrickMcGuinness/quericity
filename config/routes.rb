@@ -77,6 +77,7 @@ QuizLib::Application.routes.draw do
     end
     member do
       get "repo_quiz_banks"
+      get "clone"
     end
     resources :question_topics
     resources :sections do

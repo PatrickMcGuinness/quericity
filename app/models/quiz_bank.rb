@@ -56,6 +56,18 @@ class QuizBank < ActiveRecord::Base
     self.repository.owner
   end
 
+  def clone_the_quiz(user)
+    new_quiz_bank = user.quiz_banks.create(:title => self.title, :description => self.description,
+      :repository_id => self.repository_id, subject: self.subject,public: 0)
+    self.sections.each do |section|
+      section.clone_the_section(new_quiz_bank)
+    end
+    self.question_topics.each do |question_topic|
+      question_topic.clone_the_question_topic(new_quiz_bank)
+    end
+    new_quiz_bank
+  end
+
   def json_for_update_quiz_bank
     common = {quiz_bank: self,question_topics: []}
     self.question_topics.each do |question_topic|

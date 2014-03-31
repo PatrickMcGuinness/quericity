@@ -19,4 +19,11 @@ class Section < ActiveRecord::Base
       Section.update_all({seq: index+1},{id: id})
     end
   end
+
+  def clone_the_section(new_quiz_bank)
+    new_section = new_quiz_bank.sections.create(:title => self.title, :seq => self.seq)
+    self.questions.each do |question|
+      question.clone_the_question(new_section)
+    end
+  end
 end

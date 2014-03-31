@@ -317,6 +317,47 @@ quizlib.controller("sectionCtrl",['$scope','Section',function($scope,Section){
 
 }])
 
+quizlib.controller("CloneQuizBankCtrl",['$scope','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope, $routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
+
+  $scope.quiz_bank = QuizBank.clone($routeParams.id).$promise.then(function(data){
+    $scope.quiz_bank_id = data.id
+    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+    $scope.tags = Topic.all()
+    $scope.show_tags = []
+    QuestionTopic.all($scope.quiz_bank_id).$promise.then(function(data){
+      angular.forEach(data.result,function(value,key){
+        Topic.get(value.topic_id).$promise.then(function(data){
+          $scope.show_tags.push(data.title)
+        })
+
+      })
+    })
+  })
+  
+  $scope.cancelQuiz = function(){
+    QuizBank.delete($scope.quiz_bank_id)
+  }
+  $scope.saveQuiz = function(){
+    QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
+      angular.forEach($scope.show_tags, function(value, key){
+        QuestionTopic.save($scope.quiz_bank_id,{title: value})
+      })
+
+    })
+  }  
+
+  $scope.addSection = function(title){
+    section = Section.save($scope.quiz_bank_id,{title: title})
+    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+    $scope.newSection = {}
+  }
+
+  $scope.addMoreTags = function(){
+    if($scope.selected_tag != undefined){
+      $scope.show_tags.push($scope.selected_tag)
+    }
+  }
+}])
 quizlib.controller("EditQuizBankCtrl",['$scope','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope, $routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
 
   $scope.quiz_bank_id = $routeParams.id
