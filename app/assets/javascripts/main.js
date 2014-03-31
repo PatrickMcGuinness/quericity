@@ -13,7 +13,13 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/quiz_banks/edit.html',controller: 'EditQuizBankCtrl'}).
       when('/quiz_banks/:id/clone',
       {templateUrl: 'assets/partials/quiz_banks/clone.html',controller: 'CloneQuizBankCtrl'}).
-      when('/serve_quizzes/serve_list',
-      {templateUrl: 'assets/partials/serve_quiz/serve_list.html',controller: 'ServeQuizCtrl'}).
+      when('/served_quizzes',
+      {templateUrl: 'assets/partials/serve_quiz/index.html',controller: 'ServeQuizCtrl'}).
+      when('/groups',
+      {templateUrl: 'assets/partials/groups/index.html',controller: 'GroupListCtrl'}).
+      when('/groups/new',
+      {templateUrl: 'assets/partials/groups/add_group.html',controller: 'AddGroupCtrl'}).
+      when('/groups/:id/edit',
+      {templateUrl: 'assets/partials/groups/edit.html',controller: 'EditGroupCtrl'}).
       otherwise({redirectTo: '/manage_quiz_banks'})
   }]);

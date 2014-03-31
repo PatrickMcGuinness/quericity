@@ -36,7 +36,9 @@ a{
 	border: 1px solid;
 	padding: 10px;
 }
-
+.dropdown-menu {
+	width: 97%;
+}
 /***************** For Header ********************/
 
 .my-nav-bar{

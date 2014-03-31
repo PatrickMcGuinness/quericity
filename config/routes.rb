@@ -48,21 +48,15 @@ QuizLib::Application.routes.draw do
   resources :invites
   resources :groups do
     member do
-      get "get_student"
-      get "edit_title"
-      get "get_all_students"
-      get "get_all_students_in_group" 
+      get 'get_student_groups'
     end
-    collection do
-      get "search_group"
-      get "add_students"
-      get "add_students_edit"
-    end 
   end
   resources :users do
     collection do
       get 'get_current_user'
-    end 
+      get 'get_students'
+      get 'system_students'
+    end
   end
   resources :topics
   resources :repositories do

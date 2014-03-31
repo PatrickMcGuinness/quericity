@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	
-  #before_filter :authenticate_user!
+  before_filter :authenticate_user!
 
   respond_to :json
 
@@ -30,5 +30,12 @@ class UsersController < ApplicationController
 
   def get_current_user
     render json: {user:current_user}
+  end
+
+  def get_students
+    render json: current_user.students
+  end
+  def system_students
+    render json: User.where("role = ?",'Student')
   end
 end

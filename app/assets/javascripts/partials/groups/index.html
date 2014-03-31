@@ -1,0 +1,69 @@
+<div class="menu">
+  <div class="container">
+    <ul>
+      <li><a href="#/manage_quiz_banks">MANAGE</a></li>
+      <li class="active"><a ng-href='#/served_quizzes'>SERVE</a></li>
+      <li><a href="#">GRADE</a></li>
+      <li><a href="#">ANALYZE</a></li>
+    </ul>
+  </div>
+</div>
+<div class="row_bottom">
+	<div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#/serve_quiz/new">Serve Quiz</a></span>
+		</div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
+      <span class="sub_nav_link"><a href="#/groups">Student Groups</a></span>
+		</div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
+      <span class="sub_nav_link"><a href="#/groups/new">Add Groups</a></span>
+		</div>	
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+    <div class="col-xs-2 select_dropdown pull-right">
+      <select class="form-control" ng-model="sorttitle">
+        <option value = "">Sort By Title</option>
+        <option value = "1" >Ascending</option>
+        <option value = "2" >Descending</option>
+      </select>
+    </div>
+    <div class="col-xs-2 select_dropdown pull-right">
+      <select class="form-control" ng-model="sortmodified">
+        <option value = "">Sort By Last Modified</option>
+        <option value = "1">Ascending</option>
+        <option value = "2">Descending</option>
+      </select>
+    </div>
+	</div>
+  <div class = "row">
+		<div class = "col-xs-12">
+			<table class="table table-striped tag_btns">
+				<thead>
+					<th class="col-xs-1 manage_section">Title</th>
+          <th class="col-xs-2 manage_section">Last Modified</th>
+          <th class="col-xs-2 manage_section">Number of Students</th>
+          <th class="col-xs-1 manage_section">Action</th>
+        </thead>
+        <tbody class="text-center">
+        	<tr ng-repeat = "group in groups | orderBy:predicate:reverse">
+            <td>{{group.title}}</td>
+            <td>{{group.last_updated}}</td>
+            <td><span>{{group.count}}</span></td>
+            <td>
+              <a ng-href="#/groups/{{group.id}}/edit"><img src="/assets/edit_sm_icon.png" /></a>&nbsp;&nbsp;
+              <a ng-click = "removeGroup(group,$index)"><img src="/assets/delete_sm_icon.png" /></a>
+            </td>
+          </tr>
+
+        </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+

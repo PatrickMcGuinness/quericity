@@ -1,3 +1,109 @@
+quizlib.controller('ServeQuizCtrl', ['$scope', function($scope){
+
+}]);
+quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',function($scope,User,Group,StudentGroup){
+  $scope.groups = []
+  Group.all().$promise.then(function(data){
+    angular.forEach(data,function(value,key){
+      var obj = new Date(value.updated_at)
+      last_updated = obj.getDate() +"-" + obj.getMonth() +"-"+obj.getFullYear()
+      Group.get_student_groups(value.id).$promise.then(function(data){
+        $scope.groups.push({id: value.id, title: value.title, count: data.length,last_updated:last_updated})
+      })
+      
+    })
+  })
+  $scope.removeGroup = function(group,idx){
+    Group.delete(group.id)
+    $scope.groups.splice(idx,1)
+  }
+  $scope.$watch('sorttitle', function() {
+    if($scope.sorttitle == 1){
+      $scope.predicate = 'title'
+      $scope.reverse = false
+    }
+    if($scope.sorttitle == 2){
+      $scope.predicate = 'title'
+      $scope.reverse = true
+    }
+  });
+  $scope.$watch('sortmodified', function() {
+    if($scope.sortmodified == 1){
+      $scope.predicate = 'last_updated'
+      $scope.reverse = false
+    }
+    if($scope.sortmodified == 2){
+      $scope.predicate = 'last_updated'
+      $scope.reverse = true
+    }
+  });
+
+}]);
+quizlib.controller('AddGroupCtrl', ['$scope','User','Group','StudentGroup',function($scope,User,Group,StudentGroup){
+  
+  $scope.students = User.get_students()
+  $scope.selected_students = []
+  $scope.system_students = User.system_students()
+
+  $scope.AddStudent = function(student){
+    $scope.students.push(student)
+  }
+  $scope.saveGroup = function(){
+    Group.save($scope.group).$promise.then(function(data){
+      angular.forEach($scope.selected_students,function(value,key){
+        StudentGroup.save({student_id: value.id,group_id: data.id})
+      })
+    })
+  }
+  $scope.selected_student = function(student){
+    index = $scope.selected_students.indexOf(student);
+    if(index == -1){
+      $scope.selected_students.push(student)
+    }
+    else{
+      $scope.selected_students.splice(index,1)
+    }
+  }
+}]);
+quizlib.controller('EditGroupCtrl', ['$scope','$routeParams','User','Group','StudentGroup',function($scope,$routeParams,User,Group,StudentGroup){
+  
+  $scope.students = []
+  $scope.selected_students = []
+  $scope.group = Group.get($routeParams.id)
+  Group.get_student_groups($routeParams.id).$promise.then(function(data){
+    angular.forEach(data,function(value,key){
+      User.get(value.student_id).$promise.then(function(data){
+        $scope.students.push(data)
+      })
+
+    })
+  })
+  
+  $scope.system_students = User.system_students()
+
+  $scope.AddStudent = function(student){
+    $scope.students.push(student)
+  }
+  $scope.saveGroup = function(){
+    Group.update($scope.group.id,$scope.group).$promise.then(function(data){
+      
+      console.log($scope.selected_students)
+      angular.forEach($scope.selected_students,function(value,key){
+        console.log(value.id)
+        StudentGroup.save({student_id: value.id,group_id: data.id})
+      })
+    })
+  }
+  $scope.selected_student = function(student){
+    index = $scope.selected_students.indexOf(student);
+    if(index == -1){
+      $scope.selected_students.push(student)
+    }
+    else{
+      $scope.selected_students.splice(index,1)
+    }
+  }
+}]);
 quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section', function($scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section) {
   $scope.my_assessments = Repository.all()
   $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()

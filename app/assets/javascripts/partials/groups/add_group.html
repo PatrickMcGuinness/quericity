@@ -1,0 +1,64 @@
+<div class="menu row">
+  <div class="container">
+    <ul>
+      <li><a href="#/manage_quiz_banks">MANAGE</a></li>
+      <li class="active"><a href="#">SERVE</a></li>
+      <li><a href="#">GRADE</a></li>
+      <li><a href="#">ANALYZE</a></li>
+	  </ul>
+  </div>
+</div>
+<div class="row_bottom">
+	<div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#/serve_quiz/new">Serve Quiz</a></span>
+		</div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
+      <span class="sub_nav_link"><a href="#/groups">Student Groups</a></span>
+		</div>	
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+    <div class="row add_grp_section">
+      <button class = "btn btn-default btn">
+        <span class = "glyphicon glyphicon-floppy-saved"></span>
+        <span>
+          <a ng-href = "/#groups">Cancel</a>  
+        </span>
+      </button>
+      <button class = "btn btn-default btn">
+        <span class = "glyphicon glyphicon-remove"></span>
+        <span>
+          <a ng-click = "saveGroup()" ng-href = "/#groups">Save</a>  
+        </span>
+      </button>
+      <div class="col-xs-12">
+        <input type="text" placeholder="Add Title for Group" class="add_title form-control" ng-model = "group.title"/>
+      </div>
+      <div class="col-xs-12">
+        <input type="text" ng-model="student" typeahead="student as student.first_name for student in system_students | filter:{first_name:$viewValue} | limitTo:8" class="form-control input-sm" enter = "AddStudent(student)" placeholder="Search by name">
+      </div>
+      <div class="col-xs-12">
+        <div class="col-xs-3 radio_contorl">
+          <input type="checkbox" name="checkbox" ng-click="predicate = 'first_name'; reverse=!reverse"/>&nbsp;&nbsp;Sort by name
+        </div>
+      </div>
+      <ul class="col-xs-12">
+        <li class="col-xs-3 select_section" ng-repeat = "stud in students | orderBy:predicate:reverse">
+          <span class="col-xs-4"><img src="/assets/img_01.png" class="img-thumbnail" /></span>
+          <span style=" float:right;">
+            <input type="checkbox" name="checkbox" ng-click = "selected_student(stud)"/>
+          </span>
+          <span class="col-xs-6">
+            <h4>{{stud.first_name}}{{stud.last_name}}</h4>
+            <p>{{stud.email}}</p>
+          </span>
+        </li>
+      </ul>
+    </div>
+	</div>
+</div>
+
