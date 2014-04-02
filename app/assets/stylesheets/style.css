@@ -92,11 +92,12 @@ body{
 .left_section{
 	height:500px;
 	background-color:#22a2dc;
-	margin-top:20px;
+	/*margin-top:20px;*/
 	padding-top:20px;
 	color:#FFF;
-	font-size:16px;
+	font-size:14px;
 	line-height:32px;
+	width: 230px;
 	}
 	
 .left_section ul li{
@@ -113,10 +114,10 @@ body{
 	padding: 0px;
 	}	
 	
-.left_section ul li a:hover{
+.left_section ul li:hover{
 	color:#003656;
 	position: relative;
-	background-image:url(images/left_nav_hover.png);
+	background-image:url(/assets/left_nav_hover.png);
 	background-repeat:no-repeat;
 	}
 	

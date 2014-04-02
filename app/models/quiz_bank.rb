@@ -5,7 +5,7 @@ class QuizBank < ActiveRecord::Base
   #extend FriendlyId
   #friendly_id :title, use: :slugged
   
-  attr_accessible :description, :title, :repository_id, :subject, :instructions,:public
+  attr_accessible :description, :title, :repository_id, :subject, :instructions,:public,:status
   validates :title,:repository_id,:presence => true 
 
   belongs_to :repository, :counter_cache => true
@@ -25,6 +25,11 @@ class QuizBank < ActiveRecord::Base
   class Public
     YES = 1
     NO = 0
+  end
+
+  class Status
+    SAVED = 1
+    NOTSAVED = 0
   end
 
   def is_public?

@@ -648,9 +648,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$routeParams','QuizBank','Repos
 
   
   
-  $scope.cancelQuiz = function(){
-    QuizBank.delete($scope.quiz_bank_id)
-  }
+  
   $scope.saveQuiz = function(){
     QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
       angular.forEach($scope.show_tags, function(value, key){
@@ -714,6 +712,7 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
         })
   
   $scope.saveQuiz = function(){
+    $scope.quiz_bank.status = 1
     QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
       angular.forEach($scope.show_tags, function(value, key){
         QuestionTopic.save($scope.quiz_bank_id,{title: value})
@@ -728,7 +727,9 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
     $scope.newSection = {}
   }
   $scope.difficulties = [{name: "Easy"},{name: "Medium"},{name: "Hard"}]
-  
+  $scope.cancelQuiz = function(){
+    QuizBank.delete($scope.quiz_bank_id)
+  }
 
 
 }])

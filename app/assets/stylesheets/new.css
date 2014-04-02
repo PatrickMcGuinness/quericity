@@ -47,10 +47,28 @@ a{
 
 .my-header-nav {
 	font-size: inherit;
+	/*margin-top: 10px;*/
+	color: black;
+	/*padding: 20px;*/
+	font-size: 14px;
+}
+.my-header-nav2 {
+	font-size: inherit;
 	margin-top: 10px;
 	color: black;
 	padding: 20px;
 	font-size: 14px;
+}
+.my-header-nav2 li span{
+	font-size: 20px;
+	padding: 10px;
+	
+}
+.my-header-nav2 .dropdown a{
+	color: black !important;
+}
+.my-header-nav2 li a span.custom-size{
+	font-size: 20px;
 }
 .my-header-nav li span{
 	font-size: 20px;
@@ -124,6 +142,7 @@ ul.my-sub-header-list{
   background-color: #22A2DC !important;
   margin-left: 39px;
   min-height: 400px;
+  width: 263px;
 }
 ul.navigation{
 	list-style: none;

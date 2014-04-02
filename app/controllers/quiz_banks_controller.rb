@@ -5,7 +5,7 @@ class QuizBanksController < ApplicationController
   respond_to :json
 
   def index
-    render json: current_user.quiz_banks
+    render json: current_user.quiz_banks.where("status = ?",QuizBank::Status::SAVED)
   end
 
   def show
@@ -38,7 +38,7 @@ class QuizBanksController < ApplicationController
   end
 
   def repo_quiz_banks
-    render json: current_user.repositories.find(params[:id]).quiz_banks
+    render json: current_user.repositories.find(params[:id]).quiz_banks.where("status = ?",QuizBank::Status::SAVED)
   end
 
   def clone

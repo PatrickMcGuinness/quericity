@@ -80,9 +80,12 @@ quizlib.directive('hidecreaterepo', function () {
   return {
     restrict: 'C',
     link: function (scope, element, attr) {
-      element.bind('click', function () {
+      element.bind('click', function (e) {
         var el = angular.element( document.querySelector( '#create-repo-div' ) );
         el.addClass("hide")
+        var el = angular.element( document.querySelector( '#new-repo-holder' ) );
+        el.addClass("hide")
+        e.stopPropagation()
       })
     }
   }
@@ -93,6 +96,8 @@ quizlib.directive('showcreaterepo', function () {
     link: function (scope, element, attr) {
       element.bind('click', function () {
         var el = angular.element( document.querySelector( '#create-repo-div' ) );
+        el.removeClass("hide")
+        var el = angular.element( document.querySelector( '#new-repo-holder' ) );
         el.removeClass("hide")
       })
     }

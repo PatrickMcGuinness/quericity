@@ -14,7 +14,18 @@
   <body>
     <%=render "layouts/header"%>
     <div class="container main-container">
-        <%= yield %>
+      <%if notice%>    
+        <div class="alert alert-success">
+          <a class="close mov" data-dismiss="alert">×</a>
+          <div class="notice"><%= flash[:notice] %></div> 
+        </div>
+      <%elsif alert%>
+        <div class="alert alert-error">
+          <a class="close mov" data-dismiss="alert">×</a>
+          <div class="notice"><%= flash[:alert] %></div> 
+        </div>
+      <%end%>
+      <%= yield %>
     </div>
     <%=render "layouts/footer"%>
     
