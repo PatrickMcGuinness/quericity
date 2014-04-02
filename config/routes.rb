@@ -31,24 +31,23 @@ QuizLib::Application.routes.draw do
       
     end
   end
-  resources :shares do
-    member do
-      get "make_public"
-      get "make_private"
-      get "make_stared_private"
-      get "make_stared_public"
-      get "make_shared_private"
-      get "make_shared_private" 
-    end 
-  end
   
   
   
   resources :student_groups 
   resources :invites
+  resources :served_quizzes do
+    member do
+      get "pending"
+      get "completed"
+    end
+    resources :sharings do
+    end
+  end
   resources :groups do
     member do
       get 'get_student_groups'
+      get 'students'
     end
   end
   resources :users do
@@ -72,6 +71,13 @@ QuizLib::Application.routes.draw do
     member do
       get "repo_quiz_banks"
       get "clone"
+      get "questions"
+    end
+    resources :cloned_quiz_banks do
+      collection do
+        get "create_the_clone"
+      end
+      resources :cloned_questions
     end
     resources :question_topics
     resources :sections do

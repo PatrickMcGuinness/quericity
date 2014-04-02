@@ -30,4 +30,8 @@ class GroupsController < ApplicationController
   def get_student_groups
     render json: current_user.groups.find(params[:id]).student_groups
   end
+
+  def students
+    render json: current_user.groups.find(params[:id]).students
+  end
 end

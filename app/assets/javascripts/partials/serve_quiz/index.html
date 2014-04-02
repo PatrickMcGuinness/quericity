@@ -47,29 +47,43 @@
           </th>
         </thead>
         <tbody class="text-center">
-        	<tr>
-          	<td>Quiz Bank 1</td>
-          	<td>20/20/2022 15:30PM</td>
-          	<td>20/20/2022 15:30PM</td>
-          	<td><span style="background-color:#00a404;" class="tags">Serving Complete</span></td>
-          	<td><span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;3&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;15&nbsp;</td>
-          </tr>
-        	<tr>
-          	<td>Quiz Bank 1</td>
-          	<td>20/20/2022 15:30PM</td>
-          	<td>20/20/2022 15:30PM</td>
-          	<td><span style="background-color:#c64b00;" class="tags">In Process</span></td>
-          	<td><span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;3&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;15&nbsp;</td>
-          </tr>
-        	<tr>
-          	<td>Quiz Bank 1</td>
-          	<td>20/20/2022 15:30PM</td>
-          	<td>20/20/2022 15:30PM</td>
-          	<td><span style="background-color:#0069a7;" class="tags">Not Served Yet</span></td>
-          	<td><span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;3&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;15&nbsp;</td>
+        	<tr ng-repeat = "served_quiz in served_quizzes">
+          	<td>{{served_quiz.title}}</td>
+          	<td>{{served_quiz.start_date}}&nbsp;{{served_quiz.start_time}}</td>
+          	<td>{{served_quiz.close_date}}&nbsp;{{served_quiz.end_time}}</td>
+          	<td>
+              <span ng-show = "served_quiz.status == 'Serving Completed'">
+                <div style="background-color:#00a404;" class="tags">
+                  {{served_quiz.status}}
+                </div>  
+              </span>
+              <span ng-show = "served_quiz.status == 'In Process'">
+                <div style="background-color:#c64b00;" class="tags" >
+                  {{served_quiz.status}}
+                </div>  
+              </span>
+              <span  ng-show = "served_quiz.status == 'Not Served Yet'">
+                <div style="background-color:#0069a7;" class="tags">
+                  {{served_quiz.status}}
+                </div>  
+              </span>
+            </td>
+          	<td><span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;<a ng-click="open($index)">{{served_quiz.pend.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;<a ng-click = "open($index)">{{served_quiz.comp.length}}</a>&nbsp;</td>
           </tr>
         </tbody>
 	    </table>
 		</div>
 	</div>
 </div>
+<script type="text/ng-template" id="myModalContent.html">
+    <div class='modal-header'>
+      <h3>Students Status</h3>
+    </div>
+    <div class="modal-body">
+      <ul>
+        <li ng-repeat="sharing in sharings">
+          <a>{{sharing.id}}</a>
+        </li>
+      </ul>
+    </div>
+</script>

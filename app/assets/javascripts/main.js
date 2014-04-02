@@ -23,5 +23,7 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/groups/add_group.html',controller: 'AddGroupCtrl'}).
       when('/groups/:id/edit',
       {templateUrl: 'assets/partials/groups/edit.html',controller: 'EditGroupCtrl'}).
+      when('/quiz/preview',
+      {templateUrl: 'assets/partials/serve_quiz/preview.html',controller: 'PreviewQuizCtrl'}).
       otherwise({redirectTo: '/manage_quiz_banks'})
   }]);

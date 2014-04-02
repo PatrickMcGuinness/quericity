@@ -1,13 +1,14 @@
 quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
   function QuizBank() {
-    this.service = $resource('/quiz_banks/:id:shared_quiz_banks/:repo_quiz_banks:change_quiz_bank_repo:clone', {id: '@id'},
+    this.service = $resource('/quiz_banks/:id:shared_quiz_banks/:repo_quiz_banks:change_quiz_bank_repo:clone:questions', {id: '@id'},
                   {update:{method:"PUT",isArray:false},
                    query:{method:"GET",transformResponse: [function(data,headersGetter){
                     return {result: JSON.parse(data)}
                    }]},
                    shared_quiz_banks:{method:"GET",isArray:true},
                    repo_quiz_banks:{method:"GET",isArray:true},
-                   clone:{method:"GET",isArray:false}
+                   clone:{method:"GET",isArray:false},
+                   questions:{method: "GET", isArray:true}
                  });
   };
   QuizBank.prototype.new = function(){
@@ -36,6 +37,9 @@ quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
   }
   QuizBank.prototype.repo_quiz_banks = function(RepoId){
     return this.service.repo_quiz_banks({id: RepoId,repo_quiz_banks:"repo_quiz_banks"})
+  }
+  QuizBank.prototype.questions = function(QuizId){
+    return this.service.repo_quiz_banks({id: QuizId,questions:"questions"})
   }
 
   return new QuizBank;

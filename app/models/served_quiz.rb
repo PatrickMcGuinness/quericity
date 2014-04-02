@@ -3,8 +3,8 @@ class ServedQuiz < ActiveRecord::Base
                   :instructions,:random,:start_time,:infinite_duration,:number_of_questions, 
                   :same_questions,:show_in_sequence, :show_all_questions, :questions_per_page
 
-  validates :owner_id, presence:true
-  validates :quiz_bank_id, presence: true
+  #validates :owner_id, presence:true
+  #validates :quiz_bank_id, presence: true
 
 
   belongs_to :owner, :class_name => "User", :foreign_key => "owner_id"
@@ -42,6 +42,14 @@ class ServedQuiz < ActiveRecord::Base
     YES = 1
   end
 
+  def pending_sharings
+    self.sharings.where("status = ?",Sharing::Status::PENDING)
+  end
+
+  def completed_sharings
+    self.sharings.where("status = ?",Sharing::Status::ATTEMPTED)
+  end
+  
   def show_all_questions_in_preview?
     self.show_all_questions == ServedQuiz::ShowAllQuestions::YES
   end

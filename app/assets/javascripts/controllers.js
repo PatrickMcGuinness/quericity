@@ -1,12 +1,183 @@
-quizlib.controller('ServeQuizCtrl', ['$scope', function($scope){
+quizlib.controller('ServeQuizCtrl', ['$scope','$modal','$log','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$log,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
+  $scope.served_quizzes = []
+  $scope.pending_sharings = []
+  $scope.completed_sharings = []
+  ServedQuiz.all().$promise.then(function(data){
+    angular.forEach(data.result,function(value,key){
+      QuizBank.get(value.quiz_bank_id).$promise.then(function(data){
+        title = data.title
+        
+        var obj = new Date(value.date)
+        start_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+        
+        var obj = new Date(value.close_date)
+        close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+        
+        var obj = new Date(value.start_time)
+        start_time = obj.getHours() + ":" + obj.getMinutes()
+        
+        var obj = new Date(value.end_time)
+        end_time = obj.getHours() + ":" + obj.getMinutes()        
+
+        status = "Not Served Yet"
+        var obj = new Date()
+        today = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+        if(new Date(start_date) < new Date(today)){
+          status = "In Process"
+        }
+        if(new Date(close_date) < new Date(today)){
+          status = "Serving Completed"
+        }
+       $scope.served_quizzes.push({title: title,start_date: start_date,start_time: start_time, 
+            close_date: close_date, end_time: end_time, status: status,pend: ServedQuiz.pending(value.id),
+            comp:ServedQuiz.completed(value.id)})
+        ServedQuiz.pending(value.id).$promise.then(function(data){
+          $scope.pending_sharings.push(data)
+        })
+        $scope.completed_sharings.push(ServedQuiz.completed(value.id))
+        
+      })
+    })
+  })
+  
+  $scope.open = function (index) {
+    var modalInstance = $modal.open({
+      templateUrl: 'myModalContent.html',
+      controller: 'ServeQuizCtrl',
+      resolve: {
+        sharings: function(){
+          //console.log(index)
+          //console.log($scope.pending_sharings[index])
+          return $scope.pending_sharings[index]
+        }
+      }
+    });
+    
+  }
+}]);
+quizlib.controller('PreviewQuizCtrl', ['$scope', function($scope){
+
+}]);
+quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','Group','User','Sharing',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,Group,User,Sharing){
+  
+  $scope.show_question_list = true
+  $scope.selected_questions = []
+  $scope.show_options = true
+  $scope.group_students = []
+  $scope.students_to_left = []
+  $scope.students_to_right = []
+  $scope.selected_students = []
+  
+  QuizBank.all().$promise.then(function(data){
+    $scope.quiz_banks = data.result
+  })
+  
+  $scope.groups = Group.all()
+  $scope.system_students = User.system_students()
+  
+  $scope.$watch('selected_quiz', function() {
+    if($scope.selected_quiz != undefined){
+      $scope.quiz_bank_questions = QuizBank.questions($scope.selected_quiz.id)
+      $scope.quiz_bank = QuizBank.get($scope.selected_quiz.id)
+    }
+  });
+
+  $scope.$watch('selected_group',function(){
+    if($scope.selected_group != undefined){
+      console.log($scope.selected_group.id)
+      $scope.group_students = Group.students($scope.selected_group.id)
+    }
+  })
+
+  $scope.AddStudent = function(student){
+    index = $scope.group_students.indexOf(student);
+    if(index == -1){
+      $scope.group_students.push(student);
+    }
+  }
+
+  $scope.student_to_right = function(student){
+    index = $scope.students_to_right.indexOf(student);
+    console.log(index)
+    if(index == -1){
+      $scope.students_to_right.push(student)
+    }
+    else{
+      $scope.students_to_right.splice(index,1)
+    }
+  }
+
+  $scope.move_to_right = function(){
+    console.log($scope.students_to_right.length)
+    angular.forEach($scope.students_to_right,function(value,key){
+      $scope.selected_students.push(value)
+      index = $scope.group_students.indexOf(value)
+      $scope.group_students.splice(index,1)
+    })
+    $scope.students_to_right = []
+  }
+
+  $scope.move_to_left = function(){
+    angular.forEach($scope.students_to_left,function(value,key){
+      index = $scope.selected_students.indexOf(value)
+      $scope.selected_students.splice(index,1)
+      $scope.group_students.push(value)
+    })
+    $scope.students_to_left = []
+  }
+
+  $scope.student_to_left = function(student){
+    index = $scope.students_to_left.indexOf(student);
+    if(index == -1){
+      $scope.students_to_left.push(student)
+    }
+    else{
+      $scope.students_to_left.splice(index,1)
+    }
+  }
+
+  $scope.select_question = function(question){
+    index = $scope.selected_questions.indexOf(question);
+    if(index == -1){
+      $scope.selected_questions.push(question);
+    }
+    else{
+      $scope.selected_questions.splice(index,1);
+    }
+  }
+
+  $scope.serveTheQuiz = function(){
+    ClonedQuizBank.create_the_clone($scope.selected_quiz.id).$promise.then(function(data){
+      console.log(data.id)
+      console.log($scope.served_quiz.random)
+      cloned_quiz_bank_id = data.id
+      
+      if($scope.served_quiz.random == 0){
+        angular.forEach($scope.selected_questions,function(value,key){
+          ClonedQuestion.save($scope.selected_quiz.id,data.id,{seq: value.seq, 
+              description: value.description, question_type: value.question_type,
+              difficulty_level: value.difficulty_level, cloned_quiz_bank_id: cloned_quiz_bank_id})
+        })
+      }
+      if($scope.served_quiz.random == 1){
+
+      }
+      console.log(cloned_quiz_bank_id)
+      $scope.served_quiz.cloned_quiz_bank_id = cloned_quiz_bank_id
+      $scope.served_quiz.quiz_bank_id = $scope.selected_quiz.id
+      ServedQuiz.save($scope.served_quiz).$promise.then(function(data){
+        angular.forEach($scope.selected_students,function(value,key){
+          Sharing.save(data.id,{user_id: value.id})
+        })
+      })
+    })
+  }
 
 }]);
 
-quizlib.controller('NewServeQuizCtrl', ['$scope', function($scope){
-
-}]);
 quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',function($scope,User,Group,StudentGroup){
   $scope.groups = []
+  $scope.students = User.get_students()
   Group.all().$promise.then(function(data){
     angular.forEach(data,function(value,key){
       var obj = new Date(value.updated_at)

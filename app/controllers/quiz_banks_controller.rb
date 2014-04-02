@@ -45,6 +45,11 @@ class QuizBanksController < ApplicationController
     @quiz_bank = current_user.quiz_banks.find(params[:id])
     render json: @quiz_bank.clone_the_quiz(current_user)
   end
+
+  def questions
+    @quiz_bank = current_user.quiz_banks.find(params[:id])
+    render json: @quiz_bank.questions
+  end
   
   
 

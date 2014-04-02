@@ -13,6 +13,12 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def students
+    student_ids = self.student_groups.pluck(:student_id)
+    students  = User.where("id IN (?)",student_ids)
+    students
+  end
+
   def background_tasks_for_create(user,params)
     if params[:student_ids].present?
       student_groups = user.default_group.student_groups
