@@ -181,7 +181,7 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
   Group.all().$promise.then(function(data){
     angular.forEach(data,function(value,key){
       var obj = new Date(value.updated_at)
-      last_updated = obj.getDate() +"-" + obj.getMonth() +"-"+obj.getFullYear()
+      last_updated = obj.getDate() +"-" + (obj.getMonth() + 1) +"-"+obj.getFullYear()
       Group.get_student_groups(value.id).$promise.then(function(data){
         $scope.groups.push({id: value.id, title: value.title, count: data.length,last_updated:last_updated})
       })
@@ -600,8 +600,9 @@ quizlib.controller("sectionCtrl",['$scope','Section',function($scope,Section){
 }])
 
 quizlib.controller("CloneQuizBankCtrl",['$scope','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope, $routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
-
-  $scope.quiz_bank = QuizBank.clone($routeParams.id).$promise.then(function(data){
+  $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
+  QuizBank.clone($routeParams.id).$promise.then(function(data){
+    $scope.quiz_bank = data
     $scope.quiz_bank_id = data.id
     $scope.quiz_sections = Section.all($scope.quiz_bank_id)
     $scope.tags = Topic.all()
@@ -645,7 +646,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$routeParams','QuizBank','Repos
   $scope.quiz_bank_id = $routeParams.id
   $scope.quiz_bank = QuizBank.get($scope.quiz_bank_id)
   $scope.quiz_sections = Section.all($scope.quiz_bank_id)
-
+  $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
   
   
   
