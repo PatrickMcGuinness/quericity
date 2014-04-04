@@ -53,7 +53,7 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$modal','$log','ServedQuiz','Clon
     
   }
 }]);
-quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','QuizBank','Question','QuestionOption',function($scope,$routeParams,QuizBank,Question,QuestionOption){
+quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizBank','Question','QuestionOption',function($scope,$routeParams,$timeout,QuizBank,Question,QuestionOption){
   $scope.quiz_bank_id = $routeParams.id
   $scope.show_options = true
   $scope.quiz_bank = QuizBank.get($scope.quiz_bank_id)
@@ -63,27 +63,59 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','QuizBank','Quest
   $scope.submit = false
   $scope.show_answer = false
   $scope.questions_done = 0
+  $scope.question_done = 0
+  $scope.show_answers = []
+  $scope.to_be_graded = []
   $scope.stopQuiz = function(){
     $scope.show_options = true
     $scope.show_timer = false
     $scope.show_questions = []
+    $scope.show_answers = []
+    $scope.to_be_graded = []
+    $scope.option = {}
     $scope.show_answer = false
     $scope.submit = false
+    $scope.counter = 0
+    $scope.minutes = 0
+    $scope.hours = 0
   }
+
+  $scope.counter = 0;
+  $scope.minutes = 0;
+  $scope.hours = 0;
+  $scope.onTimeout = function(){
+    $scope.counter--;
+    if($scope.counter == 0){
+      $scope.counter = 60
+      if($scope.minutes == 0){
+        if($scope.hours != 0){
+          $scope.hours = $scope.hours - 1
+        }
+        else{
+
+        }
+      }
+      else{
+        $scope.minutes = $scope.minutes - 1
+      }
+    }
+    mytimeout = $timeout($scope.onTimeout,1000);
+  }
+
 
 
   $scope.startQuiz = function(){
     $scope.show_options = false
     $scope.show_answer = false
+    $scope.submit = true
+    $scope.show_answers = []
     if($scope.option.all_questions == 1){
-      $scope.submit = true
       angular.forEach($scope.questions,function(value,key){
         $scope.show_questions.push(value)
         $scope.show_questions[$scope.show_questions.length -1].question_options = QuestionOption.all($scope.quiz_bank_id,value.section_id,value.id)
       })  
     }
     if($scope.option.all_questions == 0){
-      $scope.submit = true
       for(var i = 0; i < $scope.option.question_number; i++){
         if($scope.questions[i] != undefined){
           $scope.show_questions.push($scope.questions[i])
@@ -98,28 +130,22 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','QuizBank','Quest
     if($scope.option.unlimited == 0){
       $scope.show_timer = true
       if($scope.option.duration_type == 1){
-        $scope.duration = ($scope.option.duration * 3600)
+        //$scope.counter = ($scope.option.duration * 3600)
+        $scope.counter = 60
+        $scope.minutes = $scope.option.duration
+        mytimeout = $timeout($scope.onTimeout,1000);
       }
       if($scope.option.duration_type == 2){
-        $scope.duration = ($scope.option.duration * 3600 * 60)
+        $scope.counter = ($scope.option.duration * 3600 * 60)
+        mytimeout = $timeout($scope.onTimeout,1000);
       }
     }
   }
   $scope.submitQuestion = function(answered_questions){
-    angular.forEach(answered_questions,function(value,key){
-      
-    })
-  }
-  $scope.submitQuiz = function(answered_questions){
-    $scope.show_options = false
-    $scope.show_timer = false
-    $scope.show_answers = []
-    $scope.submit = false
-    $scope.show_answer = true
     angular.forEach(answered_questions,function(question,key){
       if(question.question_type == 1){
         answer = {question_answer: question.question_options[0].is_correct, 
-          answer: question.answer, question_type: 1}
+          answer: question.answer}
         if(question.question_options[0].is_correct == question.answer){
           answer.correct = true
         }
@@ -143,7 +169,6 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','QuizBank','Quest
           }
 
         })
-        answer.question_type = 2
         $scope.show_answers.push(answer)
       }
       if(question.question_type == 4){
@@ -154,11 +179,77 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','QuizBank','Quest
         }else{
           answer.correct = false
         }
-        answer.question_type = 4
         $scope.show_answers.push(answer)
       }
       if(question.question_type == 3){
-        $scope.show_answers.push({question_type: 3})
+        $scope.to_be_graded.push({question_answer: question.question_options[0].answer,answer: question.answer,status: "Will be graded later"})
+      }
+    })
+    $scope.show_questions = []
+    if($scope.question_done == $scope.questions.length){
+      $scope.show_answer= true 
+      $scope.submit = false
+    }
+    for(var i = $scope.question_done; i < $scope.questions.length; i++){
+      if($scope.questions[i] != undefined){
+        $scope.show_questions.push($scope.questions[i])
+        $scope.show_questions[$scope.show_questions.length -1].question_options = QuestionOption.all($scope.quiz_bank_id,$scope.questions[i].section_id,$scope.questions[i].id)
+        $scope.question_done = i + 1
+      }
+      else{
+        $scope.questions_done = $scope.questions.length
+      }
+    }
+  }
+  $scope.submitQuiz = function(answered_questions){
+    $scope.show_options = false
+    $scope.show_timer = false
+    $scope.show_answers = []
+    $scope.to_be_graded = []
+    $scope.submit = false
+    $scope.show_answer = true
+    angular.forEach(answered_questions,function(question,key){
+      if(question.question_type == 1){
+        answer = {question_answer: question.question_options[0].is_correct, 
+          answer: question.answer}
+        if(question.question_options[0].is_correct == question.answer){
+          answer.correct = true
+        }
+        else{
+          answer.correct = false
+        }
+        $scope.show_answers.push(answer)
+      }
+      if(question.question_type == 2){
+        angular.forEach(question.question_options,function(value,key){
+          if(question.answer == value.id){
+            if(value.is_correct == true){
+              answer = {correct: true,answer: value.answer}
+            }
+            if(value.is_correct == false){
+              answer = {correct: false,answer: value.answer}
+            }
+          }
+          if(value.is_correct == true){
+            answer.question_answer = value.answer
+          }
+
+        })
+        $scope.show_answers.push(answer)
+      }
+      if(question.question_type == 4){
+        answer = {question_answer: question.question_options[0].answer,
+          answer: question.answer}
+        if(question.question_options[0].answer == question.answer){
+          answer.correct = true
+        }else{
+          answer.correct = false
+        }
+        $scope.show_answers.push(answer)
+      }
+      if(question.question_type == 3){
+        //$scope.show_answers.push({question_type: 3})
+        $scope.to_be_graded.push({question_answer: question.question_options[0].answer,answer: question.answer,status: "Will be graded later"})
       }
     })
     $scope.show_questions = []

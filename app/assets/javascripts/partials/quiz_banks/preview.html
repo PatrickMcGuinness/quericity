@@ -20,8 +20,9 @@
       <div class = "col-xs-12">
         <h2 class = "col-xs-offset-5">{{quiz_bank.title}}</h4>
         <div ng-show = "show_timer">
-          <timer class = "col-xs-offset-5" end-time="duration">{{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.
-          </timer>
+          <div class = "col-xs-5 col-xs-offset-5">{{minutes}}&nbsp;Minutes:{{counter}}Seconds</div>
+          <!--<timer class = "col-xs-offset-5" end-time="get_duration()">{{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.
+          </timer> -->
         </div>
       </div>
       <div class="col-xs-12 strip form_section" ng-show = "show_options">
@@ -30,12 +31,17 @@
               <input type="radio" name="all_questions" value = "1" ng-model = "option.all_questions">&nbsp;&nbsp;All question on one page
           </div>
 				</div>
-        <div class="col-xs-4">
-          <span class="col-xs-9">
+        <div class="col-xs-5">
+          <span class="col-xs-7">
             <input type="radio" name="all_questions" value = "0" ng-model = "option.all_questions">&nbsp;&nbsp;Questions per page:
           </span>
-          <span class="col-xs-3">
+          <span class="col-xs-5">
+            <span class = "col-xs-8">
               <input type="text" class="label_field form-control" ng-model = "option.question_number"/>
+            </span>
+            <span class = "col-xs-4">  
+              <span>/{{questions.length}}</span>
+            </span>  
           </span>
         </div>
         <!--
@@ -103,8 +109,8 @@
         </div>
         <div class = "col-xs-12 mar-top-20 mar-left-10">
           <div ng-if = "question.question_type == 1">
-            <input type="radio" name="answer" value = "true" ng-model = "question.answer">&nbsp;True
-            &nbsp;&nbsp;<input type="radio" name="answer" value = "false" ng-model = "question.answer">&nbsp;False
+            <input type="radio" name="true_false" value = "true" ng-model = "question.answer">&nbsp;True
+            &nbsp;&nbsp;<input type="radio" name="true_false" value = "false" ng-model = "question.answer">&nbsp;False
           </div>
           <div ng-if = "question.question_type == 2">
             <div ng-repeat = "question_option in question.question_options">
@@ -160,6 +166,17 @@
               </td>
               <td>
                 {{answer.correct}}
+              </td>
+            </tr>
+            <tr ng-repeat = "answer_to_grade in to_be_graded">
+              <td>
+                {{answer_to_grade.question_answer}}
+              </td>
+              <td>
+                {{answer_to_grade.answer}}
+              </td>
+              <td>
+                {{answer_to_grade.status}}
               </td>
             </tr>
           </tbody>

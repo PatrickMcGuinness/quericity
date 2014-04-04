@@ -24,9 +24,6 @@ class QuestionOptionsController < ApplicationController
   def destroy
   	render json: @question.question_options.find(params[:id]).destroy
   end
-  def destroy_list
-  	#render json: @question.question_topics.find_list(params).destory_all
-  end
 
   private
     def set_variables

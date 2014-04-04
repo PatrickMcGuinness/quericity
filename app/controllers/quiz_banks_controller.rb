@@ -9,15 +9,16 @@ class QuizBanksController < ApplicationController
   end
 
   def show
-    render json: current_user.quiz_banks.find(params[:id])
+    #render json: current_user.quiz_banks.find(params[:id])
+    render json: QuizBank.find(params[:id])
   end
 
   def edit
-    render json: current_user.quiz_banks.find(params[:id])
+    render json: QuizBank.find(params[:id])
   end
 
   def update
-    render json: current_user.quiz_banks.find(params[:id]).update_attributes(params[:quiz_bank])
+    render json: QuizBank.find(params[:id]).update_attributes(params[:quiz_bank])
   end
 
   def destroy
@@ -42,12 +43,12 @@ class QuizBanksController < ApplicationController
   end
 
   def clone
-    @quiz_bank = current_user.quiz_banks.find(params[:id])
+    @quiz_bank = QuizBank.find(params[:id])
     render json: @quiz_bank.clone_the_quiz(current_user)
   end
 
   def questions
-    @quiz_bank = current_user.quiz_banks.find(params[:id])
+    @quiz_bank = QuizBank.find(params[:id])
     render json: @quiz_bank.questions
   end
   

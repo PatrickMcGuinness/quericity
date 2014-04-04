@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def get_current_user
-    render json: {user:current_user}
+    render json: current_user
   end
 
   def get_students
