@@ -492,6 +492,10 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
       })
     })
   })
+
+  $scope.deleteQuiz = function(){
+    QuizBank.delete($scope.quiz_bank_id)
+  }
 }]);
 
 
@@ -808,6 +812,7 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$routeParams','QuizBank','Repo
     QuizBank.delete($scope.quiz_bank_id)
   }
   $scope.saveQuiz = function(){
+    $scope.quiz_bank.status = 1
     QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
       angular.forEach($scope.show_tags, function(value, key){
         QuestionTopic.save($scope.quiz_bank_id,{title: value})
@@ -844,6 +849,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$routeParams','QuizBank','Repos
   }
   
   $scope.saveQuiz = function(){
+    $scope.quiz_bank.status = 1
     QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
       angular.forEach($scope.show_tags, function(value, key){
         QuestionTopic.save($scope.quiz_bank_id,{title: value})

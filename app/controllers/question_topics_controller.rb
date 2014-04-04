@@ -27,6 +27,6 @@ class QuestionTopicsController < ApplicationController
 
   private
     def set_variables
-      @quiz_bank = current_user.quiz_banks.find(params[:quiz_bank_id])
+      @quiz_bank = QuizBank.find(params[:quiz_bank_id])
     end
 end

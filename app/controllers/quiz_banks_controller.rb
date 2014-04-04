@@ -22,7 +22,7 @@ class QuizBanksController < ApplicationController
   end
 
   def destroy
-    render json: current_user.quiz_banks.find(params[:id]).destroy
+    render json: QuizBank.find(params[:id]).destroy
   end
 
   def create 
