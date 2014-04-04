@@ -115,12 +115,6 @@ quizlib.directive('customPopover', function ($compile) {
         content: attrs.popoverHtml,
         placement: attrs.popoverPlacement
       });
-      //if(!scope.$$phase) {
-        //scope.$apply()
-      //}
-      
-      //console.log(scope)
-      //console.log(angular.element(el))
     }
   };
 });

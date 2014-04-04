@@ -6,7 +6,7 @@
       <span ng-if = "question.question_type == 2" class = "glyphicon glyphicon-play" style = "color:blue;"></span>
       <span ng-if = "question.question_type == 3" class = "glyphicon glyphicon-edit" style = "color:blue;"></span>  
     </div>
-    <div class = "col-xs-9">{{question.description}}</div>
+    <div class = "col-xs-9" ng-bind-html="question.description | unsafe" data-math-jax></div>
     <div class = "col-xs-1 pull-right">
       <img src = "/assets/arrow_down.png" ng-hide = "show_details" ng-click = "show_options(section.id,question.id,question.question_type)">
       <img src = "/assets/arrow_right.png" ng-show = "show_details" ng-click = "show_details = false">

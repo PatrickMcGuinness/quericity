@@ -1,0 +1,170 @@
+<div class="row_bottom">
+	<div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon">
+        <span class = "glyphicon glyphicon-arrow-left"></span>
+      </span>
+      <span class="sub_nav_link"><a href="#">Back</a></span>
+    </div>
+    <div class="sub_nav"  ng-hide = "show_options">  
+      <span class="sub_nav_icon">
+        <span class = "glyphicon glyphicon-stop"></span>
+      </span>
+      <span class="sub_nav_link"><a ng-click="stopQuiz()">Stop Quiz/Show Options</a></span>
+    </div>	
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+    <div class="col-xs-12">
+      <div class = "col-xs-12">
+        <h2 class = "col-xs-offset-5">{{quiz_bank.title}}</h4>
+        <div ng-show = "show_timer">
+          <timer class = "col-xs-offset-5" end-time="duration">{{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.
+          </timer>
+        </div>
+      </div>
+      <div class="col-xs-12 strip form_section" ng-show = "show_options">
+        <div class="col-xs-4">
+          <div class="col-xs-12">
+              <input type="radio" name="all_questions" value = "1" ng-model = "option.all_questions">&nbsp;&nbsp;All question on one page
+          </div>
+				</div>
+        <div class="col-xs-4">
+          <span class="col-xs-9">
+            <input type="radio" name="all_questions" value = "0" ng-model = "option.all_questions">&nbsp;&nbsp;Questions per page:
+          </span>
+          <span class="col-xs-3">
+              <input type="text" class="label_field form-control" ng-model = "option.question_number"/>
+          </span>
+        </div>
+        <!--
+        <div class="col-xs-4">
+          <div class="col-xs-6">
+              Show Answers:
+          </div>
+          <div class="col-xs-6">
+            <select class="form-control" ng-model = "option.answer">
+              <option value = "">Show Answers</option>
+              <option value = "1">After Question</option>
+              <option value = "2">After Quiz</option>
+              <option value = "3">Don't Show</option>
+            </select>
+          </div>
+        </div>
+        -->
+        <div class = "col-xs-12">
+          <div class="col-xs-2 mar-top-20">
+            <input type="radio" name="unlimited" value = "0" ng-model = "option.unlimited">&nbsp;Duration:
+          </div>
+                    
+          <div class="col-xs-2 mar-top-20">
+            <span>
+              <input type="text" class="label_field form-control" ng-model = "option.duration"/>
+            </span>
+          </div>
+          <div class="col-xs-2 mar-top-20">
+            <select class="form-control" ng-model = "option.duration_type">
+              <option value = "">Select</option>
+              <option value = "1">Mintues</option>
+              <option value = "2">Hours</option>
+            </select>
+          </div>
+          <div class = "col-xs-1 mar-top-20"> or
+          </div>
+          <div class = "col-xs-2 mar-top-20">
+            <input type="radio" name="unlimited" value = "1" ng-model = "option.unlimited">&nbsp;Unlimited
+          </div>
+          <div class = "col-xs-1 mar-top-20 pull-right">
+            <button class = "btn" ng-click = "startQuiz()">
+              <span class = "glyphicon glyphicon-play"></span>
+              Start Quiz
+            </button>
+          </div>
+        </div>  
+				
+			</div>
+    </div>       
+    <div class="col-xs-12 form_section">
+        <span><b>Instructions</b></span>
+        <p>
+        {{quiz_bank.instructions}}
+        </p>
+    </div>        
+    <div class="col-xs-12">
+      <div class="col-xs-12 strip" ng-repeat = "question in show_questions">
+        <div class="col-xs-12 ">
+          <span style="float:left; margin-left:10px;">{{$index + 1}})&nbsp;{{question.description}}</span>
+        </div>
+        <div class = "col-xs-12 mar-top-20">
+          <span>
+            <strong>&nbsp;&nbsp;Options:</strong>
+          </span>  
+        </div>
+        <div class = "col-xs-12 mar-top-20 mar-left-10">
+          <div ng-if = "question.question_type == 1">
+            <input type="radio" name="answer" value = "true" ng-model = "question.answer">&nbsp;True
+            &nbsp;&nbsp;<input type="radio" name="answer" value = "false" ng-model = "question.answer">&nbsp;False
+          </div>
+          <div ng-if = "question.question_type == 2">
+            <div ng-repeat = "question_option in question.question_options">
+              <input type="radio" name="answer" value = "{{question_option.id}}" ng-model = "question.answer">&nbsp;{{question_option.answer}}
+            </div>
+          </div>
+          <div ng-if = "question.question_type == 3">
+            <textarea ng-model = "question.answer" class =  "form-control"  rows = 3 placeholder = "Enter The Answer"></textarea>
+          </div>
+          <div ng-if = "question.question_type == 4">
+            <textarea ng-model = "question.answer" class =  "form-control"  rows = 3 placeholder = "Enter the Answer"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 strip" ng-show = "submit">
+        <span class = "col-xs-2 col-xs-offset-4">
+          <button ng-if = "option.all_questions == 1" class = "btn btn-success" ng-click = "submitQuiz(show_questions)">
+            <span class = "glyphicon glyphicon-thumbs-up"></span>
+            <span>Submit</span>
+          </button>
+          <button ng-if = "option.all_questions == 0" class = "btn btn-success" ng-click = "submitQuestion(show_questions)">
+            <span class = "glyphicon glyphicon-thumbs-up"></span>
+            <span>Submit</span>
+          </button>
+        </span>
+      </div>
+
+    </div>
+    <div class = "col-xs-12" ng-show = "show_answer">
+      <h2 class = "col-xs-4 col-xs-offset-4">
+        Answers
+      </h2>
+      <div class = "col-xs-12 strip">
+        <table class = "table table-striped">
+          <thead>
+            <th class = "col-xs-5">
+              Correct Answer
+            </th>
+            <th class = "col-xs-5">
+              Your Answer
+            </th>
+            <th class = "col-xs-2">
+              Grade
+            </th>
+          </thead>
+          <tbody>
+            <tr ng-repeat = "answer in show_answers">
+              <td>
+                {{answer.question_answer}}
+              </td>
+              <td>
+                {{answer.answer}}
+              </td>
+              <td>
+                {{answer.correct}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+	</div>
+</div>
