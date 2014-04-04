@@ -50,7 +50,7 @@
             <div class = "row"><div class = "col-xs-4 col-xs-offset-5 form-row">
               <%= link_to "Log In with Facebook", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary"%>
             </div></div>
-            <div class = "row"><div class = "col-xs-4 col-xs-offset-2 form-row">Need an Account?<%- if devise_mapping.registerable? && controller_name != 'registrations' %></div>
+            <div class = "row"><div class = "col-xs-6 col-xs-offset-2 form-row">Need an Account?<%- if devise_mapping.registerable? && controller_name != 'registrations' %></div>
             <div class= "col-xs-4 form-row">
               <%= link_to "Sign up", new_registration_path(resource_name) %>
             </div>
