@@ -11,6 +11,30 @@ quizlib.directive('enter', function () {
   };
 });
 
+quizlib.directive('hideonenter', function () {
+  return function (scope, element, attrs) {
+    element.bind("keydown", function (event) {
+      if(event.which === 13) {
+        $("#create-repo-div").addClass("hide")
+        $(".title-edit").addClass("hide")
+        event.preventDefault();
+      }
+    });
+  };
+});
+
+quizlib.directive('showtitleedit', function () {
+  return function (scope, element, attrs) {
+    element.bind("click", function (event) {
+        var el = element[0]
+        $(el).parents(".complete_row").next(".title-edit").removeClass("hide")
+    });
+  };
+});
+
+
+
+
 quizlib.directive('clickunfold', function () {
   return {
     restrict: 'C',
@@ -23,7 +47,6 @@ quizlib.directive('clickunfold', function () {
           element.next().addClass("hide")
         }
       })
-
     }
   }
 });
@@ -118,6 +141,7 @@ quizlib.directive('customPopover', function ($compile) {
     }
   };
 });
+
 
 quizlib.directive('draggable', function() {
     return function(scope, element) {

@@ -51,6 +51,10 @@ class QuizBanksController < ApplicationController
     @quiz_bank = QuizBank.find(params[:id])
     render json: @quiz_bank.questions
   end
+
+  def quiz_bank_owner
+    @quiz_bank = QuizBank.find(params[:id])
+  end
   
   
 

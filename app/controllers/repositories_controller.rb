@@ -17,7 +17,7 @@ class RepositoriesController < ApplicationController
   end
 
   def update
-    render json: current_user.repositories.find(params[:id]).update_attributes(param[:repository])
+    render json: current_user.repositories.find(params[:id]).update_attributes(params[:repository])
   end
 
   def destroy

@@ -90,12 +90,12 @@ body{
 	}
 	
 .left_section{
-	height:500px;
+	min-height:500px;
 	background-color:#22a2dc;
 	/*margin-top:20px;*/
 	padding-top:20px;
 	color:#FFF;
-	font-size:14px;
+	font-size:12px;
 	line-height:32px;
 	width: 230px;
 	}
@@ -114,12 +114,21 @@ body{
 	padding: 0px;
 	}	
 	
-.left_section ul li:hover{
+.left_section ul li a:hover{
 	color:#003656;
 	position: relative;
 	background-image:url(/assets/left_nav_hover.png);
 	background-repeat:no-repeat;
 	}
+.left_section ul li .complete_row:hover{
+	color:#003656;
+	position: relative;
+	background-image:url(/assets/left_nav_hover.png);
+	background-repeat:no-repeat;
+	}
+.left_section ul li .complete_row span.link{
+	cursor: pointer;
+	}		
 	
 .left_section ul li ul{
 	padding-left:20px;

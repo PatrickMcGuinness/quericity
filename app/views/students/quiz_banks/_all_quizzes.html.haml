@@ -16,11 +16,11 @@
           -@sharings.each do |sharing|
             %tr
               %td
-                =sharing.served_quiz.cloned_quiz_bank.title
+                -#=sharing.served_quiz.cloned_quiz_bank.title
               %td
                 =sharing.served_quiz.owner.name
               %td
-                =sharing.served_quiz.cloned_quiz_bank.subject.title
+                -#=sharing.served_quiz.cloned_quiz_bank.subject.title
               %td
                 -if sharing.served_quiz.is_served?
                   -if sharing.is_pending?

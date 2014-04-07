@@ -513,10 +513,19 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
     })
     
   })
+
+  $scope.deleteRepo = function(repo){
+    Repository.delete(repo.id)
+  }
+  $scope.editRepo = function(repo){
+    Repository.update(repo.id,repo)
+  }
   $scope.addRepo = function(){
     $scope.show_new_repo_div = false
-    Repository.save($scope.repository)
-    $scope.my_assessments.push($scope.repository)
+    Repository.save($scope.repository).$promise.then(function(data){
+      $scope.my_assessments.push(data)
+    })
+    
   }
 
   $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()

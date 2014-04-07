@@ -37,20 +37,34 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-3 left_section">
-      <ul>
+      <ul class = "row">
         <li>
           <a class = "clickunfold" ng-right-click = "$event.stopPropagation()">
             My Assessments
           </a>
           <ul class = "hide" id = "new-repo-holder">
             <li class = "hide" id = "create-repo-div">
-              <h4>Create new Repo</h4>
-              <input type = "text", ng-model = "repository.title" class = "form-control input-sm" enter = "addRepo()" placeholder = "Enter title and press enter">
+              <input type = "text", ng-model = "repository.title" class = "form-control input-sm" enter = "addRepo()" placeholder = "Enter title and press enter" hideonenter>
             </li>
             <li ng-repeat = "repo in my_assessments">
-              <a custom-popover popover-html="<span class = 'glyphicon glyphicon-edit' style= 'color:black;'></span><span style = 'margin-left:2px'><a class = 'black'>Edit</a></span><span class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;color:black'></span><span style = 'margin-left:2px'><a ng-click = 'deleteRepo(repo)' class = 'black'>Delete</a></span>" popover-placement="top" class = "rightclickunfold li" ng-right-click = "$event.stopPropagation()" droppable drop= "handleDrop" id ="{{repo.id}}">
+              <div class = "row complete_row">
+                <div class = "col-xs-12">
+                  <span class = "col-xs-7">
+                    {{repo.title}}   
+                  </span> 
+                  <span class = "col-xs-5">
+                    <span class = "glyphicon glyphicon-pencil link" showtitleedit></span>  
+                    <span ng-click = "deleteRepo(repo)" class = "glyphicon glyphicon-remove link"></span>  
+                  </span>
+                </div>  
+              </div>
+              <div class = "col-xs-12 title-edit hide">
+                <input type = "text", ng-model = "repo.title" class = "form-control input-sm" enter = "editRepo(repo)" hideonenter>
+              </div>
+            </li>
+              <!--<a custom-popover popover-html="<span class = 'glyphicon glyphicon-edit' style= 'color:black;'></span><span style = 'margin-left:2px'><a class = 'black'>Edit</a></span><span class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;color:black'></span><span style = 'margin-left:2px'><a ng-click = 'deleteRepo(repo)' class = 'black'>Delete</a></span>" popover-placement="right" class = "rightclickunfold li" ng-right-click = "$event.stopPropagation()" droppable drop= "handleDrop" id ="{{repo.id}}">
               {{repo.title}}
-              </a>
+              </a> -->
               <ul class = "hide ul" >
                 <li ng-repeat = "quiz in repo.quiz_banks">
                   <a id = "{{quiz.id}}" draggable>
@@ -65,7 +79,7 @@
           <a class = "clickunfold" ng-right-click = "$event.stopPropagation()">
             Main Repo
           </a>
-          <ul class = "hide">
+          <ul class = "hide row">
             <li ng-repeat = "main_quiz in main_repo_quizzes">
               <a  id = "{{main_quiz.id}}" item = "main_quiz" draggable>{{main_quiz.title}}</a>
             </li>     
@@ -75,7 +89,7 @@
           <a class = "clickunfold" ng-right-click = "$event.stopPropagation()">
             Shared Assessments
           </a>
-          <ul class = "hide">
+          <ul class = "hide row">
             <li ng-repeat = "shared_quiz in shared_quiz_banks">
               <a id = "{{shared_quiz.id}}" ng-href="#/quiz_banks/{{shared_quiz.id}}/show">{{shared_quiz.title}}</a>
             </li>
@@ -85,7 +99,7 @@
           <a class = "clickunfold" ng-right-click = "$event.stopPropagation()">
             Starred Assessments
           </a>  
-            <ul class = "hide">
+            <ul class = "hide row">
               <li ng-repeat = "starred_quiz in starred_quiz_banks">
                 <a id = "{{starred_quiz.id}}"ng-href="#/quiz_banks/{{starred_quiz.id}}/show">{{starred_quiz.title}}</a>
               </li>
