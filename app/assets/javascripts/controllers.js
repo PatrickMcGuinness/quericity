@@ -694,8 +694,12 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
         $scope.question_id  = data.id
         GlobalScope.set_question_id($scope.question_id)
         QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
-        {question_id: $scope.question_id, is_correct:$scope.selected_true_false_option})
-      }) 
+        {question_id: $scope.question_id, is_correct:$scope.selected_true_false_option}).$promise.then(function(){
+          $scope.true_false_question_statement = {}
+          $scope.selected_true_false_option = {}
+        })
+      })
+       
   }
   $scope.create_open_ended = function(){
     Question.save($scope.quiz_bank_id, $scope.section_id,
@@ -704,7 +708,10 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
         $scope.question_id  = data.id
         GlobalScope.set_question_id($scope.question_id)
         QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
-        {question_id: $scope.question_id, answer:$scope.open_ended_answer})
+        {question_id: $scope.question_id, answer:$scope.open_ended_answer}).$promise.then(function(){
+          $scope.open_ended_statement = {}
+          $scope.open_ended_answer = {}
+        })
       })
   }
   $scope.create_blank = function(){
@@ -715,7 +722,11 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
         $scope.question_id  = data.id
         GlobalScope.set_question_id($scope.question_id)
         QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
-        {question_id: $scope.question_id, answer:$scope.blank})
+        {question_id: $scope.question_id, answer:$scope.blank}).$promise.then(function(){
+          $scope.first_statement = {}
+          $scope.second_statement = {}
+          $scope.blank = {}
+        })
       })
   }
 

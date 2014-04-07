@@ -51,6 +51,25 @@ quizlib.directive('clickunfold', function () {
   }
 });
 
+quizlib.directive('showhide', function () {
+  return {
+    restrict: 'C',
+    link: function (scope, element, attr) {
+      console.log("hello")
+      element.bind('click', function () {
+        var el = element[0]      
+        console.log($(el).parents(".complete_row"))
+        if($(el).parents(".complete_row").siblings("ul").hasClass("hide")){
+          $(el).parents(".complete_row").siblings("ul").removeClass("hide")
+        }
+        else{
+          $(el).parents(".complete_row").siblings("ul").addClass("hide")
+        }
+      })
+    }
+  }
+});
+
 quizlib.directive('rightclickunfold', function () {
   return {
     restrict: 'C',

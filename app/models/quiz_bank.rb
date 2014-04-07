@@ -63,7 +63,7 @@ class QuizBank < ActiveRecord::Base
 
   def clone_the_quiz(user)
     new_quiz_bank = user.quiz_banks.create(:title => self.title, :description => self.description,
-      :repository_id => user.default_repo.id, subject: self.subject,public: 0)
+      :repository_id => user.default_repo.id, subject: self.subject,public: 0, instructions: self.instructions)
     self.sections.each do |section|
       section.clone_the_section(new_quiz_bank)
     end

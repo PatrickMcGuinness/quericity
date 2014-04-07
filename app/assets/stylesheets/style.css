@@ -128,7 +128,10 @@ body{
 	}
 .left_section ul li .complete_row span.link{
 	cursor: pointer;
-	}		
+	}
+.left_section ul li span.link{
+	cursor: pointer;
+	}			
 	
 .left_section ul li ul{
 	padding-left:20px;

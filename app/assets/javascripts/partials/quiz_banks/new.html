@@ -34,7 +34,7 @@
       </span>
     </div>
     <div class="sub_nav pull-right">
-      <input type = "Search" placeholder = "Search ...."class = "form-control input-sm" ng-model = "titleFilter",/>
+      <input type = "Search" placeholder = "Search ...."class = "form-control input-sm" ng-model = "titleFilter"/>
     </div>
     
   </div>
@@ -59,9 +59,9 @@
                   {{section.title}}
                 </span>
                 <span class = "col-xs-5">
-                  <span class = "glyphicon glyphicon-plus-sign"></span>
-                  <span class = "glyphicon glyphicon-trash"></span>
-                  <span class = "glyphicon glyphicon-edit"></span>
+                  <span class = "glyphicon glyphicon-plus-sign link"></span>
+                  <span ng-click = "editSection(section)" class = "glyphicon glyphicon-edit link"></span>
+                  <span ng-click = "deleteSection(section.id,$index)" class = "glyphicon glyphicon-trash link"></span>
                 </span>
               </div>    
             </li> 
