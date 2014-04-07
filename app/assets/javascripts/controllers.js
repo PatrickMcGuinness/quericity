@@ -483,7 +483,13 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
     $scope.created_at = obj.getDate() +"-" + obj.getMonth() +"-"+obj.getFullYear()
     $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()
     $scope.quiz_sections = Section.all(data.id)
+    Repository.get(data.repository_id).$promise.then(function(data){
+        User.get(data.user_id).$promise.then(function(data){
+          $scope.owner_name = data.first_name + " " + data.last_name 
+        })
+    })    
   })
+
 
   QuestionTopic.all($routeParams.id).$promise.then(function(data){
     angular.forEach(data.result,function(value,key){
