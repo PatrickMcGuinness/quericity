@@ -1,3 +1,6 @@
+quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$log','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$log,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
+
+}]);
 quizlib.controller('ServeQuizCtrl', ['$scope','$modal','$log','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$log,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
   $scope.served_quizzes = []
   $scope.pending_sharings = []
