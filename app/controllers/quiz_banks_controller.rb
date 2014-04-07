@@ -22,7 +22,7 @@ class QuizBanksController < ApplicationController
   end
 
   def destroy
-    render json: QuizBank.find(params[:id]).destroy
+    render json: QuizBank.find(params[:id]).update_attribute("deleted_at", Time.now)
   end
 
   def create 

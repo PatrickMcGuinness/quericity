@@ -1,5 +1,10 @@
 quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$log','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$log,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
-
+  $scope.served_quizzes = []
+  ServedQuiz.all().$promise.then(function(data){
+    angular.forEach(data.result,function(data){
+      //QuizBank.get(value.quiz_ba)
+    })
+  })
 }]);
 quizlib.controller('ServeQuizCtrl', ['$scope','$modal','$log','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$log,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
   $scope.served_quizzes = []
@@ -616,6 +621,7 @@ quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','Quest
   $scope.$on("question_id_Changed",function(event,question_id){
     $scope.question_id = question_id;
     $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
   })
 
 }])
