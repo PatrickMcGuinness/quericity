@@ -19,7 +19,7 @@
         Question:
       </strong>
     </span>
-    <span class = "col-xs-10">{{question.description}}</span>
+    <span class = "col-xs-10" ng-bind-html="question.description | unsafe" mathjax-bind></span>
     
   </div>
   <div class = "col-xs-12 mar-top-10">
@@ -27,7 +27,7 @@
       <span>
         <strong>Answer:</strong>
       </span>
-      <span>
+      <span >
         {{question_option.answer}}
       </span>
     </div>

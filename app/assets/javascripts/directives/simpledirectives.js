@@ -118,6 +118,25 @@ quizlib.directive('ngRightClick', function($parse) {
   };
 });
 
+quizlib.directive("mathjaxBind", function() {
+  console.log("hello")
+  return {
+    restrict: "A",
+    controller: ["$scope", "$element", "$attrs",
+            function($scope, $element, $attrs) {
+              console.log($attrs)
+        $scope.$watch($attrs.ngBindHtml, function(value) {
+            var $script = angular.element("<script type='math/tex'>")
+                .html(value == undefined ? "" : value);
+            $element.html("");
+            $element.append($script);
+            console.log($element[0])
+            MathJax.Hub.Queue(["Reprocess", MathJax.Hub, $element[0]]);
+        });
+    }]
+  };
+});
+
 quizlib.directive('hidecreaterepo', function () {
   return {
     restrict: 'C',

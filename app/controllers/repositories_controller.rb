@@ -9,11 +9,11 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    render json: current_user.repositories.find(params[:id])
+    render json: Repository.find(params[:id])
   end
 
   def edit
-    render json: current_user.repositories.find(params[:id])
+    render json: Repository.find(params[:id])
   end
 
   def update
