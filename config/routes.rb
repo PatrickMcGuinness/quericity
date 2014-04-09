@@ -40,6 +40,7 @@ QuizLib::Application.routes.draw do
     member do
       get "pending"
       get "completed"
+      get "invited"
     end
     resources :sharings do
     end

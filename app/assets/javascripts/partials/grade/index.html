@@ -45,29 +45,13 @@
         </th>
       </thead>
       <tbody class="text-center">
-        <tr>
-            <td>Quiz Bank 1</td>
-            <td>20/20/2022 15:30PM</td>
-            <td>20/20/2022 15:30PM</td>
-            <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;20&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;3&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;15&nbsp;</td>
-            <td><span style="background-color:green;" class="tags">12/20</span></td>
-            <td><img src="/assets/grade_icon.png" /></td>
-        </tr>
-        <tr>
-            <td>Quiz Bank 1</td>
-            <td>20/20/2022 15:30PM</td>
-            <td>20/20/2022 15:30PM</td>
-            <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;20&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;3&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;15&nbsp;</td>
-            <td><span style="background-color:green;" class="tags">6/20</span></td>
-            <td><img src="/assets/grade_icon.png" /></td>
-        </tr>
-        <tr>
-            <td>Quiz Bank 1</td>
-            <td>20/20/2022 15:30PM</td>
-            <td>20/20/2022 15:30PM</td>
-            <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;20&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;3&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;15&nbsp;</td>
-            <td><span style="background-color:green;" class="tags">10/20</span></td>
-            <td><img src="/assets/grade_icon.png" /></td>
+        <tr ng-repeat = "served_quiz in served_quizzes">
+          <td>{{served_quiz.title}}</td>
+          <td>{{served_quiz.start_date}} {{served_quiz.start_time}}</td>
+          <td>{{served_quiz.close_date}} {{served_quiz.end_time}}</td>
+          <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;{{served_quiz.invited.length}}&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;{{served_quiz.pending.length}}&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;{{served_quiz.completed.length}}&nbsp;</td>
+          <td><span style="background-color:green;" class="tags">12/20</span></td>
+          <td><img src="/assets/grade_icon.png" /></td>
         </tr>
         </tbody>
       </table>

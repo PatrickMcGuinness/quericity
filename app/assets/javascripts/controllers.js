@@ -1,8 +1,24 @@
 quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$log','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$log,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
   $scope.served_quizzes = []
   ServedQuiz.all().$promise.then(function(data){
-    angular.forEach(data.result,function(data){
-      //QuizBank.get(value.quiz_ba)
+    angular.forEach(data.result,function(value,data){
+      ClonedQuizBank.get(value.quiz_bank_id,value.cloned_quiz_bank_id).$promise.then(function(data){
+        title = data.title
+        var obj = new Date(value.date)
+        start_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+        
+        var obj = new Date(value.close_date)
+        close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+        
+        var obj = new Date(value.start_time)
+        start_time = obj.getHours() + ":" + obj.getMinutes()
+        
+        var obj = new Date(value.end_time)
+        end_time = obj.getHours() + ":" + obj.getMinutes()
+        $scope.served_quizzes.push({title: title,start_date: start_date,start_time: start_time, 
+            close_date: close_date, end_time: end_time, status: status,invited: ServedQuiz.invited(value.id),pending: ServedQuiz.pending(value.id),
+            completed:ServedQuiz.completed(value.id)})
+      })
     })
   })
 }]);
@@ -12,7 +28,7 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$modal','$log','ServedQuiz','Clon
   $scope.completed_sharings = []
   ServedQuiz.all().$promise.then(function(data){
     angular.forEach(data.result,function(value,key){
-      QuizBank.get(value.quiz_bank_id).$promise.then(function(data){
+      ClonedQuizBank.get(value.quiz_bank_id,value.cloned_quiz_bank_id).$promise.then(function(data){
         title = data.title
         
         var obj = new Date(value.date)
@@ -39,10 +55,10 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$modal','$log','ServedQuiz','Clon
        $scope.served_quizzes.push({title: title,start_date: start_date,start_time: start_time, 
             close_date: close_date, end_time: end_time, status: status,pend: ServedQuiz.pending(value.id),
             comp:ServedQuiz.completed(value.id)})
-        ServedQuiz.pending(value.id).$promise.then(function(data){
-          $scope.pending_sharings.push(data)
-        })
-        $scope.completed_sharings.push(ServedQuiz.completed(value.id))
+        //ServedQuiz.pending(value.id).$promise.then(function(data){
+          //$scope.pending_sharings.push(data)
+        //})
+        //$scope.completed_sharings.push(ServedQuiz.completed(value.id))
         
       })
     })
@@ -57,8 +73,7 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$modal','$log','ServedQuiz','Clon
           return $scope.pending_sharings[index]
         }
       }
-    });
-    
+    }); 
   }
 }]);
 quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizBank','Question','QuestionOption',function($scope,$routeParams,$timeout,QuizBank,Question,QuestionOption){

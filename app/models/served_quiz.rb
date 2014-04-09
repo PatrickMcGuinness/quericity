@@ -1,7 +1,7 @@
 class ServedQuiz < ActiveRecord::Base
   attr_accessible :owner_id, :quiz_bank_id,:answer, :duration, :date, :close_date,:end_time, 
                   :instructions,:random,:start_time,:infinite_duration,:number_of_questions, 
-                  :same_questions,:show_in_sequence, :show_all_questions, :questions_per_page
+                  :same_questions,:show_in_sequence, :show_all_questions, :questions_per_page,:cloned_quiz_bank_id
 
   #validates :owner_id, presence:true
   #validates :quiz_bank_id, presence: true
@@ -43,11 +43,15 @@ class ServedQuiz < ActiveRecord::Base
   end
 
   def pending_sharings
-    self.sharings.where("status = ?",Sharing::Status::PENDING)
+    self.sharings.where("status = ?",Sharing::Status::STARTED)
   end
 
   def completed_sharings
     self.sharings.where("status = ?",Sharing::Status::ATTEMPTED)
+  end
+
+  def invited_sharings
+    self.sharings.where("status = ?",Sharing::Status::PENDING)
   end
   
   def show_all_questions_in_preview?
@@ -147,19 +151,4 @@ class ServedQuiz < ActiveRecord::Base
       question = self.cloned_quiz_bank.cloned_questions.first
     end
   end
-
-  def background_job_for_create(user,student_ids,invite_ids)
-    if student_ids.present?
-      self.share_with_student_ids(student_ids)
-    end
-    invites = Invite.find_by_list(invite_ids)
-    default_group = user.default_group
-    invites.each do |invite|
-      new_user = User.invite!({:email => invite.receiver_email, :role => "Student"},user)
-      Sharing.create(:user_id => new_user.id,:served_quiz_id => self.id)
-      StudentGroup.create(:group_id => default_group.id, :student_id => new_user.id)
-    end
-    Invite.where("invitable_id = ? and invitable_type = ?",self.quiz_bank_id,"QuizBank").destroy_all
-  end
-  #handle_asynchronously :background_job_for_create, :run_at => Proc.new { Time.now }
 end

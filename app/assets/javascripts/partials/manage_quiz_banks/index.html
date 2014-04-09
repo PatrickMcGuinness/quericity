@@ -61,9 +61,6 @@
               <div class = "col-xs-12 title-edit hide">
                 <input type = "text", ng-model = "repo.title" class = "form-control input-sm" enter = "editRepo(repo)" hideonenter>
               </div>
-              <!--<a custom-popover popover-html="<span class = 'glyphicon glyphicon-edit' style= 'color:black;'></span><span style = 'margin-left:2px'><a class = 'black'>Edit</a></span><span class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;color:black'></span><span style = 'margin-left:2px'><a ng-click = 'deleteRepo(repo)' class = 'black'>Delete</a></span>" popover-placement="right" class = "rightclickunfold li" ng-right-click = "$event.stopPropagation()" droppable drop= "handleDrop" id ="{{repo.id}}">
-              {{repo.title}}
-              </a> -->
               <ul class = "hide row ul" >
                 <li ng-repeat = "quiz in repo.quiz_banks">
                   <a id = "{{quiz.id}}" draggable ng-href="#/quiz_banks/{{shared_quiz.id}}/show">

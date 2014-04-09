@@ -33,4 +33,8 @@ class ServedQuizzesController < ApplicationController
   def completed
     render json: current_user.served_quizzes.find(params[:id]).completed_sharings
   end
+
+  def invited
+    render json: current_user.served_quizzes.find(params[:id]).invited_sharings
+  end
 end

@@ -17,6 +17,7 @@ class QuizBank < ActiveRecord::Base
   has_many :invites, as: :invitable
   has_many :shares, as: :shareable 
   has_many :favourite_quiz_banks, dependent: :destroy
+  has_many :cloned_quiz_banks, dependent: :destroy
 
   after_create :create_section
   

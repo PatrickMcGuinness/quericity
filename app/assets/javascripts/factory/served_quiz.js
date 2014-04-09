@@ -1,12 +1,13 @@
 quizlib.factory('ServedQuiz', ['$resource', function($resource,$http) {
   function ServedQuiz() {
-    this.service = $resource('/served_quizzes/:id/:pending:completed', {id: '@id'},
+    this.service = $resource('/served_quizzes/:id/:pending:completed:invited', {id: '@id'},
                   {update:{method:"PUT",isArray:false},
                    query:{method:"GET",transformResponse: [function(data,headersGetter){
                     return {result: JSON.parse(data)}
                    }]},
                    pending: {method: "GET",isArray:true},
-                   completed: {method: "GET",isArray: true}
+                   completed: {method: "GET",isArray: true},
+                   invited:{method: "GET",isArray:true}
                  });
   };
   ServedQuiz.prototype.all = function() {
@@ -31,6 +32,9 @@ quizlib.factory('ServedQuiz', ['$resource', function($resource,$http) {
   }
   ServedQuiz.prototype.completed = function(ServedQuizId){
     return this.service.completed({id: ServedQuizId,completed: "completed"})
+  }
+  ServedQuiz.prototype.invited = function(ServedQuizId){
+    return this.service.invited({id: ServedQuizId,invited: "invited"})
   }
 
   return new ServedQuiz;
