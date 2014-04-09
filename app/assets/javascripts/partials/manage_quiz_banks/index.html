@@ -1,7 +1,7 @@
 <div class="menu">
   <div class="container">
     <ul>
-      <li class="active"><a href="#">MANAGE</a></li>
+      <li class="active"><a href="#/manage_quiz_banks">MANAGE</a></li>
       <li><a ng-href='#/served_quizzes'>SERVE</a></li>
       <li><a href="#/grade">GRADE</a></li>
       <li><a href="#">ANALYZE</a></li>
@@ -122,18 +122,18 @@
               {{quiz_bank.title}}
             </a>  
             </td>
-            <td>{{quiz_bank.name}}</td>
+            <td>{{quiz_bank.user.first_name}} {{quiz_bank.user.last_name}}</td>
             <td style = "text-align:left;">
               <span class = "glyphicon glyphicon-tag" style = "color: red;"></span>
-              <span>&nbsp;&nbsp;{{quiz_bank.tag.title}}</span>
+              <span>&nbsp;&nbsp;{{quiz_bank.topics[0].title}}</span>
             </td>
             <td ng-hide = "quiz_bank.public">Private</td>
             <td ng-show = "quiz_bank.public">Public</td>
             <td>
-              <a ng-if = "current_user.id == quiz_bank.user_id" ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)">
+              <a ng-if = "current_user.id == quiz_bank.user.id" ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)">
                 <span class = "glyphicon glyphicon-cloud"></span>
               </a>
-              <a ng-if = "current_user.id == quiz_bank.user_id" ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)">
+              <a ng-if = "current_user.id == quiz_bank.user.id" ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)">
                 <span  class = "glyphicon glyphicon-user"></span>
               </a>
 

@@ -1,6 +1,7 @@
 class ServedQuizzesController < ApplicationController
   
   before_filter :authenticate_user!
+  before_filter :set_served_quiz, except: [:index,:create]
   respond_to :json
 
   def index
@@ -12,29 +13,45 @@ class ServedQuizzesController < ApplicationController
   end
 
   def show
-    render json: current_user.served_quizzes.find(params[:id])
+    render json: @served_quiz
   end
 
   def edit
-    render json: current_user.served_quizzes.find(params[:id])
+    render json: @served_quiz
   end
 
   def update
-    render json: current_user.served_quizzes.find(params[:id]).update_attributes(params[:served_quiz])
+    render json: @served_quiz.update_attributes(params[:served_quiz])
   end
 
   def destroy
-    render json: current_user.served_quizzes.find(params[:id]).destroy
+    render json: @served_quiz.destroy
   end
   def pending
-    render json: current_user.served_quizzes.find(params[:id]).pending_sharings
+    render json: @served_quiz.pending_sharings
   end
 
   def completed
-    render json: current_user.served_quizzes.find(params[:id]).completed_sharings
+    render json: @served_quiz.completed_sharings
   end
 
   def invited
-    render json: current_user.served_quizzes.find(params[:id]).invited_sharings
+    render json: @served_quiz.invited_sharings
   end
+
+  def attempted_answers
+    render json: @served_quiz.attempted_answers
+  end
+
+  def graded_answers_count
+    render json: @served_quiz.graded_answers_count
+  end
+
+
+  private
+
+  def set_served_quiz
+    @served_quiz = current_user.served_quizzes.find(params[:id])
+  end
+
 end

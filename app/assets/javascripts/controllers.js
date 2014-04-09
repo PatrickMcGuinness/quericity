@@ -17,15 +17,22 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$log','ServedQuiz','
         end_time = obj.getHours() + ":" + obj.getMinutes()
         $scope.served_quizzes.push({title: title,start_date: start_date,start_time: start_time, 
             close_date: close_date, end_time: end_time, status: status,invited: ServedQuiz.invited(value.id),pending: ServedQuiz.pending(value.id),
-            completed:ServedQuiz.completed(value.id)})
+            completed:ServedQuiz.completed(value.id), attempted_answers: ServedQuiz.attempted_answers(value.id), graded_answers_count: ServedQuiz.graded_answers_count(value.id)})
       })
     })
   })
 }]);
-quizlib.controller('ServeQuizCtrl', ['$scope','$modal','$log','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$log,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
+
+quizlib.controller('ModalInstanceCtrl',function($scope, $modalInstance, items){
+  $scope.items = items
+  console.log($scope.items)
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});  
+quizlib.controller('ServeQuizCtrl', ['$scope','$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
   $scope.served_quizzes = []
-  $scope.pending_sharings = []
-  $scope.completed_sharings = []
+  $scope.invited = []
   ServedQuiz.all().$promise.then(function(data){
     angular.forEach(data.result,function(value,key){
       ClonedQuizBank.get(value.quiz_bank_id,value.cloned_quiz_bank_id).$promise.then(function(data){
@@ -52,25 +59,29 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$modal','$log','ServedQuiz','Clon
         if(new Date(close_date) < new Date(today)){
           status = "Serving Completed"
         }
-       $scope.served_quizzes.push({title: title,start_date: start_date,start_time: start_time, 
-            close_date: close_date, end_time: end_time, status: status,pend: ServedQuiz.pending(value.id),
-            comp:ServedQuiz.completed(value.id)})
-        //ServedQuiz.pending(value.id).$promise.then(function(data){
-          //$scope.pending_sharings.push(data)
-        //})
-        //$scope.completed_sharings.push(ServedQuiz.completed(value.id))
+        ServedQuiz.invited(value.id).$promise.then(function(data){
+          $scope.invited.push(data)
+        })
+        $scope.served_quizzes.push({id: value.id,title: title,start_date: start_date,start_time: start_time, 
+            close_date: close_date, end_time: end_time, status: status,pending: ServedQuiz.pending(value.id),
+            completed:ServedQuiz.completed(value.id),invited: ServedQuiz.invited(value.id)})
         
       })
     })
   })
-  
-  $scope.open = function (index) {
+  $scope.invited_students = function (index,served_quizId){
+    items = ["item 1","item 2","item 3"]
     var modalInstance = $modal.open({
       templateUrl: 'myModalContent.html',
       controller: 'ServeQuizCtrl',
       resolve: {
-        sharings: function(){
-          return $scope.pending_sharings[index]
+        items: function(){
+          //ServedQuiz.invited(served_quizId).$promise.then(function(data){
+            //console.log(data)
+            //$scope.items = data
+            return $scope.invited[index]
+          //})
+          
         }
       }
     }); 
@@ -496,7 +507,6 @@ quizlib.controller('EditGroupCtrl', ['$scope','$routeParams','User','Group','Stu
 quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section', function($scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section) {
   $scope.my_assessments = Repository.all()
   $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
-  //$scope.quiz_bank = QuizBank.get($routeParams.id)
   $scope.quiz_bank_id = $routeParams.id
   $scope.tags = []
   $scope.is_quiz_view = true
@@ -506,23 +516,7 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
     var obj2 = new Date(data.updated_at)
     $scope.quiz_bank = data
     $scope.created_at = obj.getDate() +"-" + obj.getMonth() +"-"+obj.getFullYear()
-    $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()
-    $scope.quiz_sections = Section.all(data.id)
-    Repository.get(data.repository_id).$promise.then(function(data){
-        User.get(data.user_id).$promise.then(function(data){
-          $scope.owner_name = data.first_name + " " + data.last_name
-          $scope.quiz_bank.user_id = data.id 
-        })
-    })    
-  })
-
-
-  QuestionTopic.all($routeParams.id).$promise.then(function(data){
-    angular.forEach(data.result,function(value,key){
-      Topic.get(value.topic_id).$promise.then(function(data){
-        $scope.tags.push(data.title)
-      })
-    })
+    $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()   
   })
 
   $scope.deleteQuiz = function(){
@@ -556,6 +550,7 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
     $scope.show_new_repo_div = false
     Repository.save($scope.repository).$promise.then(function(data){
       $scope.my_assessments.push(data)
+      $scope.repository = {}
     })
     
   }
@@ -575,25 +570,14 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
   $scope.current_user = User.get_current_user()
   
   QuizBank.quiz_banks_list().$promise.then(function(data){
+    $scope.quiz_banks = data
     angular.forEach(data, function(value, key){
       var tags = []
       var is_favourite = false
       FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
         is_favourite = data.result
       })
-      QuestionTopic.all(value.id).$promise.then(function(data){
-        angular.forEach(data.result,function(value,key){
-          tags.push(Topic.get(value.topic_id))
-        })
-      })
-      Repository.get(value.repository_id).$promise.then(function(data){
-        User.get(data.user_id).$promise.then(function(data){
-          name = data.first_name +" " + data.last_name
-          $scope.quiz_banks.push({user_id: data.id,title: value.title,id:value.id, name: name, public: value.public, tag: tags[0],is_favourite: is_favourite})
-        })
-      })
-
-     });
+    });
   })
   $scope.make_public = function(quiz){
     quiz.public = 1

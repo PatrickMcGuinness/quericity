@@ -40,7 +40,7 @@ class QuizBank < ActiveRecord::Base
   def self.quiz_banks_list(user)
     quiz_banks_list = user.quiz_banks.where("status = ?",QuizBank::Status::SAVED)
     repository_ids = user.repositories.pluck(:id)
-    quiz_banks_list + QuizBank.where("repository_id NOT IN (?) and public = ?",repository_ids, QuizBank::Public::YES)
+    quiz_banks_list = quiz_banks_list + QuizBank.where("repository_id NOT IN (?) and public = ?",repository_ids, QuizBank::Public::YES)
     quiz_banks_list
   end
 
@@ -79,6 +79,28 @@ class QuizBank < ActiveRecord::Base
       question_topic.clone_the_question_topic(new_quiz_bank)
     end
     new_quiz_bank
+  end
+
+  def as_json(opts = nil)
+    opts ||={}
+    {
+      :id  => id,
+      :title   => title,
+      :description  => description,
+      :repository_id => repository_id,
+      :subject => subject,
+      :instructions => instructions,
+      :public => public,
+      :status => status,
+      :created_at => created_at,
+      :updated_at => updated_at,
+      :question_topics => question_topics.as_json(),
+      :topics => topics.as_json(),
+      :user => owner.as_json(),
+      :sections => sections.as_json()
+      #:artist => artist.as_json()
+      #attr_accessible :description, :title, :repository_id, :subject, :instructions,:public,:status
+    }
   end
 
   def json_for_update_quiz_bank

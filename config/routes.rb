@@ -41,6 +41,8 @@ QuizLib::Application.routes.draw do
       get "pending"
       get "completed"
       get "invited"
+      get "attempted_answers"
+      get "graded_answers_count"
     end
     resources :sharings do
     end

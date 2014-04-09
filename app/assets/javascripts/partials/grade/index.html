@@ -1,11 +1,11 @@
 <div class="menu">
   <div class="container">
     <ul>
-      <li class="active"><a href="#">MANAGE</a></li>
-      <li><a href="#">SERVE</a></li>
-      <li><a href="#">GRADE</a></li>
+      <li><a href="#/manage_quiz_banks">MANAGE</a></li>
+      <li><a ng-href='#/served_quizzes'>SERVE</a></li>
+      <li class = "active"><a href="#/grade">GRADE</a></li>
       <li><a href="#">ANALYZE</a></li>
-     </ul>
+    </ul>
   </div>
 </div>
 <div class="row_bottom">
@@ -24,33 +24,32 @@
       <thead>
         <th class="col-xs-2 manage_section">
             Quiz Served
-            <a href="#"><img src="/assets/heading_arrow_down.png" /></a>
+            <a ng-click = "predicate = 'title'; reverse=!reverse"><img src="/assets/heading_arrow_down.png" /></a>
         </th>
         <th class="col-xs-2 manage_section">
             Start Time
-            <a href="#"><img src="/assets/heading_arrow_down.png" /></a>
         </th>
         <th class="col-xs-2 manage_section">
             End Time
-            <a href="#"><img src="/assets/heading_arrow_down.png" /></a>
         </th>
         <th class="col-xs-2 manage_section">
             Student Status
         </th>
         <th class="col-xs-2 manage_section">
-            Graded
+            Student Answers
         </th>
         <th class="col-xs-1 manage_section">
             Grade
         </th>
       </thead>
       <tbody class="text-center">
-        <tr ng-repeat = "served_quiz in served_quizzes">
+        <tr ng-repeat = "served_quiz in served_quizzes | orderBy:predicate:reverse | filter: titleFilter">
           <td>{{served_quiz.title}}</td>
           <td>{{served_quiz.start_date}} {{served_quiz.start_time}}</td>
           <td>{{served_quiz.close_date}} {{served_quiz.end_time}}</td>
           <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;{{served_quiz.invited.length}}&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;{{served_quiz.pending.length}}&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;{{served_quiz.completed.length}}&nbsp;</td>
-          <td><span style="background-color:green;" class="tags">12/20</span></td>
+          <td><span style="color:#00a404; font-weight:bold;">Attempted:</span>&nbsp;{{served_quiz.attempted_answers.length}}&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Graded:</span>&nbsp;0</td>
+          <!--<td><span style="background-color:green;" class="tags">0/{{served_quiz.attempted_answers.length}}</span></td> -->
           <td><img src="/assets/grade_icon.png" /></td>
         </tr>
         </tbody>

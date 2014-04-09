@@ -5,7 +5,7 @@ class Repository < ActiveRecord::Base
   #extend FriendlyId
   #friendly_id :title, use: :slugged
 
-  attr_accessible :description, :title,:public,:user_id
+  attr_accessible :title,:user_id
   validates :title, :presence => true
   
   belongs_to :user  
@@ -43,5 +43,17 @@ class Repository < ActiveRecord::Base
   def make_public
     self.update_attribute(:public, Repository::Public::YES)
     all_teachers = User.select{|u| u.is_professor?}.map(&:id)
+  end
+
+  def as_json(opts = nil)
+    opts ||={}
+    {
+      :id  => id,
+      :title   => title,
+      :created_at => created_at,
+      :updated_at => updated_at,
+      :quiz_banks => quiz_banks.as_json(),
+      :user => user.as_json()
+    }
   end
 end

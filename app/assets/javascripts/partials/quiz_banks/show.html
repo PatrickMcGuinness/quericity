@@ -1,20 +1,20 @@
 <div class="menu">
   <div class="container">
     <ul>
-      <li class="active"><a href="#">MANAGE</a></li>
-      <li><a href="#">SERVE</a></li>
-      <li><a href="#">GRADE</a></li>
+      <li class="active"><a href="#/manage_quiz_banks">MANAGE</a></li>
+      <li><a ng-href='#/served_quizzes'>SERVE</a></li>
+      <li><a href="#/grade">GRADE</a></li>
       <li><a href="#">ANALYZE</a></li>
-	 </ul>
+    </ul>
   </div>
 </div>
 <div class="row_bottom">
 	<div class="container">
-    <div class="sub_nav" ng-if = "quiz_bank.user_id == current_user.id">
+    <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
       <span class="sub_nav_link"><a ng-href  ='#/quiz_banks/new' data-toggle = "tooltip" title = "Create Quiz Bank">Create</a></span>
 		</div>
-    <div class="sub_nav" ng-if = "quiz_bank.user_id == current_user.id">
+    <div class="sub_nav" ng-if = "quiz_bank.user.id == current_user.id">
       <span class="sub_nav_icon"><img src="/assets/edit_icon.png" /></span>
       <span class="sub_nav_link"><a ng-href  ='#/quiz_banks/{{quiz_bank.id}}/edit' data-toggle = "tooltip" title = "Edit Quiz Bank">Edit</a></span>
 		</div>
@@ -26,7 +26,7 @@
       <span class="sub_nav_icon"><img src="/assets/preview_icon.png" /></span>
       <span class="sub_nav_link"><a href="#/quiz_banks/{{quiz_bank_id}}/preview" data-toggle = "tooltip" title = "Preview Quiz Bank">Preview</a></span>
 		</div>
-    <div class="sub_nav" ng-if = "quiz_bank.user_id == current_user.id">
+    <div class="sub_nav" ng-if = "quiz_bank.user.id == current_user.id">
       <span class="sub_nav_icon"><img src="/assets/delete_icon.png" /></span>
       <span class="sub_nav_link"><a ng-href="#/manage_quiz_banks" ng-click = "deleteQuiz()" data-toggle = "tooltip" title = "Delete Quiz Bank">Delete</a></span>
 		</div>
@@ -111,13 +111,13 @@
     </div>
 		<div class="col-xs-8 right_section_view_page">
       <div class="col-xs-12 row_space">
-        <span class="heading">{{quiz_bank.title}}</span>&nbsp;&nbsp;&nbsp;by {{owner_name}} 
+        <span class="heading">{{quiz_bank.title}}</span>&nbsp;&nbsp;&nbsp;by {{quiz_bank.user.first_name}} {{quiz_bank.user.last_name}} 
         <img style="float:right;" src="/assets/info_icon.png" data-toggle = "tooltip" title = "description" tooltip = {{quiz_bank.description}} tooltip-placement = "left"/>
       </div>
     	<div class="col-xs-12 row_space">
-        <span ng-repeat = "topic in tags">
+        <span ng-repeat = "topic in quiz_bank.topics">
           <span class = "glyphicon glyphicon-tag" style="color: red;"></span>
-          <span>&nbsp;&nbsp;{{topic}}</span>
+          <span>&nbsp;&nbsp;{{topic.title}}</span>
         </span>
           
 			</div>
@@ -134,7 +134,7 @@
       </div>
       <div class="col-xs-12 row_space">
         <ul style = "list-style:none;">
-          <li ng-repeat = "section in quiz_sections">
+          <li ng-repeat = "section in quiz_bank.sections">
             <div class = "well well-sm">{{section.title}}</div>
             <input type="hidden" ng-model="section_id" ng-init="section_id= section.id" value="{{section.id}}">
             <div class = "section-questions" ng-controller = "viewQuestionsCtrl">

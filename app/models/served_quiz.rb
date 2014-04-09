@@ -23,7 +23,7 @@ class ServedQuiz < ActiveRecord::Base
     NO = 0
   end
 
-  class Answer
+  class Answers
     AFTERQUESTION = 1
     AFTERQUIZ = 2
     DONTSHOW = 3
@@ -53,6 +53,10 @@ class ServedQuiz < ActiveRecord::Base
   def invited_sharings
     self.sharings.where("status = ?",Sharing::Status::PENDING)
   end
+
+  def attempted_answers
+    Answer.where("served_quiz_id = ?",self.id)
+  end
   
   def show_all_questions_in_preview?
     self.show_all_questions == ServedQuiz::ShowAllQuestions::YES
@@ -65,6 +69,11 @@ class ServedQuiz < ActiveRecord::Base
   def open_ended_questions_to_grade
     self.cloned_quiz_bank.cloned_questions.joins(:answers).where("cloned_questions.question_type = ? and answers.graded_by_teacher = ?", Question::QuestionType::OPENENDED, 0)
   end
+
+  def graded_answers_count
+    self.attempted_answers.count - self.open_ended_questions_to_grade.count
+  end
+
 
   
 
@@ -81,7 +90,7 @@ class ServedQuiz < ActiveRecord::Base
   end
 
   def show_answer_after_question?
-    self.answer == ServedQuiz::Answer::AFTERQUESTION
+    self.answer == ServedQuiz::Answers::AFTERQUESTION
   end
 
   def is_expired?
@@ -98,11 +107,11 @@ class ServedQuiz < ActiveRecord::Base
   end
 
   def show_answer_after_quiz?
-    self.answer == ServedQuiz::Answer::AFTERQUIZ
+    self.answer == ServedQuiz::Answers::AFTERQUIZ
   end
 
   def dont_show_answer?
-    self.answer == ServedQuiz::Answer::DONTSHOW
+    self.answer == ServedQuiz::Answers::DONTSHOW
   end
 
   def question_number(user)
@@ -115,7 +124,7 @@ class ServedQuiz < ActiveRecord::Base
   end
   
   def self.answer_options_for_select
-    ServedQuiz::Answer.get_all_answers
+    ServedQuiz::Answers.get_all_answers
   end
 
   def get_average
