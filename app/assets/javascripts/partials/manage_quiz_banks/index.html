@@ -133,10 +133,10 @@
             <td ng-hide = "quiz_bank.public">Private</td>
             <td ng-show = "quiz_bank.public">Public</td>
             <td>
-              <a ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)">
+              <a ng-if = "current_user.id == quiz_bank.user_id" ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)">
                 <span class = "glyphicon glyphicon-cloud"></span>
               </a>
-              <a ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)">
+              <a ng-if = "current_user.id == quiz_bank.user_id" ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)">
                 <span  class = "glyphicon glyphicon-user"></span>
               </a>
 

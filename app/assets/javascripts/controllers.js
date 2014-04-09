@@ -481,19 +481,22 @@ quizlib.controller('EditGroupCtrl', ['$scope','$routeParams','User','Group','Stu
 quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section', function($scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section) {
   $scope.my_assessments = Repository.all()
   $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
-  $scope.quiz_bank = QuizBank.get($routeParams.id)
+  //$scope.quiz_bank = QuizBank.get($routeParams.id)
   $scope.quiz_bank_id = $routeParams.id
   $scope.tags = []
   $scope.is_quiz_view = true
+  $scope.current_user = User.get_current_user()
   QuizBank.get($routeParams.id).$promise.then(function(data){
     var obj = new Date(data.created_at)
     var obj2 = new Date(data.updated_at)
+    $scope.quiz_bank = data
     $scope.created_at = obj.getDate() +"-" + obj.getMonth() +"-"+obj.getFullYear()
     $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()
     $scope.quiz_sections = Section.all(data.id)
     Repository.get(data.repository_id).$promise.then(function(data){
         User.get(data.user_id).$promise.then(function(data){
-          $scope.owner_name = data.first_name + " " + data.last_name 
+          $scope.owner_name = data.first_name + " " + data.last_name
+          $scope.quiz_bank.user_id = data.id 
         })
     })    
   })
@@ -554,10 +557,10 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
     $scope.main_repo_quizzes = QuizBank.repo_quiz_banks(data.result.id)
   })
 
-
+  $scope.current_user = User.get_current_user()
   
-  QuizBank.all().$promise.then(function(data){
-    angular.forEach(data.result, function(value, key){
+  QuizBank.quiz_banks_list().$promise.then(function(data){
+    angular.forEach(data, function(value, key){
       var tags = []
       var is_favourite = false
       FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
@@ -571,7 +574,7 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
       Repository.get(value.repository_id).$promise.then(function(data){
         User.get(data.user_id).$promise.then(function(data){
           name = data.first_name +" " + data.last_name
-          $scope.quiz_banks.push({title: value.title,id:value.id, name: name, public: value.public, tag: tags[0],is_favourite: is_favourite})
+          $scope.quiz_banks.push({user_id: data.id,title: value.title,id:value.id, name: name, public: value.public, tag: tags[0],is_favourite: is_favourite})
         })
       })
 

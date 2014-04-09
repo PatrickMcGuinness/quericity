@@ -10,11 +10,11 @@
 </div>
 <div class="row_bottom">
 	<div class="container">
-    <div class="sub_nav">
+    <div class="sub_nav" ng-if = "quiz_bank.user_id == current_user.id">
       <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
       <span class="sub_nav_link"><a ng-href  ='#/quiz_banks/new' data-toggle = "tooltip" title = "Create Quiz Bank">Create</a></span>
 		</div>
-    <div class="sub_nav">
+    <div class="sub_nav" ng-if = "quiz_bank.user_id == current_user.id">
       <span class="sub_nav_icon"><img src="/assets/edit_icon.png" /></span>
       <span class="sub_nav_link"><a ng-href  ='#/quiz_banks/{{quiz_bank.id}}/edit' data-toggle = "tooltip" title = "Edit Quiz Bank">Edit</a></span>
 		</div>
@@ -26,7 +26,7 @@
       <span class="sub_nav_icon"><img src="/assets/preview_icon.png" /></span>
       <span class="sub_nav_link"><a href="#/quiz_banks/{{quiz_bank_id}}/preview" data-toggle = "tooltip" title = "Preview Quiz Bank">Preview</a></span>
 		</div>
-    <div class="sub_nav">
+    <div class="sub_nav" ng-if = "quiz_bank.user_id == current_user.id">
       <span class="sub_nav_icon"><img src="/assets/delete_icon.png" /></span>
       <span class="sub_nav_link"><a ng-href="#/manage_quiz_banks" ng-click = "deleteQuiz()" data-toggle = "tooltip" title = "Delete Quiz Bank">Delete</a></span>
 		</div>

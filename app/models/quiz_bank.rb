@@ -36,6 +36,13 @@ class QuizBank < ActiveRecord::Base
     self.public == QuizBank::Public::YES
   end
 
+  def self.quiz_banks_list(user)
+    quiz_banks_list = user.quiz_banks.where("status = ?",QuizBank::Status::SAVED)
+    repository_ids = user.repositories.pluck(:id)
+    quiz_banks_list + QuizBank.where("repository_id NOT IN (?) and public = ?",repository_ids, QuizBank::Public::YES)
+    quiz_banks_list
+  end
+
   def is_favourite?(user)
     user.favourite_quiz_banks.find_by_quiz_bank_id(self.id).present?
   end

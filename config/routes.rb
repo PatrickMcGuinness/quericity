@@ -67,6 +67,7 @@ QuizLib::Application.routes.draw do
   resources :quiz_banks do
     collection do
       get "shared_quiz_banks"
+      get "quiz_banks_list"
     end
     member do
       get "repo_quiz_banks"
