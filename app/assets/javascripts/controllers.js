@@ -439,21 +439,27 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
   });
 
 }]);
-quizlib.controller('AddGroupCtrl', ['$scope','User','Group','StudentGroup',function($scope,User,Group,StudentGroup){
+quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','StudentGroup',function($scope,$location,User,Group,StudentGroup){
   
   $scope.students = User.get_students()
   $scope.selected_students = []
   $scope.system_students = User.system_students()
-
+  $scope.submitted = false
+  $scope.valid = false
   $scope.AddStudent = function(student){
     $scope.students.push(student)
   }
-  $scope.saveGroup = function(){
-    Group.save($scope.group).$promise.then(function(data){
-      angular.forEach($scope.selected_students,function(value,key){
-        StudentGroup.save({student_id: value.id,group_id: data.id})
+  $scope.saveGroup = function(isValid){
+    $scope.submitted = true
+
+    if(isValid && $scope.valid){
+      Group.save($scope.group).$promise.then(function(data){
+        angular.forEach($scope.selected_students,function(value,key){
+          StudentGroup.save({student_id: value.id,group_id: data.id})
+        })
       })
-    })
+      $location.path("/groups")
+    }
   }
   $scope.selected_student = function(student){
     index = $scope.selected_students.indexOf(student);
@@ -463,13 +469,21 @@ quizlib.controller('AddGroupCtrl', ['$scope','User','Group','StudentGroup',funct
     else{
       $scope.selected_students.splice(index,1)
     }
+    if($scope.selected_students.length > 0){
+      $scope.valid = true
+    }
+    else{
+      $scope.valid = false
+    }
   }
 }]);
-quizlib.controller('EditGroupCtrl', ['$scope','$routeParams','User','Group','StudentGroup',function($scope,$routeParams,User,Group,StudentGroup){
+quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User','Group','StudentGroup',function($scope,$location,$routeParams,User,Group,StudentGroup){
   
   $scope.students = []
   $scope.selected_students = []
   $scope.group = Group.get($routeParams.id)
+  $scope.submitted = false
+  $scope.valid = false
   Group.get_student_groups($routeParams.id).$promise.then(function(data){
     $scope.student_groups = data
     angular.forEach(data,function(value,key){
@@ -484,15 +498,19 @@ quizlib.controller('EditGroupCtrl', ['$scope','$routeParams','User','Group','Stu
   $scope.AddStudent = function(student){
     $scope.students.push(student)
   }
-  $scope.saveGroup = function(){
-    Group.update($scope.group.id,$scope.group).$promise.then(function(data){
-      angular.forEach($scope.student_groups,function(value,key){
-        StudentGroup.delete(value.id)
+  $scope.saveGroup = function(isValid){
+    $scope.submitted = true
+    if(isValid && $scope.valid){
+      Group.update($scope.group.id,$scope.group).$promise.then(function(data){
+        angular.forEach($scope.student_groups,function(value,key){
+          StudentGroup.delete(value.id)
+        })
+        angular.forEach($scope.selected_students,function(value,key){
+          StudentGroup.save({student_id: value.id,group_id: $scope.group.id})
+        })
       })
-      angular.forEach($scope.selected_students,function(value,key){
-        StudentGroup.save({student_id: value.id,group_id: $scope.group.id})
-      })
-    })
+      $location.path("/groups")
+    }
   }
   $scope.selected_student = function(student){
     index = $scope.selected_students.indexOf(student);
@@ -501,6 +519,12 @@ quizlib.controller('EditGroupCtrl', ['$scope','$routeParams','User','Group','Stu
     }
     else{
       $scope.selected_students.splice(index,1)
+    }
+    if($scope.selected_students.length > 0){
+      $scope.valid = true
+    }
+    else{
+      $scope.valid = false
     }
   }
 }]);
@@ -784,9 +808,11 @@ quizlib.controller("sectionCtrl",['$scope','Section',function($scope,Section){
   $scope.cancelEditSection = function(section){
     $scope.section_edit = null
   }
-  $scope.updateSection = function(section_edit){
-    updated_section = Section.update($scope.quiz_bank_id, section_edit.id, section_edit)
-    $scope.section_edit = null
+  $scope.updateSection = function(isValid,section_edit){
+    if(isValid){
+      updated_section = Section.update($scope.quiz_bank_id, section_edit.id, section_edit)
+      $scope.section_edit = null
+    }
   }
   $scope.show_true_false = false
   $scope.show_mcq = false
@@ -827,14 +853,16 @@ quizlib.controller("sectionCtrl",['$scope','Section',function($scope,Section){
 
 }])
 
-quizlib.controller("CloneQuizBankCtrl",['$scope','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope, $routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
+quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
   $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
+  $scope.submitted= false
   QuizBank.clone($routeParams.id).$promise.then(function(data){
     $scope.quiz_bank = data
     $scope.quiz_bank_id = data.id
     $scope.quiz_sections = Section.all($scope.quiz_bank_id)
     $scope.tags = Topic.all()
     $scope.show_tags = []
+
     QuestionTopic.all($scope.quiz_bank_id).$promise.then(function(data){
       angular.forEach(data.result,function(value,key){
         Topic.get(value.topic_id).$promise.then(function(data){
@@ -848,14 +876,17 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$routeParams','QuizBank','Repo
   $scope.cancelQuiz = function(){
     QuizBank.delete($scope.quiz_bank_id)
   }
-  $scope.saveQuiz = function(){
-    $scope.quiz_bank.status = 1
-    QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
-      angular.forEach($scope.show_tags, function(value, key){
-        QuestionTopic.save($scope.quiz_bank_id,{title: value})
+  $scope.saveQuiz = function(isValid){
+    $scope.submitted = true
+    if(isValid){
+      $scope.quiz_bank.status = 1
+      QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
+        angular.forEach($scope.show_tags, function(value, key){
+          QuestionTopic.save($scope.quiz_bank_id,{title: value})
+        })
       })
-
-    })
+      $location.path("/manage_quiz_banks")
+    }
   }  
 
   $scope.addSection = function(title){
@@ -870,13 +901,14 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$routeParams','QuizBank','Repo
     }
   }
 }])
-quizlib.controller("EditQuizBankCtrl",['$scope','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope, $routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
+quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
 
   $scope.quiz_bank_id = $routeParams.id
   $scope.quiz_bank = QuizBank.get($scope.quiz_bank_id)
   $scope.quiz_sections = Section.all($scope.quiz_bank_id)
   $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
-  
+  $scope.submitted = false
+  $scope.section_submitted = false
   
   $scope.ckEditors = [];
   
@@ -884,21 +916,25 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$routeParams','QuizBank','Repos
     var rand = ""+(Math.random() * 10000);
     $scope.ckEditors.push({value:rand});
   }
-  
-  $scope.saveQuiz = function(){
-    $scope.quiz_bank.status = 1
-    QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
-      angular.forEach($scope.show_tags, function(value, key){
-        QuestionTopic.save($scope.quiz_bank_id,{title: value})
+  $scope.saveQuiz = function(isValid){
+    $scope.submitted =true
+    if(isValid){
+      $scope.quiz_bank.status = 1
+      QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
+        angular.forEach($scope.show_tags, function(value, key){
+          QuestionTopic.save($scope.quiz_bank_id,{title: value})
+        })
       })
-
-    })
-  }  
-
-  $scope.addSection = function(title){
-    section = Section.save($scope.quiz_bank_id,{title: title})
-    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
-    $scope.newSection = {}
+      $location.path("/manage_quiz_banks")
+    }
+  }
+  $scope.addSection = function(isValid){
+    if(isValid){
+      section = Section.save($scope.quiz_bank_id,{title: $scope.newSection.title})
+      $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+      $scope.newSection = {}
+      $scope.section_submitted = true
+    }
   }
   
   $scope.tags = Topic.all()
@@ -919,13 +955,16 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$routeParams','QuizBank','Repos
   }
 
 }])
-quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope, $http,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
+quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope, $location,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
   // Variables for view show hide
 
 
   $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
   $scope.tags = Topic.all()
   $scope.show_tags = []
+  $scope.submitted = false
+  $scope.section_submitted = false
+
   $scope.addMoreTags = function(){
     if($scope.selected_tag != undefined){
       $scope.show_tags.push($scope.selected_tag)
@@ -948,20 +987,27 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$http','QuizBank','Repository','
             ) 
         })
   
-  $scope.saveQuiz = function(){
-    $scope.quiz_bank.status = 1
-    QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
-      angular.forEach($scope.show_tags, function(value, key){
-        QuestionTopic.save($scope.quiz_bank_id,{title: value})
+  $scope.saveQuiz = function(isValid){
+    $scope.submitted =true
+    if(isValid){
+      $scope.quiz_bank.status = 1
+      QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
+        angular.forEach($scope.show_tags, function(value, key){
+          QuestionTopic.save($scope.quiz_bank_id,{title: value})
+        })
       })
-
-    })
+      $location.path("/manage_quiz_banks")
+    }
   }
 
-  $scope.addSection = function(title){
-    section = Section.save($scope.quiz_bank_id,{title: title})
-    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
-    $scope.newSection = {}
+  $scope.addSection = function(isValid){
+    if(isValid){
+      console.log("isvalid")
+      section = Section.save($scope.quiz_bank_id,{title: $scope.newSection.title})
+      $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+      $scope.newSection = {}
+      $scope.section_submitted = true
+    }
   }
   $scope.difficulties = [{name: "Easy"},{name: "Medium"},{name: "Hard"}]
   $scope.cancelQuiz = function(){

@@ -136,6 +136,9 @@
               <a ng-if = "current_user.id == quiz_bank.user.id" ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)">
                 <span  class = "glyphicon glyphicon-user"></span>
               </a>
+              <a ng-if = "current_user.id != quiz_bank.user.id">
+                &nbsp;&nbsp;&nbsp;
+              </a>
 
               <a ng-show = "quiz_bank.is_favourite" ng-click = "make_unfavourite(quiz_bank)">
                 <span class = "glyphicon glyphicon-star"></span>
