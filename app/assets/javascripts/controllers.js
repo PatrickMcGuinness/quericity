@@ -628,10 +628,8 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
   QuizBank.quiz_banks_list().$promise.then(function(data){
     $scope.quiz_banks = data
     angular.forEach(data, function(value, key){
-      var tags = []
-      var is_favourite = false
       FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
-        is_favourite = data.result
+        value.is_favourite = data.result
       })
     });
   })
