@@ -98,8 +98,6 @@ class QuizBank < ActiveRecord::Base
       :topics => topics.as_json(),
       :user => owner.as_json(),
       :sections => sections.as_json()
-      #:artist => artist.as_json()
-      #attr_accessible :description, :title, :repository_id, :subject, :instructions,:public,:status
     }
   end
 

@@ -26,174 +26,191 @@
 </div>
 <div class="container">
 	<div class="row" ng-show = "show_options">
-  	<div class="col-xs-12">
-    	<div class="row">
-        <div class="col-xs-3 btn_section">
-          <button type="button" class="btn btn_blue" ng-click = "show_options = true">Options</button>
-          <button type="button" class="btn btn_grey" ng-click = "show_options = false">Select Students</button>
-        </div>
-        <div class = "col-xs-12">
-          <select class="form-control form_section" ng-model="selected_quiz" ng-options="quiz_bank as quiz_bank.title for quiz_bank in quiz_banks">
-            <option value = "">Select Quiz</option>
-          </select>
-        </div>
-	    </div>
-      <div class="row">
-        <div class="col-xs-2 form_section">
-        	<span class="label_text">Start Date:</span>
-          <span>
-            <input type="date" class="form-control" ng-model = "served_quiz.date"/>
-          </span>
-        </div>
-        <div class="col-xs-2 form_section">
-        	<span class="label_text">Start Time:</span>
-          <span>
-            <input type="time" class="label_field form-control"  ng-model = "served_quiz.start_time"/>
-          </span>
-        </div>
-        <div class="col-xs-2 form_section">
-        	<span class="label_text">End Date:</span>
-          <span>
-            <input type="date" class="form-control"  ng-model = "served_quiz.close_date"/>
-          </span>
-        </div>
-        <div class="col-xs-2 form_section">
-        	<span class="label_text">End Time:</span>
-          <span>
-            <input type="time" class="label_field form-control"  ng-model = "served_quiz.end_time"/>
-          </span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-2 radio_contorl form_section">
-          <input type="radio" name="time-limit" value = "0" ng-model = "served_quiz.infinite_duration">&nbsp;&nbsp;Time Limit:
-        </div>
-        <div class="col-xs-2 form_section ">
-          <span>
-            <input type="text" class="label_field form-control" ng-model = "served_quiz.duration"/>
-          </span>
-        </div>
-        <div class="col-xs-3">
-          <select class="form-control form_section">
-            <option>Minutes</option>
-            <option>Hours</option>
-          </select>
-        </div>
-        <span class="form_section">&nbsp;&nbsp;&nbsp;or</span>
-        <div class="col-xs-2 radio_contorl form_section">
-          <input type="radio" name="time-limit" value= "1" ng-model = "served_quiz.infinite_duration">&nbsp;&nbsp;Unlimited Time 
-        </div>
-      </div>
-      <div class="row line_bg">
-      </div>
-      <div class="row">
-	      <span class="form_section col-xs-12">Question Per Page:</span>
-      </div>
-      <div class="row">
-        <div class="col-xs-3 radio_contorl form_section">
-          <input type="radio" name="questions_per_page" value = "1" ng-model = "served_quiz.show_all_questions">&nbsp;&nbsp;All Questions on one page 
-        </div>
-        <div class="col-xs-0 radio_contorl form_section">
-          <input type="radio" name="questions_per_page" value = "0" ng-model = "served_quiz.show_all_questions"> 
-        </div>
-        <div class="col-xs-2 form_section">
-          <span>
-            <input type="text" class="label_field form-control" ng-model ="quiz_bank.questions_per_page"/>
-          </span>
-        </div>
-        <div class="col-xs-3">
-          <span class="form_section">Question Per Page:</span>
-        </div>
-      </div>
-      <div class="row line_bg"></div>
-      <div class="row">
-        <div class="col-xs-2 form_section">
-          <span>Instructions</span>
-        </div>
-        <div class="col-xs-9 form_section">
-          <span><textarea type="text" placeholder="Select quiz to see instructions" class="label_field form-control" ng-model = "served_quiz.instructions" ng-init = "served.instructions = quiz_bank.instructions"></textarea></span>
-        </div>
-        <div class="col-xs-2 form_section">
-          <span>Show Answers:</span>
-        </div>
-        <div class="col-xs-9 form_section">
-          <select class="form-control" ng-model = "served_quiz.answer">
-            <option value = "1">After Questions</option>
-            <option value = "2">After Quiz</option>
-            <option value = "3">Dont Show Answers</option>
-          </select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-4 form_section">
-          <span>
-            <input type="radio" name="question-option" value = "0" checked ng-click = "show_question_list = true" ng-model = "served_quiz.random">
-          </span>
-          <span style = "margin-left:10px">Select from questions list</span>
-        </div>  
-        <span class="form_section">
-          <input type="radio" name="question-option" value = "1" ng-click = "show_question_list = false" ng-model = "served_quiz.random">
-        </span>
-        <div class="col-xs-4 form_section">
-          <span>Randomize the questions</span>
-        </div>
-      </div>
-      <div class="row" ng-show = "show_question_list">
-      	<div class="col-xs-12">
-          <div class="col-xs-12 strip form_section" ng-repeat = "question in quiz_bank_questions">
-            <div class="col-xs-0 pull-left">
-              <input type="checkbox" name="checkbox" value = "{{question.id}}" ng-click = "select_question(question)"/>
-            </div>
-            <div class="col-xs-10 ">
-              <span style="float:left; margin-left:10px;">{{question.description}}</span>
-			      </div>
+    <form name="OptionsForm" ng-submit="saveQuiz(OptionForm.$valid)" novalidate>
+    	<div class="col-xs-12">
+      	<div class="row">
+          <div class="col-xs-3 btn_section">
+            <button type="button" class="btn btn_blue" ng-click = "show_options = true">Options</button>
+            <button type="button" class="btn btn_grey" ng-click = "show_options = false">Select Students</button>
           </div>
-        </div>
-      </div>
-      <div class="row" ng-hide = "show_question_list">
-        <div class="col-xs-12">
-          <div class="col-xs-12 strip form_section ">
-            <div class="col-xs-2 ">
-              <span style="float:left;">Number of Questions:</span>
-            </div>
-            <div class="col-xs-1">
+          <div class = "col-xs-12">
+            <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.title.$invalid) && (!OptionForm.title.$pristine || option_submitted == true)}">
+              <select class="form-control form_section" ng-model="selected_quiz" ng-options="quiz_bank as quiz_bank.title for quiz_bank in quiz_banks" name = "title" required>
+                <option value = "">Select Quiz</option>
+              </select>
+              <p ng-show="OptionForm.title.$invalid && (!OptionForm.title.$pristine || option_submitted == true)" class="help-block">Select Quiz.</p>
+            </div>  
+          </div>
+  	    </div>
+        <div class="row">
+          <div class="col-xs-2 form_section">
+            <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.date.$invalid) && (!OptionForm.date.$pristine || option_submitted == true)}">
+          	 <span class="label_text">Start Date:</span>
               <span>
-                <input type="text" class="label_field form-control" ng-model = "served_quiz.number_of_questions"/>
+                <input type="date" name = "date" class="form-control" ng-model = "served_quiz.date" required/>
+                <p ng-show="OptionForm.date.$invalid && (!OptionForm.date.$pristine || option_submitted == true)" class="help-block">Required</p>
               </span>
-            </div>
-            <div class="col-xs-2 ">
-              <span style="float:left; margin-left:10px;">/10</span>
-            </div>
+            </div>  
           </div>
-          <div class="col-xs-12 strip">
-            <div class="col-xs-0 pull-left">
-              <input type="checkbox" name="checkbox" />
-            </div>
-            <div class="col-xs-6 ">
-              <span style="float:left; margin-left:10px;">Same questions for students</span>
-            </div>
+          <div class="col-xs-2 form_section">
+            <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.start_time.$invalid) && (!OptionForm.start_time.$pristine || option_submitted == true)}">
+            	<span class="label_text">Start Time:</span>
+              <span>
+                <input type="time" name = "start_time" class="label_field form-control"  ng-model = "served_quiz.start_time" required/>
+                <p ng-show="OptionForm.start_time.$invalid && (!OptionForm.start_time.$pristine || option_submitted == true)" class="help-block">Required.</p>
+              </span>
+            </div>  
           </div>
-          <div class="col-xs-12 strip">
-            <div class="col-xs-0 pull-left">
-              <input type="checkbox" name="checkbox" />
-            </div>
-            <div class="col-xs-6 ">
-              <span style="float:left; margin-left:10px;">Same questions in same sequence</span>
+          <div class="col-xs-2 form_section">
+            <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.close_date.$invalid) && (!OptionForm.close_date.$pristine || option_submitted == true)}">
+            	<span class="label_text">End Date:</span>
+              <span>
+                <input type="date" name = "close_date" class="form-control"  ng-model = "served_quiz.close_date" required/>
+                <p ng-show="OptionForm.close_date.$invalid && (!OptionForm.close_date.$pristine || option_submitted == true)" class="help-block">Required</p>
+              </span>
+            </div>  
+          </div>
+          <div class="col-xs-2 form_section">
+            <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.end_time.$invalid) && (!OptionForm.end_time.$pristine || option_submitted == true)}">
+            	<span class="label_text">End Time:</span>
+              <span>
+                <input type="time" name = "end_time" class="label_field form-control"  ng-model = "served_quiz.end_time" required/>
+                <p ng-show="OptionForm.end_time.$invalid && (!OptionForm.end_time.$pristine || option_submitted == true)" class="help-block">Required</p>
+              </span>
+            </div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-2 radio_contorl form_section">
+            <input type="radio" name="time-limit" value = "0" ng-model = "served_quiz.infinite_duration">&nbsp;&nbsp;Time Limit:
+          </div>
+          <div class="col-xs-2 form_section ">
+            <span>
+              <input type="text" class="label_field form-control" ng-model = "served_quiz.duration"/>
+            </span>
+          </div>
+          <div class="col-xs-3">
+            <select class="form-control form_section">
+              <option>Minutes</option>
+              <option>Hours</option>
+            </select>
+          </div>
+          <span class="form_section">&nbsp;&nbsp;&nbsp;or</span>
+          <div class="col-xs-2 radio_contorl form_section">
+            <input type="radio" name="time-limit" value= "1" ng-model = "served_quiz.infinite_duration">&nbsp;&nbsp;Unlimited Time 
+          </div>
+        </div>
+        <div class="row line_bg">
+        </div>
+        <div class="row">
+  	      <span class="form_section col-xs-12">Question Per Page:</span>
+        </div>
+        <div class="row">
+          <div class="col-xs-3 radio_contorl form_section">
+            <input type="radio" name="questions_per_page" value = "1" ng-model = "served_quiz.show_all_questions">&nbsp;&nbsp;All Questions on one page 
+          </div>
+          <div class="col-xs-0 radio_contorl form_section">
+            <input type="radio" name="questions_per_page" value = "0" ng-model = "served_quiz.show_all_questions"> 
+          </div>
+          <div class="col-xs-2 form_section">
+            <span>
+              <input type="text" class="label_field form-control" ng-model ="quiz_bank.questions_per_page"/>
+            </span>
+          </div>
+          <div class="col-xs-3">
+            <span class="form_section">Question Per Page:</span>
+          </div>
+        </div>
+        <div class="row line_bg"></div>
+        <div class="row">
+          <div class="col-xs-2 form_section">
+            <span>Instructions</span>
+          </div>
+          <div class="col-xs-9 form_section">
+            <span><textarea type="text" placeholder="Select quiz to see instructions" class="label_field form-control" ng-model = "served_quiz.instructions" ng-init = "served.instructions = quiz_bank.instructions"></textarea></span>
+          </div>
+          <div class="col-xs-2 form_section">
+            <span>Show Answers:</span>
+          </div>
+          <div class="col-xs-9 form_section">
+            <select class="form-control" ng-model = "served_quiz.answer">
+              <option value = "1">After Questions</option>
+              <option value = "2">After Quiz</option>
+              <option value = "3">Dont Show Answers</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4 form_section">
+            <span>
+              <input type="radio" name="question-option" value = "0" checked ng-click = "show_question_list = true" ng-model = "served_quiz.random">
+            </span>
+            <span style = "margin-left:10px">Select from questions list</span>
+          </div>  
+          <span class="form_section">
+            <input type="radio" name="question-option" value = "1" ng-click = "show_question_list = false" ng-model = "served_quiz.random">
+          </span>
+          <div class="col-xs-4 form_section">
+            <span>Randomize the questions</span>
+          </div>
+        </div>
+        <div class="row" ng-show = "show_question_list">
+        	<div class="col-xs-12">
+            <div class="col-xs-12 strip form_section" ng-repeat = "question in quiz_bank_questions">
+              <div class="col-xs-0 pull-left">
+                <input type="checkbox" name="checkbox" value = "{{question.id}}" ng-click = "select_question(question)"/>
+              </div>
+              <div class="col-xs-10 ">
+                <span style="float:left; margin-left:10px;">{{question.description}}</span>
+  			      </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class = "row">
-        <div class = "col-xs-12 mar-top-20">
-          <div class = "col-xs-1 pull-right">  
-            <button type="button" class="btn btn_blue" ng-click = "show_options = false">Next</button>
-          </div>
-          <div class = "col-xs-1 pull-right">
-            <button type="button" class="btn">Preview</button>
+        <div class="row" ng-hide = "show_question_list">
+          <div class="col-xs-12">
+            <div class="col-xs-12 strip form_section ">
+              <div class="col-xs-2 ">
+                <span style="float:left;">Number of Questions:</span>
+              </div>
+              <div class="col-xs-1">
+                <span>
+                  <input type="text" class="label_field form-control" ng-model = "served_quiz.number_of_questions"/>
+                </span>
+              </div>
+              <div class="col-xs-2 ">
+                <span style="float:left; margin-left:10px;">/10</span>
+              </div>
+            </div>
+            <div class="col-xs-12 strip">
+              <div class="col-xs-0 pull-left">
+                <input type="checkbox" name="checkbox" />
+              </div>
+              <div class="col-xs-6 ">
+                <span style="float:left; margin-left:10px;">Same questions for students</span>
+              </div>
+            </div>
+            <div class="col-xs-12 strip">
+              <div class="col-xs-0 pull-left">
+                <input type="checkbox" name="checkbox" />
+              </div>
+              <div class="col-xs-6 ">
+                <span style="float:left; margin-left:10px;">Same questions in same sequence</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-		</div>
+        <div class = "row">
+          <div class = "col-xs-12 mar-top-20">
+            <div class = "col-xs-1 pull-right">  
+              <button type="button" class="btn btn_blue" ng-click = "show_options = false">Next</button>
+            </div>
+            <div class = "col-xs-1 pull-right">
+              <button type="button" class="btn">Preview</button>
+            </div>
+          </div>
+        </div>
+  		</div>
+    </form>
 	</div>
   <div class="row" ng-hide = "show_options">
     <div class="col-xs-12">

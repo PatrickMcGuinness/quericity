@@ -74,6 +74,17 @@ class Sharing < ActiveRecord::Base
 
   def get_average
     (self.get_correct_answers_count * 100)/(self.served_quiz.cloned_quiz_bank.cloned_questions.count)
+  end
+
+  def as_json(opts = nil)
+    opts ||={}
+    {
+      :id  => id,
+      :served_quiz_id   => served_quiz_id,
+      :status  => status,
+      :user_id => user_id,
+      :user => user.as_json()
+    }
   end  
 
   def self.add_more_students(user,emails,quiz_bank_id)

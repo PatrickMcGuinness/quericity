@@ -1,4 +1,4 @@
-quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$log','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$log,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
+quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$rootScope,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
   $scope.served_quizzes = []
   ServedQuiz.all().$promise.then(function(data){
     angular.forEach(data.result,function(value,data){
@@ -15,12 +15,37 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$log','ServedQuiz','
         
         var obj = new Date(value.end_time)
         end_time = obj.getHours() + ":" + obj.getMinutes()
-        $scope.served_quizzes.push({title: title,start_date: start_date,start_time: start_time, 
+        $scope.served_quizzes.push({id: value.id,title: title,start_date: start_date,start_time: start_time, 
             close_date: close_date, end_time: end_time, status: status,invited: ServedQuiz.invited(value.id),pending: ServedQuiz.pending(value.id),
             completed:ServedQuiz.completed(value.id), attempted_answers: ServedQuiz.attempted_answers(value.id), graded_answers_count: ServedQuiz.graded_answers_count(value.id)})
       })
     })
   })
+
+  $scope.invited_students = function (served_quizId){  
+    ServedQuiz.invited(served_quizId).$promise.then(function(data){
+      $rootScope.items = data
+      var modalInstance = $modal.open({
+        templateUrl: 'Modal.html' 
+      });
+    })   
+  }
+  $scope.pending_students = function (served_quizId){  
+    ServedQuiz.pending(served_quizId).$promise.then(function(data){
+      $rootScope.items = data
+      var modalInstance = $modal.open({
+        templateUrl: 'Modal.html' 
+      });
+    })   
+  }
+  $scope.completed_students = function (served_quizId){  
+    ServedQuiz.completed(served_quizId).$promise.then(function(data){
+      $rootScope.items = data
+      var modalInstance = $modal.open({
+        templateUrl: 'Modal.html' 
+      });
+    })   
+  }
 }]);
 
 quizlib.controller('ModalInstanceCtrl',function($scope, $modalInstance, items){
@@ -30,9 +55,8 @@ quizlib.controller('ModalInstanceCtrl',function($scope, $modalInstance, items){
     $modalInstance.dismiss('cancel');
   };
 });  
-quizlib.controller('ServeQuizCtrl', ['$scope','$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
+quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
   $scope.served_quizzes = []
-  $scope.invited = []
   ServedQuiz.all().$promise.then(function(data){
     angular.forEach(data.result,function(value,key){
       ClonedQuizBank.get(value.quiz_bank_id,value.cloned_quiz_bank_id).$promise.then(function(data){
@@ -59,9 +83,7 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$modal','ServedQuiz','ClonedQuizB
         if(new Date(close_date) < new Date(today)){
           status = "Serving Completed"
         }
-        ServedQuiz.invited(value.id).$promise.then(function(data){
-          $scope.invited.push(data)
-        })
+        
         $scope.served_quizzes.push({id: value.id,title: title,start_date: start_date,start_time: start_time, 
             close_date: close_date, end_time: end_time, status: status,pending: ServedQuiz.pending(value.id),
             completed:ServedQuiz.completed(value.id),invited: ServedQuiz.invited(value.id)})
@@ -69,22 +91,31 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$modal','ServedQuiz','ClonedQuizB
       })
     })
   })
-  $scope.invited_students = function (index,served_quizId){
-    items = ["item 1","item 2","item 3"]
-    var modalInstance = $modal.open({
-      templateUrl: 'myModalContent.html',
-      controller: 'ServeQuizCtrl',
-      resolve: {
-        items: function(){
-          //ServedQuiz.invited(served_quizId).$promise.then(function(data){
-            //console.log(data)
-            //$scope.items = data
-            return $scope.invited[index]
-          //})
-          
-        }
-      }
-    }); 
+  
+ 
+  $scope.invited_students = function (served_quizId){  
+    ServedQuiz.invited(served_quizId).$promise.then(function(data){
+      $rootScope.items = data
+      var modalInstance = $modal.open({
+        templateUrl: 'Modal.html' 
+      });
+    })   
+  }
+  $scope.pending_students = function (served_quizId){  
+    ServedQuiz.pending(served_quizId).$promise.then(function(data){
+      $rootScope.items = data
+      var modalInstance = $modal.open({
+        templateUrl: 'Modal.html' 
+      });
+    })   
+  }
+  $scope.completed_students = function (served_quizId){  
+    ServedQuiz.completed(served_quizId).$promise.then(function(data){
+      $rootScope.items = data
+      var modalInstance = $modal.open({
+        templateUrl: 'Modal.html' 
+      });
+    })   
   }
 }]);
 quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizBank','Question','QuestionOption',function($scope,$routeParams,$timeout,QuizBank,Question,QuestionOption){
@@ -298,6 +329,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   $scope.students_to_left = []
   $scope.students_to_right = []
   $scope.selected_students = []
+  $scope.option_submitted = false
   
   QuizBank.all().$promise.then(function(data){
     $scope.quiz_banks = data.result
@@ -796,22 +828,24 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
 
 }])
 
-quizlib.controller("sectionCtrl",['$scope','Section',function($scope,Section){
+quizlib.controller("sectionCtrl",['$scope','$rootScope','Section',function($scope,$rootScope,Section){
   
   $scope.deleteSection = function(id,idx){
     $scope.quiz_sections.splice(idx, 1);
     Section.delete($scope.quiz_bank_id,id);
   }
   $scope.editSection = function(section){
-     $scope.section_edit = section;
+    console.log(section)
+    console.log("helo")
+     $rootScope.section_edit = section;
   }
   $scope.cancelEditSection = function(section){
-    $scope.section_edit = null
+    $rootScope.section_edit = null
   }
   $scope.updateSection = function(isValid,section_edit){
     if(isValid){
       updated_section = Section.update($scope.quiz_bank_id, section_edit.id, section_edit)
-      $scope.section_edit = null
+      $rootScope.section_edit = null
     }
   }
   $scope.show_true_false = false
