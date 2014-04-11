@@ -5,55 +5,67 @@
       <span class = "glyphicon glyphicon-remove pull-right" style = "color:red;"></span>
     </a>
   </div>
-  <div class = "col-xs-12 mar-top-10">
-    <textarea name="description" rows="3" class = "form-control" ng-model = "question.description" data-ck-editor>
-    </textarea>
-  </div>
-  <div class = "col-xs-12 mar-top-10">
-    <table class = "table table-bordered">
-      <thead>
-        <th class = "col-xs-10">Answers</th>
-        <th class = "col-xs-1">Correct</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <input type = "text", class = "form-control" ng-model = "input_0">
-          </td>
-          <td>
-            <input type="radio" name="correct" ng-model = "radio" value = "0">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type = "text", class = "form-control" ng-model = "input_1">
-          </td>
-          <td>
-            <input type="radio" name="correct" ng-model = "radio" value = "1">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type = "text", class = "form-control" ng-model = "input_2">
-          </td>
-          <td>
-            <input type="radio" name="correct" ng-model = "radio" value = "2">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type = "text", class = "form-control" ng-model = "input_3">
-          </td>
-          <td>
-            <input type="radio" name="correct" ng-model = "radio" value = "3">
-          </td>
-        </tr>
+  <form name="McqForm" ng-submit="create_mcq(McqForm.$valid)" novalidate>
+    <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group" ng-class="{ 'has-error' : (McqForm.description.$invalid) && (!McqForm.description.$pristine || submitted == true)}">
+        <textarea name="description" rows="3" class = "form-control" ng-model = "question.description" data-ck-editor required>
+        </textarea>
+        <p ng-show="McqForm.description.$invalid && (!McqForm.description.$pristine || submitted == true)" class="help-block">Question is required.</p>
+      </div>  
+    </div>
+    <div class = "col-xs-12 mar-top-10">
+      <table class = "table table-bordered">
+        <thead>
+          <th class = "col-xs-10">Answers</th>
+          <th class = "col-xs-1">Correct</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class = "form-group" ng-class="{ 'has-error' : (McqForm.input0.$invalid) && (!McqForm.input0.$pristine || submitted == true)}">
+                <input name = "input0" type = "text", class = "form-control" ng-model = "input_0" required>
+                <p ng-show="McqForm.input0.$invalid && (!McqForm.input0.$pristine || submitted == true)" class="help-block">Required</p>
+              </div>  
+            </td>
+            <td>
+              <input type="radio" name="correct" ng-model = "radio" value = "0">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class = "form-group" ng-class="{ 'has-error' : (McqForm.input1.$invalid) && (!McqForm.input1.$pristine || submitted == true)}">
+                <input name = "input1" type = "text", class = "form-control" ng-model = "input_1" required>
+                 <p ng-show="McqForm.input0.$invalid && (!McqForm.input0.$pristine || submitted == true)" class="help-block">Required</p>
+              </div>  
+            </td>
+            <td>
+              <input type="radio" name="correct" ng-model = "radio" value = "1">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type = "text", class = "form-control" ng-model = "input_2" >
+            </td>
+            <td>
+              <input type="radio" name="correct" ng-model = "radio" value = "2">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type = "text", class = "form-control" ng-model = "input_3">
+            </td>
+            <td>
+              <input type="radio" name="correct" ng-model = "radio" value = "3">
+            </td>
+          </tr>
 
 
-      </tbody>
-    </table>
-  </div>
-  <div class = "col-xs-12 question-footer">
-    <button ng-click = "create_mcq(); hideQuestion();" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Create new question" tooltip-placement = "top"> Save Question</button>
-  </div>
+        </tbody>
+      </table>
+    </div>
+    <div class = "col-xs-12 question-footer">
+      <button type = "submit" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Create new question" tooltip-placement = "top"> Save Question</button>
+    </div>
+  </form>  
+  
 </div>

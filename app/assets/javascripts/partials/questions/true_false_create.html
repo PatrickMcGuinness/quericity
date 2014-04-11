@@ -5,15 +5,23 @@
       <span class = "glyphicon glyphicon-remove pull-right" style = "color:red;"></span>
     </a>
   </div>
-  <div class = "col-xs-12 mar-top-10">
-    <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "true_false_question_statement" data-ck-editor>
-    </textarea>
-  </div>
-  <div class = "col-xs-12 mar-top-10">
-    <input type="radio" name="correct" ng-model = "selected_true_false_option" value="true">True
-    <input type="radio" name="correct" ng-model = "selected_true_false_option" value="false">False
-  </div>
-  <div class = "col-xs-12 question-footer mar-top-10">
-    <button ng-click = "create_true_false(); hideQuestion();" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Create new Question" tooltip-placement = "top"> Save Question </button>
-  </div>
+  <form name="TrueFalseForm" ng-submit="create_true_false(TrueFalseForm.$valid)" novalidate>
+    <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.question_statement.$invalid) && (!TrueFalseForm.question_statement.$pristine || submitted == true)}">
+        <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "true_false_question_statement" data-ck-editor required>
+        </textarea>
+        <p ng-show="TrueFalseForm.question_statement.$invalid && (!TrueFalseForm.question_statement.$pristine || submitted == true)" class="help-block">Question is required.</p>
+      </div>  
+    </div>
+    <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.selected_true_false_option.$invalid) && (!TrueFalseForm.selected_true_false_option.$pristine || submitted == true)}">
+        <input type="radio" name="correct" ng-model = "selected_true_false_option" name = "selected_true_false_option" value="true" required>True
+        <input type="radio" name="correct" ng-model = "selected_true_false_option" name = "selected_true_false_option" value="false" required>False
+        <p ng-show="TrueFalseForm.selected_true_false_option.$invalid && (!TrueFalseForm.selected_true_false_option.$pristine || submitted == true)" class="help-block">Select at least one option.</p>
+      </div>  
+    </div>
+    <div class = "col-xs-12 question-footer mar-top-10">
+      <button type = "submit" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Create new Question" tooltip-placement = "top"> Save Question </button>
+    </div>
+  </form>  
 </div>  

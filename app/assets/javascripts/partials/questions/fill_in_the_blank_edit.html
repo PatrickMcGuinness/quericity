@@ -5,19 +5,29 @@
       <span class = "glyphicon glyphicon-remove pull-right" style = "color:red;"></span>
     </a>
   </div>
-  <div class = "col-xs-12 mar-top-10">
-    <textarea name="first_statement" id="first_statement" rows="3" class = "form-control" ng-model = "first_statement" data-ck-editor>
-    </textarea>
-  </div>
-  <div class = "col-xs-12 mar-top-10">
-    <textarea name="blank" id="blank" rows="2" class = "form-control" ng-model = "question_option.answer">
-    </textarea>
-  </div>
-  <div class = "col-xs-12 mar-top-10">
-    <textarea name="second_statement" id="second_statement" rows="3" class = "form-control" ng-model = "second_statement" data-ck-editor>
-    </textarea>
-  </div>
-  <div class = "col-xs-12 question-footer mar-top-10">
-    <button ng-click = "edit_blank(section.id,question.id,question)" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question </button>
-  </div>
+  <form name="BlankForm" ng-submit="edit_blank(first_statement,second_statement,section.id,question.id,question,BlankForm.$valid)" novalidate>
+    <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.first_statement.$invalid) && (!BlankForm.first_statement.$pristine || submitted == true)}">
+        <textarea name="first_statement" id="first_statement" rows="3" class = "form-control" ng-model = "first_statement" data-ck-editor required>
+        </textarea>
+        <p ng-show="BlankForm.first_statement.$invalid && (!BlankForm.first_statement.$pristine || submitted == true)" class="help-block">Satement before blank is required.</p>
+      </div>  
+    </div>
+    <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.blank.$invalid) && (!BlankForm.blank.$pristine || submitted == true)}">
+        <textarea name="blank" id="blank" rows="2" class = "form-control" ng-model = "question_option.answer" required>
+        </textarea>
+         <p ng-show="BlankForm.blank.$invalid && (!BlankForm.blank.$pristine || submitted == true)" class="help-block">Blank is required</p>
+      </div>  
+    </div>
+    <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.second_statement.$invalid) && (!BlankForm.second_statement.$pristine || submitted == true)}">
+        <textarea name="second_statement" id="second_statement" rows="3" class = "form-control" ng-model = "second_statement" data-ck-editor>
+        </textarea>
+      </div>  
+    </div>
+    <div class = "col-xs-12 question-footer mar-top-10">
+      <button type = "submit" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question </button>
+    </div>
+  </form>  
 </div>  

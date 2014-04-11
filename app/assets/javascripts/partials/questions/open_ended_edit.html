@@ -5,15 +5,20 @@
       <span class = "glyphicon glyphicon-remove pull-right" style = "color:red;"></span>
     </a>
   </div>
-  <div class = "col-xs-12 mar-top-10">
-    <textarea name="question_statement" id="question_satemtent" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor>
-    </textarea>
-  </div>
-  <div class = "col-xs-12 mar-top-10">
-    <textarea name="answer" id="answer" rows="3" class = "form-control" placeholder = "Enter answer" ng-model = "question_option.answer" data-ck-editor>
-    </textarea>
-  </div>
-  <div class = "col-xs-12 question-footer mar-top-10">
-    <button ng-click = "edit_question(section.id,question.id,question)" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question</button>
-  </div>
+  <form name="OpenEndedForm" ng-submit="edit_question(section.id,question.id,question,OpenEndedForm.$valid)" novalidate>
+    <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group" ng-class="{ 'has-error' : (OpenEndedForm.question_statement.$invalid) && (!OpenEndedForm.question_statement.$pristine || submitted == true)}">
+        <textarea name="question_statement" id="question_satemtent" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor required>
+        </textarea>
+        <p ng-show="OpenEndedForm.question_statement.$invalid && (!OpenEndedForm.question_statement.$pristine || submitted == true)" class="help-block">Question is required.</p>
+      </div>
+    </div> 
+    <div class = "col-xs-12 mar-top-10">
+      <textarea name="answer" id="answer" rows="3" class = "form-control" placeholder = "Enter answer" ng-model = "question_option.answer" data-ck-editor>
+      </textarea>
+    </div>
+    <div class = "col-xs-12 question-footer mar-top-10">
+      <button type = "submit" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question</button>
+    </div>
+  </form>  
 </div>  

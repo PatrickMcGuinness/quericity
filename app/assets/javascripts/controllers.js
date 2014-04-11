@@ -689,7 +689,7 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
   $scope.show_details = false
 
   $scope.show_details_edit = false
-  
+  $scope.submitted = false
   $scope.show_options = function(section_id,question_id,question_type){
     $scope.show_details = true
     $scope.show_details_view = true
@@ -719,20 +719,26 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
 
   }
   $scope.hide_update = function(){$scope.show_details_view = true}
-  $scope.edit_question = function(section_id,question_id,question){
-    Question.update($scope.quiz_bank_id,section_id,question_id,question).$promise.then(
-      function(data){
-        QuestionOption.update($scope.quiz_bank_id,section_id,question_id,$scope.question_option.id,$scope.question_option)
-      })
-    $scope.show_details_view = true
+  $scope.edit_question = function(section_id,question_id,question,isValid){
+    $scope.submitted = true
+    if(isValid){
+      Question.update($scope.quiz_bank_id,section_id,question_id,question).$promise.then(
+        function(data){
+          QuestionOption.update($scope.quiz_bank_id,section_id,question_id,$scope.question_option.id,$scope.question_option)
+        })
+      $scope.show_details_view = true
+    }  
   }
-  $scope.edit_blank = function(section_id,question_id,question){
-    question.description  = $scope.first_statement + "______" + $scope.second_statement
-    Question.update($scope.quiz_bank_id,section_id,question_id,question).$promise.then(
-      function(data){
-        QuestionOption.update($scope.quiz_bank_id,section_id,question_id,$scope.question_option.id,$scope.question_option)
-      })
-    $scope.show_details_view = true
+  $scope.edit_blank = function(first_statement,second_statement,section_id,question_id,question,isValid){
+    $scope.submitted = true
+    if(isValid){
+      question.description  = first_statement + "______" + second_statement
+      Question.update($scope.quiz_bank_id,section_id,question_id,question).$promise.then(
+        function(data){
+          QuestionOption.update($scope.quiz_bank_id,section_id,question_id,$scope.question_option.id,$scope.question_option)
+        })
+      $scope.show_details_view = true
+    }
 
   }
   $scope.edit_mcq = function(section_id,question_id,question,question_options){
@@ -753,6 +759,8 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
 
 quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','QuestionOption',function($scope, Question, GlobalScope,QuestionOption){
   
+  $scope.submitted = false
+  
   $scope.$on('quiz_bank_id_Changed', function(event, quiz_bank_id) {
     $scope.quiz_bank_id = quiz_bank_id;
   });
@@ -760,69 +768,91 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
   $scope.$on("section_id_Changed",function(event,section_id){
     $scope.section_id = section_id;
   })
-  $scope.create_true_false = function(){
-    Question.save($scope.quiz_bank_id, $scope.section_id,
-      {description: $scope.true_false_question_statement,section_id: $scope.section_id,
-      question_type: 1,difficult_level: 1}).$promise.then(function(data){
-        $scope.question_id  = data.id
-        GlobalScope.set_question_id($scope.question_id)
-        QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
-        {question_id: $scope.question_id, is_correct:$scope.selected_true_false_option}).$promise.then(function(){
-          $scope.true_false_question_statement = {}
-          $scope.selected_true_false_option = {}
-        })
-      })
-       
-  }
-  $scope.create_open_ended = function(){
-    Question.save($scope.quiz_bank_id, $scope.section_id,
-      {description: $scope.open_ended_statement,section_id: $scope.section_id,
-      question_type: 3,difficult_level: 1}).$promise.then(function(data){
-        $scope.question_id  = data.id
-        GlobalScope.set_question_id($scope.question_id)
-        QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
-        {question_id: $scope.question_id, answer:$scope.open_ended_answer}).$promise.then(function(){
-          $scope.open_ended_statement = {}
-          $scope.open_ended_answer = {}
-        })
-      })
-  }
-  $scope.create_blank = function(){
-    $scope.blank_statement = $scope.first_statement +"_______"+$scope.second_statement
-    Question.save($scope.quiz_bank_id, $scope.section_id,
-      {description: $scope.blank_statement,section_id: $scope.section_id,
-      question_type: 4,difficult_level: 1}).$promise.then(function(data){
-        $scope.question_id  = data.id
-        GlobalScope.set_question_id($scope.question_id)
-        QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
-        {question_id: $scope.question_id, answer:$scope.blank}).$promise.then(function(){
-          $scope.first_statement = {}
-          $scope.second_statement = {}
-          $scope.blank = {}
-        })
-      })
-  }
-
-  $scope.create_mcq = function(){
-    Question.save($scope.quiz_bank_id, $scope.section_id,
-      {description: $scope.question.description,section_id: $scope.section_id,
-      question_type: 2,difficult_level: 1}).$promise.then(function(data){
-        $scope.question_id = data.id
-        GlobalScope.set_question_id($scope.question_id)
-        inputs = [$scope.input_0,$scope.input_1,$scope.input_2,$scope.input_3]
-        for(var i = 0; i<4; i++){
-          is_correct = true
-          if($scope.radio == i){
-            is_correct = true
-          }
-          else{
-            is_correct = false
-          }
+  $scope.create_true_false = function(isValid){
+    $scope.submitted = true
+    if(isValid){
+      Question.save($scope.quiz_bank_id, $scope.section_id,
+        {description: $scope.true_false_question_statement,section_id: $scope.section_id,
+        question_type: 1,difficult_level: 1}).$promise.then(function(data){
+          $scope.question_id  = data.id
+          GlobalScope.set_question_id($scope.question_id)
           QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
-          {question_id: $scope.question_id, answer:inputs[i],is_correct: is_correct})
-        }
+          {question_id: $scope.question_id, is_correct:$scope.selected_true_false_option}).$promise.then(function(){
+            $scope.true_false_question_statement = {}
+            $scope.selected_true_false_option = {}
+            $scope.submitted = false
+            $scope.hideQuestion()
+          })
+        })
+        
+       }
+  }
+  $scope.create_open_ended = function(isValid){
+    $scope.submitted = true
+    if(isValid){
+      Question.save($scope.quiz_bank_id, $scope.section_id,
+        {description: $scope.open_ended_statement,section_id: $scope.section_id,
+        question_type: 3,difficult_level: 1}).$promise.then(function(data){
+          $scope.question_id  = data.id
+          GlobalScope.set_question_id($scope.question_id)
+          QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
+          {question_id: $scope.question_id, answer:$scope.open_ended_answer}).$promise.then(function(){
+            $scope.open_ended_statement = {}
+            $scope.open_ended_answer = {}
+            $scope.submitted = false
+            $scope.hideQuestion()
+          })
+        })
+    }    
+  }
+  $scope.create_blank = function(isValid){
+    $scope.submitted = true
+    if(isValid){
+      $scope.blank_statement = $scope.first_statement +"_______"+$scope.second_statement
+      Question.save($scope.quiz_bank_id, $scope.section_id,
+        {description: $scope.blank_statement,section_id: $scope.section_id,
+        question_type: 4,difficult_level: 1}).$promise.then(function(data){
+          $scope.question_id  = data.id
+          GlobalScope.set_question_id($scope.question_id)
+          QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
+          {question_id: $scope.question_id, answer:$scope.blank}).$promise.then(function(){
+            $scope.first_statement = {}
+            $scope.second_statement = {}
+            $scope.blank = {}
+            $scope.submitted = false
+            $scope.hideQuestion() 
+          })
+        }) 
+    }    
+  }
 
-      })
+  $scope.create_mcq = function(isValid){
+    console.log("hello")
+    $scope.submitted = true
+    if(isValid){
+      Question.save($scope.quiz_bank_id, $scope.section_id,
+        {description: $scope.question.description,section_id: $scope.section_id,
+        question_type: 2,difficult_level: 1}).$promise.then(function(data){
+          $scope.question_id = data.id
+          GlobalScope.set_question_id($scope.question_id)
+          inputs = [$scope.input_0,$scope.input_1,$scope.input_2,$scope.input_3]
+          for(var i = 0; i<4; i++){
+            if(inputs[i] != undefined){
+              is_correct = true
+              if($scope.radio == i){
+                is_correct = true
+              }
+              else{
+                is_correct = false
+              }
+              QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
+              {question_id: $scope.question_id, answer:inputs[i],is_correct: is_correct})
+            }  
+          }
+
+        })
+        $scope.hideQuestion()
+    }    
 
   }
 
