@@ -161,7 +161,7 @@
                 <input type="checkbox" name="checkbox" value = "{{question.id}}" ng-click = "select_question(question)"/>
               </div>
               <div class="col-xs-10 ">
-                <span style="float:left; margin-left:10px;">{{question.description}}</span>
+                <span style="float:left; margin-left:10px;" ng-bind-html="question.description | unsafe"></span>
   			      </div>
             </div>
           </div>

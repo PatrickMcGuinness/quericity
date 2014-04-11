@@ -100,7 +100,8 @@
     <div class="col-xs-12">
       <div class="col-xs-12 strip" ng-repeat = "question in show_questions">
         <div class="col-xs-12 ">
-          <span style="float:left; margin-left:10px;">{{$index + 1}})&nbsp;{{question.description}}</span>
+          <span class = "pull-left">{{$index + 1}})</span>
+          <span class = "col-xs-11" ng-bind-html="question.description | unsafe"></span>
         </div>
         <div class = "col-xs-12 mar-top-20">
           <span>
