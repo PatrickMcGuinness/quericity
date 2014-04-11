@@ -43,6 +43,7 @@ QuizLib::Application.routes.draw do
       get "invited"
       get "attempted_answers"
       get "graded_answers_count"
+      get "questions_to_grade"
     end
     resources :sharings do
     end

@@ -12,15 +12,15 @@
   <div class="container">
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
-      <span class="sub_nav_link"><a href="#/serve_quiz/new">Serve Quiz</a></span>
+      <span class="sub_nav_link"><a href="#/serve_quiz/new" data-toggle = "tooltip" title = "Serve new Quiz" tooltip-placement = "top">Serve Quiz</a></span>
     </div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-      <span class="sub_nav_link"><a href="#/groups">Student Groups</a></span>
+      <span class="sub_nav_link"><a href="#/groups" data-toggle = "tooltip" title = "List Student Groups" tooltip-placement = "top">Student Groups</a></span>
     </div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
-      <span class="sub_nav_link"><a href="#/groups/new">Add Groups</a></span>
+      <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new Group" tooltip-placement = "top">Add Group</a></span>
     </div>  
   </div>
 </div>
@@ -30,8 +30,8 @@
     	<div class="col-xs-12">
       	<div class="row">
           <div class="col-xs-3 btn_section">
-            <button type="button" class="btn btn_blue" ng-click = "show_options = true">Options</button>
-            <button type="button" class="btn btn_grey" ng-click = "show_options = false">Select Students</button>
+            <button type="button" class="btn btn_blue" ng-click = "show_options = true" data-toggle = "tooltip" title = "Select Quiz Options" tooltip-placement = "top">Options</button>
+            <button type="button" class="btn btn_grey" ng-click = "show_options = false" data-toggle = "tooltip" title = "Select Students to Serve Quiz" tooltip-placement = "top">Select Students</button>
           </div>
           <div class = "col-xs-12">
             <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.title.$invalid) && (!OptionForm.title.$pristine || option_submitted == true)}">
@@ -202,10 +202,10 @@
         <div class = "row">
           <div class = "col-xs-12 mar-top-20">
             <div class = "col-xs-1 pull-right">  
-              <button type="button" class="btn btn_blue" ng-click = "show_options = false">Next</button>
+              <button type="button" class="btn btn_blue" ng-click = "show_options = false" data-toggle = "tooltip" title = "Go to Select Student Step" tooltip-placement = "top">Next</button>
             </div>
             <div class = "col-xs-1 pull-right">
-              <button type="button" class="btn">Preview</button>
+              <button type="button" class="btn" data-toggle = "tooltip" title = "Preview the quiz" tooltip-placement = "top">Preview</button>
             </div>
           </div>
         </div>
@@ -216,8 +216,8 @@
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-3 btn_section">
-          <button type="button" class="btn btn_grey" ng-click = "show_options = true">Options</button>
-          <button type="button" class="btn btn_blue" ng-click = "show_options = false">Select Students</button>
+          <button type="button" class="btn btn_grey" ng-click = "show_options = true" data-toggle = "tooltip" title = "Select Quiz Options" tooltip-placement = "top">Options</button>
+          <button type="button" class="btn btn_blue" ng-click = "show_options = false" data-toggle = "tooltip" title = "Select Students to Serve" tooltip-placement = "top">Select Students</button>
         </div>
       </div>
       <div class="row">
@@ -238,10 +238,10 @@
         <div class="col-xs-2">
           <div class="row top200">
             <span class="col-xs-4 col-xs-offset-3 arrow_left">
-              <a ng-click="move_to_left()"><img src="/assets/big_arrow_left.png"/></a>
+              <a ng-click="move_to_left()" data-toggle = "tooltip" title = "Deselect all Students" tooltip-placement = "top"><img src="/assets/big_arrow_left.png"/></a>
             </span>
             <span class="col-xs-4 arrow_right">
-              <a ng-click="move_to_right()"><img src="/assets/big_arrow_right.png" /></a>
+              <a ng-click="move_to_right()" data-toggle = "tooltip" title = "Select all Students" tooltip-placement = "top"><img src="/assets/big_arrow_right.png" /></a>
             </span>
           </div>
         </div>
@@ -259,13 +259,13 @@
       <div class = "row">
         <div class = "col-xs-12 mar-top-20">
           <div class = "col-xs-1 pull-right">  
-            <a type="button" class="btn btn_blue" ng-click = "serveTheQuiz()" ng-href ="#/served_quizzes" >Serve</a>
+            <a type="button" class="btn btn_blue" ng-click = "serveTheQuiz()" ng-href ="#/served_quizzes" data-toggle = "tooltip" title = "Serve The Quiz" tooltip-placement = "top">Serve</a>
           </div>
           <div class = "col-xs-1 pull-right">
-            <button type="button" class="btn">Preview</button>
+            <button type="button" class="btn" data-toggle = "tooltip" title = "Preview the Quiz" tooltip-placement = "top">Preview</button>
           </div>
           <div class = "col-xs-1 pull-right">
-            <button type="button" class="btn" ng-click = "show_options = true">Previous</button>
+            <button type="button" class="btn" ng-click = "show_options = true" data-toggle = "tooltip" title = "Go to Select Option Step" tooltip-placement = "top">Previous</button>
           </div>
         </div>
       </div>

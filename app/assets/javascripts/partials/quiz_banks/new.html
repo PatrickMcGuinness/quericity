@@ -17,25 +17,25 @@
       </span>
       <span class="sub_nav_link">
         <!--<button type="submit" class="btn btn-primary">Submit</button> -->
-        <a type = "submit" ng-click = 'saveQuiz(QuizForm.$valid)'> Save</a>
+        <a type = "submit" ng-click = 'saveQuiz(QuizForm.$valid)' data-toggle = "tooltip" title = "Save Quiz" tooltip-placement = "top"> Save</a>
       </span>
     </div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><span class = "glyphicon glyphicon-remove"></span>
       </span>
       <span class="sub_nav_link">
-        <a ng-Click = "cancelQuiz()" ng-href = '#/manage_quiz_banks'>Cancel</a>
+        <a ng-Click = "cancelQuiz()" ng-href = '#/manage_quiz_banks' data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">Cancel</a>
       </span>
     </div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><span class = "glyphicon glyphicon-plus-sign"></span></span>
       </span>
       <span class="sub_nav_link">
-        <a class = "shownewsection">Add Section</a>
+        <a class = "shownewsection" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top">Add Section</a>
       </span>
     </div>
     <div class="sub_nav pull-right">
-      <input type = "Search" placeholder = "Search ...."class = "form-control input-sm" ng-model = "titleFilter"/>
+      <input type = "Search" placeholder = "Search ...."class = "form-control input-sm" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search Sections by title" tooltip-placement = "top"/>
     </div>
     
   </div>
@@ -60,9 +60,9 @@
                   {{section.title}}
                 </span>
                 <span class = "col-xs-5">
-                  <span class = "glyphicon glyphicon-plus-sign link"></span>
-                  <span ng-click = "editSection(section)" class = "glyphicon glyphicon-edit link"></span>
-                  <span ng-click = "deleteSection(section.id,$index)" class = "glyphicon glyphicon-trash link"></span>
+                  <span class = "glyphicon glyphicon-plus-sign link" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top"></span>
+                  <span ng-click = "editSection(section)" class = "glyphicon glyphicon-edit link" data-toggle = "tooltip" title = "Edit Section" tooltip-placement = "top"></span>
+                  <span ng-click = "deleteSection(section.id,$index)" class = "glyphicon glyphicon-trash link" data-toggle = "tooltip" title = "Delete Section" tooltip-placement = "top"></span>
                 </span>
               </div>    
             </li> 
@@ -136,15 +136,15 @@
                 {{section.title}}
               </div>
               <div class = "col-xs-4 pull-right">
-                <a ng-Click = "deleteSection(section.id,$index)">
+                <a ng-Click = "deleteSection(section.id,$index)" data-toggle = "tooltip" title = "Delete the Section" tooltip-placement = "top">
                   <span class = "glyphicon glyphicon-trash pull-right mar-left-5"></span>
                 </a>
-                <a ng-Click = "editSection(section)">
+                <a ng-Click = "editSection(section)" data-toggle = "tooltip" title = "Edit Section" tooltip-placement = "top">
                   <span class = "glyphicon glyphicon-edit pull-right mar-left-5"></span>
                 </a>
                 
                 <div class="dropdown">
-                  <a class="dropdown-toggle" ng-Click = "AddQuestion(section.id,$index)">
+                  <a class="dropdown-toggle" ng-Click = "AddQuestion(section.id,$index)" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top">
                     <span class = "glyphicon glyphicon-plus-sign pull-right mar-left-5"></span>
                   </a>
                   <ul class="dropdown-menu pull-right mar-top-20">

@@ -12,15 +12,15 @@
 	<div class="container">
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
-      <span class="sub_nav_link"><a href="#/serve_quiz/new">Serve Quiz</a></span>
+      <span class="sub_nav_link"><a href="#/serve_quiz/new" data-toggle = "tooltip" title = "Serve new Quiz" tooltip-placement = "top">Serve Quiz</a></span>
 		</div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-      <span class="sub_nav_link"><a href='#/groups'>Student Groups</a></span>
+      <span class="sub_nav_link"><a href='#/groups' data-toggle = "tooltip" title = "List Student Groups" tooltip-placement = "top">Student Groups</a></span>
 		</div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
-      <span class="sub_nav_link"><a href="#/groups/new">Add Group</a></span>
+      <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new group" tooltip-placement = "top">Add Group</a></span>
 		</div>	
 	</div>
 </div>
@@ -68,7 +68,7 @@
                 </div>  
               </span>
             </td>
-            <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;<a ng-click = "invited_students(served_quiz.id)">{{served_quiz.invited.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;<a ng-click = "pending_students(served_quiz.id)">{{served_quiz.pending.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;<a ng-click = "completed_students(served_quiz.id)">{{served_quiz.completed.length}}</a>&nbsp;</td>
+            <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;<a ng-click = "invited_students(served_quiz.id)" data-toggle = "tooltip" title = "All Students who have not started quiz" tooltip-placement = "top">{{served_quiz.invited.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;<a ng-click = "pending_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who started but have not completed quiz" tooltip-placement = "top">{{served_quiz.pending.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;<a data-toggle = "tooltip" title = "Students Completed the quiz" tooltip-placement = "top"ng-click = "completed_students(served_quiz.id)">{{served_quiz.completed.length}}</a>&nbsp;</td>
           </tr>
         </tbody>
 	    </table>

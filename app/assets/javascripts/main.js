@@ -27,5 +27,7 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/quiz_banks/preview.html',controller: 'PreviewQuizCtrl'}).
       when('/grade',
       {templateUrl: 'assets/partials/grade/index.html',controller: 'GradeListQuizCtrl'}).
+      when('/grade/:id/questions',
+      {templateUrl: 'assets/partials/grade/question_to_grade.html',controller: 'GradeQuestionCtrl'}).
       otherwise({redirectTo: '/manage_quiz_banks'})
   }]);

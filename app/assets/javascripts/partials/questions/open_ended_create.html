@@ -1,7 +1,7 @@
 <div class = "col-xs-12 new-question-box mar-top-10 mar-bot-10" ng-controller = "newQuestionCtrl">
   <div class = "heading">
     <span>Add a Questions</span>
-    <a ng-click = "hideQuestion()">
+    <a ng-click = "hideQuestion()" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">
       <span class = "glyphicon glyphicon-remove pull-right" style = "color:red;"></span>
     </a>
   </div>
@@ -14,6 +14,6 @@
     </textarea>
   </div>
   <div class = "col-xs-12 question-footer mar-top-10">
-    <button ng-click = "create_open_ended(); hideQuestion()" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;"> Save & Close </button>
+    <button ng-click = "create_open_ended(); hideQuestion()" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Create new question" tooltip-placement = "top"> Save Question</button>
   </div>
 </div>  

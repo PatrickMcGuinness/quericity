@@ -12,15 +12,15 @@
 	<div class="container">
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
-      <span class="sub_nav_link"><a href="#/serve_quiz/new">Serve Quiz</a></span>
+      <span class="sub_nav_link"><a href="#/serve_quiz/new" data-toggle = "tooltip" title = "Serve new Quiz" tooltip-placement = "top">Serve Quiz</a></span>
 		</div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-      <span class="sub_nav_link"><a href="#/groups">Student Groups</a></span>
+      <span class="sub_nav_link"><a href="#/groups" data-toggle = "tooltip" title = "List Students" tooltip-placement = "top">Student Groups</a></span>
 		</div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
-      <span class="sub_nav_link"><a href="#/groups/new">Add Groups</a></span>
+      <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new Group" tooltip-placement = "top">Add Group</a></span>
 		</div>	
 	</div>
 </div>
@@ -56,8 +56,8 @@
             <td>{{group.last_updated}}</td>
             <td><span>{{group.count}}</span></td>
             <td>
-              <a ng-href="#/groups/{{group.id}}/edit"><img src="/assets/edit_sm_icon.png" /></a>&nbsp;&nbsp;
-              <a ng-click = "removeGroup(group,$index)"><img src="/assets/delete_sm_icon.png" /></a>
+              <a ng-href="#/groups/{{group.id}}/edit"><img src="/assets/edit_sm_icon.png" data-toggle = "tooltip" title = "Edit Group" tooltip-placement = "top"/></a>&nbsp;&nbsp;
+              <a ng-click = "removeGroup(group,$index)"><img src="/assets/delete_sm_icon.png"  data-toggle = "tooltip" title = "Delete Group" tooltip-placement = "top"/></a>
             </td>
           </tr>
 

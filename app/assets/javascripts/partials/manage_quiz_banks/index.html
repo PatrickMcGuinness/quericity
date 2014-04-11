@@ -15,17 +15,17 @@
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
       <span class="sub_nav_link">
-        <a ng-href  ='#/quiz_banks/new'>Create Quiz</a>
+        <a ng-href  ='#/quiz_banks/new' data-toggle = "tooltip" title = "Create new quiz" tooltip-placement = "top">Create Quiz</a>
       </span>
     </div>
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
       <span class="sub_nav_link">
-        <a class = "showcreaterepo">Create Repo</a>
+        <a class = "showcreaterepo" data-toggle = "tooltip" title = "Create new repo" tooltip-placement = "top">Create Repo</a>
       </span>
     </div>
     <div class="input-group col-xs-2 pull-right">
-      <input type="Search" placeholder="Search..." class="form-control search" ng-model = "titleFilter"/>
+      <input type="Search" placeholder="Search..." class="form-control search" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search quizzes by title" tooltip-placement = "top"/>
         <div class="input-group-btn">
           <span class="search"></span>
         </div>
@@ -39,7 +39,7 @@
     <div class="col-xs-3 left_section">
       <ul class = "row">
         <li>
-          <a class = "clickunfold" ng-right-click = "$event.stopPropagation()">
+          <a class = "clickunfold" ng-right-click = "$event.stopPropagation()" data-toggle = "tooltip" title = "List of your repos and quizzes" tooltip-placement = "top">
             My Assessments
           </a>
           <ul class = "hide" id = "new-repo-holder">
@@ -72,7 +72,7 @@
           </ul>
         </li>
         <li>
-          <a class = "clickunfold" ng-right-click = "$event.stopPropagation()">
+          <a class = "clickunfold" ng-right-click = "$event.stopPropagation()" data-toggle = "tooltip" title = "Your default repo" tooltip-placement = "top">
             Main Repo
           </a>
           <ul class = "hide row">
@@ -82,7 +82,7 @@
           </ul>
         </li>
         <li>
-          <a class = "clickunfold" ng-right-click = "$event.stopPropagation()">
+          <a class = "clickunfold" ng-right-click = "$event.stopPropagation()" data-toggle = "tooltip" title = "List of quizzes shared on quizlib" tooltip-placement = "top">
             Shared Assessments
           </a>
           <ul class = "hide row">
@@ -92,7 +92,7 @@
           </ul>
         </li>
         <li>
-          <a class = "clickunfold" ng-right-click = "$event.stopPropagation()">
+          <a class = "clickunfold" ng-right-click = "$event.stopPropagation()" data-toggle = "tooltip" title = "List of your favourite quizzes" tooltip-placement = "top">
             Starred Assessments
           </a>  
             <ul class = "hide row">
@@ -130,24 +130,24 @@
             <td ng-hide = "quiz_bank.public">Private</td>
             <td ng-show = "quiz_bank.public">Public</td>
             <td>
-              <a ng-if = "current_user.id == quiz_bank.user.id" ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)">
+              <a ng-if = "current_user.id == quiz_bank.user.id" ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)" data-toggle = "tooltip" title = "Share Quiz" tooltip-placement = "top">
                 <span class = "glyphicon glyphicon-cloud"></span>
               </a>
-              <a ng-if = "current_user.id == quiz_bank.user.id" ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)">
+              <a ng-if = "current_user.id == quiz_bank.user.id" ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)" data-toggle = "tooltip" title = "Unshare Quiz" tooltip-placement = "top">
                 <span  class = "glyphicon glyphicon-user"></span>
               </a>
               <a ng-if = "current_user.id != quiz_bank.user.id">
                 &nbsp;&nbsp;&nbsp;
               </a>
 
-              <a ng-show = "quiz_bank.is_favourite" ng-click = "make_unfavourite(quiz_bank)">
+              <a ng-show = "quiz_bank.is_favourite" ng-click = "make_unfavourite(quiz_bank)" data-toggle = "tooltip" title = "Unlike Quiz" tooltip-placement = "top">
                 <span class = "glyphicon glyphicon-star"></span>
               </a>
-              <a ng-hide = "quiz_bank.is_favourite" ng-click = "make_favourite(quiz_bank)">
+              <a ng-hide = "quiz_bank.is_favourite" ng-click = "make_favourite(quiz_bank)" data-toggle = "tooltip" title = "Like Quiz" tooltip-placement = "top">
                 <span class = "glyphicon glyphicon-star-empty"></span>
               </a>
 
-              <a>  
+              <a data-toggle = "tooltip" title = "Serve Quiz" tooltip-placement = "top">  
                 <span class = "glyphicon glyphicon-transfer"> </span>
               </a>
             </td>

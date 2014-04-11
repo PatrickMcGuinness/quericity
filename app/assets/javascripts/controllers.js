@@ -48,13 +48,11 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
   }
 }]);
 
-quizlib.controller('ModalInstanceCtrl',function($scope, $modalInstance, items){
-  $scope.items = items
-  console.log($scope.items)
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
-});  
+quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz',function($scope,$routeParams,ServedQuiz){
+  $scope.questions_to_grade = ServedQuiz.questions_to_grade($routeParams.id)
+}]);
+
+
 quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
   $scope.served_quizzes = []
   ServedQuiz.all().$promise.then(function(data){

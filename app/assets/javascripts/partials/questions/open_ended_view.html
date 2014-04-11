@@ -5,10 +5,10 @@
     </span>
     <span class = "col-xs-8">Easy</span>
     <span class = "col-xs-2">
-      <a ng-hide = "is_quiz_view" ng-click= "show_edit()">
+      <a ng-hide = "is_quiz_view" ng-click= "show_edit()" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
         <span class = "glyphicon glyphicon-edit"></span>
       </a>
-      <a ng-hide = "is_quiz_view" ng-click = "delete_question(section.id,question.id,$index)">  
+      <a ng-hide = "is_quiz_view" ng-click = "delete_question(section.id,question.id,$index)" data-toggle = "tooltip" title = "Delete Question" tooltip-placement = "top">  
         <span class = "glyphicon glyphicon-trash"></span>
       </a>
     </span>
