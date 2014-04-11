@@ -744,6 +744,12 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
   $scope.edit_mcq = function(section_id,question_id,question,question_options){
     Question.update($scope.quiz_bank_id,section_id,question_id,question)
     angular.forEach(question_options,function(value,key){
+      if($scope.selected_option == value){
+        value.is_correct = "true"
+      }
+      else{
+        value.is_correct = "false"
+      }
       QuestionOption.update($scope.quiz_bank_id,section_id,question_id,value.id,value)
     })
     $scope.show_details_view = true
@@ -752,6 +758,9 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
     Question.delete($scope.quiz_bank_id,section_id,question_id)
     $scope.questions.splice(idx, 1);
     $scope.show_details = false
+  }
+  $scope.select_option = function(option){
+    $scope.selected_option = option
   }
 }])
 

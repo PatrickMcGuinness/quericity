@@ -21,7 +21,7 @@
             <input type = "text", class = "form-control" ng-model = "option.answer">
           </td>
           <td>
-            <input type="radio" name="correct" ng-model = "radio" value = "{{$index}}">
+            <input ng-click = "select_option(option)" type="radio" name="correct" ng-model = "correct" value = "{{$index}}">
           </td>
         </tr>
       </tbody>
