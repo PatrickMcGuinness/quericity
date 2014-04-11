@@ -70,6 +70,9 @@ class User < ActiveRecord::Base
     repo_ids = self.repositories.pluck(:id)
     QuizBank.where("repository_id IN (?)", repo_ids)
   end
+  def favourite_quiz_banks_to_show
+    self.favourite_quiz_banks.joins(:quiz_bank).where("quiz_banks.deleted_at IS NULL")
+  end
 
   def shared_quiz_banks
     QuizBank.where("public = ?",QuizBank::Public::YES)

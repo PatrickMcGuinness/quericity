@@ -9,7 +9,7 @@ class FavouriteQuizBanksController < ApplicationController
   end
 
   def index
-    render json: current_user.favourite_quiz_banks
+    render json: current_user.favourite_quiz_banks_to_show
   end
 
   def update
