@@ -19,7 +19,7 @@ class QuestionOptionsController < ApplicationController
   	render json: @question.question_options.find(params[:id])
   end
   def update
-  	render json: @question.question_options.find(params[:id]).update_attributes(params[:question_topic])
+  	render json: @question.question_options.find(params[:id]).update_attributes(params[:question_option])
   end
   def destroy
   	render json: @question.question_options.find(params[:id]).destroy
