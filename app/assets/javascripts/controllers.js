@@ -477,7 +477,9 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
   $scope.submitted = false
   $scope.valid = false
   $scope.AddStudent = function(student){
-    $scope.students.push(student)
+    if(student.id != undefined){
+      $scope.students.push(student)
+    }
   }
   $scope.saveGroup = function(isValid){
     $scope.submitted = true
@@ -526,7 +528,9 @@ quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User',
   $scope.system_students = User.system_students()
 
   $scope.AddStudent = function(student){
-    $scope.students.push(student)
+    if(student.id !=undefined){
+      $scope.students.push(student)
+    }
   }
   $scope.saveGroup = function(isValid){
     $scope.submitted = true
