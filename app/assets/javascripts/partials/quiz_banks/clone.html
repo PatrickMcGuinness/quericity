@@ -128,7 +128,7 @@
                   </a>
                   <ul class="dropdown-menu pull-right mar-top-20">
                     <li ng-repeat="question in question_types">
-                      <a ng-Click = "addNewQuestion(question)">{{question}}</a>
+                      <a ng-Click = "addNewQuestion(question,section)">{{question}}</a>
                     </li>
                   </ul>
                 </div>
@@ -153,13 +153,13 @@
               <div ng-include src="'/assets/partials/questions/all_questions.html'"></div>
             </div>
             <div>
-              <div ng-Show = "show_true_false" ng-include src="'/assets/partials/questions/true_false_create.html'">
+              <div ng-if = "question_section == section" ng-Show = "show_true_false" ng-include src="'/assets/partials/questions/true_false_create.html'">
               </div>  
-              <div ng-Show = "show_mcq" ng-include src="'/assets/partials/questions/mcq_create.html'">
+              <div ng-if = "question_section == section" ng-Show = "show_mcq" ng-include src="'/assets/partials/questions/mcq_create.html'">
               </div>
-              <div ng-Show = "show_blank" ng-include src="'/assets/partials/questions/fill_in_the_blank_create.html'">
+              <div ng-if = "question_section == section" ng-Show = "show_blank" ng-include src="'/assets/partials/questions/fill_in_the_blank_create.html'">
               </div>
-              <div ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'">
+              <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'">
               </div>
             </div>     
             
