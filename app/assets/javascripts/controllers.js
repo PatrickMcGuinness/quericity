@@ -888,41 +888,45 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section',function($scop
       $rootScope.section_edit = null
     }
   }
-  $scope.show_true_false = false
-  $scope.show_mcq = false
-  $scope.show_blank = false
-  $scope.show_open_ended = false
-  $scope.addNewQuestion = function(question_type){
+  $rootScope.show_true_false = false
+  $rootScope.show_mcq = false
+  $rootScope.show_blank = false
+  $rootScope.show_open_ended = false
+  $rootScope.question_section = null
+  $scope.addNewQuestion = function(question_type,section){
+
+    $rootScope.question_section = section
     if(question_type == "True False"){
-      $scope.show_true_false = true
-      $scope.show_mcq = false
-      $scope.show_blank = false
-      $scope.show_open_ended = false
+      $rootScope.show_true_false = true
+      $rootScope.show_mcq = false
+      $rootScope.show_blank = false
+      $rootScope.show_open_ended = false
     }
     if(question_type == "Mcq"){
-      $scope.show_true_false = false
-      $scope.show_mcq = true
-      $scope.show_blank = false
-      $scope.show_open_ended = false
+      $rootScope.show_true_false = false
+      $rootScope.show_mcq = true
+      $rootScope.show_blank = false
+      $rootScope.show_open_ended = false
     }
     if(question_type == "Fill in blank"){
-      $scope.show_true_false = false
-      $scope.show_mcq = false
-      $scope.show_blank = true
-      $scope.show_open_ended = false
+      $rootScope.show_true_false = false
+      $rootScope.show_mcq = false
+      $rootScope.show_blank = true
+      $rootScope.show_open_ended = false
     }
     if(question_type == "Open Ended"){
-      $scope.show_true_false = false
-      $scope.show_mcq = false
-      $scope.show_blank = false
-      $scope.show_open_ended = true
+      $rootScope.show_true_false = false
+      $rootScope.show_mcq = false
+      $rootScope.show_blank = false
+      $rootScope.show_open_ended = true
     }
   }
   $scope.hideQuestion = function(){
-    $scope.show_true_false = false
-    $scope.show_mcq = false
-    $scope.show_blank = false
-    $scope.show_open_ended = false
+    $rootScope.show_true_false = false
+    $rootScope.show_mcq = false
+    $rootScope.show_blank = false
+    $rootScope.show_open_ended = false
+    //$rootScope.question_section = null
   }
 
 }])

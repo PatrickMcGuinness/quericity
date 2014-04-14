@@ -118,7 +118,7 @@
         <tbody>
           <tr ng-repeat = "quiz_bank in quiz_banks | filter: titleFilter">
             <td>
-            <a custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;'></span><span style = 'margin-left:2px'><a ng-click = deleteQuiz(quiz_bank)>Delete</a></span>" popover-placement="top">
+            <a custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;'></span><span style = 'margin-left:2px'><a ng-click = deleteQuiz(quiz_bank)>Delete</a></span><span class = 'glyphicon glyphicon-edit' style= 'margin-left:2px;'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/edit'>Edit</a></span><span style= 'margin-left:2px;'><img src = '/assets/clone_icon.png'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/clone'>Clone</a></span>" popover-placement="top">
               {{quiz_bank.title}}
             </a>  
             </td>
