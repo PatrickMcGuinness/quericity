@@ -664,6 +664,9 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
     $scope.my_assessments.splice(index,1)  
   }
   $scope.deleteQuiz = function(quiz){
+    index = $scope.quiz_banks.indexOf(quiz);
+    $scope.quiz_banks.splice(index,1)
+    QuizBank.delete(quiz.id)
   }
   $scope.handleDrop = function(quizId,repoId) {
     QuizBank.get(quizId).$promise.then(function(data){

@@ -6,12 +6,7 @@ quizlib.directive("mathjaxBind", function() {
                 //debugger;
                 var $script = angular.element("<script type='math/tex'>")
                     .html(value == undefined ? "" : value);
-
-                //var $small_script = angular.element("<span class='math-tex'>").html(value == undefined ? "" : value);    
-                //$element.html("");
-                //$($($($script[0].innerHTML)[0]).find("span")[0])
                 var $small_script = $($($($script[0].innerHTML)[0]).find("span")[0]).html()
-                //console.log($small_script)
                 $small_script = String($small_script).substring(2,String($small_script).length -1);
                 $script.html("")
                 $script.append($small_script)
@@ -180,7 +175,8 @@ quizlib.directive('customPopover', function ($compile) {
       angular.element(el).popover({
         trigger: 'click',
         html: true,
-        content: attrs.popoverHtml,
+        content: function() { return $compile(attrs.popoverHtml)(scope);},
+        //content: attrs.popoverHtml,
         placement: attrs.popoverPlacement
       });
     }
