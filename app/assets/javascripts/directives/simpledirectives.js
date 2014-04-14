@@ -1,3 +1,28 @@
+quizlib.directive("mathjaxBind", function() {
+    return {
+        restrict: "A",
+        controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
+            $scope.$watch($attrs.mathjaxBind, function(value) {
+                //debugger;
+                var $script = angular.element("<script type='math/tex'>")
+                    .html(value == undefined ? "" : value);
+
+                //var $small_script = angular.element("<span class='math-tex'>").html(value == undefined ? "" : value);    
+                //$element.html("");
+                //$($($($script[0].innerHTML)[0]).find("span")[0])
+                var $small_script = $($($($script[0].innerHTML)[0]).find("span")[0]).html()
+                //console.log($small_script)
+                $small_script = String($small_script).substring(2,String($small_script).length -1);
+                $script.html("")
+                $script.append($small_script)
+                $element.html("")
+                var new_element = $($element[0]).append($(value))
+                $(new_element).find("span.math-tex").after($script).remove("span.math-tex")
+                MathJax.Hub.Queue(["Reprocess", MathJax.Hub, $element[0]]);
+            });
+        }]
+    };
+});
 quizlib.directive('enter', function () {
   return function (scope, element, attrs) {
     element.bind("keydown", function (event) {
@@ -118,24 +143,6 @@ quizlib.directive('ngRightClick', function($parse) {
   };
 });
 
-quizlib.directive("mathjaxBind", function() {
-  console.log("hello")
-  return {
-    restrict: "A",
-    controller: ["$scope", "$element", "$attrs",
-            function($scope, $element, $attrs) {
-              console.log($attrs)
-        $scope.$watch($attrs.ngBindHtml, function(value) {
-            var $script = angular.element("<script type='math/tex'>")
-                .html(value == undefined ? "" : value);
-            $element.html("");
-            $element.append($script);
-            console.log($element[0])
-            MathJax.Hub.Queue(["Reprocess", MathJax.Hub, $element[0]]);
-        });
-    }]
-  };
-});
 
 quizlib.directive('hidecreaterepo', function () {
   return {
@@ -179,6 +186,7 @@ quizlib.directive('customPopover', function ($compile) {
     }
   };
 });
+
 
 
 quizlib.directive('draggable', function() {

@@ -45,29 +45,8 @@
   <div class = "col-xs-12">
     <div class = "container">
       <div class = "row">
-        <div class = "col-xs-2 left_section">
-          <div class = "row"> 
-            <div class = "col-xs-10" style = "font-size: 20px;">
-              <strong>
-                {{quiz_bank.title}}
-              </strong>  
-            </div>
-          </div>
-          <ul class = "row">
-            <li class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter" ng-controller = "sectionCtrl">
-              <div class = "mar-top-10">
-                <span class = "col-xs-7">
-                  {{section.title}}
-                </span>
-                <span class = "col-xs-5">
-                  <span class = "glyphicon glyphicon-plus-sign link" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top"></span>
-                  <span ng-click = "editSection(section)" class = "glyphicon glyphicon-edit link" data-toggle = "tooltip" title = "Edit Section" tooltip-placement = "top"></span>
-                  <span ng-click = "deleteSection(section.id,$index)" class = "glyphicon glyphicon-trash link" data-toggle = "tooltip" title = "Delete Section" tooltip-placement = "top"></span>
-                </span>
-              </div>    
-            </li> 
-          </ul>
-        </div>              
+        <div ng-include src="'/assets/partials/quiz_banks/left_section.html'">
+        </div>             
 
         <div class = "col-xs-8 right-list mar-top-20">
           <form name="QuizForm" ng-submit="saveQuiz(QuizForm.$valid)" novalidate>

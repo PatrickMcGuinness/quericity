@@ -584,6 +584,7 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
 
 
 quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz){
+
   $scope.quiz_banks = [] 
   $scope.show_new_repo_div = false
   $scope.starred_quiz_banks = []
@@ -836,7 +837,6 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
   }
 
   $scope.create_mcq = function(isValid){
-    console.log("hello")
     $scope.submitted = true
     if(isValid){
       Question.save($scope.quiz_bank_id, $scope.section_id,
@@ -874,8 +874,6 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section',function($scop
     Section.delete($scope.quiz_bank_id,id);
   }
   $scope.editSection = function(section){
-    console.log(section)
-    console.log("helo")
      $rootScope.section_edit = section;
   }
   $scope.cancelEditSection = function(section){
@@ -1075,7 +1073,6 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
 
   $scope.addSection = function(isValid){
     if(isValid){
-      console.log("isvalid")
       section = Section.save($scope.quiz_bank_id,{title: $scope.newSection.title})
       $scope.quiz_sections = Section.all($scope.quiz_bank_id)
       $scope.newSection = {}

@@ -16,15 +16,3 @@ quizlib.directive('ckEditor', [function () {
     }
   };
 }])
-
-quizlib.directive('mathJax', [function () {
-  return {
-    restrict: 'A',
-    link: function (scope, element, attrs) {
-      var el = element[0];
-      console.log(el)
-      return MathJax.Hub.Queue(["Typeset",MathJax.Hub,el]);
-      
-    }
-  };
-}])

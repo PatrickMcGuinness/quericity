@@ -19,14 +19,16 @@
         Question:
       </strong>
     </span>
-    <span class = "col-xs-10" ng-bind-html="question.description | unsafe"></span>
+    <!--<span class = "col-xs-10" ng-bind-html="question.description | unsafe"></span> -->
+    <span class = "col-xs-10" mathjax-bind = "question.description">{{question.description}}</span>
     
   </div>
   <div class = "col-xs-12 mar-top-10">
     <span class = "col-xs-2">
       <strong>Answer:</strong>
     </span >
-    <span class = "col-xs-10" ng-bind-html="question_option.answer | unsafe"></span>
+    <!--<span class = "col-xs-10" ng-bind-html="question_option.answer | unsafe"></span> -->
+    <span class = "col-xs-10" mathjax-bind = "question.description">{{question_option.answer}}</span>
   </div>
 
 </div>
