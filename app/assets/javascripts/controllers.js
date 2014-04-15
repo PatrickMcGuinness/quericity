@@ -21,11 +21,13 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
       })
     })
   })
-
+  $rootScope.cancel = function () {
+    $rootScope.modalInstance.dismiss('cancel');
+  };
   $scope.invited_students = function (served_quizId){  
     ServedQuiz.invited(served_quizId).$promise.then(function(data){
       $rootScope.items = data
-      var modalInstance = $modal.open({
+      $rootScope.modalInstance = $modal.open({
         templateUrl: 'Modal.html' 
       });
     })   
@@ -33,7 +35,7 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
   $scope.pending_students = function (served_quizId){  
     ServedQuiz.pending(served_quizId).$promise.then(function(data){
       $rootScope.items = data
-      var modalInstance = $modal.open({
+      $rootScope.modalInstance = $modal.open({
         templateUrl: 'Modal.html' 
       });
     })   
@@ -41,7 +43,7 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
   $scope.completed_students = function (served_quizId){  
     ServedQuiz.completed(served_quizId).$promise.then(function(data){
       $rootScope.items = data
-      var modalInstance = $modal.open({
+      $rootScope.modalInstance = $modal.open({
         templateUrl: 'Modal.html' 
       });
     })   
@@ -347,7 +349,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
 
   $scope.$watch('selected_group',function(){
     if($scope.selected_group != undefined){
-      $scope.group_students = Group.students($scope.selected_group.id)
+      $scope.selected_students = Group.students($scope.selected_group.id)
     }
   })
 
