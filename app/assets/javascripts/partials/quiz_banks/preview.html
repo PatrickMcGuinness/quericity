@@ -101,7 +101,8 @@
       <div class="col-xs-12 strip" ng-repeat = "question in show_questions">
         <div class="col-xs-12 ">
           <span class = "pull-left">{{$index + 1}})</span>
-          <span class = "col-xs-11" ng-bind-html="question.description | unsafe"></span>
+          <!--<span class = "col-xs-11" ng-bind-html="question.description | unsafe"></span> -->
+          <span class = "col-xs-11" mathjax-bind = "question.description"></span>
         </div>
         <div class = "col-xs-12 mar-top-20">
           <span>
@@ -160,7 +161,7 @@
           <tbody>
             <tr ng-repeat = "answer in show_answers">
               <td>
-                {{answer.question_answer}}
+                &nbsp;{{answer.question_answer}}
               </td>
               <td>
                 {{answer.answer}}
@@ -171,7 +172,8 @@
             </tr>
             <tr ng-repeat = "answer_to_grade in to_be_graded">
               <td>
-                {{answer_to_grade.question_answer}}
+                <span class = "col-xs-10" mathjax-bind = "answer_to_grade.question_answer"></span>
+                <!--{{answer_to_grade.question_answer}} -->
               </td>
               <td>
                 {{answer_to_grade.answer}}
