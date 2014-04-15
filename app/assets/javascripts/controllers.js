@@ -52,7 +52,6 @@ quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz',fu
   $scope.questions_to_grade = ServedQuiz.questions_to_grade($routeParams.id)
 }]);
 
-
 quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
   $scope.served_quizzes = []
   ServedQuiz.all().$promise.then(function(data){
@@ -90,11 +89,14 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
     })
   })
   
- 
+  $rootScope.cancel = function () {
+    console.log("fsadfs")
+    $rootScope.modalInstance.dismiss('cancel');
+  };
   $scope.invited_students = function (served_quizId){  
     ServedQuiz.invited(served_quizId).$promise.then(function(data){
       $rootScope.items = data
-      var modalInstance = $modal.open({
+      $rootScope.modalInstance = $modal.open({
         templateUrl: 'Modal.html' 
       });
     })   
@@ -102,7 +104,7 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
   $scope.pending_students = function (served_quizId){  
     ServedQuiz.pending(served_quizId).$promise.then(function(data){
       $rootScope.items = data
-      var modalInstance = $modal.open({
+      $rootScope.modalInstance = $modal.open({
         templateUrl: 'Modal.html' 
       });
     })   
@@ -110,7 +112,7 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
   $scope.completed_students = function (served_quizId){  
     ServedQuiz.completed(served_quizId).$promise.then(function(data){
       $rootScope.items = data
-      var modalInstance = $modal.open({
+      $rootScope.modalInstance = $modal.open({
         templateUrl: 'Modal.html' 
       });
     })   
