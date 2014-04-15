@@ -6,6 +6,14 @@
     </a>
   </div>
   <div class = "col-xs-12 mar-top-10">
+    <select class="form-control form_section" ng-model="question.difficulty_level" name = "difficulty">
+      <option value = "">Select Difficulty</option>
+      <option value = "1">Easy</option>
+      <option value = "2">Medium</option>
+      <option value = "3">Hard</option>
+    </select>
+  </div>
+  <div class = "col-xs-12 mar-top-10">
     <textarea name="description" rows="3" class = "form-control" ng-model = "question.description" data-ck-editor>
     </textarea>
   </div>

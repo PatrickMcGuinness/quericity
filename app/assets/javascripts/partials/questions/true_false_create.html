@@ -7,6 +7,17 @@
   </div>
   <form name="TrueFalseForm" ng-submit="create_true_false(TrueFalseForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.difficulty.$invalid) && (!TrueFalseForm.difficulty.$pristine || submitted == true)}">
+        <select class="form-control form_section" ng-model="selected_difficulty" name = "difficulty" required>
+          <option value = "">Select Difficulty</option>
+          <option value = "1">Easy</option>
+          <option value = "2">Medium</option>
+          <option value = "3">Hard</option>
+        </select>
+        <p ng-show="TrueFalseForm.difficulty.$invalid && (!TrueFalseForm.difficulty.$pristine || submitted == true)" class="help-block">Difficulty level is required.</p>
+      </div>
+    </div>
+    <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.question_statement.$invalid) && (!TrueFalseForm.question_statement.$pristine || submitted == true)}">
         <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "true_false_question_statement" data-ck-editor required>
         </textarea>

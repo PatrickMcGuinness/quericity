@@ -3,7 +3,9 @@
     <span class = "col-xs-2">
       <strong>Difficulty:</strong>
     </span>
-    <span class = "col-xs-8">Easy</span>
+    <span ng-if = "question.difficulty_level == 1" class = "col-xs-8">Easy</span>
+    <span ng-if = "question.difficulty_level == 2" class = "col-xs-8">Medium</span>
+    <span ng-if = "question.difficulty_level == 3" class = "col-xs-8">Hard</span>
     <span class = "col-xs-2">
       <a ng-hide = "is_quiz_view" ng-click= "show_edit()" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
         <span class = "glyphicon glyphicon-edit"></span>
@@ -28,7 +30,7 @@
       <strong>Answer:</strong>
     </span >
     <!--<span class = "col-xs-10" ng-bind-html="question_option.answer | unsafe"></span> -->
-    <span class = "col-xs-10" mathjax-bind = "question.description">{{question_option.answer}}</span>
+    <span class = "col-xs-10" mathjax-bind = "question_option.answer">{{question_option.answer}}</span>
   </div>
 
 </div>

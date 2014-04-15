@@ -7,6 +7,17 @@
   </div>
   <form name="BlankForm" ng-submit="create_blank(BlankForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.difficulty.$invalid) && (!BlankForm.difficulty.$pristine || submitted == true)}">
+        <select class="form-control form_section" ng-model="selected_difficulty" name = "difficulty" required>
+          <option value = "">Select Difficulty</option>
+          <option value = "1">Easy</option>
+          <option value = "2">Medium</option>
+          <option value = "3">Hard</option>
+        </select>
+        <p ng-show="BlankForm.difficulty.$invalid && (!BlankForm.difficulty.$pristine || submitted == true)" class="help-block">Difficulty level is required.</p>
+      </div>
+    </div>
+    <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.first_statement.$invalid) && (!BlankForm.first_statement.$pristine || submitted == true)}">
         <textarea name="first_statement" id="first_statement" rows="3" class = "form-control" ng-model = "first_statement" data-ck-editor required>
         </textarea>

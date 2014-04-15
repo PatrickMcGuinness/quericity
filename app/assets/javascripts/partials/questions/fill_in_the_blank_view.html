@@ -3,7 +3,9 @@
     <span class = "col-xs-2">
       <strong>Difficulty:</strong>
     </span>
-    <span class = "col-xs-8">Easy</span>
+    <span ng-if = "question.difficulty_level == 1" class = "col-xs-8">Easy</span>
+    <span ng-if = "question.difficulty_level == 2" class = "col-xs-8">Medium</span>
+    <span ng-if = "question.difficulty_level == 3" class = "col-xs-8">Hard</span>
     <span class = "col-xs-2">
       <a ng-click= "show_blank_edit(question)" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
         <span ng-hide = "is_quiz_view" class = "glyphicon glyphicon-edit"></span>

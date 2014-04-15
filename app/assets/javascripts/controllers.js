@@ -781,12 +781,13 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
   $scope.$on("section_id_Changed",function(event,section_id){
     $scope.section_id = section_id;
   })
+  $scope.selected_difficulty = null
   $scope.create_true_false = function(isValid){
     $scope.submitted = true
     if(isValid){
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.true_false_question_statement,section_id: $scope.section_id,
-        question_type: 1,difficult_level: 1}).$promise.then(function(data){
+        question_type: 1,difficulty_level: $scope.selected_difficulty}).$promise.then(function(data){
           $scope.question_id  = data.id
           GlobalScope.set_question_id($scope.question_id)
           QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
@@ -805,7 +806,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
     if(isValid){
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.open_ended_statement,section_id: $scope.section_id,
-        question_type: 3,difficult_level: 1}).$promise.then(function(data){
+        question_type: 3,difficulty_level: $scope.selected_difficulty}).$promise.then(function(data){
           $scope.question_id  = data.id
           GlobalScope.set_question_id($scope.question_id)
           QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
@@ -824,7 +825,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
       $scope.blank_statement = $scope.first_statement +"_______"+$scope.second_statement
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.blank_statement,section_id: $scope.section_id,
-        question_type: 4,difficult_level: 1}).$promise.then(function(data){
+        question_type: 4,difficulty_level: $scope.selected_difficulty}).$promise.then(function(data){
           $scope.question_id  = data.id
           GlobalScope.set_question_id($scope.question_id)
           QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
@@ -844,7 +845,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
     if(isValid){
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.question.description,section_id: $scope.section_id,
-        question_type: 2,difficult_level: 1}).$promise.then(function(data){
+        question_type: 2,difficulty_level: $scope.selected_difficulty}).$promise.then(function(data){
           $scope.question_id = data.id
           GlobalScope.set_question_id($scope.question_id)
           inputs = [$scope.input_0,$scope.input_1,$scope.input_2,$scope.input_3]
