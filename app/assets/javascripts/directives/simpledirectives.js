@@ -53,8 +53,6 @@ quizlib.directive('showtitleedit', function () {
 });
 
 
-
-
 quizlib.directive('clickunfold', function () {
   return {
     restrict: 'C',

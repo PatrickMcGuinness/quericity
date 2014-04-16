@@ -1,4 +1,10 @@
 quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$rootScope,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
+  
+  $.removeCookie("my_assessments")
+  $.removeCookie("shared_assessments")
+  $.removeCookie("starred_assessments")
+  $.removeCookie("main_repo")
+  
   $scope.served_quizzes = []
   ServedQuiz.all().$promise.then(function(data){
     angular.forEach(data.result,function(value,data){
@@ -55,6 +61,10 @@ quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz',fu
 }]);
 
 quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
+  $.removeCookie("my_assessments")
+  $.removeCookie("shared_assessments")
+  $.removeCookie("starred_assessments")
+  $.removeCookie("main_repo")
   $scope.served_quizzes = []
   ServedQuiz.all().$promise.then(function(data){
     angular.forEach(data.result,function(value,key){
@@ -121,6 +131,11 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
   }
 }]);
 quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizBank','Question','QuestionOption',function($scope,$routeParams,$timeout,QuizBank,Question,QuestionOption){
+  $.removeCookie("my_assessments")
+  $.removeCookie("shared_assessments")
+  $.removeCookie("starred_assessments")
+  $.removeCookie("main_repo")
+
   $scope.quiz_bank_id = $routeParams.id
   $scope.show_options = true
   $scope.quiz_bank = QuizBank.get($scope.quiz_bank_id)
@@ -323,7 +338,10 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   }
 }]);
 quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','Group','User','Sharing',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,Group,User,Sharing){
-  
+  $.removeCookie("my_assessments")
+  $.removeCookie("shared_assessments")
+  $.removeCookie("starred_assessments")
+  $.removeCookie("main_repo")
   $scope.show_question_list = true
   $scope.selected_questions = []
   $scope.show_options = true
@@ -435,6 +453,10 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
 }]);
 
 quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',function($scope,User,Group,StudentGroup){
+  $.removeCookie("my_assessments")
+  $.removeCookie("shared_assessments")
+  $.removeCookie("starred_assessments")
+  $.removeCookie("main_repo")
   $scope.groups = []
   $scope.students = User.get_students()
   Group.all().$promise.then(function(data){
@@ -566,13 +588,15 @@ quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User',
     }
   }
 }]);
-quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section', function($scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section) {
+quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section','FavouriteQuiz', function($scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section,FavouriteQuiz) {
   $scope.my_assessments = Repository.all()
   $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
   $scope.quiz_bank_id = $routeParams.id
   $scope.tags = []
+  $scope.starred_quiz_banks = []
   $scope.is_quiz_view = true
   $scope.current_user = User.get_current_user()
+  
   QuizBank.get($routeParams.id).$promise.then(function(data){
     var obj = new Date(data.created_at)
     var obj2 = new Date(data.updated_at)
@@ -581,12 +605,82 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
     $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()   
   })
 
+  Repository.default_repo().$promise.then(function(data){
+    $scope.main_repo_quizzes = QuizBank.repo_quiz_banks(data.result.id)
+  })
+  FavouriteQuiz.all().$promise.then(function(data){
+    angular.forEach(data.result,function(value,key){
+      $scope.starred_quiz_banks.push(QuizBank.get(value.quiz_bank_id))
+    })
+  })
+
   $scope.deleteQuiz = function(){
     QuizBank.delete($scope.quiz_bank_id)
   }
+  
+
+
 }]);
 
+quizlib.controller("Navigation",['$scope',function($scope){
+  
 
+  $scope.no_starred_cookie = function(){
+    if($.cookie("starred_assessments") == undefined){return true;}
+    else{return false;}
+  }
+  $scope.no_shared_cookie = function(){
+    if($.cookie("shared_assessments") == undefined){return true;}
+    else{return false;}
+  }
+  $scope.no_main_repo_cookie = function(){
+    if($.cookie("main_repo") == undefined){return true}
+    else{return false}
+  }
+
+  $scope.no_my_assessments_cookie = function(){
+    if($.cookie("my_assessments") == undefined){return true}
+    else{return false}
+  }
+
+
+  $scope.update_status = function(state){
+    if(state == "my_assessments"){
+      if($.cookie("my_assessments") == undefined){
+        $.cookie("my_assessments", "my_assessments");
+      }
+      else{
+        $.removeCookie("my_assessments");
+      }
+      
+    }
+    if(state == "main_repo"){
+      if($.cookie("main_repo") == undefined){
+        $.cookie("main_repo","main_repo")
+      }
+      else{
+        $.removeCookie("main_repo");
+      }
+    }
+    if(state == "shared_assessments"){
+      if($.cookie("shared_assessments") == undefined){
+        $.cookie("shared_assessments","shared_assessments")
+      }
+      else{
+        $.removeCookie("shared_assessments");
+      }
+    }
+    if(state == "starred_assessments"){
+      if($.cookie("starred_assessments") == undefined){
+        $.cookie("starred_assessments","starred_assessments")
+      }
+      else{
+        $.removeCookie("starred_assessments");
+      }
+    }  
+  }
+
+}]);
 quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz){
 
   $scope.quiz_banks = [] 
@@ -594,7 +688,7 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
   $scope.starred_quiz_banks = []
 
   $scope.my_assessments = []
-
+  
   Repository.all().$promise.then(function(data){
     $scope.my_assessments = data
     angular.forEach(data,function(value,key){
@@ -640,6 +734,8 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
       })
     });
   })
+
+  
   $scope.make_public = function(quiz){
     quiz.public = 1
     QuizBank.update(quiz.id,quiz)
@@ -791,6 +887,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
   $scope.$on("section_id_Changed",function(event,section_id){
     $scope.section_id = section_id;
   })
+
   $scope.selected_difficulty = null
   $scope.create_true_false = function(isValid){
     $scope.submitted = true
@@ -803,6 +900,9 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
           QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
           {question_id: $scope.question_id, is_correct:$scope.selected_true_false_option}).$promise.then(function(){
             $scope.true_false_question_statement = null
+            console.log(CKEDITOR.instances['question_statement'])
+            console.log(CKEDITOR.instances['question_statement'].getData())
+            console.log(CKEDITOR.instances['question_statement'].setData("fqwefqwefqwef"))
             $scope.selected_difficulty = null
             $scope.selected_true_false_option = null
             $scope.submitted = false
@@ -954,6 +1054,10 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
 }])
 
 quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
+  $.removeCookie("my_assessments")
+  $.removeCookie("shared_assessments")
+  $.removeCookie("starred_assessments")
+  $.removeCookie("main_repo")
   $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
   $scope.submitted= false
   QuizBank.clone($routeParams.id).$promise.then(function(data){
@@ -1002,7 +1106,10 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
   }
 }])
 quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
-
+  $.removeCookie("my_assessments")
+  $.removeCookie("shared_assessments")
+  $.removeCookie("starred_assessments")
+  $.removeCookie("main_repo")
   $scope.quiz_bank_id = $routeParams.id
   $scope.quiz_bank = QuizBank.get($scope.quiz_bank_id)
   $scope.quiz_sections = Section.all($scope.quiz_bank_id)
@@ -1055,7 +1162,10 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
 quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope, $location,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
   // Variables for view show hide
 
-
+  $.removeCookie("my_assessments")
+  $.removeCookie("shared_assessments")
+  $.removeCookie("starred_assessments")
+  $.removeCookie("main_repo")
   $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
   $scope.tags = Topic.all()
   $scope.show_tags = []
