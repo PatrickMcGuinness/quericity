@@ -1,5 +1,6 @@
-<ul class = "questions-list">
-  <li ng-repeat = "question in questions" class = "col-xs-12" ng-controller = "viewQuestionCtrl">
+<ul data-quiz-bank-id = {{quiz_bank_id}} id = {{section.id}} section-droppable drop= "handleDrop" class = "questions-list">
+  <li ng-if = "questions.length == 0" class = "col-xs-12 no-record">No questions in sections</li>
+  <li ng-if = "questions.length > 0" id = {{question.id}} ng-repeat = "question in questions" class = "col-xs-12" ng-controller = "viewQuestionCtrl" draggable>
     <div class = "col-xs-1">
       <span ng-if = "question.question_type == 1" class = "glyphicon glyphicon-ok" style = "color:blue;"></span>
       <span ng-if = "question.question_type == 4" class = "glyphicon glyphicon-stop" style = "color:blue;"></span>

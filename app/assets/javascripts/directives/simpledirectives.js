@@ -75,10 +75,9 @@ quizlib.directive('showhide', function () {
   return {
     restrict: 'C',
     link: function (scope, element, attr) {
-      console.log("hello")
       element.bind('click', function () {
         var el = element[0]      
-        console.log($(el).parents(".complete_row"))
+  
         if($(el).parents(".complete_row").siblings("ul").hasClass("hide")){
           $(el).parents(".complete_row").siblings("ul").removeClass("hide")
         }
@@ -176,7 +175,6 @@ quizlib.directive('customPopover', function ($compile) {
         trigger: 'click',
         html: true,
         content: function() { return $compile(attrs.popoverHtml)(scope);},
-        //content: attrs.popoverHtml,
         placement: attrs.popoverPlacement
       });
     }
@@ -251,6 +249,64 @@ quizlib.directive('droppable', function() {
             var fn = scope.drop();
             if ('undefined' !== typeof fn) {
               fn(item.id, binId);
+            }
+          });
+
+          return false;
+        },false
+      );
+    }
+  }
+});
+
+
+quizlib.directive('sectionDroppable', function() {
+  return {
+    scope: {
+      drop: '&',
+      bin: '=' // bi-directional scope
+    },
+    link: function(scope, element) {
+      var el = element[0];
+      el.addEventListener('dragover',
+        function(e) {
+          e.dataTransfer.dropEffect = 'move';
+          // allows us to drop
+          if (e.preventDefault) e.preventDefault();
+          this.classList.add('over');
+          return false;
+        },false
+      );
+      el.addEventListener('dragenter',
+        function(e) {
+          this.classList.add('over');
+          return false;
+        },false
+      );
+
+      el.addEventListener('dragleave',
+        function(e) {
+          this.classList.remove('over');
+          return false;
+        },false
+      );
+      el.addEventListener('drop',
+        function(e) {
+          if (e.stopPropagation) e.stopPropagation();
+          var binId = this.id;
+          var quiz_bank_id = $(this).data().quizBankId
+          this.classList.remove('over');
+          var item = document.getElementById(e.dataTransfer.getData('Text'));
+          var previous_section_id = $(item).parents("ul").attr("id")
+          if( $(item).parents("ul").children("li").length - 1 == 0){
+            $(item).parents("ul").append("<li class = 'col-xs-12 no-record'>No questions in sections</li>")
+          }
+          $(this).children(".no-record").remove()
+          $(this).append(item)
+          scope.$apply(function(scope) {
+            var fn = scope.drop();
+            if ('undefined' !== typeof fn) {
+              fn(item.id, binId,quiz_bank_id,previous_section_id);
             }
           });
 
