@@ -958,16 +958,17 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
   $scope.create_mcq = function(isValid){
     $scope.submitted = true
     if(isValid){
+      inputs = [$scope.input_0,$scope.input_1,$scope.input_2,$scope.input_3]
+      var correct_input = $scope.radio;
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.question.description,section_id: $scope.section_id,
         question_type: 2,difficulty_level: $scope.selected_difficulty}).$promise.then(function(data){
           $scope.question_id = data.id
           GlobalScope.set_question_id($scope.question_id)
-          inputs = [$scope.input_0,$scope.input_1,$scope.input_2,$scope.input_3]
           for(var i = 0; i<4; i++){
             if(inputs[i] != undefined){
               is_correct = true
-              if($scope.radio == i){
+              if(correct_input == i){
                 is_correct = true
               }
               else{
