@@ -227,7 +227,7 @@
             <option value = "">Select Group</option>
           </select>  
           <ul class="col-xs-12">
-            <li class="col-xs-11 select_section" ng-repeat = "group_student in group_students">
+            <li class="col-xs-11 select_section" ng-repeat = "group_student in group_students" style = "word-wrap: break-word;">
               <span class="col-xs-4"><img src="/assets/img_01.png" class="img-thumbnail" /></span>
               <span style=" float:right;"><input type="checkbox" name="checkbox" ng-click = "student_to_right(group_student)"/></span>
               <span class="col-xs-6"><h4>{{group_student.first_name}}{{group_student.last_name}}</h4>
@@ -247,7 +247,7 @@
         </div>
         <div class="col-xs-5 right_section_area">
           <ul class="col-xs-12">
-            <li class="col-xs-11 select_section" ng-repeat = "selected_student in selected_students">
+            <li class="col-xs-11 select_section" ng-repeat = "selected_student in selected_students" style = "word-wrap: break-word;">
               <span class="col-xs-4"><img src="/assets/img_01.png" class="img-thumbnail" /></span>
               <span style=" float:right;"><input type="checkbox" name="checkbox" ng-click= "student_to_left(selected_student)"/></span>
               <span class="col-xs-6"><h4>{{selected_student.first_name}}{{selected_student.last_name}}</h4>

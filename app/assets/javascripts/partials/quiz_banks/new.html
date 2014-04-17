@@ -31,7 +31,7 @@
       <span class="sub_nav_icon"><span class = "glyphicon glyphicon-plus-sign"></span></span>
       </span>
       <span class="sub_nav_link">
-        <a class = "shownewsection" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top">Add Section</a>
+        <a ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top">Add Section</a>
       </span>
     </div>
     <div class="sub_nav pull-right">
@@ -128,7 +128,7 @@
                   </a>
                   <ul class="dropdown-menu pull-right mar-top-20">
                     <li ng-repeat="question in question_types">
-                      <a ng-Click = "addNewQuestion(question,section)">{{question}}</a>
+                      <a ng-Click = "addNewQuestion(question,section)" clear-ckeditor>{{question}}</a>
                     </li>
                   </ul>
                 </div>
@@ -137,12 +137,12 @@
             <div class = "col-xs-12 new-section-box mar-top-10 mar-bot-10" ng-if = "section == section_edit">
               <form name="UpdateSectionForm" ng-submit="updateSection(UpdateSectionForm.$valid,section_edit)">
                 <div class = "form-group" ng-class="{ 'has-error' : UpdateSectionForm.title.$invalid && !UpdateSectionForm.title.$pristine}">
-                  <span class = "col-xs-1">Title:</span>
+                  <span class = "col-xs-1" style = "margin-top: 4px;">Title:</span>
                   <span class = "col-xs-9">
-                    <input ng-model = "section_edit.title" type = "text" class = "form-control" name = "title" required>
+                    <input ng-model = "section_edit.title" type = "text" class = "form-control mar-bot-10" name = "title" required>
                     <p ng-show="UpdateSectionForm.title.$invalid && !UpdateSectionForm.title.$pristine" class="help-block">Title is required.</p>
                   </span>
-                  <span class = "col-xs-2 pull-right">
+                  <span class = "col-xs-2 pull-right" style = "margin-top:4px">
                     <a type = "submit" ng-Click = "updateSection(UpdateSectionForm.$valid,section_edit)"> Save</a>
                     <a ng-Click = "cancelEditSection()"> Cancel</a>
                   </span>
@@ -164,18 +164,18 @@
             </div>     
             
           </div>                  
-          <div class = "mar-top-20 new-section-div hide">
-            <div class = "col-xs-12 new-section-box">
+          <div ng-show = "show_new_section" class = "new-section-div">
+            <div class = "col-xs-12 new-section-box mar-top-20">
               <form name="NewSectionForm" ng-submit="addSection(NewSectionForm.$valid)">
-                <div class = "form-group" ng-class="{ 'has-error' : NewSectionForm.title.$invalid && (!NewSectionForm.title.$pristine || section_submitted == true)}">
-                  <span class = "col-xs-1">Title:</span>
+                <div class = "form-group" ng-class="{ 'has-error' : NewSectionForm.title.$invalid && section_submitted == true}">
+                  <span class = "col-xs-1" style = "margin-top: 4px;">Title:</span>
                   <span class = "col-xs-9">
-                    <input ng-model = "newSection.title" name = "title" type= "text" class= "form-control" required>
-                     <p ng-show="NewSectionForm.title.$invalid && (!NewSectionForm.title.$pristine || section_submitted == true)" class="help-block">Title is required.</p>
+                    <input ng-model = "newSection.title" name = "title" type= "text" class= "form-control mar-bot-10" required>
+                     <p ng-show="NewSectionForm.title.$invalid && section_submitted == true" class="help-block">Title is required.</p>
                   </span>
-                  <span class = "col-xs-2 pull-right">
-                    <a type = "submit" class = "hidenewsectiom" ng-Click = "addSection(NewSectionForm.$valid)"> Save</a>
-                    <a class = "hidenewsection"> Cancel</a>
+                  <span class = "col-xs-2 pull-right" style= "margin-top: 4px;">
+                    <a type = "submit" ng-Click = "addSection(NewSectionForm.$valid)"> Save</a>
+                    <a ng-click = "hide_section()"> Cancel</a>
                   </span>
               </form>  
             </div>

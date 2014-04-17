@@ -889,6 +889,23 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
   })
 
   $scope.selected_difficulty = null
+
+  $scope.removeData = function(){
+    $scope.selected_difficulty = null
+    $scope.selected_true_false_option = null
+    $scope.blank = null
+    $scope.input_1 = null
+    $scope.input_0 = null
+    $scope.input_2 = null
+    $scope.input_3 = null
+    $scope.radio = null
+    CKEDITOR.instances['true_false_question_statement'].setData("")
+    CKEDITOR.instances['first_statement'].setData("")
+    CKEDITOR.instances['second_statement'].setData("")
+    CKEDITOR.instances['description'].setData("")
+    CKEDITOR.instances['open_ended_question_statement'].setData("")
+    CKEDITOR.instances['answer'].setData("")
+  }
   $scope.create_true_false = function(isValid){
     $scope.submitted = true
     if(isValid && $scope.selected_true_false_option != undefined){
@@ -924,7 +941,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
             $scope.open_ended_answer = null
             $scope.difficulty_level = null
             $scope.submitted = false
-            CKEDITOR.instances['question_statement'].setData("")
+            CKEDITOR.instances['open_ended_question_statement'].setData("")
             CKEDITOR.instances['answer'].setData("")
             $scope.hideQuestion()
           })
@@ -1059,29 +1076,22 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
     $rootScope.show_mcq = false
     $rootScope.show_blank = false
     $rootScope.show_open_ended = false
-    for(instance in CKEDITOR.instances){
-      CKEDITOR.instances[instance].setData("")
-    }
-    debugger;
-    $scope.selected_difficulty = null
-    $scope.selected_true_false_option = null
-    $scope.blank = null
-    $scope.input_0 = null
-    $scope.input_1 = null
-    $scope.input_2 = null
-    $scope.input_3 = null
-    $scope.radio = null
   }
 
 }])
 
 quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
+  
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
+  
   $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
   $scope.submitted= false
+  $scope.show_new_section = false
+  $scope.section_submitted = false
+  
   QuizBank.clone($routeParams.id).$promise.then(function(data){
     $scope.quiz_bank = data
     $scope.quiz_bank_id = data.id
@@ -1113,12 +1123,26 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
       })
       $location.path("/manage_quiz_banks")
     }
+  }
+  $scope.show_section = function(){
+    $scope.show_new_section = true
+  }
+  $scope.hide_section = function(){
+    $scope.show_new_section = false
+    if($scope.newSection != undefined){
+      $scope.newSection.title = null
+    }
   }  
 
-  $scope.addSection = function(title){
-    section = Section.save($scope.quiz_bank_id,{title: title})
-    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
-    $scope.newSection = {}
+  $scope.addSection = function(isValid){
+    $scope.section_submitted = true
+    if(isValid){
+      section = Section.save($scope.quiz_bank_id,{title: $scope.newSection.title})
+      $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+      $scope.newSection = {}
+      $scope.section_submitted = false
+      $scope.show_new_section = false
+    }
   }
 
   $scope.addMoreTags = function(){
@@ -1171,6 +1195,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   }
   $scope.hide_section = function(){
     $scope.show_new_section = false
+    $scope.newSection.title = null
   }
   
   $scope.tags = Topic.all()
@@ -1203,6 +1228,7 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   $scope.show_tags = []
   $scope.submitted = false
   $scope.section_submitted = false
+  $scope.show_new_section = false
 
   $scope.addMoreTags = function(){
     if($scope.selected_tag != undefined){
@@ -1246,7 +1272,15 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
       $scope.quiz_sections = Section.all($scope.quiz_bank_id)
       $scope.newSection = {}
       $scope.section_submitted = false
+      $scope.show_new_section = false
     }
+  }
+  $scope.show_section = function(){
+    $scope.show_new_section = true
+  }
+  $scope.hide_section = function(){
+    $scope.show_new_section = false
+    $scope.newSection.title = null
   }
   $scope.difficulties = [{name: "Easy"},{name: "Medium"},{name: "Hard"}]
   $scope.cancelQuiz = function(){
