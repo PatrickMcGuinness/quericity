@@ -891,7 +891,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
   $scope.selected_difficulty = null
   $scope.create_true_false = function(isValid){
     $scope.submitted = true
-    if(isValid){
+    if(isValid && $scope.selected_true_false_option != undefined){
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.true_false_question_statement,section_id: $scope.section_id,
         question_type: 1,difficulty_level: $scope.selected_difficulty}).$promise.then(function(data){
@@ -900,12 +900,10 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
           QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
           {question_id: $scope.question_id, is_correct:$scope.selected_true_false_option}).$promise.then(function(){
             $scope.true_false_question_statement = null
-            console.log(CKEDITOR.instances['question_statement'])
-            console.log(CKEDITOR.instances['question_statement'].getData())
-            console.log(CKEDITOR.instances['question_statement'].setData("fqwefqwefqwef"))
             $scope.selected_difficulty = null
             $scope.selected_true_false_option = null
             $scope.submitted = false
+            CKEDITOR.instances['true_false_question_statement'].setData("")
             $scope.hideQuestion()
           })
         })
@@ -926,6 +924,8 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
             $scope.open_ended_answer = null
             $scope.difficulty_level = null
             $scope.submitted = false
+            CKEDITOR.instances['question_statement'].setData("")
+            CKEDITOR.instances['answer'].setData("")
             $scope.hideQuestion()
           })
         })
@@ -947,6 +947,8 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
             $scope.blank = null
             $scope.selected_difficulty = null
             $scope.submitted = false
+            CKEDITOR.instances['first_statement'].setData("")
+            CKEDITOR.instances['second_statement'].setData("")
             $scope.hideQuestion() 
           })
         }) 
@@ -977,6 +979,14 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
           }
 
         })
+        $scope.selected_difficulty = null
+        $scope.submitted = false
+        $scope.radio = null
+        $scope.input_0 = null
+        $scope.input_1 = null
+        $scope.input_2 = null
+        $scope.input_3 = null
+        CKEDITOR.instances['description'].setData("")
         $scope.hideQuestion()
     }    
 
