@@ -56,7 +56,7 @@
           <p ng-show="selected_students.length == 0" class="help-block">Select atleast one student.</p>
         </div>
         <ul class="col-xs-12">
-          <li class="col-xs-3 select_section" style = "word-wrap: break-word;" ng-repeat = "stud in students | orderBy:predicate:reverse" ng-class="{ 'adjust-thumbnail' : {{$index%3}} == 0}">
+          <li class="col-xs-3 select_section" style = "word-wrap: break-word; width: 30%" ng-repeat = "stud in students | orderBy:predicate:reverse" ng-class="{ 'adjust-thumbnail' : {{$index%3}} == 0}">
             <span class="col-xs-4"><img src="/assets/img_01.png" class="img-thumbnail" /></span>
             <span style=" float:right;">
               <input type="checkbox" name="checkbox" ng-click = "selected_student(stud)"/>
