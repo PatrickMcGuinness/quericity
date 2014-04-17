@@ -19,7 +19,7 @@
     </div>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (OpenEndedForm.question_statement.$invalid) && (!OpenEndedForm.question_statement.$pristine || submitted == true)}">
-        <textarea name="question_statement" id="question_satemtent" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor required>
+        <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor required>
         </textarea>
         <p ng-show="OpenEndedForm.question_statement.$invalid && (!OpenEndedForm.question_statement.$pristine || submitted == true)" class="help-block">Question is required.</p>
       </div>
