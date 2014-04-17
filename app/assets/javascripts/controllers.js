@@ -1059,7 +1059,18 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
     $rootScope.show_mcq = false
     $rootScope.show_blank = false
     $rootScope.show_open_ended = false
-    //$rootScope.question_section = null
+    for(instance in CKEDITOR.instances){
+      CKEDITOR.instances[instance].setData("")
+    }
+    debugger;
+    $scope.selected_difficulty = null
+    $scope.selected_true_false_option = null
+    $scope.blank = null
+    $scope.input_0 = null
+    $scope.input_1 = null
+    $scope.input_2 = null
+    $scope.input_3 = null
+    $scope.radio = null
   }
 
 }])
@@ -1121,15 +1132,16 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
+  
   $scope.quiz_bank_id = $routeParams.id
   $scope.quiz_bank = QuizBank.get($scope.quiz_bank_id)
   $scope.quiz_sections = Section.all($scope.quiz_bank_id)
   $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
   $scope.submitted = false
   $scope.section_submitted = false
-  
   $scope.ckEditors = [];
-  
+  $scope.newSection = null
+  $scope.show_new_section = false  
 
   $scope.saveQuiz = function(isValid){
     $scope.submitted =true
@@ -1144,12 +1156,21 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
     }
   }
   $scope.addSection = function(isValid){
+    $scope.section_submitted = true
     if(isValid){
       section = Section.save($scope.quiz_bank_id,{title: $scope.newSection.title})
       $scope.quiz_sections = Section.all($scope.quiz_bank_id)
       $scope.newSection = {}
-      $scope.section_submitted = true
+      $scope.section_submitted = false
+      $scope.show_new_section = false
     }
+  }
+
+  $scope.show_section = function(){
+    $scope.show_new_section = true
+  }
+  $scope.hide_section = function(){
+    $scope.show_new_section = false
   }
   
   $scope.tags = Topic.all()
@@ -1219,11 +1240,12 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   }
 
   $scope.addSection = function(isValid){
+    $scope.section_submitted = true
     if(isValid){
       section = Section.save($scope.quiz_bank_id,{title: $scope.newSection.title})
       $scope.quiz_sections = Section.all($scope.quiz_bank_id)
       $scope.newSection = {}
-      $scope.section_submitted = true
+      $scope.section_submitted = false
     }
   }
   $scope.difficulties = [{name: "Easy"},{name: "Medium"},{name: "Hard"}]
