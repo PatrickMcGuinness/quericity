@@ -447,14 +447,8 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
           ClonedQuestion.save($scope.selected_quiz.id,data.id,{seq: value.seq, 
               description: value.description, question_type: value.question_type,
               difficulty_level: value.difficulty_level, cloned_quiz_bank_id: cloned_quiz_bank_id}).$promise.then(function(cloned_question){
-                console.log(cloned_question)
-                console.log(cloned_question.id)
                 QuestionOption.all($scope.selected_quiz.id,value.section_id,value.id).$promise.then(function(question_options){
-                  console.log(question_options)
                   angular.forEach(question_options,function(question_option,key){
-                    console.log(question_option)
-                    console.log("question_type is " + cloned_question.question_type)
-                    console.log(question_option.is_correct)
                     ClonedQuestionOption.save($scope.selected_quiz.id, data.id, cloned_question.id, {answer: question_option.answer, cloned_question_id: cloned_question.id, is_correct: question_option.is_correct, seq: question_option.seq})
                   })
                 })     
