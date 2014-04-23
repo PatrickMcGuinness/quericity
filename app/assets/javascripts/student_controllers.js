@@ -173,10 +173,13 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
 
         /* If question is mcq*/
         if(question.question_type == 2){
+          var correct_answer = null
           angular.forEach(question.cloned_question_options,function(value,key){
             if(value.is_correct == true){
-              var answer = value.answer
+              correct_answer = value.answer
             }
+          })
+          angular.forEach(question.cloned_question_options,function(value,key){
             if(value.id == question.answer){
               if(value.is_correct == true){
                 var is_correct = true
@@ -185,10 +188,9 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
                 var is_correct = false
               }
               var student_answer = value.answer
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+              Answer.save({cloned_question_id: question.id, student_answer: student_answer, answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
             }
-          })
-          
+          })         
         }
         /*if questios in open ended*/
         if(question.question_type == 3){
@@ -198,7 +200,7 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
         /*If question is fill in the blank*/
 
         if(question.question_type == 4){
-          if(question.answer == question.cloned_question_options[0].answer){
+          if(question.answer.toLowerCase() == question.cloned_question_options[0].answer.toLowerCase()){
             var is_correct = true
           }
           else{
@@ -250,10 +252,13 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
 
         /* If question is mcq*/
         if(question.question_type == 2){
+          var correct_answer = null
           angular.forEach(question.cloned_question_options,function(value,key){
             if(value.is_correct == true){
-              var answer = value.answer
+              correct_answer = value.answer
             }
+          })
+          angular.forEach(question.cloned_question_options,function(value,key){
             if(value.id == question.answer){
               if(value.is_correct == true){
                 var is_correct = true
@@ -262,10 +267,9 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
                 var is_correct = false
               }
               var student_answer = value.answer
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+              Answer.save({cloned_question_id: question.id, student_answer: student_answer, answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
             }
-          })
-          
+          })         
         }
         /*if questios in open ended*/
         if(question.question_type == 3){
@@ -275,7 +279,7 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
         /*If question is fill in the blank*/
 
         if(question.question_type == 4){
-          if(question.answer == question.cloned_question_options[0].answer){
+          if(question.answer.toLowerCase() == question.cloned_question_options[0].answer.toLowerCase()){
             var is_correct = true
           }
           else{
@@ -348,10 +352,13 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
 
         /* If question is mcq*/
         if(question.question_type == 2){
+          var correct_answer = null
           angular.forEach(question.cloned_question_options,function(value,key){
             if(value.is_correct == true){
-              var answer = value.answer
+              correct_answer = value.answer
             }
+          })
+          angular.forEach(question.cloned_question_options,function(value,key){
             if(value.id == question.answer){
               if(value.is_correct == true){
                 var is_correct = true
@@ -360,10 +367,9 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
                 var is_correct = false
               }
               var student_answer = value.answer
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+              Answer.save({cloned_question_id: question.id, student_answer: student_answer, answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
             }
-          })
-          
+          })         
         }
         /*if questios in open ended*/
         if(question.question_type == 3){
@@ -373,17 +379,17 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
         /*If question is fill in the blank*/
 
         if(question.question_type == 4){
-          if(question.answer == question.cloned_question_options[0].answer){
+          if(question.answer.toLowerCase() == question.cloned_question_options[0].answer.toLowerCase()){
             var is_correct = true
           }
           else{
             var is_correct = false
           }
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: question.cloned_question_options[0].answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
-        }
-        index = $scope.served_quiz.questions_to_show.indexOf(question)
-        $scope.served_quiz.questions_to_show.splice(index,1)    
+        }    
       }
+      index = $scope.served_quiz.questions_to_show.indexOf(question)
+      $scope.served_quiz.questions_to_show.splice(index,1)
     })
     
     /*check the remaining questions*/
@@ -508,10 +514,13 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
 
         /* If question is mcq*/
         if(question.question_type == 2){
+          var correct_answer = null
           angular.forEach(question.cloned_question_options,function(value,key){
             if(value.is_correct == true){
-              var answer = value.answer
+              correct_answer = value.answer
             }
+          })
+          angular.forEach(question.cloned_question_options,function(value,key){
             if(value.id == question.answer){
               if(value.is_correct == true){
                 var is_correct = true
@@ -520,10 +529,9 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
                 var is_correct = false
               }
               var student_answer = value.answer
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+              Answer.save({cloned_question_id: question.id, student_answer: student_answer, answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
             }
-          })
-          
+          })         
         }
         /*if questios in open ended*/
         if(question.question_type == 3){
@@ -533,7 +541,7 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
         /*If question is fill in the blank*/
 
         if(question.question_type == 4){
-          if(question.answer == question.cloned_question_options[0].answer){
+          if(question.answer.toLowerCase() == question.cloned_question_options[0].answer.toLowerCase()){
             var is_correct = true
           }
           else{
