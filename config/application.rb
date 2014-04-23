@@ -66,6 +66,6 @@ module QuizLib
     config.assets.precompile += %w(factory/*)
     config.assets.precompile += %w(services/*)
     config.assets.precompile += %w(directives/*)
-    config.assets.precompile << %w(main.js controllers.js dialogpatch.js angular-dragdrop.js filters.js timer.js)
+    config.assets.precompile << %w(student_controllers.js student.js main.js controllers.js dialogpatch.js angular-dragdrop.js filters.js timer.js)
   end
 end
