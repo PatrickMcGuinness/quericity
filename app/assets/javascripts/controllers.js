@@ -12,17 +12,20 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
   ServedQuiz.all().$promise.then(function(data){
     $scope.served_quizzes = data.result
     angular.forEach($scope.served_quizzes,function(value,key){
-      var obj = new Date(value.date)
-      value.start_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+      var obj1 = new Date(value.date)
+      value.start_date = obj1.getDate() +"-" + (obj1.getMonth()+1) +"-"+obj1.getFullYear()
       
-      var obj = new Date(value.close_date)
-      value.close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+      var obj2 = new Date(value.close_date)
+      value.close_date = obj2.getDate() +"-" + (obj2.getMonth()+1) +"-"+obj2.getFullYear()
       
-      var obj = new Date(value.start_time)
-      value.start_time = obj.getHours() + ":" + obj.getMinutes()
+      var obj3 = new Date(value.start_time)
+      obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
+      value.start_time = obj3.getHours() + ":" + obj3.getMinutes()
       
-      var obj = new Date(value.end_time)
-      value.end_time = obj.getHours() + ":" + obj.getMinutes()
+      var obj4 = new Date(value.end_time)
+      obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
+      value.end_time = obj4.getHours() + ":" + obj4.getMinutes()
+      
       value.attempted_answers = ServedQuiz.attempted_answers(value.id)
       ServedQuiz.graded_answers_count(value.id).$promise.then(function(data){
         value.graded_answers_count = data
@@ -88,25 +91,31 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
   ServedQuiz.all().$promise.then(function(data){
     $scope.served_quizzes = data.result
     angular.forEach($scope.served_quizzes,function(value,key){
-      var obj = new Date(value.date)
-      value.start_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+      var obj1 = new Date(value.date)
+      value.start_date = obj1.getDate() +"-" + (obj1.getMonth()+1) +"-"+obj1.getFullYear()
       
-      var obj = new Date(value.close_date)
-      value.close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+      var obj2 = new Date(value.close_date)
+      value.close_date = obj2.getDate() +"-" + (obj2.getMonth()+1) +"-"+obj2.getFullYear()
       
-      var obj = new Date(value.start_time)
-      value.start_time = obj.getHours() + ":" + obj.getMinutes()
+      var obj3 = new Date(value.start_time)
+      obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
+      value.start_time = obj3.getHours() + ":" + obj3.getMinutes()
       
-      var obj = new Date(value.end_time)
-      value.end_time = obj.getHours() + ":" + obj.getMinutes()
+      var obj4 = new Date(value.end_time)
+      obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
+      value.end_time = obj4.getHours() + ":" + obj4.getMinutes()
+      
       status = "Not Served Yet"
       var obj = new Date()
-      today = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
-      if(new Date(value.start_date) < new Date(today)){
-        status = "In Process"
+      if(new Date(obj1.getFullYear(),obj1.getMonth(),obj1.getDate()) <= new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
+        if((obj3.getHours() < obj.getHours()) && (obj3.getMinutes() <= obj.getMinutes())){
+          status = "In Process"
+        }
       }
-      if(new Date(value.close_date) < new Date(today)){
-        status = "Serving Completed"
+      if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) < new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
+        if((obj4.getHours() < obj.getHours()) && (obj4.getMinutes() <= obj.getMinutes())){
+          status = "Serving Completed"
+        }
       }
       value.status = status 
     })
