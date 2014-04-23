@@ -531,8 +531,16 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
   $scope.submitted = false
   $scope.valid = false
   $scope.AddStudent = function(student){
+    var check = 0
     if(student.id != undefined){
-      $scope.students.push(student)
+      angular.forEach($scope.students,function(value,key){
+        if(value.id == student.id){
+          check = 1;
+        }
+      })
+      if(check == 0){
+        $scope.students.push(student)
+      }  
     }
   }
   $scope.saveGroup = function(isValid){
@@ -582,8 +590,16 @@ quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User',
   $scope.system_students = User.system_students()
 
   $scope.AddStudent = function(student){
-    if(student.id !=undefined){
-      $scope.students.push(student)
+    var check = 0
+    if(student.id != undefined){
+      angular.forEach($scope.students,function(value,key){
+        if(value.id == student.id){
+          check = 1;
+        }
+      })
+      if(check == 0){
+        $scope.students.push(student)
+      }  
     }
   }
   $scope.saveGroup = function(isValid){
