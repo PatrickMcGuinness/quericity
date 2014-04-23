@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>QuizLib</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "ckeditor/init" %>
+    <%= javascript_include_tag "ckeditor/config" %>
+    <%= javascript_include_tag "dialogpatch" %>
+    <%= javascript_include_tag "student" %>
+    <%= javascript_include_tag "factory/student_served_quiz" %>
+    <%= javascript_include_tag "factory/student_sharing" %>
+    <%= javascript_include_tag "factory/answer" %>
+    <%= javascript_include_tag "student_controllers" %>
+    <%= javascript_include_tag "directives/studentdirectives" %>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <%=render "layouts/header"%>
+    <div ng-app="student_quizlib">
+      <ng-view>
+        <%= yield %>
+      </ng-view>
+    </div>
+    <%=render "layouts/footer"%>   
+    
+  </body>
+</html>

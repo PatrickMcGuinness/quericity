@@ -1,0 +1,35 @@
+<div class="row_bottom">
+  <div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon">
+        <span class = "glyphicon glyphicon-arrow-left"></span>
+      </span>
+      <span class="sub_nav_link"><a ng-href="#/quizlist">Back</a></span>
+    </div> 
+  </div>
+</div>
+<div class="container">
+	<div class="row">
+    <div class = "col-xs-3 col-xs-offset-5">
+      <h2> {{served_quiz.cloned_quiz_bank.title}}</h2>
+      &nbsp;&nbsp;{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}
+      <div ng-if = "served_quiz.infinite_duration == 0 && served_quiz.student_sharing.status_in_string != 'COMPLETED'">
+        <div class = "col-xs-5 col-xs-offset-2">{{timer.minutes}}&nbsp;Minutes:{{timer.counter}}Seconds</div>
+      </div>
+	</div>
+  <div class = "row">
+    <div class = "col-xs-12">
+      <h3>Instructions</h3>
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "col-xs-12">
+      {{served_quiz.instructions}}
+    </div>
+    <div ng-if = "served_quiz.show_all_questions == 1 && served_quiz.infinite_duration == 1" ng-include src="'/assets/partials/students/all_questions_answers_after_quiz.html'" ng-controller = "AllQuestionsAnswerAfterQuizCtrl">
+    </div>
+    <div ng-if = "served_quiz.show_all_questions == 1 && served_quiz.infinite_duration == 0" ng-include src="'/assets/partials/students/all_questions_with_time_limit.html'" ng-controller = "AllQuestionsTimeLimit">
+    </div>
+  </div>
+  
+</div>

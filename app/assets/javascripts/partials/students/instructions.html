@@ -1,0 +1,50 @@
+<div class="row_bottom">
+  <div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon">
+        <span class = "glyphicon glyphicon-arrow-left"></span>
+      </span>
+      <span class="sub_nav_link"><a ng-href="#/quizlist'">Back</a></span>
+    </div> 
+  </div>
+</div>
+<div class="container">
+	<div class="row">
+    <div class = "col-xs-3 col-xs-offset-5">
+      <h2> {{served_quiz.cloned_quiz_bank.title}}</h2>
+      &nbsp;&nbsp;{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}
+    </div>
+	</div>
+  <div class = "row">
+    <div class = "col-xs-12">
+      <h3>Instructions</h3>
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "col-xs-12">
+      {{served_quiz.instructions}}
+    </div>
+    <div class = "col-xs-12 mar-top-10">
+      Note the following before you continue
+    </div>
+    <div class = "col-xs-12 mar-top-10">
+      <p ng-if = "served_quiz.infinite_duration == 1">
+        1) The quiz has no time limit
+      </p>
+      <p ng-if = "served_quiz.infinite_duration == 0">
+        1) The Quiz has {{served_quiz.duration}} mins.
+      </p>
+      <p>
+        2) Quiz has {{served_quiz.cloned_quiz_bank.cloned_questions.length}} questions
+      </p>
+      <p>
+        3) The Quiz will expire on {{served_quiz.close_date}} at {{served_quiz.end_time}}
+      </p>
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "col-xs-2 col-xs-offset-5 mar-top-20">
+      <a class = "btn btn-success btn-lg pull-left" ng-href = "#/quiz/{{served_quiz.id}}/attempt" ng-click = "changeStatus()">Start Quiz</a>
+    </div>
+  </div>
+</div>
