@@ -1,5 +1,5 @@
 class ClonedQuestion < ActiveRecord::Base
-  attr_accessible :title,:seq, :description, :question_type,:difficulty_level,
+  attr_accessible :seq, :description, :question_type,:difficulty_level,
                   :reference_url,:cloned_section_id, :cloned_quiz_bank_id
 
   has_many :cloned_question_options
@@ -71,4 +71,23 @@ class ClonedQuestion < ActiveRecord::Base
       ClonedQuestionOption.create_the_clone(question,cloned_question)
     end  
   end
+
+  def as_json(opts = nil)
+    opts ||={}
+    {
+      :id  => id,
+      :created_at => created_at,
+      :updated_at => updated_at,
+      :seq => seq,
+      :description => description,
+      :question_type => question_type,
+      :difficulty_level => difficulty_level,
+      :reference_url => reference_url,
+      :cloned_section_id => cloned_section_id,
+      :cloned_quiz_bank_id => cloned_quiz_bank_id,
+      :cloned_question_options => cloned_question_options.as_json()
+    }
+    
+  end
+
 end

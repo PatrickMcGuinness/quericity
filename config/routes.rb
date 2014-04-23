@@ -36,6 +36,11 @@ QuizLib::Application.routes.draw do
   
   resources :student_groups 
   resources :invites
+  resources :answers do
+    member do
+      get "student_answers_in_served_quiz"
+    end
+  end
   resources :served_quizzes do
     member do
       get "pending"
@@ -44,8 +49,18 @@ QuizLib::Application.routes.draw do
       get "attempted_answers"
       get "graded_answers_count"
       get "questions_to_grade"
+      get "questions_to_attempt"
+    end
+    collection do
+      get "student_served_quizzes"
+      get "student_started_quizzes"
+      get "student_pending_quizzes"
+      get "student_attempted_quizzes"
     end
     resources :sharings do
+      collection do
+        get "student_sharing"
+      end
     end
   end
   resources :groups do
@@ -82,7 +97,9 @@ QuizLib::Application.routes.draw do
       collection do
         get "create_the_clone"
       end
-      resources :cloned_questions
+      resources :cloned_questions do
+        resources :cloned_question_options
+      end
     end
     resources :question_topics
     resources :sections do
@@ -93,18 +110,6 @@ QuizLib::Application.routes.draw do
   end
 
   namespace :students do
-    resources :quiz_banks do
-      collection do
-        get "attempted"
-        get "pending"
-        post "check_answer"
-        get "answer_sheet"
-      end
-      member do
-        get "take_quiz"
-        get "attempt_quiz"
-      end
-    end
 
     resources :users do
       member do

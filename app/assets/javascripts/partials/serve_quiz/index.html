@@ -1,13 +1,4 @@
-<div class="menu">
-  <div class="container">
-    <ul>
-      <li><a href="#/manage_quiz_banks">MANAGE</a></li>
-      <li class="active"><a ng-href='#/served_quizzes'>SERVE</a></li>
-      <li><a href="#/grade">GRADE</a></li>
-      <li><a href="#">ANALYZE</a></li>
-    </ul>
-  </div>
-</div>
+<div ng-include src="'/assets/partials/common/menu.html'"></div>
 <div class="row_bottom">
 	<div class="container">
     <div class="sub_nav">
@@ -48,7 +39,7 @@
         </thead>
         <tbody class="text-center">
         	<tr ng-repeat = "served_quiz in served_quizzes">
-          	<td>{{served_quiz.title}}</td>
+          	<td>{{served_quiz.cloned_quiz_bank.title}}</td>
           	<td>{{served_quiz.start_date}}&nbsp;{{served_quiz.start_time}}</td>
           	<td>{{served_quiz.close_date}}&nbsp;{{served_quiz.end_time}}</td>
           	<td>
@@ -68,7 +59,7 @@
                 </div>  
               </span>
             </td>
-            <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;<a ng-click = "invited_students(served_quiz.id)" data-toggle = "tooltip" title = "All Students who have not started quiz" tooltip-placement = "top">{{served_quiz.invited.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;<a ng-click = "pending_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who started but have not completed quiz" tooltip-placement = "top">{{served_quiz.pending.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;<a data-toggle = "tooltip" title = "Students Completed the quiz" tooltip-placement = "top"ng-click = "completed_students(served_quiz.id)">{{served_quiz.completed.length}}</a>&nbsp;</td>
+            <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;<a ng-click = "invited_students(served_quiz.id)" data-toggle = "tooltip" title = "All Students who have not started quiz" tooltip-placement = "top">{{served_quiz.invited_sharings.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Partial:</span>&nbsp;<a ng-click = "pending_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who started but have not completed quiz" tooltip-placement = "top">{{served_quiz.pending_sharings.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;<a data-toggle = "tooltip" title = "Students Completed the quiz" tooltip-placement = "top"ng-click = "completed_students(served_quiz.id)">{{served_quiz.completed_sharings.length}}</a>&nbsp;</td>
           </tr>
         </tbody>
 	    </table>

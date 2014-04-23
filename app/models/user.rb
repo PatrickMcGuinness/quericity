@@ -70,9 +70,31 @@ class User < ActiveRecord::Base
     repo_ids = self.repositories.pluck(:id)
     QuizBank.where("repository_id IN (?)", repo_ids)
   end
+  
   def favourite_quiz_banks_to_show
     self.favourite_quiz_banks.joins(:quiz_bank).where("quiz_banks.deleted_at IS NULL")
   end
+
+  def student_served_quizzes
+    sharing_ids = self.sharings.pluck(:id)
+    ServedQuiz.joins(:sharings).where("sharings.id IN (?)",sharing_ids)
+  end
+
+  def student_pending_quizzes
+    sharing_ids = self.sharings.where("status = ?",Sharing::Status::PENDING)
+    ServedQuiz.joins(:sharings).where("sharings.id IN (?)",sharing_ids)
+  end
+
+  def student_started_quizzes
+    sharing_ids = self.sharings.where("status = ?",Sharing::Status::STARTED)
+    ServedQuiz.joins(:sharings).where("sharings.id IN (?)",sharing_ids)
+  end
+
+  def student_attempted_quizzes
+    sharing_ids = self.sharings.where("status = ?",Sharing::Status::ATTEMPTED)
+    ServedQuiz.joins(:sharings).where("sharings.id IN (?)",sharing_ids)
+  end
+
 
   def shared_quiz_banks
     QuizBank.where("public = ?",QuizBank::Public::YES)

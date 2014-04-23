@@ -1,7 +1,9 @@
 class ServedQuizzesController < ApplicationController
   
   before_filter :authenticate_user!
-  before_filter :set_served_quiz, except: [:index,:create]
+  before_filter :set_served_quiz, except: [:index,:create,
+                :student_served_quizzes,:student_pending_quizzes,
+                :student_attempted_quizzes,:student_started_quizzes,:show,:questions_to_attempt]
   respond_to :json
 
   def index
@@ -13,7 +15,8 @@ class ServedQuizzesController < ApplicationController
   end
 
   def show
-    render json: @served_quiz
+    #render json: @served_quiz
+    render json: ServedQuiz.find(params[:id])
   end
 
   def edit
@@ -48,7 +51,27 @@ class ServedQuizzesController < ApplicationController
   end
 
   def questions_to_grade
-    render json: @served_quiz.open_ended_questions_to_grade
+    render json: @served_quiz.open_ended_answers_to_grade
+  end
+
+  def student_served_quizzes
+    render json: current_user.student_served_quizzes
+  end
+
+  def student_attempted_quizzes
+    render json: current_user.student_attempted_quizzes
+  end
+
+  def student_pending_quizzes
+    render json: current_user.student_pending_quizzes
+  end
+
+  def student_started_quizzes
+    render json: current_user.student_started_quizzes
+  end
+
+  def questions_to_attempt
+    render json: ServedQuiz.find(params[:id]).questions_to_attempt(current_user)
   end
 
 

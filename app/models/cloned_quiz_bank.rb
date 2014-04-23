@@ -17,4 +17,21 @@ class ClonedQuizBank < ActiveRecord::Base
   	cloned_quiz_bank
   end
 
+  def as_json(opts = nil)
+    opts ||={}
+    {
+      :id  => id,
+      :created_at => created_at,
+      :updated_at => updated_at,
+      :description => description,
+      :repository_id => repository_id,
+      :quiz_bank_id => quiz_bank_id, 
+      :title => title, 
+      :subject => subject,
+      :instructions => instructions,
+      :cloned_questions => cloned_questions.as_json()   
+    }
+    
+  end
+
 end

@@ -1,3 +1,6 @@
+quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
+  $scope.$route = $route 
+}]);  
 quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$rootScope,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
   
   $.removeCookie("my_assessments")
@@ -7,23 +10,22 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
   
   $scope.served_quizzes = []
   ServedQuiz.all().$promise.then(function(data){
-    angular.forEach(data.result,function(value,data){
-      ClonedQuizBank.get(value.quiz_bank_id,value.cloned_quiz_bank_id).$promise.then(function(data){
-        title = data.title
-        var obj = new Date(value.date)
-        start_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
-        
-        var obj = new Date(value.close_date)
-        close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
-        
-        var obj = new Date(value.start_time)
-        start_time = obj.getHours() + ":" + obj.getMinutes()
-        
-        var obj = new Date(value.end_time)
-        end_time = obj.getHours() + ":" + obj.getMinutes()
-        $scope.served_quizzes.push({id: value.id,title: title,start_date: start_date,start_time: start_time, 
-            close_date: close_date, end_time: end_time, status: status,invited: ServedQuiz.invited(value.id),pending: ServedQuiz.pending(value.id),
-            completed:ServedQuiz.completed(value.id), attempted_answers: ServedQuiz.attempted_answers(value.id), graded_answers_count: ServedQuiz.graded_answers_count(value.id)})
+    $scope.served_quizzes = data.result
+    angular.forEach($scope.served_quizzes,function(value,key){
+      var obj = new Date(value.date)
+      value.start_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+      
+      var obj = new Date(value.close_date)
+      value.close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+      
+      var obj = new Date(value.start_time)
+      value.start_time = obj.getHours() + ":" + obj.getMinutes()
+      
+      var obj = new Date(value.end_time)
+      value.end_time = obj.getHours() + ":" + obj.getMinutes()
+      value.attempted_answers = ServedQuiz.attempted_answers(value.id)
+      ServedQuiz.graded_answers_count(value.id).$promise.then(function(data){
+        value.graded_answers_count = data
       })
     })
   })
@@ -56,8 +58,24 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
   }
 }]);
 
-quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz',function($scope,$routeParams,ServedQuiz){
-  $scope.questions_to_grade = ServedQuiz.questions_to_grade($routeParams.id)
+quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz','Answer',function($scope,$routeParams,ServedQuiz,Answer){
+  $scope.answers_to_grade = ServedQuiz.questions_to_grade($routeParams.id)
+  $scope.correct = function(answer){
+    answer.graded_by_teacher = 1
+    answer.is_correct = true
+    Answer.update(answer.id,answer).$promise.then(function(){
+      index = $scope.answers_to_grade.indexOf(answer)
+      $scope.answers_to_grade.splice(index,1)
+    })
+  }
+  $scope.wrong = function(answer){
+    answer.graded_by_teacher = 1
+    answer.is_correct = false
+    Answer.update(answer.id,answer).$promise.then(function(){
+      index = $scope.answers_to_grade.indexOf(answer)
+      $scope.answers_to_grade.splice(index,1)
+    })
+  }
 }]);
 
 quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
@@ -66,40 +84,34 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
   $scope.served_quizzes = []
-  ServedQuiz.all().$promise.then(function(data){
-    angular.forEach(data.result,function(value,key){
-      ClonedQuizBank.get(value.quiz_bank_id,value.cloned_quiz_bank_id).$promise.then(function(data){
-        title = data.title
-        
-        var obj = new Date(value.date)
-        start_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
-        
-        var obj = new Date(value.close_date)
-        close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
-        
-        var obj = new Date(value.start_time)
-        start_time = obj.getHours() + ":" + obj.getMinutes()
-        
-        var obj = new Date(value.end_time)
-        end_time = obj.getHours() + ":" + obj.getMinutes()        
 
-        status = "Not Served Yet"
-        var obj = new Date()
-        today = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
-        if(new Date(start_date) < new Date(today)){
-          status = "In Process"
-        }
-        if(new Date(close_date) < new Date(today)){
-          status = "Serving Completed"
-        }
-        
-        $scope.served_quizzes.push({id: value.id,title: title,start_date: start_date,start_time: start_time, 
-            close_date: close_date, end_time: end_time, status: status,pending: ServedQuiz.pending(value.id),
-            completed:ServedQuiz.completed(value.id),invited: ServedQuiz.invited(value.id)})
-        
-      })
+  ServedQuiz.all().$promise.then(function(data){
+    $scope.served_quizzes = data.result
+    angular.forEach($scope.served_quizzes,function(value,key){
+      var obj = new Date(value.date)
+      value.start_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+      
+      var obj = new Date(value.close_date)
+      value.close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+      
+      var obj = new Date(value.start_time)
+      value.start_time = obj.getHours() + ":" + obj.getMinutes()
+      
+      var obj = new Date(value.end_time)
+      value.end_time = obj.getHours() + ":" + obj.getMinutes()
+      status = "Not Served Yet"
+      var obj = new Date()
+      today = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+      if(new Date(value.start_date) < new Date(today)){
+        status = "In Process"
+      }
+      if(new Date(value.close_date) < new Date(today)){
+        status = "Serving Completed"
+      }
+      value.status = status 
     })
   })
+  
   
   $rootScope.cancel = function () {
     console.log("fsadfs")
@@ -337,7 +349,7 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
     $scope.show_questions = []
   }
 }]);
-quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','Group','User','Sharing',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,Group,User,Sharing){
+quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','ClonedQuestionOption','Group','User','Sharing','QuestionOption',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,ClonedQuestionOption,Group,User,Sharing,QuestionOption){
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
@@ -434,7 +446,20 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
         angular.forEach($scope.selected_questions,function(value,key){
           ClonedQuestion.save($scope.selected_quiz.id,data.id,{seq: value.seq, 
               description: value.description, question_type: value.question_type,
-              difficulty_level: value.difficulty_level, cloned_quiz_bank_id: cloned_quiz_bank_id})
+              difficulty_level: value.difficulty_level, cloned_quiz_bank_id: cloned_quiz_bank_id}).$promise.then(function(cloned_question){
+                console.log(cloned_question)
+                console.log(cloned_question.id)
+                QuestionOption.all($scope.selected_quiz.id,value.section_id,value.id).$promise.then(function(question_options){
+                  console.log(question_options)
+                  angular.forEach(question_options,function(question_option,key){
+                    console.log(question_option)
+                    console.log("question_type is " + cloned_question.question_type)
+                    console.log(question_option.is_correct)
+                    ClonedQuestionOption.save($scope.selected_quiz.id, data.id, cloned_question.id, {answer: question_option.answer, cloned_question_id: cloned_question.id, is_correct: question_option.is_correct, seq: question_option.seq})
+                  })
+                })     
+
+              })
         })
       }
       if($scope.served_quiz.random == 1){
@@ -790,7 +815,13 @@ quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','Quest
   $scope.$on("question_id_Changed",function(event,question_id){
     $scope.question_id = question_id;
     $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
-    MathJax.Hub.Queue(["Reprocess", MathJax.Hub]);
+  })
+  $scope.$on('my-sorted',function(ev,val){
+    $scope.questions.splice(val.to, 0, $scope.questions.splice(val.from, 1)[0]);
+  })
+  
+  $scope.$on('my-created',function(ev,val){
+    $scope.questions.splice(val.to, 0,{name:'#'+($scope.questions.length+1)+': '+val.name});
   })
 
 }])
@@ -1214,6 +1245,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
       $scope.show_tags.push($scope.selected_tag)
     }
   }
+  
 
 }])
 quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope, $location,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){

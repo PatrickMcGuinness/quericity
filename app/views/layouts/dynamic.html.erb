@@ -24,6 +24,8 @@
     <%= javascript_include_tag "factory/served_quiz" %>
     <%= javascript_include_tag "factory/cloned_quiz_bank" %>
     <%= javascript_include_tag "factory/cloned_question" %>
+    <%= javascript_include_tag "factory/cloned_question_option" %>
+    <%= javascript_include_tag "factory/teacher_answer" %>
     <%= javascript_include_tag "factory/sharing" %>
     <%= javascript_include_tag "services/global_scope" %>
     <%= javascript_include_tag "directives/simpledirectives" %>
@@ -40,7 +42,7 @@
     <%=render "layouts/header"%>
     <div ng-app="quizlib">
       <ng-view>
-          <%= yield %>
+        <%= yield %>
       </ng-view>
     </div>
     <%=render "layouts/footer"%>   

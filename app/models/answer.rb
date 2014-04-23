@@ -29,56 +29,27 @@ class Answer < ActiveRecord::Base
     Answer.where("student_id = ? and cloned_question_id = ?", student.id, cloned_question.id).first
   end
 
-
-  def self.check_answer(user,cloned_question, student_answer,served_quiz_id)
-    if cloned_question.is_true_false?
-      Answer.check_true_false_question(user,cloned_question, student_answer,served_quiz_id)
-    elsif cloned_question.is_mcq?
-      Answer.check_mcq_question(user,cloned_question,student_answer,served_quiz_id)
-    elsif cloned_question.is_fill_in_the_blank?
-      Answer.check_fill_in_the_blank_question(user,cloned_question, student_answer,served_quiz_id)
-    else
-      Answer.check_open_ended_question(user,cloned_question, student_answer,served_quiz_id)
-    end
+  def self.student_answers_in_served_quiz(served_quiz,student)
+    Answer.where("served_quiz_id = ? and student_id = ?",served_quiz.id,student.id)
   end
 
-  def self.check_true_false_question(user,cloned_question, student_answer,served_quiz_id)
-    cloned_question_option = cloned_question.cloned_question_options.first
-    answer = "true" if cloned_question_option.is_correct == true
-    answer = "false" unless cloned_question_option.is_correct == true
-    is_correct = Answer.is_answer_correct?(student_answer, answer)
-    answer = Answer.create(:student_id => user.id, :cloned_question_id => cloned_question.id, 
-                  :student_answer => student_answer, :answer => answer, :is_correct => is_correct,
-                  :served_quiz_id => served_quiz_id, :graded_by_teacher => Answer::Graded::YES)
-  end
 
-  def self.check_mcq_question(user,cloned_question,student_answer,served_quiz_id)
-    cloned_question_option = cloned_question.cloned_question_options.find_by_is_correct(true)
-    answer = cloned_question_option.answer
-    is_correct = cloned_question.cloned_question_options.find_by_answer(student_answer).is_correct
-    answer = Answer.create(:student_id => user.id, :cloned_question_id => cloned_question.id, 
-                  :student_answer => student_answer, :answer => answer, :is_correct => is_correct,
-                  :served_quiz_id => served_quiz_id, :graded_by_teacher => Answer::Graded::YES)
+  def as_json(opts = nil)
+    opts ||={}
+    {
+      :id  => id,
+      :student_id => student_id,
+      :cloned_question => cloned_question.as_json(),
+      :student_answer => student_answer,
+      :answer => answer,
+      :is_correct => is_correct,
+      :served_quiz_id => served_quiz_id, 
+      :graded_by_teacher => graded_by_teacher,
+      :created_at => created_at,
+      :updated_at => updated_at, 
+    }
+    
   end
-
-  def self.check_fill_in_the_blank_question(user,cloned_question,student_answer,served_quiz_id)
-    cloned_question_option = cloned_question.cloned_question_options.first
-    answer = cloned_question_option.answer
-    is_correct = Answer.is_answer_correct?(student_answer, answer)
-    answer = Answer.create(:student_id => user.id, :cloned_question_id => cloned_question.id, 
-                  :student_answer => student_answer, :answer => answer, :is_correct => is_correct,
-                  :served_quiz_id => served_quiz_id, :graded_by_teacher => Answer::Graded::YES)
-  end
-
-  def self.check_open_ended_question(user,cloned_question,student_answer,served_quiz_id)
-    cloned_question_option = cloned_question.cloned_question_options.first
-    answer = cloned_question_option.answer
-    is_correct = false
-    answer = Answer.create(:student_id => user.id, :cloned_question_id => cloned_question.id, 
-                  :student_answer => student_answer, :answer => answer, :is_correct => is_correct,
-                  :served_quiz_id => served_quiz_id)
-  end
-
   def manual_check_the_answer(string)
     self.is_correct = true if string == "correct"
     self.is_correct = false if string == "wrong"

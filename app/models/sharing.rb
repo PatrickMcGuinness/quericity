@@ -44,6 +44,14 @@ class Sharing < ActiveRecord::Base
     self.status == Sharing::Status::STARTED
   end
 
+  def status_in_string
+    status = 'INVITED' if self.is_pending?
+    status = 'PARTIAL' if self.is_started?
+    status = 'COMPLETED' if self.is_attempted?
+    status = 'EXPIRED' if self.is_expired?
+    status
+  end
+
   def self.get_sharing(served_quiz,user)
     user.sharings.where("served_quiz_id = ?",served_quiz.id).first
   end
@@ -83,7 +91,8 @@ class Sharing < ActiveRecord::Base
       :served_quiz_id   => served_quiz_id,
       :status  => status,
       :user_id => user_id,
-      :user => user.as_json()
+      :user => user.as_json(),
+      :status_in_string => status_in_string.as_json()
     }
   end  
 

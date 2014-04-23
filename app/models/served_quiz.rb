@@ -70,6 +70,10 @@ class ServedQuiz < ActiveRecord::Base
     self.cloned_quiz_bank.cloned_questions.joins(:answers).where("cloned_questions.question_type = ? and answers.graded_by_teacher = ?", Question::QuestionType::OPENENDED, 0)
   end
 
+  def open_ended_answers_to_grade
+    Answer.joins(:cloned_question).where("cloned_questions.question_type = ? and answers.served_quiz_id = ? and answers.graded_by_teacher = ?",Question::QuestionType::OPENENDED,self.id,0)
+  end
+
   def graded_answers_count
     self.attempted_answers.count - self.open_ended_questions_to_grade.count
   end
@@ -118,10 +122,6 @@ class ServedQuiz < ActiveRecord::Base
     count = user.answers.where("served_quiz_id = ?",self.id).count
     count = count + 1
   end
-
-  def should_redirect?(user)
-    self.question_number(user) > self.cloned_quiz_bank.cloned_questions.count 
-  end
   
   def self.answer_options_for_select
     ServedQuiz::Answers.get_all_answers
@@ -152,12 +152,40 @@ class ServedQuiz < ActiveRecord::Base
     ClonedQuizBank.create_the_clone(quiz_bank,params)
   end
 
-  def next_question(user)
-    question_ids = user.answers.where("served_quiz_id = ? and student_id = ?",self.id, user.id).pluck(:cloned_question_id)
-    unless question_ids.blank?
-      question = self.cloned_quiz_bank.cloned_questions.where("id NOT IN (?)",question_ids).first 
-    else
-      question = self.cloned_quiz_bank.cloned_questions.first
-    end
+  def questions_to_attempt(student)
+    attempted_questions_id = self.cloned_quiz_bank.cloned_questions.joins(:answers).where("answers.student_id = ?",student.id).pluck(:id)
+    questions = self.cloned_quiz_bank.cloned_questions if attempted_questions_id.blank?
+    questions = self.cloned_quiz_bank.cloned_questions.where("id NOT IN (?)",attempted_questions_id) unless attempted_questions_id.blank?
+    questions
+  end
+  def as_json(opts = nil)
+    opts ||={}
+    {
+      :id  => id,
+      :answer => answer,
+      :duration => duration,
+      :date => date,
+      :close_date => close_date,
+      :end_time => end_time,
+      :created_at => created_at,
+      :updated_at => updated_at,
+      :quiz_bank => quiz_bank_id,
+      :owner => owner.as_json(),
+      :sharings => sharings.as_json(),
+      :pending_sharings => pending_sharings.as_json(),
+      :completed_sharings => completed_sharings.as_json(),
+      :invited_sharings => invited_sharings.as_json(),
+      :instructions => instructions,
+      :random => random,
+      :start_time => start_time,
+      :infinite_duration => infinite_duration,
+      :number_of_questions => number_of_questions, 
+      :same_questions => same_questions,
+      :show_in_sequence => show_in_sequence, 
+      :show_all_questions => show_all_questions, 
+      :questions_per_page => questions_per_page,
+      :cloned_quiz_bank => cloned_quiz_bank.as_json()   
+    }
+    
   end
 end

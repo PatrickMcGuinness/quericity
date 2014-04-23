@@ -6,10 +6,12 @@ class HomeController < ApplicationController
   end
 
   def determine_layout
-    if user_signed_in?
+    if user_signed_in? and current_user.is_professor?
      "dynamic"
-   else
+    elsif user_signed_in? and current_user.is_student?
+      "student_layout" 
+    else
      "application"
-   end
+    end
  end
 end
