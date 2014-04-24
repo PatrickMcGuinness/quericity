@@ -66,38 +66,23 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
   }
 }]);
 
-student_quizlib.controller('QuizInstuctionCtrl', ['$scope','ServedQuiz','Sharing','$routeParams','$location',function($scope,ServedQuiz,Sharing,$routeParams,$location){
-  ServedQuiz.get($routeParams.id).$promise.then(function(data){
-    $scope.served_quiz = data
-    Sharing.student_sharing(data.id).$promise.then(function(sharing){
-      $scope.served_quiz.student_sharing = sharing
-      if($scope.served_quiz.student_sharing.status_in_string != "INVITED"){
-        $location.path("/quiz/"+$scope.served_quiz.id+"/attempt")
-      }
-      else{
-        console.log("invited")
-      }
-    })
-    var obj = new Date($scope.served_quiz.close_date)
-    $scope.served_quiz.close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
-    var obj = new Date($scope.served_quiz.end_time)
-    $scope.served_quiz.end_time = (obj.getHours() - 5) + ":" + obj.getMinutes()
-  })
-
-  $scope.changeStatus = function(){
-    $scope.served_quiz.student_sharing.status = 4
-    Sharing.update($scope.served_quiz.id, $scope.served_quiz.student_sharing.id,$scope.served_quiz.student_sharing)
-  }
-}]);
-
 student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','$routeParams',function($scope,ServedQuiz,Sharing,$routeParams){
   $scope.served_quiz_id = $routeParams.id
   ServedQuiz.get($routeParams.id).$promise.then(function(data){
     $scope.served_quiz = data
     $scope.served_quiz.student_sharing = Sharing.student_sharing(data.id)
     $scope.served_quiz.questions_to_attempt = ServedQuiz.questions_to_attempt(data.id)
+    var obj = new Date($scope.served_quiz.close_date)
+    $scope.served_quiz.close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
+    var obj = new Date($scope.served_quiz.end_time)
+    $scope.served_quiz.end_time = (obj.getHours() - 5) + ":" + obj.getMinutes()
   })
   $scope.timer = { counter: 0, minutes: 0 }
+  $scope.changeStatus = function(){
+    $scope.served_quiz.student_sharing.status = 4
+    $scope.served_quiz.student_sharing.status_in_string = 'PARTIAL'
+    Sharing.update($scope.served_quiz.id, $scope.served_quiz.student_sharing.id,$scope.served_quiz.student_sharing)
+  }
 
 }]);
 

@@ -58,7 +58,7 @@
               <span style="color:#0069a7; font-weight:bold;">Complete:</span>&nbsp;Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}
             </td>
             <td>
-              <a ng-if = "served_quiz.show_icon == true" data-toggle = "tooltip" title = "Proceed to Quiz" tooltip-placement = "top" ng-href = "#/quiz/{{served_quiz.id}}/instructions"><img src="/assets/attempt.png"/></a>
+              <a ng-if = "served_quiz.show_icon == true" data-toggle = "tooltip" title = "Proceed to Quiz" tooltip-placement = "top" ng-href = "#/quiz/{{served_quiz.id}}/attempt"><img src="/assets/attempt.png"/></a>
               <span ng-if = "served_quiz.show_icon == false" style = "border: 1px solid">Quiz Not Available</span>
             </td>
           </tr>
