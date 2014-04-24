@@ -74,12 +74,13 @@ class ServedQuiz < ActiveRecord::Base
     Answer.joins(:cloned_question).where("cloned_questions.question_type = ? and answers.served_quiz_id = ? and answers.graded_by_teacher = ?",Question::QuestionType::OPENENDED,self.id,0)
   end
 
-  def graded_answers_count
-    self.attempted_answers.count - self.open_ended_questions_to_grade.count
+  def graded_answers
+    ids = self.open_ended_answers_to_grade.pluck(:id)
+    answers = self.attempted_answers if ids.blank? 
+    answers = self.attempted_answers.where("id NOT IN (?)",ids) unless ids.blank? 
+    #self.attempted_answers.count - self.open_ended_questions_to_grade.count
+    answers
   end
-
-
-  
 
   def graded_by_system
     self.cloned_quiz_bank.cloned_questions.joins(:answers).count - self.open_ended_questions_to_grade.count

@@ -1,6 +1,6 @@
 quizlib.factory('ServedQuiz', ['$resource', function($resource,$http) {
   function ServedQuiz() {
-    this.service = $resource('/served_quizzes/:id/:pending:completed:invited:attempted_answers:graded_answers_count:questions_to_grade', {id: '@id'},
+    this.service = $resource('/served_quizzes/:id/:pending:completed:invited:attempted_answers:graded_answers:questions_to_grade', {id: '@id'},
                   {update:{method:"PUT",isArray:false},
                    query:{method:"GET",transformResponse: [function(data,headersGetter){
                     return {result: JSON.parse(data)}
@@ -9,7 +9,7 @@ quizlib.factory('ServedQuiz', ['$resource', function($resource,$http) {
                    completed: {method: "GET",isArray: true},
                    invited:{method: "GET",isArray:true},
                    attempted_answers:{method: "GET",isArray:true},
-                   graded_answers_count: {method: "GET", isArray: false},
+                   graded_answers: {method: "GET", isArray: true},
                    questions_to_grade: {method: "GET", isArray: true}
                  });
   };
@@ -42,8 +42,8 @@ quizlib.factory('ServedQuiz', ['$resource', function($resource,$http) {
   ServedQuiz.prototype.attempted_answers = function(ServedQuizId){
     return this.service.attempted_answers({id: ServedQuizId,attempted_answers: "attempted_answers"})
   }
-  ServedQuiz.prototype.graded_answers_count = function(ServedQuizId){
-    return this.service.graded_answers_count({id: ServedQuizId,graded_answers_count: "graded_answers_count"})
+  ServedQuiz.prototype.graded_answers = function(ServedQuizId){
+    return this.service.graded_answers({id: ServedQuizId,graded_answers: "graded_answers"})
   }
   ServedQuiz.prototype.questions_to_grade = function(ServedQuizId){
     return this.service.questions_to_grade({id: ServedQuizId,questions_to_grade: "questions_to_grade"})

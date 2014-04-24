@@ -296,6 +296,7 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
       $scope.served_quiz.questions_to_attempt = data
       if($scope.served_quiz.questions_to_attempt == 0){
         $scope.served_quiz.student_sharing.status = 2
+          $scope.served_quiz.student_sharing.status_in_string = "COMPLETED"
         Sharing.update($scope.served_quiz.id, $scope.served_quiz.student_sharing.id,$scope.served_quiz.student_sharing)
       }
     })
@@ -398,6 +399,7 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
       $scope.served_quiz.questions_to_attempt = data
       if($scope.served_quiz.questions_to_attempt.length == 0){
         $scope.served_quiz.student_sharing.status = 2
+        $scope.served_quiz.student_sharing.status_in_string = "COMPLETED"
         Sharing.update($scope.served_quiz.id, $scope.served_quiz.student_sharing.id,$scope.served_quiz.student_sharing)
       }
       else{

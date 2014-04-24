@@ -1,4 +1,4 @@
-<div class = "mar-top-10 col-xs-12 strip" ng-repeat = "question in served_quiz.questions_to_attempt" ng-if = "served_quiz.questions_to_attempt.length > 0">
+<div class = "mar-top-10 col-xs-12 strip" ng-repeat = "question in served_quiz.questions_to_attempt" ng-if = "served_quiz.student_sharing.status_in_string != 'COMPLETED'">
   <span mathjax-bind = "question.description"></span>
   <div class = "pull-left" ng-if = "question.question_type == 1">
     <input type="radio" name="true_false{{$index}}" value = "true" ng-model = "question.answer">&nbsp;True
@@ -16,12 +16,12 @@
     <input ng-model = "question.answer" class =  "form-control" placeholder = "Enter blank">
   </div>
 </div>
-<div class = "row" ng-if = "served_quiz.questions_to_attempt.length > 0">
+<div class = "row" ng-if = "served_quiz.student_sharing.status_in_string != 'COMPLETED'">
   <div class = "col-xs-2 col-xs-offset-5 mar-top-20">
     <a class = "btn btn-success btn-lg pull-left" ng-click = "submit(served_quiz.questions_to_attempt)">Submit Answers</a>
   </div>
 </div>
-<div class = "row" ng-if = "served_quiz.questions_to_attempt.length == 0 && served_quiz.answer != 3">
+<div class = "row" ng-if = "served_quiz.student_sharing.status_in_string == 'COMPLETED' && served_quiz.answer != 3">
   <div class = "col-xs-12">
     <h3>Answers</h3>
   </div>
@@ -46,7 +46,7 @@
   </div>
 </div>
 
-<div class = "row" ng-if = "served_quiz.questions_to_attempt.length == 0 && served_quiz.answer == 3">
+<div class = "row" ng-if = "served_quiz.student_sharing.status_in_string == 'COMPLETED' && served_quiz.answer == 3">
   <div class = "col-xs-12">
     <h3>Answers</h3>
   </div>

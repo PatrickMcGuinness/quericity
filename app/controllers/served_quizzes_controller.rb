@@ -46,8 +46,8 @@ class ServedQuizzesController < ApplicationController
     render json: @served_quiz.attempted_answers
   end
 
-  def graded_answers_count
-    render json: @served_quiz.graded_answers_count
+  def graded_answers
+    render json: @served_quiz.graded_answers
   end
 
   def questions_to_grade

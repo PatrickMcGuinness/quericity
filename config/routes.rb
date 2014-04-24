@@ -47,7 +47,7 @@ QuizLib::Application.routes.draw do
       get "completed"
       get "invited"
       get "attempted_answers"
-      get "graded_answers_count"
+      get "graded_answers"
       get "questions_to_grade"
       get "questions_to_attempt"
     end

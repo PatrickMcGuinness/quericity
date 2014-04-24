@@ -27,8 +27,8 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
       value.end_time = obj4.getHours() + ":" + obj4.getMinutes()
       
       value.attempted_answers = ServedQuiz.attempted_answers(value.id)
-      ServedQuiz.graded_answers_count(value.id).$promise.then(function(data){
-        value.graded_answers_count = data
+      ServedQuiz.graded_answers(value.id).$promise.then(function(data){
+        value.graded_answers = data
       })
     })
   })
@@ -108,8 +108,18 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
       status = "Not Served Yet"
       var obj = new Date()
       if(new Date(obj1.getFullYear(),obj1.getMonth(),obj1.getDate()) <= new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        if((obj3.getHours() < obj.getHours()) && (obj3.getMinutes() <= obj.getMinutes())){
+        console.log(obj3.getHours())
+        console.log(obj3.getMinutes())
+        console.log(obj.getHours())
+        console.log(obj.getMinutes())
+        console.log((obj3.getHours() < obj.getHours()) && (obj3.getMinutes() <= obj.getMinutes()))
+        if((obj3.getHours() < obj.getHours())){
           status = "In Process"
+        }
+        else if(obj3.getHours() == obj.getHours()){
+          if(obj3.getMinutes() < obj.getMinutes()){
+            status = "In Process"
+          }
         }
       }
       if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) < new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
@@ -411,9 +421,17 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
 
   $scope.move_to_right = function(){
     angular.forEach($scope.students_to_right,function(value,key){
-      $scope.selected_students.push(value)
-      index = $scope.group_students.indexOf(value)
-      $scope.group_students.splice(index,1)
+      var check = 0
+      angular.forEach($scope.selected_students,function(select_student,key){
+        if(value.id == select_student.id){
+          check = 1;
+        }
+      })
+      if(check != 1){
+        $scope.selected_students.push(value)
+        index = $scope.group_students.indexOf(value)
+        $scope.group_students.splice(index,1)
+      }
     })
     $scope.students_to_right = []
   }
