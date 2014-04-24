@@ -113,7 +113,7 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
         $scope.served_quiz.student_sharing.status_in_string = "COMPLETED"
         Sharing.update($scope.served_quiz.id, $scope.served_quiz.student_sharing.id,$scope.served_quiz.student_sharing)
       }
-      if($scope.minutes > 0){
+      if($scope.timer.minutes > 0){
         $scope.timer.counter = 59
         $scope.timer.minutes = $scope.timer.minutes - 1
       }
@@ -455,7 +455,7 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
           Sharing.update($scope.served_quiz.id, $scope.served_quiz.student_sharing.id,$scope.served_quiz.student_sharing)
         }
       }
-      if($scope.minutes > 0){
+      if($scope.timer.minutes > 0){
         $scope.timer.counter = 59
         $scope.timer.minutes = $scope.timer.minutes - 1
       }
