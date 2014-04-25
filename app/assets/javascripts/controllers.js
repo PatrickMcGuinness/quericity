@@ -469,7 +469,10 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   $scope.$watch('selected_quiz', function() {
     if($scope.selected_quiz != undefined){
       $scope.quiz_bank_questions = QuizBank.questions($scope.selected_quiz.id)
-      $scope.quiz_bank = QuizBank.get($scope.selected_quiz.id)
+      QuizBank.get($scope.selected_quiz.id).$promise.then(function(data){
+        $scope.quiz_bank = data
+        //$scope.served_quiz.instructions = data.instructions
+      })
     }
   });
 
@@ -542,6 +545,13 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
     }
   }
 
+  $scope.checkOptions = function(isValid){
+    $scope.option_submitted = true
+    if(isValid && $scope.served_quiz.infinite_duration != undefined && $scope.served_quiz.random != undefined && $scope.served_quiz.show_all_questions != undefined){
+      $scope.show_options = false
+    }
+  }
+
   $scope.serveTheQuiz = function(){
     ClonedQuizBank.create_the_clone($scope.selected_quiz.id).$promise.then(function(data){
       cloned_quiz_bank_id = data.id
@@ -561,12 +571,25 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
         })
       }
       if($scope.served_quiz.random == 1){
+        console.log($scope.served_quiz.number_of_questions)
+        for(var i = 0; i < $scope.served_quiz.number_of_questions; i++){
+          var question = $scope.quiz_bank_questions[Math.floor(Math.random() * $scope.quiz_bank_questions.length)];
+          index = $scope.quiz_bank_questions.indexOf(question);
+          $scope.quiz_bank_questions.splice(index,1)
+          ClonedQuestion.save($scope.selected_quiz.id,data.id,{seq: question.seq, 
+              description: question.description, question_type: question.question_type,
+              difficulty_level: question.difficulty_level, cloned_quiz_bank_id: cloned_quiz_bank_id}).$promise.then(function(cloned_question){
+                QuestionOption.all($scope.selected_quiz.id,question.section_id,question.id).$promise.then(function(question_options){
+                  angular.forEach(question_options,function(question_option,key){
+                    ClonedQuestionOption.save($scope.selected_quiz.id, data.id, cloned_question.id, {answer: question_option.answer, cloned_question_id: cloned_question.id, is_correct: question_option.is_correct, seq: question_option.seq})
+                  })
+                })     
 
+          })
+        }
       }
       $scope.served_quiz.cloned_quiz_bank_id = cloned_quiz_bank_id
       $scope.served_quiz.quiz_bank_id = $scope.selected_quiz.id
-      console.log($scope.quiz.date)
-      console.log($scope.quiz.close_date)
       $scope.served_quiz.date = $scope.quiz.date
       $scope.served_quiz.close_date = $scope.quiz.close_date
       ServedQuiz.save($scope.served_quiz).$promise.then(function(data){
