@@ -20,7 +20,7 @@
 //= require angular-resource
 //= require angular-route
 //= require ui-bootstrap-tpls-0.10.0.min
-
+//= require bootstrap-timepicker.min
 
 loadingimage =  "<img alt='Please wait' src='/assets/loading.gif' style='margin-left:5px;' class='loading-img'>"
 

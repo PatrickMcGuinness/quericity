@@ -368,6 +368,82 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
     $scope.show_questions = []
   }
 }]);
+
+quizlib.controller('DatePickerCtrl', ['$scope',function($scope){
+  $scope.today = function() {
+    $scope.quiz.date = new Date();
+    $scope.quiz.close_date = new Date()
+  };
+  $scope.today();
+
+  $scope.showWeeks = false;
+  
+  $scope.toggleWeeks = function () {
+    $scope.showWeeks = ! $scope.showWeeks;
+  };
+
+  $scope.clear = function () {
+    $scope.quiz.date = null;
+    $scope.quiz.close_date = null
+  };
+
+  // Disable weekend selection
+  $scope.disabled = function(date, mode) {
+    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+  };
+
+  $scope.toggleMin = function() {
+    $scope.minDate = ( $scope.minDate ) ? null : new Date();
+  };
+  $scope.toggleMin();
+
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    $scope.opened = true;
+  };
+
+  $scope.dateOptions = {
+    'year-format': "'yy'",
+    'starting-day': 1
+  };
+
+  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
+  $scope.format = $scope.formats[0];
+}]);
+quizlib.controller('TimePickerCtrl', ['$scope',function($scope){
+  $scope.mytime = new Date();
+
+  $scope.hstep = 1;
+  $scope.mstep = 15;
+
+  $scope.options = {
+    hstep: [1, 2, 3],
+    mstep: [1, 5, 10, 15, 25, 30]
+  };
+
+  $scope.ismeridian = true;
+  $scope.toggleMode = function() {
+    $scope.ismeridian = ! $scope.ismeridian;
+  };
+
+  $scope.update = function() {
+    var d = new Date();
+    d.setHours( 14 );
+    d.setMinutes( 0 );
+    $scope.mytime = d;
+  };
+
+  $scope.changed = function () {
+    console.log('Time changed to: ' + $scope.mytime);
+  };
+
+  $scope.clear = function() {
+    $scope.mytime = null;
+  };
+}]); 
+
 quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','ClonedQuestionOption','Group','User','Sharing','QuestionOption',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,ClonedQuestionOption,Group,User,Sharing,QuestionOption){
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
@@ -381,6 +457,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   $scope.students_to_right = []
   $scope.selected_students = []
   $scope.option_submitted = false
+  $scope.quiz = {date: null, close_date: null}
   
   QuizBank.all().$promise.then(function(data){
     $scope.quiz_banks = data.result
@@ -488,6 +565,10 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
       }
       $scope.served_quiz.cloned_quiz_bank_id = cloned_quiz_bank_id
       $scope.served_quiz.quiz_bank_id = $scope.selected_quiz.id
+      console.log($scope.quiz.date)
+      console.log($scope.quiz.close_date)
+      $scope.served_quiz.date = $scope.quiz.date
+      $scope.served_quiz.close_date = $scope.quiz.close_date
       ServedQuiz.save($scope.served_quiz).$promise.then(function(data){
         angular.forEach($scope.selected_students,function(value,key){
           Sharing.save(data.id,{user_id: value.id})

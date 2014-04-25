@@ -66,6 +66,8 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
   }
 }]);
 
+
+
 student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','$routeParams',function($scope,ServedQuiz,Sharing,$routeParams){
   $scope.served_quiz_id = $routeParams.id
   ServedQuiz.get($routeParams.id).$promise.then(function(data){

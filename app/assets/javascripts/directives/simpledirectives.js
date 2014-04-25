@@ -18,7 +18,15 @@ quizlib.directive("mathjaxBind", function() {
   };
 });
 
-
+quizlib.directive('timepick',function(){
+  return {
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      console.log(element)
+      element.timepicker()
+    }
+  };
+})
 quizlib.directive('enter', function () {
   return function (scope, element, attrs) {
     element.bind("keydown", function (event) {

@@ -39,6 +39,9 @@ a{
 .adjust-thumbnail{
 	clear: both;
 }
+p.input-group ul{
+	padding-right: 10px;
+} 
 
 /***************** For Header ********************/
 
