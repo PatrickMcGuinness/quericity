@@ -21,6 +21,30 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
     date_formatting($scope.started_quizzes)
   })
 
+  $scope.toggle_title = function(){
+    if($scope.title == false){
+      $scope.title = true
+    }
+    else{
+      $scope.title = false
+    }
+  }
+  $scope.toggle_teacher_name = function(){
+    if($scope.teacher_name == false){
+      $scope.teacher_name = true
+    }
+    else{
+      $scope.teacher_name = false
+    }
+  }
+  $scope.toggle_subject = function(){
+    if($scope.subject_title == false){
+      $scope.subject_title = true
+    }
+    else{
+      $scope.subject_title = false
+    }
+  }
   $scope.show_pending_quizzes = function(){
     $scope.served_quizzes = $scope.pending_quizzes
   }

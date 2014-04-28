@@ -25,16 +25,25 @@
       <table class="table table-striped tag_btns">
         <thead>
           <th class="col-xs-2 manage_section">
-              Quiz Name
-            <a ng-click="predicate = 'cloned_quiz_bank.title'; reverse=!reverse"><img src="/assets/heading_arrow_down.png" /></a>
+            Quiz Title
+            <a ng-click="predicate = 'cloned_quiz_bank.title'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_title()" ng-if = "title == true || title == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_title()" ng-if = "title == false"/>
+            </a>
           </th>
           <th class="col-xs-2 manage_section">
               Teacher Name
-            <a ng-click="predicate = 'owner.first_name'; reverse=!reverse"><img src="/assets/heading_arrow_down.png" /></a>
+            <a ng-click="predicate = 'owner.first_name'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_teacher_name()" ng-if = "teacher_name == true || teacher_name == undefined"/>
+               <img src="/assets/heading_arrow_up.png" ng-click = "toggle_teacher_name()" ng-if = "teacher_name == false"/>
+            </a>
           </th>
           <th class="col-xs-2 manage_section">
               Subject
-            <a ng-click="predicate = 'cloned_quiz_bank.subject'; reverse=!reverse"><img src="/assets/heading_arrow_down.png" /></a>
+            <a ng-click="predicate = 'cloned_quiz_bank.subject'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_subject()" ng-if = "subject_title == true || subject_title == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_subject()" ng-if = "subject_title == false"/>
+            </a>
           </th>
           <th class="col-xs-4 manage_section">
               Status

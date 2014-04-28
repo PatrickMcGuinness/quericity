@@ -26,8 +26,9 @@
                   -else
                     %span.glyphicon.glyphicon-user
                     %span 
-                      =link_to "Settings",profile_students_user_path(current_user) 
+                      =link_to "Settings","#"
                 %li
+                  %br
                   %span.glyphicon.glyphicon-off.custom-size
                   %span 
                     =link_to "Log out", destroy_user_session_path, :method => "delete"

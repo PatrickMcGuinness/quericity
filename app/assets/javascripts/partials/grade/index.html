@@ -15,7 +15,10 @@
       <thead>
         <th class="col-xs-2 manage_section">
             Quiz Served
-            <a ng-click = "predicate = 'cloned_quiz_bank.title'; reverse=!reverse"><img src="/assets/heading_arrow_down.png" /></a>
+            <a ng-click = "predicate = 'cloned_quiz_bank.title'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_title()" ng-if = "title == true || title == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_title()" ng-if = "title == false"/>
+            </a>
         </th>
         <th class="col-xs-2 manage_section">
             Start Time

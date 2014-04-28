@@ -16,29 +16,31 @@
 	</div>
 </div>
 <div class="container">
-	<div class="row">
-    <div class="col-xs-2 select_dropdown pull-right">
-      <select class="form-control" ng-model="sorttitle">
-        <option value = "">Sort By Title</option>
-        <option value = "1" >Ascending</option>
-        <option value = "2" >Descending</option>
-      </select>
-    </div>
-    <div class="col-xs-2 select_dropdown pull-right">
-      <select class="form-control" ng-model="sortmodified">
-        <option value = "">Sort By Last Modified</option>
-        <option value = "1">Ascending</option>
-        <option value = "2">Descending</option>
-      </select>
-    </div>
-	</div>
   <div class = "row">
 		<div class = "col-xs-12">
 			<table class="table table-striped tag_btns">
 				<thead>
-					<th class="col-xs-1 manage_section">Title</th>
-          <th class="col-xs-2 manage_section">Last Modified</th>
-          <th class="col-xs-2 manage_section">Number of Students</th>
+					<th class="col-xs-1 manage_section">
+            Title
+            <a ng-click="predicate = 'title'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_title()" ng-if = "title == true || title == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_title()" ng-if = "title == false"/>
+            </a>
+          </th>
+          <th class="col-xs-2 manage_section">
+            Last Modified
+            <a ng-click="predicate = 'last_updated'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_last_updated()" ng-if = "last_updated == true || last_updated == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_last_updated()" ng-if = "last_updated == false"/>
+            </a>
+          </th>
+          <th class="col-xs-2 manage_section">
+            Number of Students
+            <a ng-click="predicate = 'count'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_count()" ng-if = "count == true || count == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_count()" ng-if = "count == false"/>
+            </a>
+          </th>
           <th class="col-xs-1 manage_section">Action</th>
         </thead>
         <tbody class="text-center">

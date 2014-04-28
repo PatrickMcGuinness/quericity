@@ -59,6 +59,13 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
       });
     })   
   }
+  $scope.toggle_title = function(){
+    if($scope.title == false){
+      $scope.title = true
+    }else{
+      $scope.title = false
+    }
+  }
 }]);
 
 quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz','Answer',function($scope,$routeParams,ServedQuiz,Answer){
@@ -623,7 +630,29 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
     Group.delete(group.id)
     $scope.groups.splice(idx,1)
   }
-  $scope.$watch('sorttitle', function() {
+  $scope.toggle_title = function(){
+    if($scope.title == false){
+      $scope.title = true
+    }
+    else{
+      $scope.title = false
+    }
+  }
+  $scope.toggle_count = function(){
+    if($scope.count == false){
+      $scope.count = true
+    }else{
+      $scope.count = false
+    }
+  }
+  $scope.toggle_last_updated = function(){
+    if($scope.last_updated == false){
+      $scope.last_updated = true
+    }else{
+      $scope.last_updated = false
+    }
+  }
+  /*$scope.$watch('sorttitle', function() {
     if($scope.sorttitle == 1){
       $scope.predicate = 'title'
       $scope.reverse = false
@@ -642,7 +671,7 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
       $scope.predicate = 'last_updated'
       $scope.reverse = true
     }
-  });
+  });*/
 
 }]);
 quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','StudentGroup',function($scope,$location,User,Group,StudentGroup){
@@ -862,6 +891,31 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
     })
     
   })
+
+  $scope.toggle_title = function(){
+    if($scope.quiz_title == false){
+      $scope.quiz_title = true
+    }
+    else{
+      $scope.quiz_title = false
+    }
+  }
+
+  $scope.toggle_name = function(){
+    if($scope.owner_name == false){
+      $scope.owner_name = true
+    }else{
+      $scope.owner_name = false
+    }
+  }
+  $scope.toggle_tags = function(){
+    if($scope.quiz_tag == false){
+      $scope.quiz_tag = true
+    }
+    else{
+      $scope.quiz_tag = false
+    }
+  }
 
   $scope.deleteRepo = function(repo){
     Repository.delete(repo.id)
