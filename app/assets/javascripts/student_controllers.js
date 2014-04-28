@@ -68,11 +68,14 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
       value.close_date = obj2.getDate() +"-" + (obj2.getMonth()+1) +"-"+obj2.getFullYear()
       
       var obj3 = new Date(value.start_time)
-      obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
+      //obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
       
       var obj4 = new Date(value.end_time)
-      obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
+
+      //obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
+      
       value.end_time = obj4.getHours() + ":"
+      
       if(obj4.getMinutes() < 10){
         value.end_time = value.end_time + "0" + obj4.getMinutes()
       }
@@ -81,6 +84,7 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
       }
       
       value.show_icon = false
+      value.expired = false
       var obj = new Date()
       if(new Date(obj1.getFullYear(),obj1.getMonth(),obj1.getDate()) <= new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
         if((obj3.getHours() < obj.getHours()) && (obj3.getMinutes() <= obj.getMinutes())){
@@ -89,7 +93,8 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
       }
       if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) < new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
         if((obj4.getHours() < obj.getHours()) && (obj4.getMinutes() <= obj.getMinutes())){
-          value.show_icon = false
+          value.expired = true
+          value.started = false
         }
       } 
     })

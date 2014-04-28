@@ -58,13 +58,19 @@
             <td>{{served_quiz.owner.first_name}}{{served_quiz.owner.last_name}}</td>
             <td>{{served_quiz.cloned_quiz_bank.subject}}</td>
             <td ng-if = "served_quiz.student_sharing.status_in_string == 'INVITED'">
-              <span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}
+              <span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;
+              <span ng-if = "served_quiz.expired == false">Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
+              <span ng-if = "served_quiz.expired == true">Quiz expired on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
             </td>
             <td ng-if = "served_quiz.student_sharing.status_in_string == 'PARTIAL'">
-              <span style="color:#c64b00; font-weight:bold;">Partial:</span>&nbsp;Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}
+              <span style="color:#c64b00; font-weight:bold;">Partial:</span>&nbsp;
+              <span ng-if = "served_quiz.expired == false">Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
+              <span ng-if = "served_quiz.expired == false">Quiz expired on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
             </td>
             <td ng-if = "served_quiz.student_sharing.status_in_string == 'COMPLETED'">
-              <span style="color:#0069a7; font-weight:bold;">Complete:</span>&nbsp;Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}
+              <span style="color:#0069a7; font-weight:bold;">Complete:</span>&nbsp;
+              <span ng-if = "served_quiz.expired == false">Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
+              <span ng-if = "served_quiz.expired == true">Quiz expired on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
             </td>
             <td>
               <a ng-if = "served_quiz.show_icon == true" data-toggle = "tooltip" title = "Proceed to Quiz" tooltip-placement = "top" ng-href = "#/quiz/{{served_quiz.id}}/attempt"><img src="/assets/attempt.png"/></a>

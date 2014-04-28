@@ -19,14 +19,14 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
       value.close_date = obj2.getDate() +"-" + (obj2.getMonth()+1) +"-"+obj2.getFullYear()
       
       var obj3 = new Date(value.start_time)
-      obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
+      //obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
       value.start_time = obj3.getHours() + ":"
       if(obj3.getMinutes() < 10){ 
         value.start_time = value.start_time + "0" + obj3.getMinutes()
       }else{value.start_time = value.start_time + obj3.getMinutes()}
       
       var obj4 = new Date(value.end_time)
-      obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
+      //obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
       value.end_time = obj4.getHours() + ":"
       if(obj4.getMinutes() < 10){
         value.end_time = value.end_time + "0" + obj3.getMinutes()
@@ -111,14 +111,14 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
       value.close_date = obj2.getDate() +"-" + (obj2.getMonth()+1) +"-"+obj2.getFullYear()
       
       var obj3 = new Date(value.start_time)
-      obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
+      //obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
       value.start_time = obj3.getHours() + ":"
       if(obj3.getMinutes() < 10){
         value.start_time = value.start_time + "0" + obj3.getMinutes() 
       }else{ value.start_time = value.start_time +  obj3.getMinutes()} 
       
       var obj4 = new Date(value.end_time)
-      obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
+      //obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
       value.end_time = obj4.getHours() + ":"
       if(obj3.getMinutes() < 10){
         value.end_time = value.end_time + "0" + obj3.getMinutes()
@@ -565,6 +565,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
     }
   }
 
+
   $scope.serveTheQuiz = function(){
     ClonedQuizBank.create_the_clone($scope.selected_quiz.id).$promise.then(function(data){
       cloned_quiz_bank_id = data.id
@@ -605,6 +606,15 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
       $scope.served_quiz.quiz_bank_id = $scope.selected_quiz.id
       $scope.served_quiz.date = $scope.quiz.date
       $scope.served_quiz.close_date = $scope.quiz.close_date
+      var obj4 = new Date()
+      var gmt_hours = obj4.getTimezoneOffset()/60
+      var gmt_minutes = obj4.getTimezoneOffset()%60
+      var split_start_time = $scope.served_quiz.start_time.split(":")
+      var split_minute_part = split_start_time[1].split(" ")
+      $scope.served_quiz.start_time = (parseInt(split_start_time[0]) + gmt_hours) +":"+ (parseInt(split_minute_part[0]) + gmt_minutes) + " " +split_minute_part[1] 
+      var split_end_time = $scope.served_quiz.end_time.split(":")
+      var split_end_minute_part = split_end_time[1].split(" ")
+      $scope.served_quiz.end_time = (parseInt(split_end_time[0]) + gmt_hours) + ":" + (parseInt(split_end_minute_part[0]) + gmt_minutes) + " " + split_end_minute_part[1]
       ServedQuiz.save($scope.served_quiz).$promise.then(function(data){
         angular.forEach($scope.selected_students,function(value,key){
           Sharing.save(data.id,{user_id: value.id})
