@@ -20,11 +20,17 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
       
       var obj3 = new Date(value.start_time)
       obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
-      value.start_time = obj3.getHours() + ":" + obj3.getMinutes()
+      value.start_time = obj3.getHours() + ":"
+      if(obj3.getMinutes() < 10){ 
+        value.start_time = value.start_time + "0" + obj3.getMinutes()
+      }else{value.start_time = value.start_time + obj3.getMinutes()}
       
       var obj4 = new Date(value.end_time)
       obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
-      value.end_time = obj4.getHours() + ":" + obj4.getMinutes()
+      value.end_time = obj4.getHours() + ":"
+      if(obj4.getMinutes() < 10){
+        value.end_time = value.end_time + "0" + obj3.getMinutes()
+      }else{value.end_time = value.end_time + obj3.getMinutes()}
       
       value.attempted_answers = ServedQuiz.attempted_answers(value.id)
       ServedQuiz.graded_answers(value.id).$promise.then(function(data){
@@ -106,20 +112,21 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
       
       var obj3 = new Date(value.start_time)
       obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
-      value.start_time = obj3.getHours() + ":" + obj3.getMinutes()
+      value.start_time = obj3.getHours() + ":"
+      if(obj3.getMinutes() < 10){
+        value.start_time = value.start_time + "0" + obj3.getMinutes() 
+      }else{ value.start_time = value.start_time +  obj3.getMinutes()} 
       
       var obj4 = new Date(value.end_time)
       obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
-      value.end_time = obj4.getHours() + ":" + obj4.getMinutes()
+      value.end_time = obj4.getHours() + ":"
+      if(obj3.getMinutes() < 10){
+        value.end_time = value.end_time + "0" + obj3.getMinutes()
+      }else{value.end_time = value.end_time + obj3.getMinutes()}
       
       status = "Not Served Yet"
       var obj = new Date()
       if(new Date(obj1.getFullYear(),obj1.getMonth(),obj1.getDate()) <= new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        console.log(obj3.getHours())
-        console.log(obj3.getMinutes())
-        console.log(obj.getHours())
-        console.log(obj.getMinutes())
-        console.log((obj3.getHours() < obj.getHours()) && (obj3.getMinutes() <= obj.getMinutes()))
         if((obj3.getHours() < obj.getHours())){
           status = "In Process"
         }
@@ -140,7 +147,6 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
   
   
   $rootScope.cancel = function () {
-    console.log("fsadfs")
     $rootScope.modalInstance.dismiss('cancel');
   };
   $scope.invited_students = function (served_quizId){  
@@ -652,26 +658,6 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
       $scope.last_updated = false
     }
   }
-  /*$scope.$watch('sorttitle', function() {
-    if($scope.sorttitle == 1){
-      $scope.predicate = 'title'
-      $scope.reverse = false
-    }
-    if($scope.sorttitle == 2){
-      $scope.predicate = 'title'
-      $scope.reverse = true
-    }
-  });
-  $scope.$watch('sortmodified', function() {
-    if($scope.sortmodified == 1){
-      $scope.predicate = 'last_updated'
-      $scope.reverse = false
-    }
-    if($scope.sortmodified == 2){
-      $scope.predicate = 'last_updated'
-      $scope.reverse = true
-    }
-  });*/
 
 }]);
 quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','StudentGroup',function($scope,$location,User,Group,StudentGroup){

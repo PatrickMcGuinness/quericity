@@ -72,7 +72,13 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
       
       var obj4 = new Date(value.end_time)
       obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
-      value.end_time = obj4.getHours() + ":" + obj4.getMinutes()
+      value.end_time = obj4.getHours() + ":"
+      if(obj4.getMinutes() < 10){
+        value.end_time = value.end_time + "0" + obj4.getMinutes()
+      }
+      else{
+        value.end_time = value.end_time + obj4.getMinutes()
+      }
       
       value.show_icon = false
       var obj = new Date()
