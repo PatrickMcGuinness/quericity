@@ -120,7 +120,7 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
   }
 }]);
 
-student_quizlib.controller('AnswersCtrl', ['$scope','ServedQuiz','Sharing','$routeParams',function($scope,ServedQuiz,Sharing,$routeParams){
+student_quizlib.controller('AnswersCtrl', ['$scope','ServedQuiz','Sharing','$routeParams','Answer',function($scope,ServedQuiz,Sharing,$routeParams,Answer){
   $scope.served_quiz_id = $routeParams.id
   ServedQuiz.get($routeParams.id).$promise.then(function(data){
     $scope.served_quiz = data
