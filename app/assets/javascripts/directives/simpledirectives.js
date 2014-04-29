@@ -23,6 +23,10 @@ quizlib.directive('timepick',function(){
     restrict: 'A',
     link: function(scope,element,attrs){
       element.timepicker()
+      element.bind("click",function(event){
+        console.log("clicked")
+        element.val($(".bootstrap-timepicker-hour").val() + ":" +$(".bootstrap-timepicker-minute").val() + " "+ $(".bootstrap-timepicker-meridian").val())
+      })
     }
   };
 })

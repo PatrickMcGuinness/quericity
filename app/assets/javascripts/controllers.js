@@ -131,14 +131,22 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
           status = "In Process"
         }
         else if(obj3.getHours() == obj.getHours()){
-          if(obj3.getMinutes() < obj.getMinutes()){
+          if(obj3.getMinutes() <= obj.getMinutes()){
             status = "In Process"
           }
         }
       }
       if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) < new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        if((obj4.getHours() < obj.getHours()) && (obj4.getMinutes() <= obj.getMinutes())){
+        status = "Serving Completed"
+      }
+      if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) == new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
+        if((obj2.getHours() < obj.getHours())){
           status = "Serving Completed"
+        }
+        else if(obj2.getHours() == obj.getHours()){
+          if(obj2.getMinutes() <= obj.getMinutes()){
+            status = "Serving Completed"
+          }
         }
       }
       value.status = status 
@@ -585,7 +593,6 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
         })
       }
       if($scope.served_quiz.random == 1){
-        console.log($scope.served_quiz.number_of_questions)
         for(var i = 0; i < $scope.served_quiz.number_of_questions; i++){
           var question = $scope.quiz_bank_questions[Math.floor(Math.random() * $scope.quiz_bank_questions.length)];
           index = $scope.quiz_bank_questions.indexOf(question);

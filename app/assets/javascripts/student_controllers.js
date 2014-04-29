@@ -86,22 +86,49 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
       value.show_icon = false
       value.expired = false
       var obj = new Date()
-      if(new Date(obj1.getFullYear(),obj1.getMonth(),obj1.getDate()) <= new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        if((obj3.getHours() < obj.getHours()) && (obj3.getMinutes() <= obj.getMinutes())){
+      if(new Date(obj1.getFullYear(),obj1.getMonth(),obj1.getDate()) < new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
+        value.show_icon = true
+      }
+      if((obj1.getFullYear() == obj.getFullYear()) && (obj1.getDate() == obj.getDate()) && (obj1.getMonth() == obj.getMonth())){
+        if(obj3.getHours() < obj.getHours()){
           value.show_icon = true
+        }
+        if(obj3.getHours() == obj.getHours()){
+          if(obj3.getMinutes() <= obj3.getMinutes()){
+            value.show_icon = true
+          }
         }
       }
       if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) < new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        if((obj4.getHours() < obj.getHours()) && (obj4.getMinutes() <= obj.getMinutes())){
+        value.expired = true
+        value.started = false
+      }
+      if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) == new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
+        if(obj4.getHours() < obj.getHours()){
           value.expired = true
           value.started = false
+        }
+        else if(obj4.getHours() == obj.getHours()){
+          if(obj4.getMinutes() <= obj.getMinutes()){
+            value.expired = true
+            value.started = false
+            value.show_icon = false
+          }
         }
       } 
     })
   }
 }]);
 
+student_quizlib.controller('AnswersCtrl', ['$scope','ServedQuiz','Sharing','$routeParams',function($scope,ServedQuiz,Sharing,$routeParams){
+  $scope.served_quiz_id = $routeParams.id
+  ServedQuiz.get($routeParams.id).$promise.then(function(data){
+    $scope.served_quiz = data
+    $scope.served_quiz.student_sharing = Sharing.student_sharing(data.id)
+    $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
+  })
 
+}]);
 
 student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','$routeParams',function($scope,ServedQuiz,Sharing,$routeParams){
   $scope.served_quiz_id = $routeParams.id
@@ -112,7 +139,12 @@ student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','
     var obj = new Date($scope.served_quiz.close_date)
     $scope.served_quiz.close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
     var obj = new Date($scope.served_quiz.end_time)
-    $scope.served_quiz.end_time = (obj.getHours() - 5) + ":" + obj.getMinutes()
+    if(obj.getMinutes() < 10){
+      $scope.served_quiz.end_time = obj.getHours() + ":" + "0" + obj.getMinutes()
+    }
+    else{
+      $scope.served_quiz.end_time = obj.getHours() + ":" + obj.getMinutes()
+    }
   })
   $scope.timer = { counter: 0, minutes: 0 }
   $scope.changeStatus = function(){
@@ -126,8 +158,7 @@ student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','
 student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer',function($scope,$timeout,ServedQuiz,Sharing,Answer){
   $scope.time_running = true
   
-  $scope.onTimeout = function(){
-    
+  $scope.onTimeout = function(){  
     if($scope.timer.counter == 0){
       if($scope.timer.minutes == 0){
         $timeout.cancel(mytimeout);
@@ -138,8 +169,7 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
       if($scope.timer.minutes > 0){
         $scope.timer.counter = 59
         $scope.timer.minutes = $scope.timer.minutes - 1
-      }
-        
+      }   
     }else{
       $scope.timer.counter--;
     }
@@ -176,7 +206,9 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
     angular.forEach(cloned_questions,function(question,key){
       /* Grade only questions with given answers */
       if(question.answer != null){
+        
         /* If question is fill in the blank*/
+        
         if(question.question_type == 1){
           if(question.cloned_question_options[0].is_correct == true){
             var answer = "true"
@@ -194,6 +226,7 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
         }
 
         /* If question is mcq*/
+        
         if(question.question_type == 2){
           var correct_answer = null
           angular.forEach(question.cloned_question_options,function(value,key){
@@ -214,7 +247,9 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
             }
           })         
         }
+
         /*if questios in open ended*/
+        
         if(question.question_type == 3){
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: question.cloned_question_options[0].answer, is_correct: false,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
         }
@@ -246,6 +281,7 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
     $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
   }
 }]);
+
 student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQuiz','Sharing','Answer',function($scope,ServedQuiz,Sharing,Answer){
   
   $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
@@ -327,6 +363,9 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
 
 }]);
 
+student_quizlib.controller('Answers', ['$scope','ServedQuiz','Sharing','Answer',function($scope,ServedQuiz,Sharing,Answer){
+  
+}]);
 
 
 student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz','Sharing','Answer',function($scope,ServedQuiz,Sharing,Answer){
