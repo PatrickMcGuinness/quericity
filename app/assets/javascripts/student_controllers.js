@@ -85,6 +85,7 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
       
       value.show_icon = false
       value.expired = false
+      
       var obj = new Date()
       if(new Date(obj1.getFullYear(),obj1.getMonth(),obj1.getDate()) < new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
         value.show_icon = true
@@ -190,7 +191,6 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
         event.preventDefault();
       }
       if(answer){
-        //$timeout.cancel(mytimeout);
         $scope.served_quiz.student_sharing.status = 2
         $scope.served_quiz.student_sharing.status_in_string = "COMPLETED"
         Sharing.update($scope.served_quiz.id, $scope.served_quiz.student_sharing.id,$scope.served_quiz.student_sharing)
@@ -363,11 +363,6 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
 
 }]);
 
-student_quizlib.controller('Answers', ['$scope','ServedQuiz','Sharing','Answer',function($scope,ServedQuiz,Sharing,Answer){
-  
-}]);
-
-
 student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz','Sharing','Answer',function($scope,ServedQuiz,Sharing,Answer){
 
   ServedQuiz.get($scope.served_quiz_id).$promise.then(function(data){
@@ -409,7 +404,12 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
           else{
             var is_correct = false
           }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
+            answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, 
+            graded_by_teacher: 0}).$promise.then(function(data){
+              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
+              check_more_questions()
+            })
         }
 
         /* If question is mcq*/
@@ -429,13 +429,23 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
                 var is_correct = false
               }
               var student_answer = value.answer
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+              Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
+                  answer: correct_answer, is_correct: is_correct,
+                  served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+                    $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
+                    check_more_questions()
+                  })
             }
           })         
         }
         /*if questios in open ended*/
         if(question.question_type == 3){
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: question.cloned_question_options[0].answer, is_correct: false,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
+            answer: question.cloned_question_options[0].answer, is_correct: false,
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
+              check_more_questions()
+            })
         }
 
         /*If question is fill in the blank*/
@@ -447,17 +457,18 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
           else{
             var is_correct = false
           }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: question.cloned_question_options[0].answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
+            answer: question.cloned_question_options[0].answer, is_correct: is_correct,
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
+              check_more_questions()
+            })
         }    
       }
-      index = $scope.served_quiz.questions_to_show.indexOf(question)
-      $scope.served_quiz.questions_to_show.splice(index,1)
     })
     
-    /*check the remaining questions*/
-    
-    ServedQuiz.questions_to_attempt($scope.served_quiz.id).$promise.then(function(data){
-      $scope.served_quiz.questions_to_attempt = data
+    var check_more_questions = function(){
+      $scope.served_quiz.questions_to_show = []
       if($scope.served_quiz.questions_to_attempt.length == 0){
         $scope.served_quiz.student_sharing.status = 2
         $scope.served_quiz.student_sharing.status_in_string = "COMPLETED"
@@ -475,7 +486,7 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
           })
         }
       }
-    })
+    }
     $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
   }
 
@@ -572,7 +583,12 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
           else{
             var is_correct = false
           }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
+            answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id,
+             graded_by_teacher: 0}).$promise.then(function(data){
+                $scope.questions_to_attempt = data.questions_to_attempt
+                check_more_questions()
+             })
         }
 
         /* If question is mcq*/
@@ -592,13 +608,23 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
                 var is_correct = false
               }
               var student_answer = value.answer
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+              Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
+                answer: correct_answer, is_correct: is_correct,served_quiz_id: 
+                $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+                  $scope.questions_to_attempt = data.questions_to_attempt
+                  check_more_questions()
+                })
             }
           })         
         }
         /*if questios in open ended*/
         if(question.question_type == 3){
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: question.cloned_question_options[0].answer, is_correct: false,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
+            answer: question.cloned_question_options[0].answer, is_correct: false,
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+              $scope.questions_to_attempt = data.questions_to_attempt
+              check_more_questions()
+            })
         }
 
         /*If question is fill in the blank*/
@@ -610,17 +636,21 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
           else{
             var is_correct = false
           }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: question.cloned_question_options[0].answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0})
+          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
+            answer: question.cloned_question_options[0].answer, is_correct: is_correct,
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+              $scope.questions_to_attempt = data.questions_to_attempt
+              check_more_questions()
+            })
         }
-        index = $scope.served_quiz.questions_to_show.indexOf(question)
-        $scope.served_quiz.questions_to_show.splice(index,1)  
+        //index = $scope.served_quiz.questions_to_show.indexOf(question)
+        //$scope.served_quiz.questions_to_show.splice(index,1)  
       }  
     })
-    
+   
     /*check the remaining questions*/
-    
-    ServedQuiz.questions_to_attempt($scope.served_quiz.id).$promise.then(function(data){
-      $scope.served_quiz.questions_to_attempt = data
+    var check_more_questions = function(){
+      $scope.served_quiz.questions_to_show = []
       if($scope.served_quiz.questions_to_attempt.length == 0){
         $scope.served_quiz.student_sharing.status = 2
         $scope.served_quiz.student_sharing.status_in_string = "COMPLETED"
@@ -638,7 +668,7 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
           })
         }
       }
-    })
+    }  
     $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
   }
 }]);

@@ -32,6 +32,10 @@ class Answer < ActiveRecord::Base
   def self.student_answers_in_served_quiz(served_quiz,student)
     Answer.where("served_quiz_id = ? and student_id = ?",served_quiz.id,student.id)
   end
+  
+  def questions_to_attempt
+    self.served_quiz.questions_to_attempt(self.student)
+  end
 
 
   def as_json(opts = nil)
@@ -45,6 +49,7 @@ class Answer < ActiveRecord::Base
       :is_correct => is_correct,
       :served_quiz_id => served_quiz_id, 
       :graded_by_teacher => graded_by_teacher,
+      :questions_to_attempt => questions_to_attempt.as_json(),
       :created_at => created_at,
       :updated_at => updated_at, 
     }

@@ -54,11 +54,5 @@
     </div>
     <div ng-if = "served_quiz.show_all_questions == 0 && served_quiz.infinite_duration == 0" ng-include src="'/assets/partials/students/number_of_questions_with_time_limit.html'" ng-controller = "NumberOfQuestionsTimeLimit">
     </div>
-  </div>
-  <div class = "row" ng-if = "served_quiz.student_sharing.status_in_string == 'COMPLETED'">
-    <div class = "col-xs-2 col-xs-offset-5 mar-top-20">
-      <a class = "btn btn-success btn-lg pull-left" ng-href = "#/quizlist">Go Back</a>
-    </div>
-  </div>
-  
+  </div> 
 </div>

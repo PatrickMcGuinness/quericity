@@ -65,7 +65,7 @@
             <td ng-if = "served_quiz.student_sharing.status_in_string == 'PARTIAL'">
               <span style="color:#c64b00; font-weight:bold;">Partial:</span>&nbsp;
               <span ng-if = "served_quiz.expired == false">Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
-              <span ng-if = "served_quiz.expired == false">Quiz expired on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
+              <span ng-if = "served_quiz.expired == true">Quiz expired on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
             </td>
             <td ng-if = "served_quiz.student_sharing.status_in_string == 'COMPLETED'">
               <span style="color:#0069a7; font-weight:bold;">Complete:</span>&nbsp;

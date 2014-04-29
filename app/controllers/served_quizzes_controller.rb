@@ -30,6 +30,7 @@ class ServedQuizzesController < ApplicationController
   def destroy
     render json: @served_quiz.destroy
   end
+  
   def pending
     render json: @served_quiz.pending_sharings
   end
