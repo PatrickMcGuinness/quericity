@@ -182,14 +182,30 @@ quizlib.directive('customPopover', function ($compile) {
     link: function (scope, el, attrs) {
       scope.label = attrs.popoverLabel;
       angular.element(el).popover({
-        trigger: 'click',
+        trigger: 'manual',
         html: true,
         content: function() { return $compile(attrs.popoverHtml)(scope);},
         placement: attrs.popoverPlacement
-      });
+      }).on('click',function(e){
+          e.stopPropagation()
+          $(this).popover("show")
+          $(this).next().show()
+          $(".popover-maker").not(this).next().hide()
+      })
     }
   };
 });
+
+quizlib.directive('closePopovers',function(){
+  return {
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("click",function(){
+        $(".popover-maker").next().hide()
+      })
+    }
+  };
+})
 
 
 

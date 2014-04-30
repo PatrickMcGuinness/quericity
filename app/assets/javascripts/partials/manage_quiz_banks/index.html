@@ -13,17 +13,14 @@
         <a class = "showcreaterepo" data-toggle = "tooltip" title = "Create new repo" tooltip-placement = "top">Create Repo</a>
       </span>
     </div>
-    <div class="input-group col-xs-2 pull-right">
+    <div class="col-xs-2 pull-right">
       <input type="Search" placeholder="Search..." class="form-control search" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search quizzes by title" tooltip-placement = "top"/>
-        <div class="input-group-btn">
-          <span class="search"></span>
-        </div>
     </div>
   </div>
 </div>
 
 
-<div class="container">
+<div class="container" close-popovers>
   <div class="row">
     <div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'">
     </div>
@@ -58,10 +55,10 @@
         <tbody>
           <tr ng-repeat = "quiz_bank in quiz_banks | filter: titleFilter | orderBy:predicate:reverse">
             <td>
-            <a ng-if = "current_user.id == quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span ng-show = 'current_user.id == quiz_bank.user.id' class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;'></span><span ng-show = 'current_user.id == quiz_bank.user.id' style = 'margin-left:2px'><a ng-click = deleteQuiz(quiz_bank)>Delete</a></span><span class = 'glyphicon glyphicon-edit' style= 'margin-left:2px;'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/edit'>Edit</a></span><span style= 'margin-left:2px;'><img src = '/assets/clone_icon.png'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/clone'>Clone</a></span>" popover-placement="top">
+            <a ng-if = "current_user.id == quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span ng-show = 'current_user.id == quiz_bank.user.id' class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;'></span><span ng-show = 'current_user.id == quiz_bank.user.id' style = 'margin-left:2px'><a ng-click = deleteQuiz(quiz_bank)>Delete</a></span><span class = 'glyphicon glyphicon-edit' style= 'margin-left:2px;'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/edit'>Edit</a></span><span style= 'margin-left:2px;'><img src = '/assets/clone_icon.png'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/clone'>Clone</a></span>" popover-placement="top" class = "popover-maker">
               {{quiz_bank.title}}
             </a>
-            <a ng-if = "current_user.id != quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span style= 'margin-left:2px;'><img src = '/assets/clone_icon.png'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/clone'>Clone</a></span>" popover-placement="top">
+            <a ng-if = "current_user.id != quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span style= 'margin-left:2px;'><img src = '/assets/clone_icon.png'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/clone'>Clone</a></span>" popover-placement="top" class = "popover-maker">
               {{quiz_bank.title}}
             </a>  
             </td>
@@ -90,7 +87,7 @@
                 <span class = "glyphicon glyphicon-star-empty"></span>
               </a>
 
-              <a data-toggle = "tooltip" title = "Serve Quiz" tooltip-placement = "top">  
+              <a data-toggle = "tooltip" title = "Serve Quiz" tooltip-placement = "top" ng-href = "#/serve_quiz/new?selected_quiz={{quiz_bank.id}}">  
                 <span class = "glyphicon glyphicon-transfer"> </span>
               </a>
             </td>

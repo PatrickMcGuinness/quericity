@@ -465,11 +465,13 @@ quizlib.controller('TimePickerCtrl', ['$scope',function($scope){
   };
 }]); 
 
-quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','ClonedQuestionOption','Group','User','Sharing','QuestionOption',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,ClonedQuestionOption,Group,User,Sharing,QuestionOption){
+quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','ClonedQuestionOption','Group','User','Sharing','QuestionOption','$routeParams',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,ClonedQuestionOption,Group,User,Sharing,QuestionOption,$routeParams){
+  
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
+  
   $scope.show_question_list = true
   $scope.selected_questions = []
   $scope.show_options = true
@@ -486,7 +488,12 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   
   $scope.groups = Group.all()
   $scope.system_students = User.system_students()
-  
+  if($routeParams.selected_quiz != undefined){
+    QuizBank.get($routeParams.selected_quiz).$promise.then(function(data){
+      $scope.selected_quiz = data
+    })
+    //$scope.selected_quiz = QuizBank.get($routeParams.selected_quiz)
+  }
   $scope.$watch('selected_quiz', function() {
     if($scope.selected_quiz != undefined){
       $scope.quiz_bank_questions = QuizBank.questions($scope.selected_quiz.id)
