@@ -51,4 +51,16 @@ class UsersController < ApplicationController
   def line_graph_data
     render json: current_user.students.find(params[:id]).line_graph_data
   end
+
+  def dashboard_details
+    render json: User.find(params[:id]).get_details
+  end
+
+  def dashboard_bar_graph_data
+    render json: User.find(params[:id]).bar_graph_data
+  end
+
+  def dashboard_line_graph_data
+    render json: User.find(params[:id]).line_graph_data
+  end
 end

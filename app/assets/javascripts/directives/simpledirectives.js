@@ -67,6 +67,7 @@ quizlib.directive("studentLinegraph",function(){
 
         var xAxis = d3.svg.axis().scale(x).tickSize(-height).tickSubdivide(true).ticks(data.length).tickFormat(d3.format(',f'));
         // Add the x-axis.
+
         graph.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
@@ -81,6 +82,7 @@ quizlib.directive("studentLinegraph",function(){
         .call(yAxis);
         
         graph.append("path").attr("d", line(data));
+        
       })
     }
   };
@@ -171,7 +173,12 @@ quizlib.directive("studentBargraph",function(){
       
       scope.$on("Student_Bar_Graph_Ready",function(){
         //var data = [4, 8, 15, 16, 23, 42,30,23,20,10];
-        var data = scope.scores
+        var data = []
+        var average_data = [4,5]
+
+        angular.forEach(scope.scores,function(value,key){
+          data.push({score: value, max_score: scope.maxscores[key]})
+        })
 
         var margin = {top: 30, right: 30, bottom: 30, left: 40},
         width = 800 - margin.left - margin.right,
@@ -179,11 +186,19 @@ quizlib.directive("studentBargraph",function(){
         
         var y = d3.scale.linear()
         .range([height,0])
-        .domain([0, d3.max(data)])
+        .domain([0, d3.max(scope.scores)])
 
         var x = d3.scale.ordinal()
         .domain(scope.names)
         .rangeRoundBands([0, width], .1);
+
+        var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return "<div><strong>Total Marks:</strong> <span style='color:red'>" + d.max_score + "</span></div>"
+                  + "<div><strong>Marks Obtained:</strong> <span style = 'color:green'>"+ d.score +"</span></div>";
+        });
 
         var xAxis = d3.svg.axis()
         .scale(x)
@@ -198,6 +213,8 @@ quizlib.directive("studentBargraph",function(){
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        chart.call(tip);
   
         var barWidth= width/data.length    
   
@@ -207,15 +224,19 @@ quizlib.directive("studentBargraph",function(){
         .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
 
         bar.append("rect")
-        .attr("y", function(d){return y(d);})
-        .attr("height",function(d){return height - y(d)})
-        .attr("width",barWidth - 1);
+        .attr("y", function(d){return y(d.score);})
+        .attr("height",function(d){return height - y(d.score)})
+        .attr("width",barWidth - 1)
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
 
         bar.append("text")
         .attr("x",barWidth/2)
-        .attr("y",function(d){return y(d) + 3;})
+        .attr("y",function(d){return y(d.score) + 3;})
         .attr("dy",".75em")
-        .text(function(d){return d})
+        .text(function(d){return d.score})
+
+
       
         chart.append("g")
         .attr("class", "x axis")

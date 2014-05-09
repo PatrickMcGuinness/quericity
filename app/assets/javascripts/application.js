@@ -23,6 +23,7 @@
 //= require bootstrap-timepicker.min
 //= require d3
 //= require d3.tip
+//= require c3.min
 
 loadingimage =  "<img alt='Please wait' src='/assets/loading.gif' style='margin-left:5px;' class='loading-img'>"
 

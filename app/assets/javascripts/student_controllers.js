@@ -1,3 +1,44 @@
+student_quizlib.controller('DashBoardCtrl', ['$scope','ServedQuiz','Sharing','User',function($scope,ServedQuiz,Sharing,User){
+    User.get_current_user().$promise.then(function(data){
+      $scope.student_id = data.id
+      $scope.student_detail = User.dashboard_details(data.id)
+    }) 
+}]);
+student_quizlib.controller('StudentLineGraphCtrl',['$scope','User',function($scope,User){
+  $scope.$watch('student_id', function() {
+    if($scope.student_id != undefined){
+      User.dashboard_line_graph_data($scope.student_id).$promise.then(function(data){
+        $scope.averages = data.quizzes
+        $scope.$broadcast("Student_Line_Graph_Ready")
+      })
+    }  
+  })  
+}]);
+
+student_quizlib.controller('StudentBarGraphCtrl', ['$scope','User',function($scope,User){
+  $scope.$watch('student_id',function(){
+    if($scope.student_id != undefined){
+      User.dashboard_bar_graph_data($scope.student_id).$promise.then(function(data){
+        $scope.scores = data.quizzes
+        $scope.names = data.names
+        $scope.maxscores = data.maxscores
+        $scope.$broadcast("Student_Bar_Graph_Ready");
+      })
+    }
+  }) 
+}]);
+
+student_quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParams','TimeDisplay',function($scope,ServedQuiz,$routeParams,TimeDisplay){
+  $scope.student_id = $routeParams.student_id
+  ServedQuiz.student_quiz_report($routeParams.id,$routeParams.student_id).$promise.then(function(data){
+    $scope.student_quiz_report = data
+    $scope.student_quiz_report.served_at = TimeDisplay.get_date(data.served_quiz.created_at) + " " + TimeDisplay.get_time(data.served_quiz.created_at)
+    $scope.student_quiz_report.start_time = TimeDisplay.get_date(data.served_quiz.date) + " " + TimeDisplay.get_time(data.served_quiz.start_time)
+    $scope.student_quiz_report.end_time = TimeDisplay.get_date(data.served_quiz.close_date)+ " " + TimeDisplay.get_time(data.served_quiz.end_time)
+  }) 
+
+}]);
+
 student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',function($scope,ServedQuiz,Sharing){
   
   ServedQuiz.student_served_quizzes().$promise.then(function(data){

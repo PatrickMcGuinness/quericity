@@ -113,5 +113,6 @@ class Sharing < ActiveRecord::Base
     end
     [students, invites]
   end
+
 end
 

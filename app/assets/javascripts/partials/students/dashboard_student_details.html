@@ -1,0 +1,31 @@
+<div class = "col-xs-12 no-record-found mar-top-20" ng-if = "student_detail.quizzes_data.length == 0">
+  {{student_detail.student.first_name}} {{student_detail.student.last_name}} has no quizzes
+</div>
+<div class = "col-xs-12 mar-top-10" ng-if = "student_detail.quizzes_data.length > 0">
+  <table class = "table table-striped">
+    <thead>
+      <th class = "col-xs-2 manage_section">Quiz Title</th>
+      <th class = "col-xs-2 manage_section">Status</th>
+      <th class = "col-xs-1 manage_section">Attempted</th>
+      <th class = "col-xs-1 manage_section">Graded</th>
+      <th class = "col-xs-1 manage_section">Correct</th>
+      <th class = "col-xs-1 manage_section">Wrong</th> 
+      <th class = "col-xs-1 manage_section">Score</th>
+      <th class = "col-xs-1 manage_section">Action</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat = "quiz in student_detail.quizzes_data" style = "text-align: center">
+        <td>{{quiz.served_quiz.cloned_quiz_bank.title}}</td>
+        <td>{{quiz.served_quiz.cloned_quiz_bank.cloned_questions.length}}</td>
+        <td>{{quiz.attempted_answers.length}}</td>
+        <td>{{quiz.graded_answers.length}}</td>
+        <td>{{quiz.correct_answers.length}}</td>
+        <td>{{quiz.wrong_answers.length}}</td>
+        <td>{{quiz.correct_answers.length}}</td>
+        <td>
+          <a ng-href = "#/dashboard/quiz/{{quiz.served_quiz.id}}?student_id={{student_detail.student.id}}"><img src = "/assets/detail_icon.png" style = "height: 20px;"></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

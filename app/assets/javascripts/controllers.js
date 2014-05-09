@@ -19,6 +19,7 @@ quizlib.controller('StudentBarGraphCtrl', ['$scope','User',function($scope,User)
       User.bar_graph_data($scope.student_id).$promise.then(function(data){
         $scope.scores = data.quizzes
         $scope.names = data.names
+        $scope.maxscores = data.maxscores
         $scope.$broadcast("Student_Bar_Graph_Ready");
       })
     }

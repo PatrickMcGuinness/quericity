@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
     common
   end
 
+
   def confirm_the_user
     if self.provider.present?
       self.confirmed_at = Time.now
@@ -108,10 +109,11 @@ class User < ActiveRecord::Base
   end
 
   def bar_graph_data
-    common = {quizzes: [],names:[]}
+    common = {quizzes: [],names:[],maxscores:[]}
     self.student_attempted_quizzes.each do |quiz|
       common[:quizzes].push(Answer.student_correct_answers(quiz,self).count)
       common[:names].push(quiz.cloned_quiz_bank.title)
+      common[:maxscores].push(quiz.cloned_quiz_bank.cloned_questions.length)
     end
     common
   end

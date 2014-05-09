@@ -2,7 +2,7 @@ class ServedQuizzesController < ApplicationController
   
   before_filter :authenticate_user!
   before_filter :set_served_quiz, except: [:index,:create,:first_served_quiz,
-                :student_served_quizzes,:student_pending_quizzes,
+                :student_served_quizzes,:student_pending_quizzes,:student_quiz_report,
                 :student_attempted_quizzes,:student_started_quizzes,:show,:questions_to_attempt]
   
   respond_to :json
@@ -91,6 +91,7 @@ class ServedQuizzesController < ApplicationController
 
 
   def student_quiz_report
+    @served_quiz = ServedQuiz.find(params[:id])
     student = User.find(params[:student_id])
     render json: {served_quiz: @served_quiz,answers:Answer.student_answers_in_served_quiz(@served_quiz,student),
       correct_answers: Answer.student_correct_answers(@served_quiz,student), wrong_answers: Answer.student_wrong_answers(@served_quiz,student)}
