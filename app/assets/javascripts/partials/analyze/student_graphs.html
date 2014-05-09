@@ -1,0 +1,82 @@
+<style>
+
+.chart rect {
+  fill: steelblue;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+path{
+  stroke: steelblue;
+  stroke-width: 1;
+  fill: none;
+}     
+.axis {
+  shape-rendering: crispEdges;
+}
+.x.axis line {
+  stroke: lightgrey;
+}
+.x.axis .minor {
+  stroke-opacity: .5;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.y.axis line, .y.axis path {
+  fill: none;
+  stroke: #000;
+}
+
+.x.axis .tick text{
+  fill: black;
+}
+.y.axis .tick text{
+  fill: black;
+}
+</style>
+
+<div class = "col-xs-12">
+  <button class = "btn btn-warning form-control show-bargraph mar-top-10">Show Bar Graph</button>
+  <button class = "btn btn-warning form-control show-linegraph mar-top-10 hide">Show Line Graph </button>
+</div>
+
+<div class = "col-xs-12 mar-top-10 bar-graph hide" ng-controller = "StudentBarGraphCtrl">
+    <div style = "text-align: center"><h3>Performance in each Quiz</h3>
+    </div>
+    <div class = "info" style = "text-align:center">
+      <div>x-axis: Number of Quizzes</div>
+      <div>y-axis: Score</div>
+    </div>
+    <student-bargraph myscores = "scores">
+      <svg class="chart"></svg>
+    </student-bargraph>     
+</div>
+
+<div class = "col-xs-12 mar-top-10 line-graph" ng-controller = "StudentLineGraphCtrl">
+    <div style = "text-align: center"><h3>Performance over Time</h3>
+    </div>
+    <div class = "info" style = "text-align:center">
+      <div>x-axis: Number of Quizzes</div>
+      <div>y-axis: Percentage</div>
+    </div>  
+    <student-linegraph>
+      <svg class = "line-chart"></svg>
+    </student-linegraph>  
+</div>  

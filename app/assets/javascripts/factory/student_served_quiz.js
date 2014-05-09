@@ -10,6 +10,7 @@ student_quizlib.factory('ServedQuiz', ['$resource', function($resource,$http) {
                    student_pending_quizzes: {method: "GET",isArray: true},
                    student_started_quizzes: {method: "GET",isArray: true},
                    questions_to_attempt: {method: "GET", isArray: true}
+                   
 
                  });
   };
@@ -44,6 +45,7 @@ student_quizlib.factory('ServedQuiz', ['$resource', function($resource,$http) {
   ServedQuiz.prototype.questions_to_attempt = function(ServedQuizId){
     return this.service.questions_to_attempt({id: ServedQuizId,questions_to_attempt: "questions_to_attempt"})
   }
+  
 
   return new ServedQuiz;
 }]);

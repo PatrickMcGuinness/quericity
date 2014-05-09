@@ -35,7 +35,20 @@ class UsersController < ApplicationController
   def get_students
     render json: current_user.students
   end
+  
   def system_students
     render json: User.where("role = ?",'Student')
+  end
+
+  def get_student_details
+    render json: current_user.students.find(params[:id]).get_details
+  end
+
+  def bar_graph_data
+    render json: current_user.students.find(params[:id]).bar_graph_data
+  end
+
+  def line_graph_data
+    render json: current_user.students.find(params[:id]).line_graph_data
   end
 end

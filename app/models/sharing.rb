@@ -57,7 +57,7 @@ class Sharing < ActiveRecord::Base
   end
 
   def get_correct_answers
-    Answer.where("student_id = ? and served_quiz_id = ? and is_correct = ? and graded_by_teacher = ?",self.user_id,self.served_quiz_id,true,Answer::Graded::YES)
+    Answer.where("student_id = ? and served_quiz_id = ? and is_correct = ?",self.user_id,self.served_quiz_id,true)
   end
 
   def get_correct_answers_count
@@ -71,7 +71,7 @@ class Sharing < ActiveRecord::Base
   def get_wrong_answers_count
     self.get_wrong_answers.count
   end
-
+  #TODO need to remove
   def get_attempted_answers
     Answer.where("student_id = ? and served_quiz_id = ?",self.user_id, self.served_quiz_id)
   end

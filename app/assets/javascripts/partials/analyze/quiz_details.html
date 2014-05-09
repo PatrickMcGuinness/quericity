@@ -1,0 +1,36 @@
+<div>
+  <div class = "col-xs-12 mar-top-10" style = "text-align:center">
+    <h4>{{quiz_detail.served_quiz.cloned_quiz_bank.title}}</h4>
+  </div>
+	<div class = "col-xs-12 mar-top-10">
+    &nbsp;&nbsp;<span><strong>Served_at:</strong>&nbsp;{{quiz_detail.served_at}}</span>&nbsp;&nbsp;
+    <span><strong>Questions:</strong>&nbsp;{{quiz_detail.served_quiz.cloned_quiz_bank.cloned_questions.length}}</span>&nbsp;&nbsp;<span><strong>Attempted:</strong>&nbsp;{{quiz_detail.Answers.length}}</span>&nbsp;&nbsp;<span><strong>Correct:</strong>&nbsp;{{quiz_detail.correct_answers.length}}</span>&nbsp;&nbsp;<span><strong>Wrong:</strong>&nbsp;{{quiz_detail.wrong_answers.length}}</span>
+  </div>
+  
+  <div ng-include src="'/assets/partials/analyze/quiz_graphs.html'"></div>
+  
+  <div class = "col-xs-12 mar-top-20">
+    <table class = "table table-striped">
+      <thead>
+        <th class = "col-xs-4 manage_section">Name</th>
+        <th class = "col-xs-1 manage_section">Attempted</th>
+        <th class = "col-xs-1 manage_section">Graded</th>
+        <th class = "col-xs-1 manage_section">Correct</th>
+        <th class = "col-xs-1 manage_section">Wrong</th>
+        <th class = "col-xs-1 manage_section">Action</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat = "sharing in quiz_detail.sharings" style = "text-align: center;">
+          <td>{{sharing.user.first_name}} {{sharing.user.last_name}}</td>
+          <td>{{sharing.attempted_answers.length}}</td>
+          <td>{{sharing.graded_answers.length}}</td>
+          <td>{{sharing.correct_answers.length}}</td>
+          <td>{{sharing.wrong_answers.length}}</td>
+          <td>
+            <a ng-href = "#/analyze/quiz/{{sharing.served_quiz_id}}?student_id={{sharing.user.id}}"><img src = "/assets/detail_icon.png" style = "height: 20px;"></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

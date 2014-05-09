@@ -50,12 +50,16 @@ QuizLib::Application.routes.draw do
       get "graded_answers"
       get "questions_to_grade"
       get "questions_to_attempt"
+      get "student_quiz_report"
+      get "quiz_report"
+      get "histogram_data"
     end
     collection do
       get "student_served_quizzes"
       get "student_started_quizzes"
       get "student_pending_quizzes"
       get "student_attempted_quizzes"
+      get "first_served_quiz"
     end
     resources :sharings do
       collection do
@@ -74,6 +78,11 @@ QuizLib::Application.routes.draw do
       get 'get_current_user'
       get 'get_students'
       get 'system_students'
+    end
+    member do
+      get 'get_student_details'
+      get "bar_graph_data"
+      get "line_graph_data"
     end
   end
   resources :topics

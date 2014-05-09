@@ -45,6 +45,18 @@ class User < ActiveRecord::Base
     self.repositories.create(:title => Repository::DefaultRepo::NAME) if self.is_professor?
   end
 
+  def get_details
+    common = {student: self.as_json(),quizzes_data: []}
+    self.student_served_quizzes.each do |served_quiz|
+      common[:quizzes_data].push({served_quiz: served_quiz.as_json(),attempted_answers: Answer.student_answers_in_served_quiz(served_quiz,self).as_json(),
+        correct_answers: Answer.student_correct_answers(served_quiz,self).as_json(), 
+        wrong_answers: Answer.student_wrong_answers(served_quiz,self).as_json(), 
+        status: Sharing.where("user_id = ? and served_quiz_id = ?",self.id,served_quiz.id).first.as_json(),
+        graded_answers: served_quiz.graded_answers.where("student_id = ?",self.id)})
+    end
+    common
+  end
+
   def confirm_the_user
     if self.provider.present?
       self.confirmed_at = Time.now
@@ -93,6 +105,19 @@ class User < ActiveRecord::Base
   def student_attempted_quizzes
     sharing_ids = self.sharings.where("status = ?",Sharing::Status::ATTEMPTED)
     ServedQuiz.joins(:sharings).where("sharings.id IN (?)",sharing_ids)
+  end
+
+  def bar_graph_data
+    common = {quizzes: [],names:[]}
+    self.student_attempted_quizzes.each do |quiz|
+      common[:quizzes].push(Answer.student_correct_answers(quiz,self).count)
+      common[:names].push(quiz.cloned_quiz_bank.title)
+    end
+    common
+  end
+
+  def line_graph_data
+    {quizzes: self.sharings.map{|s| s.get_average}} 
   end
 
 

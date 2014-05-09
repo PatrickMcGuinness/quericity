@@ -1,0 +1,21 @@
+<div class = "row student-bar" ng-controller = "QuizBarCtrl">
+  <div class = "col-xs-12 student-bar-header">
+    <h4>Quiz List</h4>
+  </div>
+  <div class = "col-xs-12 student-header-student" ng-repeat = "served_quiz in quizzes" ng-class="{active: served_quiz.id == quiz_detail.served_quiz.id}">
+    <a>
+      <span style = "color: white;">
+        <div class = "col-xs-10">
+          <a ng-href = "#/analyze/quiz_report?quiz_id={{served_quiz.id}}" style="color:white;"> <strong>{{served_quiz.cloned_quiz_bank.title}} </strong></a>
+        </div>
+        <div class = "col-xs-2" hide-info>
+          <a><span class = "glyphicon glyphicon-chevron-down" style = "color:white;"></span></a>
+        </div>
+        <div class = "col-xs-12 hide">
+          <div style = "color:white;">Subject: {{served_quiz.cloned_quiz_bank.subject}}</div>
+          <div style = "color:white;">Student: {{served_quiz.sharings.length}}</div>
+        </div>
+      </span>
+    </a>  
+  </div>
+</div>

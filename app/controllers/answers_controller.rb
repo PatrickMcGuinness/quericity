@@ -23,7 +23,7 @@ class AnswersController < ApplicationController
   def update
     render json: Answer.find(params[:id]).update_attributes(student_id: params[:student_id], 
       cloned_question_id: params[:cloned_question_id], student_answer: params[:student_answer],
-       answer: params[:text], is_correct: params[:is_correct], served_quiz_id: params[:served_quiz_id],
+       answer: params[:answer], is_correct: params[:is_correct], served_quiz_id: params[:served_quiz_id],
         graded_by_teacher: params[:graded_by_teacher])
   end
 

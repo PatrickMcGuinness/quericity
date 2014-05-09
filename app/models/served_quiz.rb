@@ -74,6 +74,10 @@ class ServedQuiz < ActiveRecord::Base
     Answer.joins(:cloned_question).where("cloned_questions.question_type = ? and answers.served_quiz_id = ? and answers.graded_by_teacher = ?",Question::QuestionType::OPENENDED,self.id,0)
   end
 
+  def all_students_average_in_quiz
+    (self.sharings.map{|s| s.get_correct_answers_count}.inject(:+) * 100)/self.cloned_quiz_bank.cloned_questions.count
+  end
+
   def graded_answers
     ids = self.open_ended_answers_to_grade.pluck(:id)
     answers = self.attempted_answers if ids.blank? 
@@ -117,6 +121,31 @@ class ServedQuiz < ActiveRecord::Base
 
   def dont_show_answer?
     self.answer == ServedQuiz::Answers::DONTSHOW
+  end
+
+  def histogram_data
+    common = {averages:["below 60","60-70","70-80","80-90","above 90"], students: [0,0,0,0,0]}
+    self.sharings.each do |sharing|
+      average = sharing.get_average
+      common[:students][0] = common[:students][0] + 1 if average < 60
+      common[:students][1] = common[:students][1] + 1 if average >= 60 and average < 70
+      common[:students][2] = common[:students][2] + 1 if average >= 70 and average < 80
+      common[:students][3] = common[:students][3] + 1 if average >= 80 and average < 90
+      common[:students][4] = common[:students][4] + 1 if average > 90 
+    end
+    common
+  end
+  
+  def get_quiz_report
+    common = {served_quiz: self.as_json(),Answers: Answer.where("served_quiz_id = ?",self.id).as_json(),correct_answers:Answer.quiz_correct_answers(self),
+    wrong_answers:Answer.quiz_wrong_answers(self).as_json(), sharings: []}
+    self.sharings.each do |sharing|
+      common[:sharings].push({id: sharing.id, user:sharing.user.as_json(),served_quiz_id: sharing.served_quiz_id,attempted_answers: Answer.student_answers_in_served_quiz(self,sharing.user).as_json(),
+        correct_answers: Answer.student_correct_answers(self,sharing.user).as_json(), 
+        wrong_answers: Answer.student_wrong_answers(self,sharing.user).as_json(),graded_answers: self.graded_answers.as_json()})
+      
+    end
+    common
   end
 
   def question_number(user)

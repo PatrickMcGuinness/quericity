@@ -1,6 +1,97 @@
 quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
   $scope.$route = $route 
-}]);  
+}]);
+
+quizlib.controller('StudentLineGraphCtrl',['$scope','User',function($scope,User){
+  $scope.$watch('student_id', function() {
+    if($scope.student_id != undefined){
+      User.line_graph_data($scope.student_id).$promise.then(function(data){
+        $scope.averages = data.quizzes
+        $scope.$broadcast("Student_Line_Graph_Ready")
+      })
+    }  
+  })  
+}]);
+
+quizlib.controller('StudentBarGraphCtrl', ['$scope','User',function($scope,User){
+  $scope.$watch('student_id',function(){
+    if($scope.student_id != undefined){
+      User.bar_graph_data($scope.student_id).$promise.then(function(data){
+        $scope.scores = data.quizzes
+        $scope.names = data.names
+        $scope.$broadcast("Student_Bar_Graph_Ready");
+      })
+    }
+  }) 
+}]);
+
+
+quizlib.controller("QuizHistogramCtrl",['$scope','ServedQuiz',function($scope,ServedQuiz){
+  $scope.$watch('quiz_id',function(){
+    if($scope.quiz_id != undefined){
+      ServedQuiz.histogram_data($scope.quiz_id).$promise.then(function(data){
+        $scope.averages = data.averages
+        $scope.students = data.students
+        $scope.$broadcast("Quiz_Histogram_Ready");
+      })
+    }
+  })
+}])
+
+
+quizlib.controller('StudentReportCtrl', ['$scope','$routeParams','User',function($scope,$routeParams,User){
+
+  if($routeParams.student_id == undefined){
+    User.get_students().$promise.then(function(data){
+      $scope.student_id = data[0].id
+      $scope.student_detail = User.get_student_details(data[0].id)
+    })
+  }
+  else{
+    $scope.student_id  = $routeParams.student_id
+    $scope.student_detail = User.get_student_details($routeParams.student_id)
+  }
+}]);
+quizlib.controller('QuizReportCtrl', ['$scope','ServedQuiz','$routeParams','TimeDisplay',function($scope,ServedQuiz,$routeParams,TimeDisplay){
+  if($routeParams.quiz_id == undefined){
+    ServedQuiz.first_served_quiz().$promise.then(function(data){
+      $scope.quiz_detail = data
+      $scope.quiz_id = data.served_quiz.id
+      $scope.quiz_detail.served_at = TimeDisplay.get_date(data.served_quiz.created_at) + " " + TimeDisplay.get_time(data.served_quiz.created_at)
+      $scope.quiz_detail.start_time = TimeDisplay.get_date(data.served_quiz.date) + " " + TimeDisplay.get_time(data.served_quiz.start_time)
+      $scope.quiz_detail.end_time = TimeDisplay.get_date(data.served_quiz.close_date)+ " " + TimeDisplay.get_time(data.served_quiz.end_time)
+    })
+  }else{
+    ServedQuiz.quiz_report($routeParams.quiz_id).$promise.then(function(data){
+      $scope.quiz_detail = data
+      $scope.quiz_id = data.served_quiz.id
+      $scope.quiz_detail.served_at = TimeDisplay.get_date(data.served_quiz.created_at) + " " + TimeDisplay.get_time(data.served_quiz.created_at)
+      $scope.quiz_detail.start_time = TimeDisplay.get_date(data.served_quiz.date) + " " + TimeDisplay.get_time(data.served_quiz.start_time)
+      $scope.quiz_detail.end_time = TimeDisplay.get_date(data.served_quiz.close_date)+ " " + TimeDisplay.get_time(data.served_quiz.end_time)
+    })
+  } 
+}]);
+quizlib.controller('StudentBarCtrl', ['$scope','User',function($scope,User){
+  $scope.students = User.get_students() 
+}]);
+quizlib.controller('QuizBarCtrl', ['$scope','ServedQuiz',function($scope,ServedQuiz){
+  ServedQuiz.all().$promise.then(function(data){
+    $scope.quizzes = data.result
+  }) 
+}]);
+
+quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParams','TimeDisplay',function($scope,ServedQuiz,$routeParams,TimeDisplay){
+  $scope.student_id = $routeParams.student_id
+  ServedQuiz.student_quiz_report($routeParams.id,$routeParams.student_id).$promise.then(function(data){
+    $scope.student_quiz_report = data
+    $scope.student_quiz_report.served_at = TimeDisplay.get_date(data.served_quiz.created_at) + " " + TimeDisplay.get_time(data.served_quiz.created_at)
+    $scope.student_quiz_report.start_time = TimeDisplay.get_date(data.served_quiz.date) + " " + TimeDisplay.get_time(data.served_quiz.start_time)
+    $scope.student_quiz_report.end_time = TimeDisplay.get_date(data.served_quiz.close_date)+ " " + TimeDisplay.get_time(data.served_quiz.end_time)
+  }) 
+
+}]);
+
+
 quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$rootScope,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
   
   $.removeCookie("my_assessments")
@@ -79,6 +170,7 @@ quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz','A
   $scope.correct = function(answer){
     answer.graded_by_teacher = 1
     answer.is_correct = true
+    console.log(answer)
     Answer.update(answer.id,answer).$promise.then(function(){
       index = $scope.answers_to_grade.indexOf(answer)
       $scope.answers_to_grade.splice(index,1)

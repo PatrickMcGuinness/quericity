@@ -21,6 +21,8 @@
 //= require angular-route
 //= require ui-bootstrap-tpls-0.10.0.min
 //= require bootstrap-timepicker.min
+//= require d3
+//= require d3.tip
 
 loadingimage =  "<img alt='Please wait' src='/assets/loading.gif' style='margin-left:5px;' class='loading-img'>"
 

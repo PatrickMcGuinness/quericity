@@ -8,6 +8,6 @@ class Topic < ActiveRecord::Base
   has_many :quiz_banks, :through => :question_topics
 
   def self.search(search)
-    Topic.where('title ILIKE ?', "%#{search}%")
+    Topic.where('title ILIKE ?', "#{search}%")
   end
 end

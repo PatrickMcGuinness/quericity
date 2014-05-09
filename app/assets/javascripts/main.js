@@ -28,5 +28,11 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/grade/index.html',controller: 'GradeListQuizCtrl',activetab: 'grade'}).
       when('/grade/:id/questions',
       {templateUrl: 'assets/partials/grade/question_to_grade.html',controller: 'GradeQuestionCtrl',activetab: 'grade'}).
+      when('/analyze/student_report',
+      {templateUrl: 'assets/partials/analyze/student_report.html',controller: 'StudentReportCtrl',activetab: 'analyze'}).
+      when('/analyze/quiz/:id',
+      {templateUrl: 'assets/partials/analyze/quiz_detail.html',controller: 'QuizDetailCtrl',activetab: 'analyze'}).
+      when('/analyze/quiz_report',
+      {templateUrl: 'assets/partials/analyze/quiz_report.html',controller: 'QuizReportCtrl',activetab: 'analyze'}).
       otherwise({redirectTo: '/manage_quiz_banks'})
 }]);

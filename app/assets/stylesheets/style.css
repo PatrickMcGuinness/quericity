@@ -373,4 +373,39 @@ ul li{
 	z-index:1000;
 	
 	}
+.student-bar{
+	padding: 5px;
+	border: 1px solid;
+	background-color: #22A2DC;
+}
+.student-bar-header{
+	/*background-color: #003656;*/
+	color: white;
+	padding: 5px;
+}
+.student-bar-header h4{
+	color: white;
+}
+.student-header-student{
+	padding: 5px;
+}
+.student-header-student:hover{
+	background-color: #999999;
+}
+.student-header-student.active{
+	background-color: #999999;
+}
+.no-record-found{
+	padding: 5px;
+	border: 1px solid;
+} 	
+.questions-in-report{
+	border: 1px solid;
+	padding: 5px;
+	background-color: #DFDFDF;
+}
+.answers-in-report{
+	border: 1px solid;
+	padding: 5px;
+}
 	

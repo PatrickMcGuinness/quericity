@@ -1,9 +1,10 @@
 class ServedQuizzesController < ApplicationController
   
   before_filter :authenticate_user!
-  before_filter :set_served_quiz, except: [:index,:create,
+  before_filter :set_served_quiz, except: [:index,:create,:first_served_quiz,
                 :student_served_quizzes,:student_pending_quizzes,
                 :student_attempted_quizzes,:student_started_quizzes,:show,:questions_to_attempt]
+  
   respond_to :json
 
   def index
@@ -55,6 +56,14 @@ class ServedQuizzesController < ApplicationController
     render json: @served_quiz.open_ended_answers_to_grade
   end
 
+  def first_served_quiz
+    render json: current_user.served_quizzes.first.get_quiz_report
+  end
+
+  def quiz_report
+    render json: @served_quiz.get_quiz_report
+  end
+
   def student_served_quizzes
     render json: current_user.student_served_quizzes
   end
@@ -73,6 +82,18 @@ class ServedQuizzesController < ApplicationController
 
   def questions_to_attempt
     render json: ServedQuiz.find(params[:id]).questions_to_attempt(current_user)
+  end
+
+  def histogram_data
+    render json: @served_quiz.histogram_data
+  end
+
+
+
+  def student_quiz_report
+    student = User.find(params[:student_id])
+    render json: {served_quiz: @served_quiz,answers:Answer.student_answers_in_served_quiz(@served_quiz,student),
+      correct_answers: Answer.student_correct_answers(@served_quiz,student), wrong_answers: Answer.student_wrong_answers(@served_quiz,student)}
   end
 
 

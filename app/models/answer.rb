@@ -32,6 +32,22 @@ class Answer < ActiveRecord::Base
   def self.student_answers_in_served_quiz(served_quiz,student)
     Answer.where("served_quiz_id = ? and student_id = ?",served_quiz.id,student.id)
   end
+
+  def self.student_correct_answers(served_quiz,student)
+    Answer.where("served_quiz_id = ? and student_id = ? and is_correct = ?",served_quiz.id, student.id,true)
+  end
+
+  def self.student_wrong_answers(served_quiz,student)
+    Answer.where("served_quiz_id = ? and student_id = ? and is_correct = ?",served_quiz.id, student.id,false)
+  end
+
+  def self.quiz_correct_answers(served_quiz)
+    Answer.where("served_quiz_id = ? and is_correct = ?",served_quiz.id,true)
+  end
+
+  def self.quiz_wrong_answers(served_quiz)
+    Answer.where("served_quiz_id = ? and is_correct = ?",served_quiz.id,false)
+  end
   
   def questions_to_attempt
     self.served_quiz.questions_to_attempt(self.student)
@@ -43,6 +59,7 @@ class Answer < ActiveRecord::Base
     {
       :id  => id,
       :student_id => student_id,
+      :cloned_question_id => cloned_question_id,
       :cloned_question => cloned_question.as_json(),
       :student_answer => student_answer,
       :answer => answer,
