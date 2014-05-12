@@ -44,8 +44,10 @@ quizlib.controller('StudentReportCtrl', ['$scope','$routeParams','User',function
 
   if($routeParams.student_id == undefined){
     User.get_served_students().$promise.then(function(data){
-      $scope.student_id = data[0].id
-      $scope.student_detail = User.get_student_details(data[0].id)
+      if(data.length > 0){
+        $scope.student_id = data[0].id
+        $scope.student_detail = User.get_student_details(data[0].id)
+      }
     })
   }
   else{

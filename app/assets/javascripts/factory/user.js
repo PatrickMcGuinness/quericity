@@ -27,8 +27,8 @@ quizlib.factory('User', ['$resource', function($resource) {
   User.prototype.get_students = function(){
     return this.service.get_students({get_students: "get_students"})
   }
-  User.prototype.served_students = function(){
-    return this.service.served_students({served_students: "served_students"})
+  User.prototype.get_served_students = function(){
+    return this.service.get_served_students({get_served_students: "get_served_students"})
   }
   User.prototype.system_students = function(){
     return this.service.system_students({system_students: "system_students"})

@@ -172,7 +172,9 @@ class User < ActiveRecord::Base
 
   def served_students
     served_quiz_ids = self.served_quizzes.pluck(:id)
-    User.joins(:sharings).where("served_quiz_id IN (?)",served_quiz_ids)
+    users = User.joins(:sharings).where("served_quiz_id IN (?)",served_quiz_ids) unless served_quiz_ids.blank? 
+    users = [] if served_quiz_ids.blank?
+    users 
   end
 
   def self.search_by_name(search)

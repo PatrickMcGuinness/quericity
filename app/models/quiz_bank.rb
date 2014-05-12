@@ -7,7 +7,7 @@ class QuizBank < ActiveRecord::Base
   
   attr_accessible :description, :title, :repository_id, :subject, :instructions,:public,:status
   
-  validates :title,:repository_id,:subject,:presence => true 
+  #validates :title,:repository_id,:subject,:presence => true 
 
   belongs_to :repository, :counter_cache => true
   
