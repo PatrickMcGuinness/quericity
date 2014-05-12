@@ -35,6 +35,10 @@ class UsersController < ApplicationController
   def get_students
     render json: current_user.students
   end
+
+  def get_served_students
+    render json: current_user.served_students
+  end
   
   def system_students
     render json: User.where("role = ?",'Student')

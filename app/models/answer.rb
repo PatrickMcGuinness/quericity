@@ -6,7 +6,9 @@ class Answer < ActiveRecord::Base
   belongs_to :cloned_question
   belongs_to :served_quiz
 
-
+  validates :student_id,:cloned_question_id, :student_answer, :answer, :is_correct,:served_quiz_id, presence: true
+  validates :cloned_question_id, :uniqueness => { :scope => :student_id }  
+  
   class Graded
     NO = 0
     YES = 1

@@ -13,6 +13,8 @@ class ServedQuiz < ActiveRecord::Base
   has_many :sharings, dependent: :destroy
   #has_many :answers, dependent: :destroy
 
+  validates :owner_id, :quiz_bank_id,:close_date,:date, :end_time, :start_time,:cloned_quiz_bank_id, presence: true 
+  
   class Random
     YES = 1
     NO = 0
@@ -41,6 +43,8 @@ class ServedQuiz < ActiveRecord::Base
     NO = 0
     YES = 1
   end
+
+
 
   def pending_sharings
     self.sharings.where("status = ?",Sharing::Status::STARTED)

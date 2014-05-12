@@ -43,7 +43,7 @@ quizlib.controller("QuizHistogramCtrl",['$scope','ServedQuiz',function($scope,Se
 quizlib.controller('StudentReportCtrl', ['$scope','$routeParams','User',function($scope,$routeParams,User){
 
   if($routeParams.student_id == undefined){
-    User.get_students().$promise.then(function(data){
+    User.get_served_students().$promise.then(function(data){
       $scope.student_id = data[0].id
       $scope.student_detail = User.get_student_details(data[0].id)
     })
@@ -73,7 +73,7 @@ quizlib.controller('QuizReportCtrl', ['$scope','ServedQuiz','$routeParams','Time
   } 
 }]);
 quizlib.controller('StudentBarCtrl', ['$scope','User',function($scope,User){
-  $scope.students = User.get_students() 
+  $scope.students = User.get_served_students() 
 }]);
 quizlib.controller('QuizBarCtrl', ['$scope','ServedQuiz',function($scope,ServedQuiz){
   ServedQuiz.all().$promise.then(function(data){

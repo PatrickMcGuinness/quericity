@@ -1,7 +1,10 @@
 class QuestionTopic < ActiveRecord::Base
+  
   attr_accessible :quiz_bank_id, :topic_id
-  validates :quiz_bank_id, :presence => true
-  validates :topic_id, :presence => true
+  
+  validates :quiz_bank_id,:topic_id, :presence => true
+
+  validates :topic_id, :uniqueness => {:scope => :quiz_bank_id}
   
   belongs_to :quiz_bank
   belongs_to :topic

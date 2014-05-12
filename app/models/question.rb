@@ -1,7 +1,8 @@
 class Question < ActiveRecord::Base
   
   attr_accessible :seq,:description,:question_type,:difficulty_level,:reference_url,:section_id
-  validates :description, :section_id, :question_type, :presence => true
+  
+  validates :description, :section_id, :question_type, :difficulty_level, :presence => true
   
   belongs_to :section, :counter_cache => true
   has_many :question_options, dependent: :destroy

@@ -6,7 +6,8 @@ class QuizBank < ActiveRecord::Base
   #friendly_id :title, use: :slugged
   
   attr_accessible :description, :title, :repository_id, :subject, :instructions,:public,:status
-  validates :title,:repository_id,:presence => true 
+  
+  validates :title,:repository_id,:subject,:presence => true 
 
   belongs_to :repository, :counter_cache => true
   
@@ -20,6 +21,7 @@ class QuizBank < ActiveRecord::Base
   has_many :cloned_quiz_banks, dependent: :destroy
 
   after_create :create_section
+
   
   default_scope { where("deleted_at IS NULL") }
 

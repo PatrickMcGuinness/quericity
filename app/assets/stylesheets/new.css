@@ -1,3 +1,13 @@
+.error{
+	float: left;
+	color: red;
+}
+.input-error{
+	border: 1px solid red;
+}
+.input-success{
+	border: 1px solid green;
+}
 .over{
 	color:red;
 }

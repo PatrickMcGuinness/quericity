@@ -78,6 +78,7 @@ QuizLib::Application.routes.draw do
       get 'get_current_user'
       get 'get_students'
       get 'system_students'
+      get "get_served_students"
     end
     member do
       get 'get_student_details'

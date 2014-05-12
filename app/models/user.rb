@@ -33,6 +33,13 @@ class User < ActiveRecord::Base
   after_create :create_default_repo
   after_create :confirm_the_user
 
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :email, presence: true
+  validates :password, presence: true
+  validates :role, presence: true
+  validates :email, uniqueness: true  
+
 
 
   
@@ -161,6 +168,11 @@ class User < ActiveRecord::Base
     group_ids = self.groups.pluck(:id)
     student_ids = StudentGroup.where("group_id IN (?)",group_ids).pluck(:student_id)
     User.where("id IN (?)", student_ids)
+  end
+
+  def served_students
+    served_quiz_ids = self.served_quizzes.pluck(:id)
+    User.joins(:sharings).where("served_quiz_id IN (?)",served_quiz_ids)
   end
 
   def self.search_by_name(search)

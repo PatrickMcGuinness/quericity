@@ -6,6 +6,9 @@ class ClonedQuestion < ActiveRecord::Base
   has_many :answers
 
   belongs_to :cloned_quiz_bank
+
+  validates :description,:question_type, :difficulty_level,:cloned_quiz_bank_id,presence: true
+
  
 
   def is_true_false?

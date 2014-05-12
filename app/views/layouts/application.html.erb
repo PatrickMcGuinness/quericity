@@ -15,12 +15,12 @@
     <%=render "layouts/header"%>
     <div class="container main-container">
       <%if notice%>    
-        <div class="alert alert-success">
+        <div class="alert alert-info">
           <a class="close mov" data-dismiss="alert">×</a>
           <div class="notice"><%= flash[:notice] %></div> 
         </div>
       <%elsif alert%>
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
           <a class="close mov" data-dismiss="alert">×</a>
           <div class="notice"><%= flash[:alert] %></div> 
         </div>

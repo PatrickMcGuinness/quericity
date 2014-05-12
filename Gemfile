@@ -19,6 +19,7 @@ gem 'delayed_job_active_record'
 gem 'friendly_id',:require => "friendly_id"
 gem 'faker'
 gem "d3-rails"
+gem 'activerecord-import'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

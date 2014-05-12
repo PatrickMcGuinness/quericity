@@ -6,12 +6,14 @@ class Repository < ActiveRecord::Base
   #friendly_id :title, use: :slugged
 
   attr_accessible :title,:user_id
-  validates :title, :presence => true
   
   belongs_to :user  
   has_many :quiz_banks, dependent: :destroy
 
   default_scope { where("deleted_at IS NULL") }
+
+  validates :title, :user_id ,presence: true
+  validates :title, :uniqueness => { :scope => :user_id }  
 
 
   class Public

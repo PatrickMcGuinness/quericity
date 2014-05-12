@@ -6,6 +6,10 @@ class Group < ActiveRecord::Base
 
   has_many :student_groups, dependent: :destroy
   has_many :invites, as: :invitable
+
+  validates :title,:owner_id , presence: true
+
+  validates :title, :uniqueness => { :scope => :owner_id }  
   
   def add_student_groups(params)
     params[:user_ids].each do |user|

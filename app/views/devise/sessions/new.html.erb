@@ -1,65 +1,45 @@
-<div class = "container">
-	<div class = "row">
-		<div class = "col-xs-5 col-xs-offset-3">
-			<div class="login-box">
-				<div class="login-heading">
-					<div class= "row">
-						<div class = "col-xs-4 col-xs-offset-4">
-							Log in
-						</div>	
+<div class = "row">
+  <div class = "container">
+		<div class = "col-xs-5 col-xs-offset-3" style="text-align:center;">
+			<h3 class = "mar-top-10">Login</h3>	
+				<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal", id: "sign-in"}) do |f| %>			
+					<div class = "form-group">
+			  		<div class  = "col-xs-4 pull-left" style = "text-align: left;">Email *:</div>
+			  		<div class = "col-xs-12">
+							<%= f.email_field :email,:class => "form-control",:autofocus => "true",:placeholder => "Email" %>
+						</div>
 					</div>
-				</div>
-				<div class = "row" style= "padding: 30px;">
-					<div class = "col-xs-12">
-						<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
-						
-							<div class = "row">
-								<div class = "col-xs-12 form-row">
-						  		<span class  = "col-xs-2 form-label">Email:</span>
-						  		<span class = "col-xs-10">
-										<%= f.email_field :email,:class => "form-control size_area_s",:autofocus => "true",:placeholder => "Email" %>
-									</span>
-								</div>
-							</div>
-							<div class = "row">
-								<div class = "col-xs-12 form-row">
-						  		<span class  = "col-xs-2 form-label">Password:</span>
-						  		<span class = "col-xs-10">
-										<%= f.password_field :password,:class => "form-control size_area_s",:placeholder =>"Password" %>
-									</span>
-								</div>
-							</div>
-							<div class = "row">
-								<div class = "col-xs-12 form-row">
-						  		<span class = "col-xs-4 col-xs-offset-4">
-										<%= f.submit "Log in", :class => "btn btn-primary lead btn_s_i" %>
-									</span>
-								</div>
-							</div>
+					<div class = "form-group">
+			  		<div class  = "col-xs-4 pull-left" style = "text-align:left;">Password *:</div>
+			  		<div class = "col-xs-12">
+							<%= f.password_field :password,:class => "form-control size_area_s",:placeholder =>"Password" %>
+						</div>
+					</div>
+					<div class = "form-group">
+						<div class = "col-xs-12">
+								<%= f.submit "Log in", :class => "btn btn-success form-control" %>
+						</div>
+					</div>
 
-						  
-						  <div class = "row">
-                <div class = "col-xs-6 col-xs-offset-4 form-row">
-  						  	<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-  					        <%= link_to "Forgot your password?", new_password_path(resource_name), :class => 'link_s' %><br />
-  					      <% end -%>
-                </div>
-						  </div>	
-						<% end %>
-            <div class="row"><div class= "col-xs-2" style= 'margin-left: 205px;'>or</div></div>
-            <div class = "row"><div class = "col-xs-4 col-xs-offset-5 form-row">
-              <%= link_to "Log In with Facebook", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary"%>
-            </div></div>
-            <div class = "row"><div class = "col-xs-6 col-xs-offset-2 form-row">Need an Account?<%- if devise_mapping.registerable? && controller_name != 'registrations' %></div>
-            <div class= "col-xs-4 form-row">
-              <%= link_to "Sign up", new_registration_path(resource_name) %>
+				  
+				  <div class = "form-group">
+            <div class = "col-xs-12">
+					  	<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+				        <%= link_to "Forgot your password?", new_password_path(resource_name), :class => 'mov_l' %><br />
+				      <% end -%>
             </div>
+				  </div>	
+				<% end %>
+            
+        or
+        <%= link_to "Log In with Facebook", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary col-xs-12 btn-lg"%>
+        <div class = "col-xs-6">Need an Account?<%- if devise_mapping.registerable? && controller_name != 'registrations' %></div>
+        <div class= "col-xs-6">
+          <%= link_to "Sign up", new_registration_path(resource_name) %>
+        </div>
           <% end -%></div>
 					</div>
-				</div>	 
-				<div class = "sign_up-p"> 
-					
-			  </div>  
+				</div>	  
 		  </div>
 		</div>
 	</div>    
