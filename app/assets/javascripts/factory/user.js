@@ -18,8 +18,8 @@ quizlib.factory('User', ['$resource', function($resource) {
   User.prototype.save = function(User){
     return this.service.save(User)
   }
-  User.prototype.updateUser = function(User){
-    return this.service.update()
+  User.prototype.update = function(UserId,User){
+    return this.service.update({id: UserId},User)
   }
   User.prototype.get = function(UserId){
     return this.service.get({id: UserId})

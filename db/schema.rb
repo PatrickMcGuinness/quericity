@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140402110945) do
+ActiveRecord::Schema.define(:version => 20140513131513) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -24,6 +24,11 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.integer  "served_quiz_id"
     t.integer  "graded_by_teacher",  :default => 0
   end
+
+  add_index "answers", ["cloned_question_id"], :name => "index_answers_on_cloned_question_id"
+  add_index "answers", ["id"], :name => "index_answers_on_id"
+  add_index "answers", ["served_quiz_id"], :name => "index_answers_on_served_quiz_id"
+  add_index "answers", ["student_id"], :name => "index_answers_on_student_id"
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -50,6 +55,9 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.datetime "updated_at",         :null => false
   end
 
+  add_index "cloned_question_options", ["cloned_question_id"], :name => "index_cloned_question_options_on_cloned_question_id"
+  add_index "cloned_question_options", ["id"], :name => "index_cloned_question_options_on_id"
+
   create_table "cloned_questions", :force => true do |t|
     t.integer  "seq"
     t.text     "description"
@@ -61,6 +69,10 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.datetime "updated_at",          :null => false
     t.integer  "cloned_quiz_bank_id"
   end
+
+  add_index "cloned_questions", ["cloned_quiz_bank_id"], :name => "index_cloned_questions_on_cloned_quiz_bank_id"
+  add_index "cloned_questions", ["id"], :name => "index_cloned_questions_on_id"
+  add_index "cloned_questions", ["question_type"], :name => "index_cloned_questions_on_question_type"
 
   create_table "cloned_quiz_banks", :force => true do |t|
     t.integer  "description"
@@ -104,12 +116,19 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.datetime "updated_at",   :null => false
   end
 
+  add_index "favourite_quiz_banks", ["id"], :name => "index_favourite_quiz_banks_on_id"
+  add_index "favourite_quiz_banks", ["quiz_bank_id"], :name => "index_favourite_quiz_banks_on_quiz_bank_id"
+  add_index "favourite_quiz_banks", ["user_id"], :name => "index_favourite_quiz_banks_on_user_id"
+
   create_table "groups", :force => true do |t|
     t.string   "title"
     t.integer  "owner_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "groups", ["id"], :name => "index_groups_on_id"
+  add_index "groups", ["owner_id"], :name => "index_groups_on_owner_id"
 
   create_table "invites", :force => true do |t|
     t.integer  "sender_id"
@@ -130,12 +149,19 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.datetime "updated_at",                   :null => false
   end
 
+  add_index "question_options", ["id"], :name => "index_question_options_on_id"
+  add_index "question_options", ["question_id"], :name => "index_question_options_on_question_id"
+
   create_table "question_topics", :force => true do |t|
     t.integer  "quiz_bank_id"
     t.integer  "topic_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
+
+  add_index "question_topics", ["id"], :name => "index_question_topics_on_id"
+  add_index "question_topics", ["quiz_bank_id"], :name => "index_question_topics_on_quiz_bank_id"
+  add_index "question_topics", ["topic_id"], :name => "index_question_topics_on_topic_id"
 
   create_table "questions", :force => true do |t|
     t.integer  "seq",              :default => 0
@@ -148,6 +174,9 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.datetime "updated_at",                      :null => false
     t.datetime "deleted_at"
   end
+
+  add_index "questions", ["id"], :name => "index_questions_on_id"
+  add_index "questions", ["section_id"], :name => "index_questions_on_section_id"
 
   create_table "quiz_banks", :force => true do |t|
     t.string   "title"
@@ -163,7 +192,10 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.integer  "status",        :default => 0
   end
 
+  add_index "quiz_banks", ["id"], :name => "index_quiz_banks_on_id"
+  add_index "quiz_banks", ["repository_id"], :name => "index_quiz_banks_on_repository_id"
   add_index "quiz_banks", ["slug"], :name => "index_quiz_banks_on_slug", :unique => true
+  add_index "quiz_banks", ["status"], :name => "index_quiz_banks_on_status"
 
   create_table "repositories", :force => true do |t|
     t.string   "title"
@@ -175,7 +207,9 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.integer  "user_id"
   end
 
+  add_index "repositories", ["id"], :name => "index_repositories_on_id"
   add_index "repositories", ["slug"], :name => "index_repositories_on_slug", :unique => true
+  add_index "repositories", ["user_id"], :name => "index_repositories_on_user_id"
 
   create_table "sections", :force => true do |t|
     t.integer  "seq",             :default => 0
@@ -186,6 +220,9 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.datetime "deleted_at"
     t.integer  "questions_count", :default => 0
   end
+
+  add_index "sections", ["id"], :name => "index_sections_on_id"
+  add_index "sections", ["quiz_bank_id"], :name => "index_sections_on_quiz_bank_id"
 
   create_table "served_quizzes", :force => true do |t|
     t.integer  "owner_id"
@@ -209,6 +246,10 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.integer  "questions_per_page"
   end
 
+  add_index "served_quizzes", ["id"], :name => "index_served_quizzes_on_id"
+  add_index "served_quizzes", ["owner_id"], :name => "index_served_quizzes_on_owner_id"
+  add_index "served_quizzes", ["quiz_bank_id"], :name => "index_served_quizzes_on_quiz_bank_id"
+
   create_table "shares", :force => true do |t|
     t.integer  "shareable_id"
     t.string   "shareable_type"
@@ -227,12 +268,21 @@ ActiveRecord::Schema.define(:version => 20140402110945) do
     t.integer  "status",         :default => 1
   end
 
+  add_index "sharings", ["id"], :name => "index_sharings_on_id"
+  add_index "sharings", ["served_quiz_id"], :name => "index_sharings_on_served_quiz_id"
+  add_index "sharings", ["status"], :name => "index_sharings_on_status"
+  add_index "sharings", ["user_id"], :name => "index_sharings_on_user_id"
+
   create_table "student_groups", :force => true do |t|
     t.integer  "student_id"
     t.integer  "group_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "student_groups", ["group_id"], :name => "index_student_groups_on_group_id"
+  add_index "student_groups", ["id"], :name => "index_student_groups_on_id"
+  add_index "student_groups", ["student_id"], :name => "index_student_groups_on_student_id"
 
   create_table "subjects", :force => true do |t|
     t.string   "title"

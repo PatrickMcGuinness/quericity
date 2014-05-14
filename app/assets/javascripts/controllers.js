@@ -2,6 +2,44 @@ quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
   $scope.$route = $route 
 }]);
 
+quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',function($scope,User,fileUpload){
+  $scope.user = User.get_current_user()
+  $scope.submitted = false
+  $scope.loading = false
+  $scope.saveUser = function(isValid){
+    $scope.submitted = true
+    if(isValid){
+      $scope.user = User.update($scope.user.id, $scope.user)
+    }
+  }
+    
+  $scope.uploadFile = function(){
+      var file = $scope.myFile;
+      //console.log('file is ' + JSON.stringify(file));
+      var uploadUrl = "/users/"+ $scope.user.id + "/upload_image";
+      $scope.loading = true
+      fileUpload.uploadFileToUrl(file, uploadUrl);
+  };
+
+  $scope.$on("profile_pic_Changed",function(event,profile_pic){
+    $scope.user.profile_pic = profile_pic
+    $scope.loading = false
+  })
+
+}]);
+
+quizlib.controller('PasswordCtrl', ['$scope','User',function($scope,User){
+  $scope.user = User.get_current_user()
+  $scope.submitted = false
+  $scope.savePassword = function(isValid){
+    $scope.submitted = true
+    if(isValid){
+      $scope.user = User.update($scope.user.id, $scope.user)
+    }
+  } 
+}]);
+
+
 quizlib.controller('StudentLineGraphCtrl',['$scope','User',function($scope,User){
   $scope.$watch('student_id', function() {
     if($scope.student_id != undefined){

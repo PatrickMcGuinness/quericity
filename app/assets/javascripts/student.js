@@ -12,5 +12,7 @@ student_quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/students/dashboard.html',controller: 'DashBoardCtrl',activetab: 'dashboard'}).
       when('/dashboard/quiz/:id',
       {templateUrl: 'assets/partials/students/quiz_detail.html',controller: 'QuizDetailCtrl',activetab: 'dashboard'}).
+      when('/settings',
+      {templateUrl: 'assets/partials/students/settings.html',controller: 'SettingsCtrl',activetab: 'settings'}).
       otherwise({redirectTo: '/quizlist'})
   }]);

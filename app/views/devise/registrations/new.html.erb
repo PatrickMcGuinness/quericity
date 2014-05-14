@@ -19,17 +19,17 @@
 			    </div>
 			    <div class="form-group">
 			    	<div class="signup_email col-xs-12">
-			        <%= f.text_field :first_name,:class => "form-control size_area",:placeholder => "First Name", :id => 'user_registeration_f_name' %>
+			        <%= f.text_field :first_name,:class => "form-control",:placeholder => "First Name", :id => 'user_registeration_f_name' %>
 			      </div>
 			    </div>
 			    <div class="form-group">
 			    	<div class="signup_email col-xs-12">
-			        <%= f.text_field :last_name,:class => "form-control size_area",:placeholder => "Last Name", :id => 'user_registeration_l_name' %>
+			        <%= f.text_field :last_name,:class => "form-control",:placeholder => "Last Name", :id => 'user_registeration_l_name' %>
 			      </div>
 			    </div>
 			    <div class="form-group">
 			    	<div class="signup_email col-xs-12">
-			        <%= f.email_field :email,:class => "form-control size_area",:placeholder => "Email", :id => 'user_registeration_email' %>
+			        <%= f.email_field :email,:class => "form-control",:placeholder => "Email", :id => 'user_registeration_email' %>
 			      </div>
 			    </div>
 			    <div class="form-group">
@@ -39,11 +39,11 @@
 			    </div>
 				  <div class="form-group">
 				  	<div class="col-xs-12">
-				  	  <%= f.submit "Sign up!", :class => "btn btn-success btn-lg form-control" %>
+				  	  <%= f.submit "Sign up!", :class => "btn btn-success btn-lg col-xs-12" %>
 				  	</div>  
 				  </div></br>
 				  <div class = "fbook_text">or sign up with Facebook:</div>
-				  <%= link_to "Facebook Sign Up", user_omniauth_authorize_path(:facebook), :class => "size_area btn btn-primary btn-block btn-lg mar-top-10"%></br>
+				  <%= link_to "Facebook Sign Up", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary btn-block btn-lg mar-top-10"%></br>
 				<% end %>
 			  <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
 			    <%= link_to "Forgot your password?", new_password_path(resource_name), :class => "mov_l" %><br />

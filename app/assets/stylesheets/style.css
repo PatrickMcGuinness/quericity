@@ -78,8 +78,14 @@ body{
 	}
 .sub_nav_link a:hover{
 	text-decoration:none;
-	color:#b1cdde;
+	padding-bottom: 10px;
+	border-bottom: 3px solid #003656;
 	}
+.sub_nav_link a.active{
+  text-decoration:none;
+  border-bottom: 3px solid #003656;
+  padding-bottom:10px;
+}	
 	
 .search{
 	width:210px;

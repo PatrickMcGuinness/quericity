@@ -33,12 +33,12 @@ class User < ActiveRecord::Base
   after_create :create_default_repo
   after_create :confirm_the_user
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :email, presence: true
-  validates :password, presence: true
-  validates :role, presence: true
-  validates :email, uniqueness: true  
+  #validates :first_name, presence: true
+  #validates :last_name, presence: true
+  #validates :email, presence: true
+  #validates :password, presence: true
+  #validates :role, presence: true
+  #validates :email, uniqueness: true  
 
 
 
@@ -172,7 +172,7 @@ class User < ActiveRecord::Base
 
   def served_students
     served_quiz_ids = self.served_quizzes.pluck(:id)
-    users = User.joins(:sharings).where("served_quiz_id IN (?)",served_quiz_ids) unless served_quiz_ids.blank? 
+    users = User.joins(:sharings).where("served_quiz_id IN (?)",served_quiz_ids).uniq unless served_quiz_ids.blank? 
     users = [] if served_quiz_ids.blank?
     users 
   end
@@ -183,6 +183,33 @@ class User < ActiveRecord::Base
 
   def self.search_by_email(search)
     User.where('role = ? and email ILIKE ?',"Student", "%#{search}%").limit(5)
+  end
+
+  def display_picture
+    if self.provider == "facebook" && self.uid
+      return "http://graph.facebook.com/#{self.uid}/picture?type=large"
+    elsif self.profile_pic.url
+      return {url:self.profile_pic.url}
+    else
+      return {url: "/assets/img_01.png"}
+    end
+  end
+
+  def as_json(opts = nil)
+    opts ||={}
+    {
+
+      :id  => id,
+      :email => email, 
+      :role => role, 
+      :invited_by => invited_by, 
+      :provider => provider, 
+      :uid => uid,
+      :first_name => first_name,
+      :last_name => last_name,
+      :profile_pic => display_picture.as_json()
+    }
+    
   end
 
   def self.find_for_facebook_oauth(auth)

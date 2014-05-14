@@ -1,0 +1,52 @@
+<div class="menu">
+  <div class="container">
+    <ul>
+      <li><a href="#/dashboard">DASHBOARD</a></li>
+      <li><a href="#/quizlist">QUIZ</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class = "row">
+  <div class = "container">
+    <div class = "col-xs-4 col-xs-offset-4">
+      <h2>{{user.first_name}} Profile</h2>
+      <form name="UserForm" ng-submit="saveUser(UserForm.$valid)" entype = "multipart/form-data" class = "form-horizontal" novalidate>
+        <div class = "form-group" ng-class="{ 'has-error' : (UserForm.first_name.$invalid) && (!UserForm.first_name.$pristine || submitted == true)}">
+          <div class = "col-xs-12 mar-top-20">
+            <label>First Name *:</label> 
+            <input type: "text" class = "form-control" ng-model = "user.first_name" placeholder = "Enter First Name" name = "first_name" required>
+            <p ng-show="UserForm.first_name.$invalid && (!QuizForm.first_name.$pristine || submitted == true)" class="help-block">First Name is required.</p>
+          </div>
+        </div>
+        <div class = "form-group" ng-class="{ 'has-error' : (UserForm.last_name.$invalid) && (!UserForm.last_name.$pristine || submitted == true)}">  
+          <div class = "col-xs-12">
+            <label>Last Name *:</label> 
+            <input type: "text" class = "form-control" ng-model = "user.last_name" name = "last_name" placeholder = "Enter Last Name" required>
+            <p ng-show="UserForm.last_name.$invalid && (!QuizForm.last_name.$pristine || submitted == true)" class="help-block">Last Name is required.</p>
+          </div>
+        </div>
+        <div class = "form-group" ng-class="{ 'has-error' : (UserForm.email.$invalid) && (!UserForm.email.$pristine || submitted == true)}">  
+          <div class = "col-xs-12">
+            <label>Email: * </label> 
+            <input type: "email" class = "form-control" ng-model = "user.email" name = "email" placeholder = "email" required>
+            <p ng-show="UserForm.email.$invalid && (!UserForm.email.$pristine || submitted == true)" class="help-block">Email is required.</p>
+          </div>
+        </div>
+        <div class = "form-group">
+          <div class = "col-xs-12">
+            <label>Profile picture</label>
+          </div> 
+          <input type="file" file-model="myFile" class = "btn btn-warning col-xs-7 pull-left"/>
+          <a ng-click="uploadFile()" class = "btn btn-success col-xs-3 pull-right">upload</a>
+          <div class = "col-xs-12">
+            <img src = "{{user.profile_pic.url}}">
+            <img src = "/assets/loading.gif" ng-if = "loading == true">
+          </div>
+        </div>  
+
+        <button type = "submit" class = "btn btn-success col-xs-12">Save</button>
+      </form>   
+    </div>
+  </div>
+</div>

@@ -17,7 +17,16 @@ class UsersController < ApplicationController
   end
 
   def update
-    render json: User.find(params[:id]).update_attributes(param[:quiz_bank])
+    user = User.find(params[:id])
+    user.update_attributes(params[:user])
+    render json: user
+  end
+
+  def upload_image
+    user = User.find(params[:id])
+    user.update_attribute("profile_pic",params[:profile_pic])
+    user.save
+    render json: user
   end
 
   def destroy

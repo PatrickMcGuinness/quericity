@@ -34,5 +34,9 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/analyze/quiz_detail.html',controller: 'QuizDetailCtrl',activetab: 'analyze'}).
       when('/analyze/quiz_report',
       {templateUrl: 'assets/partials/analyze/quiz_report.html',controller: 'QuizReportCtrl',activetab: 'analyze'}).
+      when('/settings',
+      {templateUrl: 'assets/partials/settings/settings.html',controller: 'SettingsCtrl',activetab: 'settings'}).
+      when('/settings/change_password',
+      {templateUrl: 'assets/partials/settings/change_password.html',controller: 'PasswordCtrl',activetab: 'settings'}).
       otherwise({redirectTo: '/manage_quiz_banks'})
 }]);

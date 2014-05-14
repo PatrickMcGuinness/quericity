@@ -87,6 +87,7 @@ QuizLib::Application.routes.draw do
       get "dashboard_details"
       get "dashboard_bar_graph_data"
       get "dashboard_line_graph_data"
+      post "upload_image"
     end
   end
   resources :topics

@@ -1,3 +1,29 @@
+student_quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',function($scope,User,fileUpload){
+  $scope.user = User.get_current_user()
+  $scope.submitted = false
+  $scope.loading = false
+  $scope.saveUser = function(isValid){
+    $scope.submitted = true
+    if(isValid){
+      $scope.user = User.update($scope.user.id, $scope.user)
+    }
+  }
+    
+  $scope.uploadFile = function(){
+      var file = $scope.myFile;
+      //console.log('file is ' + JSON.stringify(file));
+      var uploadUrl = "/users/"+ $scope.user.id + "/upload_image";
+      $scope.loading = true
+      fileUpload.uploadFileToUrl(file, uploadUrl);
+  };
+
+  $scope.$on("profile_pic_Changed",function(event,profile_pic){
+    $scope.user.profile_pic = profile_pic
+    $scope.loading = false
+  })
+
+}]);
+
 student_quizlib.controller('DashBoardCtrl', ['$scope','ServedQuiz','Sharing','User',function($scope,ServedQuiz,Sharing,User){
     User.get_current_user().$promise.then(function(data){
       $scope.student_id = data.id

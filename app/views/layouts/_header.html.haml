@@ -22,11 +22,14 @@
                   -if current_user.is_professor?
                     %span.glyphicon.glyphicon-cog
                     %span
-                      =link_to "Settings","#"
+                      %ng-view
+                        %a{href:"#/settings"}Settings
+
                   -else
-                    %span.glyphicon.glyphicon-user
-                    %span 
-                      =link_to "Settings","#"
+                    %span.glyphicon.glyphicon-cog
+                    %span
+                      %ng-view 
+                        %a{href: "#/settings"}Settings
                 %li
                   %br
                   %span.glyphicon.glyphicon-off.custom-size

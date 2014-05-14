@@ -4,7 +4,7 @@
 	</div>
   <div class = "col-xs-12 student-header-student" ng-repeat = "student in students" ng-class="{active: student.id == student_detail.student.id}">
     <a ng-href = "#/analyze/student_report?student_id={{student.id}}">
-      <span class = "col-xs-2"><img src="/assets/img_01.png" style = "width: 50px; height:50px;"/></span>
+      <span class = "col-xs-2"><img src="{{student.profile_pic.url}}" style = "width: 50px; height:50px;"/></span>
       <span class = "col-xs-9" style = "color: white;">
         <div class = "col-xs-12">
           {{student.first_name}} {{student.last_name}}
