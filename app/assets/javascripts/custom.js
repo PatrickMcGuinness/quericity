@@ -12,7 +12,8 @@ $(document).ready(function(){
           required: true
           },
         'user[email]': {
-          required: true
+          required: true,
+          remote: "/home/verify_email"
         },
         'user[password]': {
           required: true
@@ -23,13 +24,14 @@ $(document).ready(function(){
           required: "Please select role",  
         },
         'user[first_name]': {
-          required: "Please enter First Name",  
+          required: "Please enter First Name"  
         },
         'user[last_name]': {
           required: "Please enter Last Name"
         },
         'user[email]': {
-          required: "Please enter Email"
+          required: "Please enter Email",
+          remote: "Email Already Exists"
         },
         'user[password]':{
           required: "Please enter Password"

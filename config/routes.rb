@@ -25,6 +25,7 @@ QuizLib::Application.routes.draw do
   post "sections/update_section_before_destroy", to: "sections#update_section_before_destroy", as: :update_section_before_destroy
   get "/subjects", to: "subjects#index", as: :subjects
   get "/topics", to: "topics#index", as: :topics
+  get "/home/verify_email", to: "home#verify_email", as: :verify_email
   resources :favourite_quiz_banks do
     member do
       get "is_favourite"

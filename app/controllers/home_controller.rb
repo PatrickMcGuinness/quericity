@@ -14,4 +14,8 @@ class HomeController < ApplicationController
      "application"
     end
  end
+
+ def verify_email
+  render json: User.where("email = ?",params[:user][:email]).blank?
+ end
 end
