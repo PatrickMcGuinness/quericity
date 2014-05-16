@@ -65,7 +65,7 @@ student_quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParam
 
 }]);
 
-student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',function($scope,ServedQuiz,Sharing){
+student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,QuizStatus){
   
   ServedQuiz.student_served_quizzes().$promise.then(function(data){
     $scope.all_quizzes = data
@@ -129,61 +129,21 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing',func
     angular.forEach(quizzes,function(value,key){
       value.student_sharing = Sharing.student_sharing(value.id)
       
-      var obj1 = new Date(value.date)
+      var obj1 = new Date(value.local_date)
       
-      var obj2 = new Date(value.close_date)
-      value.close_date = obj2.getDate() +"-" + (obj2.getMonth()+1) +"-"+obj2.getFullYear()
+      var obj2 = new Date(value.local_close_date)
+      value.close_date = TimeDisplay.get_date(value.local_close_date)
       
-      var obj3 = new Date(value.start_time)
-      //obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
+      var obj3 = new Date(value.local_start_time)
       
-      var obj4 = new Date(value.end_time)
-
-      //obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
+      var obj4 = new Date(value.local_end_time)
       
-      value.end_time = obj4.getHours() + ":"
-      
-      if(obj4.getMinutes() < 10){
-        value.end_time = value.end_time + "0" + obj4.getMinutes()
-      }
-      else{
-        value.end_time = value.end_time + obj4.getMinutes()
-      }
+      value.end_time = TimeDisplay.get_time(value.local_end_time)
       
       value.show_icon = false
       value.expired = false
       
-      var obj = new Date()
-      if(new Date(obj1.getFullYear(),obj1.getMonth(),obj1.getDate()) < new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        value.show_icon = true
-      }
-      if((obj1.getFullYear() == obj.getFullYear()) && (obj1.getDate() == obj.getDate()) && (obj1.getMonth() == obj.getMonth())){
-        if(obj3.getHours() < obj.getHours()){
-          value.show_icon = true
-        }
-        if(obj3.getHours() == obj.getHours()){
-          if(obj3.getMinutes() <= obj3.getMinutes()){
-            value.show_icon = true
-          }
-        }
-      }
-      if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) < new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        value.expired = true
-        value.started = false
-      }
-      if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) == new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        if(obj4.getHours() < obj.getHours()){
-          value.expired = true
-          value.started = false
-        }
-        else if(obj4.getHours() == obj.getHours()){
-          if(obj4.getMinutes() <= obj.getMinutes()){
-            value.expired = true
-            value.started = false
-            value.show_icon = false
-          }
-        }
-      } 
+      value.status = QuizStatus.get_status(obj1,obj2,value.local_start_time,value.local_end_time)
     })
   }
 }]);

@@ -8,15 +8,14 @@ student_quizlib.service('TimeDisplay', function ($rootScope){
       return date
     },
     get_time: function(data_time){
-      var obj3 = new Date(data_time)
-      time = obj3.getHours() + ":"
-      if(obj3.getMinutes() < 10){
-        time = time + "0" + obj3.getMinutes() 
+      data_array = data_time.split(":")
+      if(data_array[0] < 10){
+        data_array[0] = "0" + data_array[0]
       }
-      else{ 
-        time = time +  obj3.getMinutes()
+      if(data_array[1] < 10){
+        data_array[1] = "0" + data_array[1]
       }
-      return time
+      return data_array.join(":")
     }
 
     

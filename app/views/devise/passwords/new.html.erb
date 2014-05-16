@@ -6,7 +6,7 @@
         <%= devise_error_messages! %>
 
         <div class="form-group">
-          <div class = "col-xs-3" style = "text-align: left">Email *:</div>
+          <div class = "col-xs-6" style = "text-align: left">Email *:</div>
           <div class="col-xs-12">
             <%= f.email_field :email,:class => "form-control",:placeholder => "Email", :autofocus => true%>
           </div>
@@ -14,15 +14,18 @@
 
         <div class = "form-group">  
           <div class = "col-xs-12 mar-top-10">
-      	    <%= f.submit "Send me reset password instructions", :class => "btn btn-primary btn-lg col-xs-12" %>
+      	    <%= f.submit "Send me reset password instructions", :class => "btn btn-primary btn-lg col-xs-12 responsive-button" %>
           <div>  
         </div>
       	 
       <% end %>
-      
-      <%= link_to "Sign in", new_session_path(resource_name) %>&nbsp;
-      <%= link_to "Sign up", new_registration_path(resource_name) %>&nbsp;  
-      <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)%>  
+      <div class = "col-xs-12">
+        <%= link_to "Sign in", new_session_path(resource_name)%>&nbsp;
+        <%= link_to "Sign up", new_registration_path(resource_name)%>&nbsp;
+      </div>
+      <div class = "col-xs-12 mar-top-20">   
+        <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)%>  
+      </div>
     </div>    
   </div>
 </div>   

@@ -43,8 +43,8 @@
         <tbody class="text-center">
         	<tr ng-repeat = "served_quiz in served_quizzes | filter: titleFilter">
           	<td>{{served_quiz.cloned_quiz_bank.title}}</td>
-          	<td>{{served_quiz.start_date}}&nbsp;{{served_quiz.start_time}}</td>
-          	<td>{{served_quiz.close_date}}&nbsp;{{served_quiz.end_time}}</td>
+          	<td>{{served_quiz.local_date}}&nbsp;{{served_quiz.local_start_time}}</td>
+          	<td>{{served_quiz.local_close_date}}&nbsp;{{served_quiz.local_end_time}}</td>
           	<td>
               <span ng-show = "served_quiz.status == 'Serving Completed'">
                 <div style="background-color:#00a404;" class="tags">

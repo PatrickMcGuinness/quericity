@@ -12,7 +12,7 @@ class ServedQuizzesController < ApplicationController
   end
 
   def create
-    render json: current_user.served_quizzes.create(params[:served_quiz])
+    render json: ServedQuiz.create_served_quiz(current_user,params)
   end
 
   def show

@@ -133,7 +133,7 @@ quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParams','Time
 }]);
 
 
-quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$modal,$rootScope,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
+quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQuiz','ClonedQuizBank','QuizBank','Sharing','QuizStatus','TimeDisplay',function($scope,$modal,$rootScope,ServedQuiz,ClonedQuizBank,QuizBank,Sharing,QuizStatus,TimeDisplay){
   
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
@@ -144,25 +144,15 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
   ServedQuiz.all().$promise.then(function(data){
     $scope.served_quizzes = data.result
     angular.forEach($scope.served_quizzes,function(value,key){
-      var obj1 = new Date(value.date)
-      value.start_date = obj1.getDate() +"-" + (obj1.getMonth()+1) +"-"+obj1.getFullYear()
       
-      var obj2 = new Date(value.close_date)
-      value.close_date = obj2.getDate() +"-" + (obj2.getMonth()+1) +"-"+obj2.getFullYear()
+      var obj1 = new Date(value.local_date)
+      value.local_date = TimeDisplay.get_date(value.local_date)
       
-      var obj3 = new Date(value.start_time)
-      //obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
-      value.start_time = obj3.getHours() + ":"
-      if(obj3.getMinutes() < 10){ 
-        value.start_time = value.start_time + "0" + obj3.getMinutes()
-      }else{value.start_time = value.start_time + obj3.getMinutes()}
+      var obj2 = new Date(value.local_close_date)
+      value.local_close_date = TimeDisplay.get_date(value.local_close_date)
       
-      var obj4 = new Date(value.end_time)
-      //obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
-      value.end_time = obj4.getHours() + ":"
-      if(obj4.getMinutes() < 10){
-        value.end_time = value.end_time + "0" + obj3.getMinutes()
-      }else{value.end_time = value.end_time + obj3.getMinutes()}
+      value.local_start_time = TimeDisplay.get_time(value.local_start_time)
+      value.local_end_time = TimeDisplay.get_time(value.local_end_time)
       
       value.attempted_answers = ServedQuiz.attempted_answers(value.id)
       ServedQuiz.graded_answers(value.id).$promise.then(function(data){
@@ -227,7 +217,7 @@ quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz','A
   }
 }]);
 
-quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing){
+quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing','QuizStatus','TimeDisplay',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing,QuizStatus,TimeDisplay){
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
@@ -237,52 +227,16 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
   ServedQuiz.all().$promise.then(function(data){
     $scope.served_quizzes = data.result
     angular.forEach($scope.served_quizzes,function(value,key){
-      var obj1 = new Date(value.date)
-      value.start_date = obj1.getDate() +"-" + (obj1.getMonth()+1) +"-"+obj1.getFullYear()
+      var obj1 = new Date(value.local_date)
+      value.local_date = TimeDisplay.get_date(value.local_date)
       
-      var obj2 = new Date(value.close_date)
-      value.close_date = obj2.getDate() +"-" + (obj2.getMonth()+1) +"-"+obj2.getFullYear()
+      var obj2 = new Date(value.local_close_date)
+      value.local_close_date = TimeDisplay.get_date(value.local_close_date)
       
-      var obj3 = new Date(value.start_time)
-      //obj3.setTime( obj3.getTime() + obj3.getTimezoneOffset()*60*1000 );
-      value.start_time = obj3.getHours() + ":"
-      if(obj3.getMinutes() < 10){
-        value.start_time = value.start_time + "0" + obj3.getMinutes() 
-      }else{ value.start_time = value.start_time +  obj3.getMinutes()} 
-      
-      var obj4 = new Date(value.end_time)
-      //obj4.setTime( obj4.getTime() + obj4.getTimezoneOffset()*60*1000 );
-      value.end_time = obj4.getHours() + ":"
-      if(obj3.getMinutes() < 10){
-        value.end_time = value.end_time + "0" + obj3.getMinutes()
-      }else{value.end_time = value.end_time + obj3.getMinutes()}
-      
-      status = "Not Served Yet"
-      var obj = new Date()
-      if(new Date(obj1.getFullYear(),obj1.getMonth(),obj1.getDate()) <= new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        if((obj3.getHours() < obj.getHours())){
-          status = "In Process"
-        }
-        else if(obj3.getHours() == obj.getHours()){
-          if(obj3.getMinutes() <= obj.getMinutes()){
-            status = "In Process"
-          }
-        }
-      }
-      if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) < new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        status = "Serving Completed"
-      }
-      if(new Date(obj2.getFullYear(),obj2.getMonth(),obj2.getDate()) == new Date(obj.getFullYear(),obj.getMonth(),obj.getDate())){
-        if((obj2.getHours() < obj.getHours())){
-          status = "Serving Completed"
-        }
-        else if(obj2.getHours() == obj.getHours()){
-          if(obj2.getMinutes() <= obj.getMinutes()){
-            status = "Serving Completed"
-          }
-        }
-      }
-      value.status = status 
+      value.local_start_time = TimeDisplay.get_time(value.local_start_time)
+      value.local_end_time = TimeDisplay.get_time(value.local_end_time)
+
+      value.status = QuizStatus.get_status(obj1,obj2,value.local_start_time,value.local_end_time)
     })
   })
   
@@ -753,15 +707,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
       $scope.served_quiz.quiz_bank_id = $scope.selected_quiz.id
       $scope.served_quiz.date = $scope.quiz.date
       $scope.served_quiz.close_date = $scope.quiz.close_date
-      var obj4 = new Date()
-      var gmt_hours = obj4.getTimezoneOffset()/60
-      var gmt_minutes = obj4.getTimezoneOffset()%60
-      var split_start_time = $scope.served_quiz.start_time.split(":")
-      var split_minute_part = split_start_time[1].split(" ")
-      $scope.served_quiz.start_time = (parseInt(split_start_time[0]) + gmt_hours) +":"+ (parseInt(split_minute_part[0]) + gmt_minutes) + " " +split_minute_part[1] 
-      var split_end_time = $scope.served_quiz.end_time.split(":")
-      var split_end_minute_part = split_end_time[1].split(" ")
-      $scope.served_quiz.end_time = (parseInt(split_end_time[0]) + gmt_hours) + ":" + (parseInt(split_end_minute_part[0]) + gmt_minutes) + " " + split_end_minute_part[1]
+      
       ServedQuiz.save($scope.served_quiz).$promise.then(function(data){
         angular.forEach($scope.selected_students,function(value,key){
           Sharing.save(data.id,{user_id: value.id})
@@ -956,8 +902,6 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
     QuizBank.delete($scope.quiz_bank_id)
   }
   
-
-
 }]);
 
 quizlib.controller("Navigation",['$scope',function($scope){
