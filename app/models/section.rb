@@ -3,7 +3,7 @@ class Section < ActiveRecord::Base
   attr_accessible :title, :seq, :quiz_bank_id
   
   validates :title, :quiz_bank_id, presence: true
-  validates :title, :uniqueness => { :scope => :quiz_bank_id }
+  #validates :title, :uniqueness => { :scope => :quiz_bank_id }
   
   belongs_to :quiz_bank
   has_many :questions, dependent: :destroy

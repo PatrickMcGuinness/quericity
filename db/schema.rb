@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140515085822) do
+ActiveRecord::Schema.define(:version => 20140516120355) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -331,7 +331,7 @@ ActiveRecord::Schema.define(:version => 20140515085822) do
     t.string   "provider"
     t.string   "uid"
     t.integer  "invitations_count"
-    t.decimal  "time_zone"
+    t.string   "time_zone"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

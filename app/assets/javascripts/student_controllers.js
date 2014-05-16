@@ -127,23 +127,17 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing','Tim
 
   var date_formatting = function(quizzes){
     angular.forEach(quizzes,function(value,key){
-      value.student_sharing = Sharing.student_sharing(value.id)
+      Sharing.student_sharing(value.id).$promise.then(function(data){
+        value.student_sharing = data
+        var obj1 = new Date(value.student_sharing.local_date)
+        var obj2 = new Date(value.student_sharing.local_close_date)
+        value.close_date = TimeDisplay.get_date(value.student_sharing.local_close_date)
+        var obj3 = new Date(value.student_sharing.local_start_time) 
+        var obj4 = new Date(value.student_sharing.local_end_time)
+        value.end_time = TimeDisplay.get_time(value.student_sharing.local_end_time)
       
-      var obj1 = new Date(value.local_date)
-      
-      var obj2 = new Date(value.local_close_date)
-      value.close_date = TimeDisplay.get_date(value.local_close_date)
-      
-      var obj3 = new Date(value.local_start_time)
-      
-      var obj4 = new Date(value.local_end_time)
-      
-      value.end_time = TimeDisplay.get_time(value.local_end_time)
-      
-      value.show_icon = false
-      value.expired = false
-      
-      value.status = QuizStatus.get_status(obj1,obj2,value.local_start_time,value.local_end_time)
+        value.status = QuizStatus.get_status(obj1,obj2,value.student_sharing.local_start_time,value.student_sharing.local_end_time)
+      })
     })
   }
 }]);
