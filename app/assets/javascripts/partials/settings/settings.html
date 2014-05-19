@@ -81,13 +81,14 @@
         </div>
         <div class = "form-group">
           <div class = "col-xs-12">
-            <label>Profile picture</label>
-          </div> 
-          <input type="file" file-model="myFile" class = "btn btn-warning col-xs-7 pull-left"/>
-          <a ng-click="uploadFile()" class = "btn btn-success col-xs-3 pull-right">upload</a>
-          <div class = "col-xs-12">
-            <img src = "{{user.profile_pic.url}}">
-            <img src = "/assets/loading.gif" ng-if = "loading == true">
+            <label>Profile picture</label> 
+            <input type="file" file-model="myFile" class = "col-xs-7 pull-left hide" id = "real-file"/>
+            <a class = "btn btn-default col-xs-12" choose-image>Choose an image</a>
+            <a ng-click="uploadFile()" class = "btn btn-success col-xs-3 pull-right hide" id = "pic-upload">upload</a>
+          </div>  
+          <div class = "col-xs-12 mar-top-20">
+            <img src = "{{user.profile_pic.url}}"> 
+            <img src = "/assets/loading.gif" ng-show = "loading">
           </div>
         </div>  
 

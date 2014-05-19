@@ -8,6 +8,7 @@ student_quizlib.directive('fileModel', ['$parse', function ($parse) {
         scope.$apply(function(){
             modelSetter(scope, element[0].files[0]);
         });
+        $("#pic-upload").trigger('click');
       });
     }
   };
@@ -25,6 +26,17 @@ student_quizlib.directive("showActiveTag",function(){
     }
   };
 });
+
+student_quizlib.directive("chooseImage",function(){
+  return {
+    restrict: "A",
+    link: function(scope,element,attrs){
+      element.bind("click",function(){
+        $("#real-file").trigger("click")
+      })
+    }
+  };
+})
 
 student_quizlib.directive("mathjaxBind", function() {
   return {
