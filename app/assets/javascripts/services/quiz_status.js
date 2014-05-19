@@ -24,7 +24,7 @@ quizlib.service('QuizStatus', function ($rootScope){
           }
         }
       }
-      if(obj2.getFullYear() < obj.getFullYear() || obj2.getMonth() < obj.getMonth() || obj2.getDate() < obj.getMonth()){
+      if(obj2.getFullYear() < obj.getFullYear() || obj2.getMonth() < obj.getMonth() || obj2.getDate() < obj.getDate()){
         status = "Serving Completed"
       }
       if( obj2.getFullYear() == obj.getFullYear() && obj2.getMonth() == obj.getMonth() && obj2.getDate() == obj.getDate()){

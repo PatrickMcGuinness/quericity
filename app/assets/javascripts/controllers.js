@@ -4,6 +4,7 @@ quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
 
 quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',function($scope,User,fileUpload){
   $scope.user = User.get_current_user()
+
   $scope.submitted = false
   $scope.loading = false
   $scope.saveUser = function(isValid){

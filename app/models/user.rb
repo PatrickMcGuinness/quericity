@@ -208,7 +208,7 @@ class User < ActiveRecord::Base
       :first_name => first_name,
       :last_name => last_name,
       :profile_pic => display_picture.as_json(),
-      :time_zone => time_zone.to_f
+      :time_zone => time_zone.to_s
     }
     
   end
