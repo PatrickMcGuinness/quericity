@@ -644,7 +644,7 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id,
              graded_by_teacher: 0}).$promise.then(function(data){
-                $scope.questions_to_attempt = data.questions_to_attempt
+                $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
                 check_more_questions()
              })
         }
@@ -669,7 +669,7 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
               Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
                 answer: correct_answer, is_correct: is_correct,served_quiz_id: 
                 $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
-                  $scope.questions_to_attempt = data.questions_to_attempt
+                  $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
                   check_more_questions()
                 })
             }
@@ -680,7 +680,7 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: false,
             served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
-              $scope.questions_to_attempt = data.questions_to_attempt
+              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_more_questions()
             })
         }
@@ -697,7 +697,7 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: is_correct,
             served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
-              $scope.questions_to_attempt = data.questions_to_attempt
+              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_more_questions()
             })
         }
