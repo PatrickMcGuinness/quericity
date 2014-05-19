@@ -6,7 +6,9 @@
       </a>
       <ul id = "new-repo-holder" ng-class="{ 'hide' : (no_my_assessments_cookie() == true)}">
         <li class = "hide" id = "create-repo-div">
+          {{repository.title}}
           <input type = "text", ng-model = "repository.title" class = "form-control input-sm" enter = "addRepo()" placeholder = "Enter title and press enter" hideonenter>
+          
         </li>
         <li ng-repeat = "repo in my_assessments">
           <div class = "row complete_row" droppable drop= "handleDrop" id ="{{repo.id}}">

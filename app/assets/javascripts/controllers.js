@@ -969,7 +969,7 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
   $scope.quiz_banks = [] 
   $scope.show_new_repo_div = false
   $scope.starred_quiz_banks = []
-
+  $scope.repository = {title: null}
   $scope.my_assessments = []
   
   Repository.all().$promise.then(function(data){
