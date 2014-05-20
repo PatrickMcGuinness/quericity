@@ -8,7 +8,8 @@
   <form name="BlankForm" ng-submit="edit_blank(first_statement,second_statement,section.id,question.id,question,BlankForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.difficulty.$invalid) && (!BlankForm.difficulty.$pristine || submitted == true)}">
-        <select class="form-control form_section" ng-model="question.difficulty_level" name = "difficulty" required>
+        <label>Difficulty Level *:</label>
+        <select class="form-control" ng-model="question.difficulty_level" name = "difficulty" required>
           <option value = "">Select Difficulty</option>
           <option value = "1">Easy</option>
           <option value = "2">Medium</option>
@@ -19,6 +20,7 @@
     </div>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.first_statement.$invalid) && (!BlankForm.first_statement.$pristine || submitted == true)}">
+        <label>Question Satement Before Blank*:</label>
         <textarea name="first_statement" id="first_statement" rows="3" class = "form-control" ng-model = "first_statement" data-ck-editor required>
         </textarea>
         <p ng-show="BlankForm.first_statement.$invalid && (!BlankForm.first_statement.$pristine || submitted == true)" class="help-block">Satement before blank is required.</p>
@@ -26,6 +28,7 @@
     </div>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.blank.$invalid) && (!BlankForm.blank.$pristine || submitted == true)}">
+        <label>Blank *:</label>
         <textarea name="blank" id="blank" rows="2" class = "form-control" ng-model = "question_option.answer" required>
         </textarea>
          <p ng-show="BlankForm.blank.$invalid && (!BlankForm.blank.$pristine || submitted == true)" class="help-block">Blank is required</p>
@@ -33,6 +36,7 @@
     </div>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.second_statement.$invalid) && (!BlankForm.second_statement.$pristine || submitted == true)}">
+        <label>Question Satement After Blank *:</label>
         <textarea name="second_statement" id="second_statement" rows="3" class = "form-control" ng-model = "second_statement" data-ck-editor>
         </textarea>
       </div>  

@@ -34,7 +34,7 @@
           </div>  
         </div>
         <div class="col-xs-12">
-          <input type="text" ng-model="student" typeahead="student as student.first_name for student in system_students | filter:{first_name:$viewValue} | limitTo:8" class="form-control input-sm" enter = "AddStudent(student)" placeholder="Search by name">
+          <input type="text" ng-model="student" typeahead="student as student.first_name for student in system_students | filter:{first_name:$viewValue} | limitTo:8" class="form-control input-sm type-search" enter = "AddStudent(student)" placeholder="Search by name" typeahead-on-select = "AddStudent(student)">
         </div>
         <div class="col-xs-12 radio_contorl">
           <input type="checkbox" name="checkbox" ng-click="predicate = 'first_name'; reverse=!reverse" data-toggle = "tooltip" title = "Sort Students by first name" tooltip-placement = "top"/>&nbsp;&nbsp;Sort by name

@@ -36,16 +36,21 @@ body{
 	text-decoration: none;
 	color:#ffffff;
 	}
-	
-.menu ul li a:hover{
+.menu ul li:hover{
+
+  background-color:#999;
+  padding:13px 23px 15px 23px;
+
+}	
+/*.menu ul li a:hover{
 	color:#b1cdde;
 	display:inline;
 	}
-	
+*/	
 .menu ul li.active{
 	background-color:#999;
-	padding:13px 15px 15px 15px;	
-	}
+	padding:13px 23px 15px 23px;	
+}
 
 .sub_links{
 	margin-bottom:20px;

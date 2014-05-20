@@ -521,6 +521,8 @@ quizlib.controller('DatePickerCtrl', ['$scope',function($scope){
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
   $scope.format = $scope.formats[0];
 }]);
+
+
 quizlib.controller('TimePickerCtrl', ['$scope',function($scope){
   $scope.mytime = new Date();
 

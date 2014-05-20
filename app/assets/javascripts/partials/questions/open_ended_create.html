@@ -1,4 +1,4 @@
-<div class = "col-xs-12 new-question-box mar-top-10 mar-bot-10" ng-controller = "newQuestionCtrl">
+<div class = "col-xs-12 new-question-box mar-bot-10" ng-controller = "newQuestionCtrl">
   <div class = "heading">
     <span>Add a Question</span>
     <a ng-click = "hideQuestion();removeData();" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">
@@ -29,6 +29,7 @@
       </div>  
     </div>
     <div class = "col-xs-12 mar-top-10">
+      <label>Answer Statement :</label>
       <textarea name="answer" id="answer" rows="3" class = "form-control" placeholder = "Enter answer" ng-model = "open_ended_answer" data-ck-editor>
       </textarea>  
     </div>

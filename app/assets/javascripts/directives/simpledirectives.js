@@ -340,6 +340,8 @@ quizlib.directive('enter', function () {
   };
 });
 
+
+
 quizlib.directive('hideonenter', function () {
   return function (scope, element, attrs) {
     element.bind("keydown", function (event) {
