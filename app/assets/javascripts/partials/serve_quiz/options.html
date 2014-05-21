@@ -12,7 +12,8 @@
     <div class="sub_nav">
       <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
       <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new Group" tooltip-placement = "top">Add Group</a></span>
-    </div>  
+    </div>
+     
   </div>
 </div>
 <div class="container">
@@ -20,18 +21,14 @@
     <form name="OptionForm" ng-submit="checkOptions(OptionForm.$valid)" novalidate>
     	<div class="col-xs-12">
       	<div class="row">
-          <!--<div class="col-xs-3 btn_section">
-            <button type="button" class="btn btn_blue" ng-click = "show_options = true" data-toggle = "tooltip" title = "Select Quiz Options" tooltip-placement = "top">Options</button>
-            <button type="submit" class="btn btn_grey" data-toggle = "tooltip" title = "Select Students to Serve Quiz" tooltip-placement = "top">Select Students</button>
-          </div> -->
-            <div class = "col-xs-12"> 
-              <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.title.$invalid) && (!OptionForm.title.$pristine || option_submitted == true)}">
-                <select class="form-control form_section" ng-model="selected_quiz" ng-options="quiz_bank as quiz_bank.title for quiz_bank in quiz_banks" name = "title" required>
-                  <option value = "">Select Quiz</option>
-                </select>
-                <p ng-show="OptionForm.title.$invalid && (!OptionForm.title.$pristine || option_submitted == true)" class="help-block">Required!</p>
-              </div>  
-            </div> 
+          <div class = "col-xs-12"> 
+            <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.title.$invalid) && (!OptionForm.title.$pristine || option_submitted == true)}">
+              <select class="form-control form_section" ng-model="selected_quiz" ng-options="quiz_bank as quiz_bank.title for quiz_bank in quiz_banks" name = "title" required>
+                <option value = "">Select Quiz</option>
+              </select>
+              <p ng-show="OptionForm.title.$invalid && (!OptionForm.title.$pristine || option_submitted == true)" class="help-block">Required!</p>
+            </div>  
+          </div> 
   	    </div>
         <div class="row">
           <div class="col-xs-2 form_section">

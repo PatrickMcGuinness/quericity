@@ -26,6 +26,7 @@
 //= require jquery.validate
 //= require custom.js
 //= require angular-tour.min
+//= require angular-tour-tpls.min
 
 loadingimage =  "<img alt='Please wait' src='/assets/loading.gif' style='margin-left:5px;' class='loading-img'>"
 

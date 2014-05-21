@@ -1,62 +1,64 @@
 <div ng-include src="'/assets/partials/common/menu.html'"></div>
-<div class="row_bottom">
-	<div class="container">
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
-      <span class="sub_nav_link"><a href="#/serve_quiz/new" data-toggle = "tooltip" title = "Serve new Quiz" tooltip-placement = "top">Serve Quiz</a></span>
-		</div>
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-      <span class="sub_nav_link"><a href="#/groups" data-toggle = "tooltip" title = "List Students" tooltip-placement = "top">Student Groups</a></span>
-		</div>
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
-      <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new Group" tooltip-placement = "top">Add Group</a></span>
-		</div>	
-	</div>
-</div>
-<div class="container">
-  <div class = "row">
-		<div class = "col-xs-12">
-			<table class="table table-striped tag_btns">
-				<thead>
-					<th class="col-xs-1 manage_section">
-            Title
-            <a ng-click="predicate = 'title'; reverse=!reverse">
-              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_title()" ng-if = "title == true || title == undefined"/>
-              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_title()" ng-if = "title == false"/>
-            </a>
-          </th>
-          <th class="col-xs-2 manage_section">
-            Last Modified
-            <a ng-click="predicate = 'last_updated'; reverse=!reverse">
-              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_last_updated()" ng-if = "last_updated == true || last_updated == undefined"/>
-              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_last_updated()" ng-if = "last_updated == false"/>
-            </a>
-          </th>
-          <th class="col-xs-2 manage_section">
-            Number of Students
-            <a ng-click="predicate = 'count'; reverse=!reverse">
-              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_count()" ng-if = "count == true || count == undefined"/>
-              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_count()" ng-if = "count == false"/>
-            </a>
-          </th>
-          <th class="col-xs-1 manage_section">Action</th>
-        </thead>
-        <tbody class="text-center">
-        	<tr ng-repeat = "group in groups | orderBy:predicate:reverse">
-            <td>{{group.title}}</td>
-            <td>{{group.last_updated}}</td>
-            <td><span>{{group.count}}</span></td>
-            <td>
-              <a ng-href="#/groups/{{group.id}}/edit"><img src="/assets/edit_sm_icon.png" data-toggle = "tooltip" title = "Edit Group" tooltip-placement = "top"/></a>&nbsp;&nbsp;
-              <a ng-click = "removeGroup(group,$index)"><img src="/assets/delete_sm_icon.png"  data-toggle = "tooltip" title = "Delete Group" tooltip-placement = "top"/></a>
-            </td>
-          </tr>
+<tour step="currentStep">
+  <div class="row_bottom">
+  	<div class="container">
+      <div class="sub_nav">
+        <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
+        <span class="sub_nav_link"><a href="#/serve_quiz/new" data-toggle = "tooltip" title = "Serve new Quiz" tooltip-placement = "top">Serve Quiz</a></span>
+  		</div>
+      <div class="sub_nav">
+        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
+        <span class="sub_nav_link"><a href="#/groups" data-toggle = "tooltip" title = "List Students" tooltip-placement = "top">Student Groups</a></span>
+  		</div>
+      <div class="sub_nav">
+        <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
+        <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new Group" tooltip-placement = "top">Add Group</a></span>
+  		</div>	
+  	</div>
+  </div>
+  <div class="container">
+    <div class = "row">
+  		<div class = "col-xs-12">
+  			<table class="table table-striped tag_btns">
+  				<thead>
+  					<th class="col-xs-1 manage_section">
+              Title
+              <a ng-click="predicate = 'title'; reverse=!reverse">
+                <img src="/assets/heading_arrow_down.png" ng-click = "toggle_title()" ng-if = "title == true || title == undefined"/>
+                <img src="/assets/heading_arrow_up.png" ng-click = "toggle_title()" ng-if = "title == false"/>
+              </a>
+            </th>
+            <th class="col-xs-2 manage_section">
+              Last Modified
+              <a ng-click="predicate = 'last_updated'; reverse=!reverse">
+                <img src="/assets/heading_arrow_down.png" ng-click = "toggle_last_updated()" ng-if = "last_updated == true || last_updated == undefined"/>
+                <img src="/assets/heading_arrow_up.png" ng-click = "toggle_last_updated()" ng-if = "last_updated == false"/>
+              </a>
+            </th>
+            <th class="col-xs-2 manage_section" >
+              Number of Students
+              <a ng-click="predicate = 'count'; reverse=!reverse">
+                <img src="/assets/heading_arrow_down.png" ng-click = "toggle_count()" ng-if = "count == true || count == undefined"/>
+                <img src="/assets/heading_arrow_up.png" ng-click = "toggle_count()" ng-if = "count == false"/>
+              </a>
+            </th>
+            <th class="col-xs-1 manage_section">Action</th>
+          </thead>
+          <tbody class="text-center">
+          	<tr ng-repeat = "group in groups | orderBy:predicate:reverse">
+              <td>{{group.title}}</td>
+              <td>{{group.last_updated}}</td>
+              <td><span>{{group.count}}</span></td>
+              <td>
+                <a ng-href="#/groups/{{group.id}}/edit"><img src="/assets/edit_sm_icon.png" data-toggle = "tooltip" title = "Edit Group" tooltip-placement = "top"/></a>&nbsp;&nbsp;
+                <a ng-click = "removeGroup(group,$index)"><img src="/assets/delete_sm_icon.png"  data-toggle = "tooltip" title = "Delete Group" tooltip-placement = "top"/></a>
+              </td>
+            </tr>
 
-        </tbody>
-			</table>
-		</div>
-	</div>
-</div>
+          </tbody>
+  			</table>
+  		</div>
+  	</div>
+  </div>
+</tour>  
 

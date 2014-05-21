@@ -1,61 +1,67 @@
 <div ng-include src="'/assets/partials/common/menu.html'"></div>
-<div class="row_bottom">
-	<div class="container">
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
-      <span class="sub_nav_link"><a href="#/serve_quiz/new" data-toggle = "tooltip" title = "Serve new Quiz" tooltip-placement = "top">Serve Quiz</a></span>
-		</div>
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-      <span class="sub_nav_link"><a href="#/groups" data-toggle = "tooltip" title = "List Student Groups" tooltip-placement = "top">Student Groups</a></span>
-		</div>	
-	</div>
-</div>
-<div class="container">
-	<div class="row">
-    <form name="GroupForm" ng-submit="saveGroup(GroupForm.$valid)" novalidate>
-      <div class="row add_grp_section">
-        <button class = "btn btn-default btn">
-          <span class = "glyphicon glyphicon-floppy-saved"></span>
-          <span>
-            <a ng-href = "#/groups" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">Cancel</a>  
-          </span>
-        </button>
-        <button class = "btn btn-default btn">
-          <span class = "glyphicon glyphicon-remove"></span>
-          <span>
-            <a ng-click = "saveGroup(GroupForm.$valid)" data-toggle = "tooltip" title = "Save Group" tooltip-placement = "top">Save</a>  
-          </span>
-        </button>
-        <div class="col-xs-12">
-          <div class = "form-group" ng-class="{ 'has-error' : (GroupForm.title.$invalid) && (!GroupForm.title.$pristine || submitted == true)}">           
-            <input type="text" placeholder="Add Title for Group" class="add_title form-control" ng-model = "group.title" name = "title" required/>
-            <p ng-show="GroupForm.title.$invalid && (!GroupForm.title.$pristine || submitted == true)" class="help-block">Title is required.</p>
-          </div>  
-        </div>
-        <div class="col-xs-12">
-          <input type="text" ng-model="student" typeahead="student as student.first_name for student in system_students | filter:{first_name:$viewValue} | limitTo:8" class="form-control input-sm type-search" enter = "AddStudent(student)" placeholder="Search by name" typeahead-on-select = "AddStudent(student)">
-        </div>
-        <div class="col-xs-12 radio_contorl">
-          <input type="checkbox" name="checkbox" ng-click="predicate = 'first_name'; reverse=!reverse" data-toggle = "tooltip" title = "Sort Students by first name" tooltip-placement = "top"/>&nbsp;&nbsp;Sort by name
-        </div>
-        <div class = "col-xs-12" ng-class="{ 'has-error' : selected_students.length == 0}">
-          <p ng-show="selected_students.length == 0" class="help-block">Select atleast one student.</p>
-        </div>
-        <ul class="col-xs-12">
-          <li class="col-xs-3 select_section" style = "word-wrap: break-word; width: 30%" ng-repeat = "stud in students | orderBy:predicate:reverse" ng-class="{ 'adjust-thumbnail' : {{$index%3}} == 0}">
-            <span class="col-xs-4"><img src="{{stud.profile_pic.url}}" class="img-thumbnail" /></span>
-            <span style=" float:right;">
-              <input type="checkbox" name="checkbox" ng-click = "selected_student(stud)"/>
+<tour step="currentStep">
+  <div class="row_bottom">
+  	<div class="container">
+      <div class="sub_nav">
+        <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
+        <span class="sub_nav_link"><a href="#/serve_quiz/new" data-toggle = "tooltip" title = "Serve new Quiz" tooltip-placement = "top">Serve Quiz</a></span>
+  		</div>
+      <div class="sub_nav">
+        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
+        <span class="sub_nav_link"><a href="#/groups" data-toggle = "tooltip" title = "List Student Groups" tooltip-placement = "top">Student Groups</a></span>
+  		</div>
+      <div class="sub_nav">
+        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
+        <span class="sub_nav_link"><a href ng-click = "openTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Open Tour</a></span>
+      </div>	
+  	</div>
+  </div>
+  <div class="container">
+  	<div class="row">
+      <form name="GroupForm" ng-submit="saveGroup(GroupForm.$valid)" novalidate>
+        <div class="row add_grp_section">
+          <button class = "btn btn-default btn">
+            <span class = "glyphicon glyphicon-floppy-saved"></span>
+            <span>
+              <a ng-href = "#/groups" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">Cancel</a>  
             </span>
-            <span class="col-xs-6">
-              <h4>{{stud.first_name}}{{stud.last_name}}</h4>
-              <p>{{stud.email}}</p>
+          </button>
+          <button class = "btn btn-default btn">
+            <span class = "glyphicon glyphicon-remove"></span>
+            <span>
+              <a ng-click = "saveGroup(GroupForm.$valid)" data-toggle = "tooltip" title = "Save Group" tooltip-placement = "top" tourtip = "You can now save the group" tourtip-step = "4" tourtip-next-label="Finish">Save</a>  
             </span>
-          </li>
-        </ul>
-      </div>
-    </form>  
-	</div>
-</div>
+          </button>
+          <div class="col-xs-12">
+            <div class = "form-group" ng-class="{ 'has-error' : (GroupForm.title.$invalid) && (!GroupForm.title.$pristine || submitted == true)}">           
+              <input type="text" placeholder="Add Title for Group" class="add_title form-control" ng-model = "group.title" name = "title" required tourtip = "Add Name to the Group" tourtip-step = "0"/>
+              <p ng-show="GroupForm.title.$invalid && (!GroupForm.title.$pristine || submitted == true)" class="help-block">Title is required.</p>
+            </div>  
+          </div>
+          <div class="col-xs-12">
+            <input type="text" ng-model="student" typeahead="student as student.first_name for student in system_students | filter:{first_name:$viewValue} | limitTo:8" class="form-control input-sm type-search" enter = "AddStudent(student)" placeholder="Search by name" typeahead-on-select = "AddStudent(student)" tourtip = "Search Students and Select" tourtip-step = "1">
+          </div>
+          <div class="col-xs-12 radio_contorl">
+            <input type="checkbox" name="checkbox" ng-click="predicate = 'first_name'; reverse=!reverse" data-toggle = "tooltip" title = "Sort Students by first name" tooltip-placement = "top"/ tourtip = "You can sort the students by first name" tourtip-step = "2">&nbsp;&nbsp;Sort by name
+          </div>
+          <div class = "col-xs-12" ng-class="{ 'has-error' : selected_students.length == 0}">
+            <p ng-show="selected_students.length == 0" class="help-block">Select atleast one student.</p>
+          </div>
+          <ul class="col-xs-12">
+            <li class="col-xs-3 select_section" style = "word-wrap: break-word; width: 30%" ng-repeat = "stud in students | orderBy:predicate:reverse" ng-class="{ 'adjust-thumbnail' : {{$index%3}} == 0}" tourtip = "Click on users check boxes to select them" tourtip-step = "3">
+              <span class="col-xs-4"><img src="{{stud.profile_pic.url}}" class="img-thumbnail" /></span>
+              <span style=" float:right;">
+                <input type="checkbox" name="checkbox" ng-click = "selected_student(stud)"/>
+              </span>
+              <span class="col-xs-6">
+                <h4>{{stud.first_name}}{{stud.last_name}}</h4>
+                <p>{{stud.email}}</p>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </form>  
+  	</div>
+  </div>
+</tour>  
 

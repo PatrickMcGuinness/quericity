@@ -773,6 +773,7 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
   $scope.system_students = User.system_students()
   $scope.submitted = false
   $scope.valid = false
+  $scope.group = {title: null}
   $scope.AddStudent = function(student){
     var check = 0
     if(student.id != undefined){
@@ -782,13 +783,13 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
         }
       })
       if(check == 0){
+      	console.log("students")
         $scope.students.push(student)
       }  
     }
   }
   $scope.saveGroup = function(isValid){
     $scope.submitted = true
-
     if(isValid && $scope.valid){
       Group.save($scope.group).$promise.then(function(data){
         angular.forEach($scope.selected_students,function(value,key){
