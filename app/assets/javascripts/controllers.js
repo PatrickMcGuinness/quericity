@@ -571,7 +571,10 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   $scope.selected_students = []
   $scope.option_submitted = false
   $scope.quiz = {date: null, close_date: null}
-  
+  $scope.selects = {selected_group: null}
+
+  $scope.served_quiz = {}  // to make the angular js work weird
+
   QuizBank.all().$promise.then(function(data){
     $scope.quiz_banks = data.result
   })
@@ -594,9 +597,9 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
     }
   });
 
-  $scope.$watch('selected_group',function(){
-    if($scope.selected_group != undefined){
-      $scope.selected_students = Group.students($scope.selected_group.id)
+  $scope.$watch('selects.selected_group',function(){
+    if($scope.selects.selected_group != undefined){
+      $scope.selected_students = Group.students($scope.selects.selected_group.id)
     }
   })
 

@@ -69,8 +69,13 @@ p.input-group ul{
 
 .my-nav-bar{
 	background-color: #ffffff !important;
-	min-height: 70px;
-	margin-bottom: 0px !important;
+	/*min-height: 70px;*/
+	/*margin-bottom: 0px !important; */
+}
+.remove-shadow{
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
 
 .my-header-nav {

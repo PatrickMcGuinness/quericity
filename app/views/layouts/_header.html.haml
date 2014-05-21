@@ -1,18 +1,19 @@
 %header
-  .navbar.my-nav-bar{role:"banner"}
-    .container
+  %nav.navbar.navbar-default{role:"navigation", style: "margin-bottom: 0px;"}
+    .container-fluid
       .navbar-header
-        %button.navbar-toggle{type:"button",data:{toggle:"collapse",target:".bs-navbar-collapse"}}
+        %button.navbar-toggle{type:"button",data:{toggle:"collapse" ,target:"#bs-example-navbar-collapse-1"}}
           %span.sr-only Toggle navigation
           %span.icon-bar
           %span.icon-bar
-          %span.icon-bar      
-        %a{href:"/",class:"navbar-brand",style:"margin-left:12px;"}
+          %span.icon-bar
+        %a.navbar-brand{href:"/",style:"margin-left:60px;"}
           %span.header
             %img{src: "/assets/logo.png",style: "height: 55px;"}
-      %nav.collapse.navbar-collapse.bs-navbar-collapse{role:"navigation"}
-        -if user_signed_in?  
-          %ul.nav.navbar-nav.navbar-right.my-header-nav
+
+      .collapse.navbar-collapse#bs-example-navbar-collapse-1
+        -if user_signed_in?
+          %ul.nav.navbar-nav.navbar-right.my-header-nav{style: "margin-right: 10px;"}
             .dropdown.name
               %a{id:"dLabel",role:"button",href:"#",data:{toggle:"dropdown",target:"#"}}
                 =current_user.name
@@ -35,11 +36,11 @@
                   %span.glyphicon.glyphicon-off.custom-size
                   %span 
                     =link_to "Log out", destroy_user_session_path, :method => "delete"
-                
+          
         -else
-          %ul.nav.navbar-nav.navbar-right.my-header-nav2
+          %ul.nav.navbar-nav.navbar-right{style: "margin-top:10px;"}
             %li
               =link_to 'Sign up' , new_user_registration_path
             %li
-              =link_to 'Log in' , new_user_session_path
+              =link_to 'Log in' , new_user_session_path  
         
