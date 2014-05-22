@@ -1,0 +1,41 @@
+<div ng-include src="'/assets/partials/common/menu.html'"></div>
+<div class="row_bottom">
+  <div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#/serve_quiz/new" data-toggle = "tooltip" title = "Serve new Quiz" tooltip-placement = "top">Serve Quiz</a></span>
+    </div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
+      <span class="sub_nav_link"><a href="#/groups" data-toggle = "tooltip" title = "List Students" tooltip-placement = "top">Student Groups</a></span>
+    </div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
+      <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new Group" tooltip-placement = "top">Add Group</a></span>
+    </div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/edit_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#/groups/{{group.id}}/edit" data-toggle = "tooltip" title = "Add new Group" tooltip-placement = "top">Edit Group</a></span>
+    </div>  
+  </div>
+</div>
+<div class = "container">
+  <div class = "col-xs-12 mar-top-20" style = "text-align: center">
+    <h2>{{group.title}}</h2>
+  </div>
+
+  <div class = "col-xs-12 mar-top-10" style = "text-align: center">
+    <strong>Created at:&nbsp;</strong> {{group.created_at}} &nbsp;&nbsp;&nbsp;<strong> Last updated at:&nbsp;</strong>{{group.updated_at}}
+  </div>
+
+  <ul class="col-xs-12">
+    <li class="col-xs-3 select_section" style = "word-wrap: break-word; width: 30%" ng-repeat = "student in group.students | orderBy:predicate:reverse" ng-class="{ 'adjust-thumbnail' : {{$index%3}} == 0}">
+      <span class="col-xs-4"><img src="{{student.profile_pic.url}}" class="img-thumbnail" /></span>
+      <span class="col-xs-6">
+        <h4>{{student.first_name}}{{student.last_name}}</h4>
+        <p>{{student.email}}</p>
+      </span>
+    </li>
+  </ul>
+
+</div>

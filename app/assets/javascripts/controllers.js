@@ -730,14 +730,12 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
   $scope.groups = []
-  $scope.students = User.get_students()
+  //$scope.students = User.get_students()
   Group.all().$promise.then(function(data){
     angular.forEach(data,function(value,key){
       var obj = new Date(value.updated_at)
       last_updated = obj.getDate() +"-" + (obj.getMonth() + 1) +"-"+obj.getFullYear()
-      Group.get_student_groups(value.id).$promise.then(function(data){
-        $scope.groups.push({id: value.id, title: value.title, count: data.length,last_updated:last_updated})
-      })
+      $scope.groups.push({id: value.id, title: value.title, count: value.students.length,last_updated:last_updated})
       
     })
   })
@@ -769,6 +767,8 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
   }
 
 }]);
+
+ 
 quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','StudentGroup',function($scope,$location,User,Group,StudentGroup){
   
   $scope.students = User.get_students()
@@ -818,21 +818,29 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
     }
   }
 }]);
+quizlib.controller('ViewGroupCtrl', ['$scope','$location','$routeParams','User','Group','StudentGroup',function($scope,$location,$routeParams,User,Group,StudentGroup){
+  Group.get($routeParams.id).$promise.then(function(data){
+    $scope.group = data
+    var obj = new Date($scope.group.updated_at)
+    $scope.group.updated_at = obj.getDate() +"-" + (obj.getMonth() + 1) +"-"+obj.getFullYear()
+    var obj = new Date($scope.group.created_at)
+    $scope.group.created_at = obj.getDate() +"-" + (obj.getMonth() + 1) +"-"+obj.getFullYear()
+  })
+}]); 
 quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User','Group','StudentGroup',function($scope,$location,$routeParams,User,Group,StudentGroup){
   
   $scope.students = []
   $scope.selected_students = []
-  $scope.group = Group.get($routeParams.id)
+  
   $scope.submitted = false
   $scope.valid = false
-  Group.get_student_groups($routeParams.id).$promise.then(function(data){
-    $scope.student_groups = data
-    angular.forEach(data,function(value,key){
-      User.get(value.student_id).$promise.then(function(data){
-        $scope.students.push(data)
-      })
-    })
+
+  Group.get($routeParams.id).$promise.then(function(data){
+    $scope.group = data
+    $scope.students = data.students
   })
+
+  
   
   $scope.system_students = User.system_students()
 
@@ -915,7 +923,8 @@ quizlib.controller("Navigation",['$scope',function($scope){
   
 
   $scope.no_starred_cookie = function(){
-    if($.cookie("starred_assessments") == undefined){return true;}
+    if($.cookie("starred_assessments") == undefined){
+      return true;}
     else{return false;}
   }
   $scope.no_shared_cookie = function(){

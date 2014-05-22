@@ -271,15 +271,18 @@
         <div class="row">
           <div class="col-xs-5 left_section_area">
             <input type="text" ng-model="student" typeahead="student as student.first_name for student in system_students | filter:{first_name:$viewValue} | limitTo:8" class="form-control" enter = "AddStudent(student)" placeholder="Search by name" typeahead-on-select = "AddStudent(student)">
-            <select class="form-control form_section col-xs-12" ng-model="selects.selected_group" ng-options="group as group.title for group in groups" tourtip-step = "0" tourtip = "Either select the user individually or select from group" tourtip-next-label = "Finish">
+            <select class="form-control form_section col-xs-12" ng-model="selects.selected_group" ng-options="group as group.title for group in groups" tourtip-step = "0">
               <option value = "">Select Group</option>
             </select> 
-            <ul class="col-xs-12">
+            <ul class="col-xs-12 mar-top-20">
               <li class="col-xs-11 select_section" ng-repeat = "group_student in group_students" style = "word-wrap: break-word;">
                 <span class="col-xs-4"><img src="{{group_student.profile_pic.url}}" class="img-thumbnail" /></span>
                 <span style=" float:right;"><input type="checkbox" name="checkbox" ng-click = "student_to_right(group_student)"/></span>
                 <span class="col-xs-6"><h4>{{group_student.first_name}}{{group_student.last_name}}</h4>
                 <p>{{group_student.email}}</p></span>
+              </li>
+              <li class = "no-record select_section" ng-if = "selects.selected_group != undefined && selected_students.length == 0 && group_students.length == 0">
+                No students in the group. <a ng-href = "#/groups/selects.selected_group.id/edit">Click here</a> to add
               </li>
             </ul>
           </div>
@@ -301,6 +304,7 @@
                 <span class="col-xs-6"><h4>{{selected_student.first_name}}{{selected_student.last_name}}</h4>
                 <p>{{selected_student.email}}</p></span>
               </li>
+
             </ul>
           </div>
         </div>

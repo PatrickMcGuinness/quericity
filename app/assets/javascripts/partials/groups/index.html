@@ -46,7 +46,7 @@
           </thead>
           <tbody class="text-center">
           	<tr ng-repeat = "group in groups | orderBy:predicate:reverse">
-              <td>{{group.title}}</td>
+              <td><a ng-href = "#/groups/{{group.id}}/view">{{group.title}}</a></td>
               <td>{{group.last_updated}}</td>
               <td><span>{{group.count}}</span></td>
               <td>

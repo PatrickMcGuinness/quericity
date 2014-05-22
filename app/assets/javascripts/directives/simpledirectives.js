@@ -386,12 +386,15 @@ quizlib.directive('showhide', function () {
     link: function (scope, element, attr) {
       element.bind('click', function () {
         var el = element[0]      
-  
         if($(el).parents(".complete_row").siblings("ul").hasClass("hide")){
           $(el).parents(".complete_row").siblings("ul").removeClass("hide")
+          $(el).children(".down").removeClass("hide")
+          $(el).children(".right").addClass("hide")
         }
         else{
           $(el).parents(".complete_row").siblings("ul").addClass("hide")
+          $(el).children(".right").removeClass("hide")
+          $(el).children(".down").addClass("hide")
         }
       })
     }

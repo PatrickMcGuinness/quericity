@@ -105,13 +105,16 @@ body{
 	
 .left_section{
 	min-height:500px;
-	background-color:#22a2dc;
+	background-color:#eee;
 	/*margin-top:20px;*/
 	padding-top:20px;
-	color:#FFF;
 	font-size:14px;
 	line-height:32px;
-	width: 230px;
+	min-width: 200px;
+  -webkit-box-shadow: 0px 1px 1px 0px;
+  -moz-box-shadow: 0px 1px 1px 0px;
+  box-shadow: 0px 1px 1px 0px;
+
 	}
 	
 .left_section ul li{
@@ -120,25 +123,36 @@ body{
 	
 .left_section ul li a{
 	text-decoration:none;
-	color:#fff;
-	padding:7px 20px 20px 30px;
+	/*padding:7px 20px 20px 30px;*/
+  padding-left: 10px;
+  color: #494949;
+  font-family: sans-serif;
+  
 	}
 .left_section ul li a.black{
 	color:black;
 	padding: 0px;
-	}	
-	
-.left_section ul li a:hover{
-	color:#003656;
-	position: relative;
-	background-image:url(/assets/left_nav_hover.png);
-	background-repeat:no-repeat;
 	}
-.left_section ul li .complete_row:hover{
+.drive-icon{
+  font-size: 10px;
+}	
+	
+/*.left_section ul li a:hover{
 	color:#003656;
 	position: relative;
 	background-image:url(/assets/left_nav_hover.png);
 	background-repeat:no-repeat;
+	}*/
+.left_section ul li .complete_row{
+    padding-left: 10px;
+    color: #494949;
+    font-family: sans-serif; 
+  }  
+.left_section ul li .complete_row:hover{
+	background-color:#ddd;
+	position: relative;
+	/*background-image:url(/assets/left_nav_hover.png);
+	background-repeat:no-repeat; */
 	}
 .left_section ul li .complete_row span.link{
 	cursor: pointer;

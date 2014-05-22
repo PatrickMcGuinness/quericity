@@ -24,39 +24,6 @@ class Group < ActiveRecord::Base
     students
   end
 
-  def background_tasks_for_create(user,params)
-    if params[:student_ids].present?
-      student_groups = user.default_group.student_groups
-      student_groups.update_all(:group_id => self.id)
-      student_ids_new = student_groups.pluck(:student_id)
-      other_student_ids = params[:student_ids] - student_ids_new
-      other_student_ids.each do |student_id|
-        StudentGroup.create(:student_id => student_id, :group_id => self.id)
-      end
-    end
-
-    if params[:invite_ids].present?
-      invites = Invite.where("id IN (?)", params[:invite_ids])
-      invites.each do |invite|
-        new_user = User.invite!({:email => invite.receiver_email, :role => "Student"},user)
-        StudentGroup.create(:group_id => self.id, :student_id => new_user.id)
-        invite.destroy
-      end
-    end
-  end
-  handle_asynchronously :background_tasks_for_create, :run_at => Proc.new { Time.now }
-
-  def background_tasks_for_update(user,params)
-    if params[:invite_ids].present?
-      invites = Invite.where("id IN (?)", params[:invite_ids])
-      invites.each do |invite|
-        new_user = User.invite!({:email => invite.receiver_email, :role => "Student"},user)
-        StudentGroup.create(:group_id => self.id, :student_id => new_user.id)
-        invite.destroy
-      end
-    end
-  end
-  handle_asynchronously :background_tasks_for_update, :run_at => Proc.new { Time.now }
 
   def self.add_students(user,params)
     students = []
@@ -98,5 +65,19 @@ class Group < ActiveRecord::Base
       end
     end
     [student_groups, invites]
+  end
+
+  def as_json(opts = nil)
+    opts ||={}
+    {
+      :id => id,
+      :title => title,
+      :owner_id => owner_id,
+      :owner => owner.as_json(),
+      :created_at => created_at,
+      :updated_at => updated_at,
+      :students => students.as_json()
+    }
+    
   end
 end

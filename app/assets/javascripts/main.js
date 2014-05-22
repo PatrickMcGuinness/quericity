@@ -22,6 +22,8 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/groups/add_group.html',controller: 'AddGroupCtrl',activetab: 'serve'}).
       when('/groups/:id/edit',
       {templateUrl: 'assets/partials/groups/edit.html',controller: 'EditGroupCtrl',activetab: 'serve'}).
+      when('/groups/:id/view',
+      {templateUrl: 'assets/partials/groups/view.html',controller: 'ViewGroupCtrl',activetab: 'serve'}).
       when('/quiz_banks/:id/preview',
       {templateUrl: 'assets/partials/quiz_banks/preview.html',controller: 'PreviewQuizCtrl',activetab: 'manage'}).
       when('/grade',
