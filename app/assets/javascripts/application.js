@@ -27,6 +27,7 @@
 //= require custom.js
 //= require angular-tour.min
 //= require angular-tour-tpls.min
+//= require bootstrap-datetimepicker.min
 
 loadingimage =  "<img alt='Please wait' src='/assets/loading.gif' style='margin-left:5px;' class='loading-img'>"
 
