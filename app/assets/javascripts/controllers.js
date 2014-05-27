@@ -270,6 +270,10 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
     })   
   }
 }]);
+
+quizlib.controller('PreviewServeQuizCtrl', ['$scope','$routeParams','$timeout','QuizBank','Question','QuestionOption',function($scope,$routeParams,$timeout,QuizBank,Question,QuestionOption){
+}]);
+
 quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizBank','Question','QuestionOption',function($scope,$routeParams,$timeout,QuizBank,Question,QuestionOption){
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
@@ -562,35 +566,47 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
   
-  $scope.show_question_list = true
+  //$scope.show_question_list = true
   $scope.selected_questions = []
-  $scope.show_options = true
+  //$scope.show_options = true
   $scope.group_students = []
   $scope.students_to_left = []
   $scope.students_to_right = []
   $scope.selected_students = []
   $scope.option_submitted = false
   $scope.quiz = {date: null, close_date: null}
-  $scope.selects = {selected_group: null}
+  $scope.selects = {selected_group: null, selected_quiz: null}
+  $scope.toggle_display = {show_question_list: true, show_options: true}
 
   $scope.served_quiz = {}  // to make the angular js work weird
 
   QuizBank.all().$promise.then(function(data){
     $scope.quiz_banks = data.result
   })
+  $scope.init = function(){
+    User.get_current_user().$promise.then(function(data){
+      $scope.user = data
+      if($scope.user.show_tour == true){
+        $scope.currentStep = 0
+      }
+      else{
+        $scope.currentStep = 1000
+      }
+    })
+  }
   
   $scope.groups = Group.all()
   $scope.system_students = User.system_students()
   if($routeParams.selected_quiz != undefined){
     QuizBank.get($routeParams.selected_quiz).$promise.then(function(data){
-      $scope.selected_quiz = data
+      $scope.selects.selected_quiz = data
     })
     //$scope.selected_quiz = QuizBank.get($routeParams.selected_quiz)
   }
-  $scope.$watch('selected_quiz', function() {
-    if($scope.selected_quiz != undefined){
-      $scope.quiz_bank_questions = QuizBank.questions($scope.selected_quiz.id)
-      QuizBank.get($scope.selected_quiz.id).$promise.then(function(data){
+  $scope.$watch('selects.selected_quiz', function() {
+    if($scope.selects.selected_quiz != undefined){
+      $scope.quiz_bank_questions = QuizBank.questions($scope.selects.selected_quiz.id)
+      QuizBank.get($scope.selects.selected_quiz.id).$promise.then(function(data){
         $scope.quiz_bank = data
         //$scope.served_quiz.instructions = data.instructions
       })
@@ -669,23 +685,23 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   $scope.checkOptions = function(isValid){
     $scope.option_submitted = true
     if(isValid && $scope.served_quiz.infinite_duration != undefined && $scope.served_quiz.random != undefined && $scope.served_quiz.show_all_questions != undefined){
-      $scope.show_options = false
+      $scope.toggle_display.show_options = false
     }
   }
 
 
   $scope.serveTheQuiz = function(){
-    ClonedQuizBank.create_the_clone($scope.selected_quiz.id).$promise.then(function(data){
+    ClonedQuizBank.create_the_clone($scope.selects.selected_quiz.id).$promise.then(function(data){
       cloned_quiz_bank_id = data.id
       
       if($scope.served_quiz.random == 0){
         angular.forEach($scope.selected_questions,function(value,key){
-          ClonedQuestion.save($scope.selected_quiz.id,data.id,{seq: value.seq, 
+          ClonedQuestion.save($scope.selects.selected_quiz.id,data.id,{seq: value.seq, 
               description: value.description, question_type: value.question_type,
               difficulty_level: value.difficulty_level, cloned_quiz_bank_id: cloned_quiz_bank_id}).$promise.then(function(cloned_question){
-                QuestionOption.all($scope.selected_quiz.id,value.section_id,value.id).$promise.then(function(question_options){
+                QuestionOption.all($scope.selects.selected_quiz.id,value.section_id,value.id).$promise.then(function(question_options){
                   angular.forEach(question_options,function(question_option,key){
-                    ClonedQuestionOption.save($scope.selected_quiz.id, data.id, cloned_question.id, {answer: question_option.answer, cloned_question_id: cloned_question.id, is_correct: question_option.is_correct, seq: question_option.seq})
+                    ClonedQuestionOption.save($scope.selects.selected_quiz.id, data.id, cloned_question.id, {answer: question_option.answer, cloned_question_id: cloned_question.id, is_correct: question_option.is_correct, seq: question_option.seq})
                   })
                 })     
 
@@ -697,12 +713,12 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
           var question = $scope.quiz_bank_questions[Math.floor(Math.random() * $scope.quiz_bank_questions.length)];
           index = $scope.quiz_bank_questions.indexOf(question);
           $scope.quiz_bank_questions.splice(index,1)
-          ClonedQuestion.save($scope.selected_quiz.id,data.id,{seq: question.seq, 
+          ClonedQuestion.save($scope.selects.selected_quiz.id,data.id,{seq: question.seq, 
               description: question.description, question_type: question.question_type,
               difficulty_level: question.difficulty_level, cloned_quiz_bank_id: cloned_quiz_bank_id}).$promise.then(function(cloned_question){
-                QuestionOption.all($scope.selected_quiz.id,question.section_id,question.id).$promise.then(function(question_options){
+                QuestionOption.all($scope.selects.selected_quiz.id,question.section_id,question.id).$promise.then(function(question_options){
                   angular.forEach(question_options,function(question_option,key){
-                    ClonedQuestionOption.save($scope.selected_quiz.id, data.id, cloned_question.id, {answer: question_option.answer, cloned_question_id: cloned_question.id, is_correct: question_option.is_correct, seq: question_option.seq})
+                    ClonedQuestionOption.save($scope.selects.selected_quiz.id, data.id, cloned_question.id, {answer: question_option.answer, cloned_question_id: cloned_question.id, is_correct: question_option.is_correct, seq: question_option.seq})
                   })
                 })     
 
@@ -710,7 +726,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
         }
       }
       $scope.served_quiz.cloned_quiz_bank_id = cloned_quiz_bank_id
-      $scope.served_quiz.quiz_bank_id = $scope.selected_quiz.id
+      $scope.served_quiz.quiz_bank_id = $scope.selects.selected_quiz.id
       $scope.served_quiz.date = $scope.quiz.date
       $scope.served_quiz.close_date = $scope.quiz.close_date
       
@@ -777,6 +793,17 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
   $scope.submitted = false
   $scope.valid = false
   $scope.group = {title: null}
+  $scope.init = function(){
+    User.get_current_user().$promise.then(function(data){
+      $scope.user = data
+      if($scope.user.show_tour == true){
+        $scope.currentStep = 0
+      }
+      else{
+        $scope.currentStep = 1000
+      }
+    })
+  }
   $scope.AddStudent = function(student){
     var check = 0
     if(student.id != undefined){
@@ -818,7 +845,7 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
     }
   }
 }]);
-quizlib.controller('ViewGroupCtrl', ['$scope','$location','$routeParams','User','Group','StudentGroup',function($scope,$location,$routeParams,User,Group,StudentGroup){
+quizlib.controller('ViewGroupCtrl', ['$scope','$routeParams','Group',function($scope,$routeParams,Group){
   Group.get($routeParams.id).$promise.then(function(data){
     $scope.group = data
     var obj = new Date($scope.group.updated_at)
@@ -841,7 +868,18 @@ quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User',
   })
 
   
-  
+  $scope.init = function(){
+    User.get_current_user().$promise.then(function(data){
+      $scope.user = data
+      if($scope.user.show_tour == true){
+        $scope.currentStep = 0
+      }
+      else{
+        $scope.currentStep = 1000
+      }
+    })
+  }
+
   $scope.system_students = User.system_students()
 
   $scope.AddStudent = function(student){
@@ -994,6 +1032,17 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
     })
     
   })
+  $scope.init = function(){
+    User.get_current_user().$promise.then(function(data){
+      $scope.user = data
+      if($scope.user.show_tour == true){
+        $scope.currentStep = 0
+      }
+      else{
+        $scope.currentStep = 1000
+      }
+    })
+  }
 
   $scope.toggle_title = function(){
     if($scope.quiz_title == false){
@@ -1546,7 +1595,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   
 
 }])
-quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope, $location,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
+quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','User',function($scope, $location,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,User){
   // Variables for view show hide
 
   $.removeCookie("my_assessments")
@@ -1559,11 +1608,23 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   $scope.submitted = false
   $scope.section_submitted = false
   $scope.show_new_section = false
+  $scope.quiz_bank = {}
 
   $scope.addMoreTags = function(){
     if($scope.selected_tag != undefined){
       $scope.show_tags.push($scope.selected_tag)
     }
+  }
+  $scope.init = function(){
+    User.get_current_user().$promise.then(function(data){
+      $scope.user = data
+      if($scope.user.show_tour == true){
+        $scope.currentStep = 0
+      }
+      else{
+        $scope.currentStep = 1000
+      }
+    })
   }
   Repository.default_repo().
       $promise.then(

@@ -1,98 +1,109 @@
 <div ng-include src="'/assets/partials/common/menu.html'"></div>
-<div class="row_bottom">
-  <div class="container">
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
-      <span class="sub_nav_link">
-        <a ng-href  ='#/quiz_banks/new' data-toggle = "tooltip" title = "Create new quiz" tooltip-placement = "top">Create Quiz</a>
-      </span>
-    </div>
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
-      <span class="sub_nav_link">
-        <a class = "showcreaterepo" data-toggle = "tooltip" title = "Create new repo" tooltip-placement = "top">Create Repo</a>
-      </span>
-    </div>
-    <div class="col-xs-2 pull-right">
-      <input type="Search" placeholder="Search..." class="form-control search" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search quizzes by title" tooltip-placement = "top"/>
+<tour step="currentStep" ng-init = "init()">
+  <div class="row_bottom">
+    <div class="container">
+      <div class="sub_nav">
+        <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
+        <span class="sub_nav_link">
+          <a ng-href  ='#/quiz_banks/new' data-toggle = "tooltip" title = "Create new quiz" tooltip-placement = "top">Create Quiz</a>
+        </span>
+      </div>
+      <div class="sub_nav">
+        <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
+        <span class="sub_nav_link">
+          <a class = "showcreaterepo" data-toggle = "tooltip" title = "Create new repo" tooltip-placement = "top">Create Repo</a>
+        </span>
+      </div>
+      <div class="sub_nav" ng-show = "user.show_tour">
+        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
+        <span class="sub_nav_link"><a href ng-click = "openTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Open Tour</a></span>
+      </div>
+      <div class="sub_nav" ng-show = "user.show_tour">
+        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
+        <span class="sub_nav_link"><a href ng-click = "closeTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Close Tour</a></span>
+      </div>
+      
+      <div class="col-xs-2 pull-right">
+        <input type="Search" placeholder="Search..." class="form-control search" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search quizzes by title" tooltip-placement = "top"/>
+      </div>
     </div>
   </div>
-</div>
 
 
-<div close-popovers>
-  <div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'"></div>
-    
-  <div class="col-xs-10 right_section">
-    <table class="table table-striped">
-      <thead>
-        <th class="col-xs-2 manage_section">
-          Title
-          <a ng-click="predicate = 'title'; reverse=!reverse">
-            <img src="/assets/heading_arrow_down.png" ng-click = "toggle_title()" ng-if = "quiz_title == true || quiz_title == undefined"/>
-            <img src="/assets/heading_arrow_up.png" ng-click = "toggle_title()" ng-if = "quiz_title == false"/>
-          </a>
-        </th>
-        <th class="col-xs-2 manage_section">
-          Owner
-          <a ng-click="predicate = 'user.first_name'; reverse=!reverse">
-            <img src="/assets/heading_arrow_down.png" ng-click = "toggle_name()" ng-if = "owner_name == true || owner_name == undefined"/>
-            <img src="/assets/heading_arrow_up.png" ng-click = "toggle_name()" ng-if = "owner_name == false"/>
-          </a>
-        </th>
-        <th class="col-xs-2 manage_section">
-          Tags
-          <a ng-click="predicate = 'topics[0].title'; reverse=!reverse">
-            <img src="/assets/heading_arrow_down.png" ng-click = "toggle_tags()" ng-if = "quiz_tag == true || quiz_tag == undefined"/>
-            <img src="/assets/heading_arrow_up.png" ng-click = "toggle_tags()" ng-if = "quiz_tag == false"/>
-          </a>
-        </th>
-        <th class="col-xs-2 manage_section">Sharing</th>
-        <th class="col-xs-2 manage_section">Action</th>
-      </thead>
-      <tbody>
-        <tr ng-repeat = "quiz_bank in quiz_banks | filter: titleFilter | orderBy:predicate:reverse">
-          <td>
-          <a ng-if = "current_user.id == quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span ng-show = 'current_user.id == quiz_bank.user.id' class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;'></span><span ng-show = 'current_user.id == quiz_bank.user.id' style = 'margin-left:2px'><a ng-click = deleteQuiz(quiz_bank)>Delete</a></span><span class = 'glyphicon glyphicon-edit' style= 'margin-left:2px;'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/edit'>Edit</a></span><span style= 'margin-left:2px;'><img src = '/assets/clone_icon.png'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/clone'>Clone</a></span>" popover-placement="top" class = "popover-maker">
-            {{quiz_bank.title}}
-          </a>
-          <a ng-if = "current_user.id != quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span style= 'margin-left:2px;'><img src = '/assets/clone_icon.png'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/clone'>Clone</a></span>" popover-placement="top" class = "popover-maker">
-            {{quiz_bank.title}}
-          </a>  
-          </td>
-          <td>{{quiz_bank.user.first_name}} {{quiz_bank.user.last_name}}</td>
-          <td style = "text-align:left;">
-            <span class = "glyphicon glyphicon-tag" style = "color: red;"></span>
-            <span>&nbsp;&nbsp;{{quiz_bank.topics[0].title}}</span>
-          </td>
-          <td ng-hide = "quiz_bank.public">Private</td>
-          <td ng-show = "quiz_bank.public">Public</td>
-          <td>
-            <a ng-if = "current_user.id == quiz_bank.user.id" ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)" data-toggle = "tooltip" title = "Share Quiz" tooltip-placement = "top">
-              <span class = "glyphicon glyphicon-cloud"></span>
+  <div close-popovers>
+    <div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'"></div>
+      
+    <div class="col-xs-10 right_section">
+      <table class="table table-striped">
+        <thead>
+          <th class="col-xs-2 manage_section">
+            Title
+            <a ng-click="predicate = 'title'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_title()" ng-if = "quiz_title == true || quiz_title == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_title()" ng-if = "quiz_title == false"/>
             </a>
-            <a ng-if = "current_user.id == quiz_bank.user.id" ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)" data-toggle = "tooltip" title = "Unshare Quiz" tooltip-placement = "top">
-              <span  class = "glyphicon glyphicon-user"></span>
+          </th>
+          <th class="col-xs-2 manage_section">
+            Owner
+            <a ng-click="predicate = 'user.first_name'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_name()" ng-if = "owner_name == true || owner_name == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_name()" ng-if = "owner_name == false"/>
             </a>
-            <a ng-if = "current_user.id != quiz_bank.user.id">
-              &nbsp;&nbsp;&nbsp;
+          </th>
+          <th class="col-xs-2 manage_section">
+            Tags
+            <a ng-click="predicate = 'topics[0].title'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_tags()" ng-if = "quiz_tag == true || quiz_tag == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_tags()" ng-if = "quiz_tag == false"/>
             </a>
+          </th>
+          <th class="col-xs-2 manage_section">Sharing</th>
+          <th class="col-xs-2 manage_section">Action</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat = "quiz_bank in quiz_banks | filter: titleFilter | orderBy:predicate:reverse">
+            <td>
+            <a ng-if = "current_user.id == quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span ng-show = 'current_user.id == quiz_bank.user.id' class = 'glyphicon glyphicon-trash' style= 'margin-left:2px;'></span><span ng-show = 'current_user.id == quiz_bank.user.id' style = 'margin-left:2px'><a ng-click = deleteQuiz(quiz_bank)>Delete</a></span><span class = 'glyphicon glyphicon-edit' style= 'margin-left:2px;'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/edit'>Edit</a></span><span style= 'margin-left:2px;'><img src = '/assets/clone_icon.png'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/clone'>Clone</a></span>" popover-placement="top" class = "popover-maker">
+              {{quiz_bank.title}}
+            </a>
+            <a ng-if = "current_user.id != quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span style= 'margin-left:2px;'><img src = '/assets/clone_icon.png'></span><span style = 'margin-left:2px'><a href = '#/quiz_banks/{{quiz_bank.id}}/clone'>Clone</a></span>" popover-placement="top" class = "popover-maker">
+              {{quiz_bank.title}}
+            </a>  
+            </td>
+            <td>{{quiz_bank.user.first_name}} {{quiz_bank.user.last_name}}</td>
+            <td style = "text-align:left;">
+              <span class = "glyphicon glyphicon-tag" style = "color: red;"></span>
+              <span>&nbsp;&nbsp;{{quiz_bank.topics[0].title}}</span>
+            </td>
+            <td ng-hide = "quiz_bank.public">Private</td>
+            <td ng-show = "quiz_bank.public">Public</td>
+            <td>
+              <a ng-if = "current_user.id == quiz_bank.user.id" ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)" data-toggle = "tooltip" title = "Share Quiz" tooltip-placement = "top">
+                <span class = "glyphicon glyphicon-cloud"></span>
+              </a>
+              <a ng-if = "current_user.id == quiz_bank.user.id" ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)" data-toggle = "tooltip" title = "Unshare Quiz" tooltip-placement = "top">
+                <span  class = "glyphicon glyphicon-user"></span>
+              </a>
+              <a ng-if = "current_user.id != quiz_bank.user.id">
+                &nbsp;&nbsp;&nbsp;
+              </a>
 
-            <a ng-show = "quiz_bank.is_favourite" ng-click = "make_unfavourite(quiz_bank)" data-toggle = "tooltip" title = "Unlike Quiz" tooltip-placement = "top">
-              <span class = "glyphicon glyphicon-star"></span>
-            </a>
-            <a ng-hide = "quiz_bank.is_favourite" ng-click = "make_favourite(quiz_bank)" data-toggle = "tooltip" title = "Like Quiz" tooltip-placement = "top">
-              <span class = "glyphicon glyphicon-star-empty"></span>
-            </a>
+              <a ng-show = "quiz_bank.is_favourite" ng-click = "make_unfavourite(quiz_bank)" data-toggle = "tooltip" title = "Unlike Quiz" tooltip-placement = "top">
+                <span class = "glyphicon glyphicon-star"></span>
+              </a>
+              <a ng-hide = "quiz_bank.is_favourite" ng-click = "make_favourite(quiz_bank)" data-toggle = "tooltip" title = "Like Quiz" tooltip-placement = "top">
+                <span class = "glyphicon glyphicon-star-empty"></span>
+              </a>
 
-            <a data-toggle = "tooltip" title = "Serve Quiz" tooltip-placement = "top" ng-href = "#/serve_quiz/new?selected_quiz={{quiz_bank.id}}">  
-              <span class = "glyphicon glyphicon-transfer"> </span>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              <a data-toggle = "tooltip" title = "Serve Quiz" tooltip-placement = "top" ng-href = "#/serve_quiz/new?selected_quiz={{quiz_bank.id}}">  
+                <span class = "glyphicon glyphicon-transfer"> </span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+</tour>  
 
 

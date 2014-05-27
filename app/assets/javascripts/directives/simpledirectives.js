@@ -26,6 +26,7 @@ quizlib.directive("showLinegraph",function(){
   };
 });
 
+
 quizlib.directive("chooseImage",function(){
   return {
     restrict: "A",
@@ -390,11 +391,13 @@ quizlib.directive('showhide', function () {
           $(el).parents(".complete_row").siblings("ul").removeClass("hide")
           $(el).children(".down").removeClass("hide")
           $(el).children(".right").addClass("hide")
+          $(el).parents(".complete_row").addClass("active")
         }
         else{
           $(el).parents(".complete_row").siblings("ul").addClass("hide")
           $(el).children(".right").removeClass("hide")
           $(el).children(".down").addClass("hide")
+          $(el).parents(".complete_row").removeClass("active")
         }
       })
     }

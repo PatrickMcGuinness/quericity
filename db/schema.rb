@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140516120355) do
+ActiveRecord::Schema.define(:version => 20140523115436) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -299,9 +299,9 @@ ActiveRecord::Schema.define(:version => 20140516120355) do
   create_table "users", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "email",                  :default => "", :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.string   "email",                  :default => "",   :null => false
     t.string   "encrypted_password",     :default => ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -332,6 +332,7 @@ ActiveRecord::Schema.define(:version => 20140516120355) do
     t.string   "uid"
     t.integer  "invitations_count"
     t.string   "time_zone"
+    t.boolean  "show_tour",              :default => true
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

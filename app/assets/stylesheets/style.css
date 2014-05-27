@@ -149,10 +149,20 @@ body{
     font-family: sans-serif; 
   }  
 .left_section ul li .complete_row:hover{
-	background-color:#ddd;
+	background-color:#22A2DC;
 	position: relative;
+	color: white;
 	/*background-image:url(/assets/left_nav_hover.png);
 	background-repeat:no-repeat; */
+	}
+.left_section ul li .complete_row:hover a{
+	background-color:#22A2DC;
+	position: relative;
+	color: white;
+	}	
+.left_section ul li .complete_row.active a{
+	color:#22A2DC;
+	position: relative;
 	}
 .left_section ul li .complete_row span.link{
 	cursor: pointer;

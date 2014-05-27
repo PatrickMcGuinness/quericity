@@ -1,5 +1,5 @@
 <div ng-include src="'/assets/partials/common/menu.html'"></div>
-<tour step="currentStep">
+<tour step="currentStep" ng-init = "init()">
   <div class="row_bottom">
   	<div class="container">
       <div class="sub_nav">
@@ -10,9 +10,13 @@
         <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
         <span class="sub_nav_link"><a href="#/groups" data-toggle = "tooltip" title = "List Student Groups" tooltip-placement = "top">Student Groups</a></span>
   		</div>
-      <div class="sub_nav">
+      <div class="sub_nav" ng-show = "user.show_tour">
         <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
         <span class="sub_nav_link"><a href ng-click = "openTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Open Tour</a></span>
+      </div>
+      <div class="sub_nav" ng-show = "user.show_tour">
+        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
+        <span class="sub_nav_link"><a href ng-click = "closeTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Close Tour</a></span>
       </div>	
   	</div>
   </div>
@@ -34,7 +38,7 @@
           </button>
           <div class="col-xs-12">
             <div class = "form-group" ng-class="{ 'has-error' : (GroupForm.title.$invalid) && (!GroupForm.title.$pristine || submitted == true)}">           
-              <input type="text" placeholder="Add Title for Group" class="add_title form-control" ng-model = "group.title" name = "title" required tourtip = "Add Name to the Group" tourtip-step = "0"/>
+              <input type="text" placeholder="Add Title for Group" class="add_title form-control" ng-model = "group.title" name = "title" required tourtip = "Add Name to the Group" tourtip-step = "0" />
               <p ng-show="GroupForm.title.$invalid && (!GroupForm.title.$pristine || submitted == true)" class="help-block">Title is required.</p>
             </div>  
           </div>

@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,:omniauthable, :omniauth_providers => [:facebook]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :role, :invited_by, :provider, :uid,:time_zone
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :role, :invited_by, :provider, :uid,:time_zone, :show_tour
   attr_accessible :first_name, :last_name,:profile_pic, :role, :encrypted_password,:reset_password_token, :reset_password_sent_at, :remember_created_at,
   :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip,:confirmation_token,
   :confirmed_at, :confirmation_sent_at, :unconfirmed_email
@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
   #validates :password, presence: true
   #validates :role, presence: true
   #validates :email, uniqueness: true  
-
 
 
   
@@ -208,7 +207,8 @@ class User < ActiveRecord::Base
       :first_name => first_name,
       :last_name => last_name,
       :profile_pic => display_picture.as_json(),
-      :time_zone => time_zone.to_s
+      :time_zone => time_zone.to_s,
+      :show_tour => show_tour
     }
     
   end

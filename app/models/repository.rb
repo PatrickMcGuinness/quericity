@@ -12,7 +12,7 @@ class Repository < ActiveRecord::Base
 
   default_scope { where("deleted_at IS NULL") }
 
-  #validates :title, :user_id ,presence: true
+  validates :title, :user_id ,presence: true
   #validates :title, :uniqueness => { :scope => :user_id }  
 
 
