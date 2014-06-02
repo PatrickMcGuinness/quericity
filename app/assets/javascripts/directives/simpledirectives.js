@@ -1,3 +1,35 @@
+quizlib.directive("removeOption",function(){
+  return {
+    restrict: "A",
+    link: function(scope,element,attrs){
+      element.bind("click",function(){
+        if($(this).parents("tbody").children("tr").length == 2){
+          alert("need at least two options")
+        }
+        else{
+          $(this).parents("tr").remove()
+        }
+      })
+    }
+  };
+})
+
+quizlib.directive("addOption",function(){
+  return {
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("focus",function($compile){
+        if($(this).parents("tr").is(":last-child")){
+          //var tpl = "<div></div>"
+          //var el = $compile( tpl)( scope );
+          var el = "<tr><td><input type = 'text' class = 'form-control'></td><td><input type = 'radio'></td><td><a><span class = 'glyphicon glyphicon-remove' style = 'color:red' remove-option></span></a></td></tr>"
+          //$compile(el)(scope)
+        }
+      })
+    }
+  };
+})
+
 quizlib.directive("showBargraph",function(){
   return {
     restrict: "C",
@@ -11,6 +43,7 @@ quizlib.directive("showBargraph",function(){
     }
   };
 });
+
 quizlib.directive("showLinegraph",function(){
   return {
     restrict: "C",

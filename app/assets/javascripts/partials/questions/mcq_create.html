@@ -31,25 +31,29 @@
         <thead>
           <th class = "col-xs-10">Answers</th>
           <th class = "col-xs-1">Correct</th>
+          <th class = "col-xs-1"></th>
         </thead>
         <tbody>
           <tr>
             <td>
               <div class = "form-group mar-top-10" ng-class="{ 'has-error' : (McqForm.input0.$invalid) && submitted == true}">
-                <input name = "input0" type = "text", class = "form-control" ng-model = "input_0" required>
+                <input name = "input0" type = "text", class = "form-control" ng-model = "input_0" required add-option>
                 <p ng-show="McqForm.input0.$invalid && submitted == true" class="help-block">Required</p>
               </div>  
             </td>
             <td>
               <div class = "form-group mar-top-10">
-                <input type="radio" name="correct" ng-model = "radio" value = "0">
+                <input type="radio" name="correct" ng-model = "radio" value = "0" >
               </div>
+            </td>
+            <td>
+              <span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option ng-click = "remove_mcq_input(input_0)"></span>
             </td>
           </tr>
           <tr>
             <td>
               <div class = "form-group mar-top-10" ng-class="{ 'has-error' : (McqForm.input1.$invalid) && submitted == true}">
-                <input name = "input1" type = "text", class = "form-control" ng-model = "input_1" required>
+                <input name = "input1" type = "text", class = "form-control" ng-model = "input_1" required add-option>
                  <p ng-show="McqForm.input1.$invalid && submitted == true" class="help-block">Required</p>
               </div>  
             </td>
@@ -58,11 +62,14 @@
                 <input type="radio" name="correct" ng-model = "radio" value = "1">  
               </div>
             </td>
+            <td>
+              <a><span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option></span></a>
+            </td>
           </tr>
           <tr>
             <td>
               <div class = "form-group mar-top-10">
-                <input type = "text", class = "form-control" ng-model = "input_2" >
+                <input type = "text", class = "form-control" ng-model = "input_2" add-option>
               </div>
             </td>
             <td>
@@ -70,11 +77,14 @@
                 <input type="radio" name="correct" ng-model = "radio" value = "2">
               </div>
             </td>
+            <td>
+              <span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option></span>
+            </td>
           </tr>
           <tr>
             <td>
               <div class = "form-group mar-top-10">
-                <input type = "text", class = "form-control" ng-model = "input_3">
+                <input type = "text", class = "form-control" ng-model = "input_3" add-option>
               </div>
             </td>
             <td>
@@ -82,8 +92,11 @@
                 <input type="radio" name="correct" ng-model = "radio" value = "3">
               </div>
             </td>
+            <td>
+              <span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option></span>
+            </td>
           </tr>
-          <tr>
+          <!--<tr>
             <td class = "col-xs-12">
               <div class = "form-group" ng-class="{ 'has-error' : (selected_true_false_option == undefined)}">
                 <p ng-show="radio == undefined && submitted == true" class="help-block">Select at least one option.</p>
@@ -91,7 +104,7 @@
             </td>
             <td>
             </td>  
-          </tr>  
+          </tr> -->  
 
 
         </tbody>

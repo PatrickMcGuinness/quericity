@@ -24,6 +24,7 @@
       <thead>
         <th class = "col-xs-10">Answers</th>
         <th class = "col-xs-1">Correct</th>
+        <th class = "col-xs-1"></th>
       </thead>
       <tbody>
         <tr ng-repeat = "option in question_options">
@@ -31,7 +32,10 @@
             <input type = "text", class = "form-control" ng-model = "option.answer">
           </td>
           <td>
-            <input ng-click = "select_option(option)" type="radio" name="correct" ng-model = "correct" value = "{{$index}}" ng-checked = "option.is_correct == true">
+            <input ng-click = "select_option(option)" type="radio" name="correct" ng-model = "correct" value = "{{$index}}" ng-checked = "option.is_correct == true" >
+          </td>
+          <td>
+            <span class = "glyphicon glyphicon-remove" style = "color:red" remove-option></span>
           </td>
         </tr>
       </tbody>

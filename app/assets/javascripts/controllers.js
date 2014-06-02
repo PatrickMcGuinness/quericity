@@ -565,7 +565,7 @@ quizlib.controller('TimePickerCtrl', ['$scope',function($scope){
   };
 }]); 
 
-quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','ClonedQuestionOption','Group','User','Sharing','QuestionOption','$routeParams',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,ClonedQuestionOption,Group,User,Sharing,QuestionOption,$routeParams){
+quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','ClonedQuestionOption','Group','User','Sharing','QuestionOption','$routeParams','$location',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,ClonedQuestionOption,Group,User,Sharing,QuestionOption,$routeParams,$location){
   
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
@@ -726,6 +726,8 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
         angular.forEach($scope.selected_students,function(value,key){
           Sharing.save(data.id,{user_id: value.id})
         })
+        console.log("$lcoiton")
+        $location.path("/served_quizzes")
       })
     })
   }
@@ -1276,6 +1278,8 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
 
   $scope.selected_difficulty = null
 
+  //$scope.mcq_options = [$scope.input_0 = "asds", $scope.input_1 = "sfsd",$scope.input_2 = "dfgdf",$scope.input_3 = "dfsgsdd"]
+
   $scope.removeData = function(){
     $scope.selected_difficulty = null
     $scope.selected_true_false_option = null
@@ -1358,6 +1362,50 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
     }    
   }
 
+  $scope.remove_mcq_input = function(input){
+    console.log($scope.mcq_options)
+    var index = $scope.mcq_options.indexOf(input)
+    $scope.mcq_options.splice(index)
+    console.log($scope.mcq_options)
+  }
+  /*$scope.create_mcq = function(isValid){
+    $scope.submitted = true
+    
+    if(isValid){
+      inputs = $scope.mcq_options
+      var correct_input = $scope.radio;
+      Question.save($scope.quiz_bank_id, $scope.section_id,
+        {description: $scope.question.description,section_id: $scope.section_id,
+        question_type: 2,difficulty_level: $scope.selected_difficulty}).$promise.then(function(data){
+          $scope.question_id = data.id
+          GlobalScope.set_question_id($scope.question_id)
+          for(var i = 0; i<(inputs.length -1) ; i++){
+            if(inputs[i] != undefined){
+              is_correct = true
+              if(correct_input == i){
+                is_correct = true
+              }
+              else{
+                is_correct = false
+              }
+              QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
+              {question_id: $scope.question_id, answer:inputs[i],is_correct: is_correct})
+            }  
+          }
+
+        })
+        $scope.selected_difficulty = null
+        $scope.submitted = false
+        $scope.radio = null
+        $scope.input_0 = null
+        $scope.input_1 = null
+        $scope.input_2 = null
+        $scope.input_3 = null
+        CKEDITOR.instances['description'].setData("")
+        $scope.hideQuestion()
+    }
+
+  }*/
   $scope.create_mcq = function(isValid){
     $scope.submitted = true
     if(isValid){
