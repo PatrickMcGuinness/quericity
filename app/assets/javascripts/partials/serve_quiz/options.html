@@ -290,7 +290,7 @@
                 <p>{{group_student.email}}</p></span>
               </li>
               <li class = "no-record select_section" ng-if = "selects.selected_group != undefined && selected_students.length == 0 && group_students.length == 0">
-                No students in the group. <a ng-href = "#/groups/selects.selected_group.id/edit">Click here</a> to add
+                No students in the group. <a ng-href = "#/groups/{{selects.selected_group.id}}/edit">Click here</a> to add
               </li>
             </ul>
           </div>
