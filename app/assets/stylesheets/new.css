@@ -8,6 +8,9 @@
 	color: white;
 	border-radius: 5px 5px 0px 0px;
 }
+.mar-bot-0{
+	margin-bottom:0px !important;
+}
 .error{
 	float: left;
 	color: red;

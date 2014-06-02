@@ -58,9 +58,9 @@ student_quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParam
   $scope.student_id = $routeParams.student_id
   ServedQuiz.student_quiz_report($routeParams.id,$routeParams.student_id).$promise.then(function(data){
     $scope.student_quiz_report = data
-    $scope.student_quiz_report.served_at = TimeDisplay.get_date(data.served_quiz.created_at) + " " + TimeDisplay.get_time(data.served_quiz.created_at)
-    $scope.student_quiz_report.start_time = TimeDisplay.get_date(data.served_quiz.date) + " " + TimeDisplay.get_time(data.served_quiz.start_time)
-    $scope.student_quiz_report.end_time = TimeDisplay.get_date(data.served_quiz.close_date)+ " " + TimeDisplay.get_time(data.served_quiz.end_time)
+    $scope.student_quiz_report.served_at = TimeDisplay.get_date(data.served_quiz.created_at)
+    $scope.student_quiz_report.start_time = TimeDisplay.get_date(data.served_quiz.date)
+    $scope.student_quiz_report.end_time = TimeDisplay.get_date(data.served_quiz.close_date)
   }) 
 
 }]);
@@ -132,11 +132,9 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing','Tim
         var obj1 = new Date(value.student_sharing.local_date)
         var obj2 = new Date(value.student_sharing.local_close_date)
         value.close_date = TimeDisplay.get_date(value.student_sharing.local_close_date)
-        var obj3 = new Date(value.student_sharing.local_start_time) 
-        var obj4 = new Date(value.student_sharing.local_end_time)
-        value.end_time = TimeDisplay.get_time(value.student_sharing.local_end_time)
-      
-        value.status = QuizStatus.get_status(obj1,obj2,value.student_sharing.local_start_time,value.student_sharing.local_end_time)
+        value.updated_at = TimeDisplay.get_date(value.updated_at)
+        value.status = QuizStatus.get_status(obj1,obj2,value.close_status)
+
       })
     })
   }

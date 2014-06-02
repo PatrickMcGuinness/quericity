@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140523115436) do
+ActiveRecord::Schema.define(:version => 20140530101109) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -244,6 +244,8 @@ ActiveRecord::Schema.define(:version => 20140523115436) do
     t.integer  "show_in_sequence"
     t.integer  "show_all_questions",  :default => 0
     t.integer  "questions_per_page"
+    t.integer  "no_expiration",       :default => 0
+    t.integer  "status",              :default => 0
   end
 
   add_index "served_quizzes", ["id"], :name => "index_served_quizzes_on_id"
@@ -333,6 +335,7 @@ ActiveRecord::Schema.define(:version => 20140523115436) do
     t.integer  "invitations_count"
     t.string   "time_zone"
     t.boolean  "show_tour",              :default => true
+    t.boolean  "show_tooltip",           :default => true
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

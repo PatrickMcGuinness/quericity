@@ -55,22 +55,25 @@
         <tbody class="text-center">
           <tr ng-repeat = "served_quiz in served_quizzes | orderBy:predicate:reverse">
             <td>{{served_quiz.cloned_quiz_bank.title}}</td>
-            <td>{{served_quiz.owner.first_name}}{{served_quiz.owner.last_name}}</td>
+            <td>{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}</td>
             <td>{{served_quiz.cloned_quiz_bank.subject}}</td>
             <td ng-if = "served_quiz.student_sharing.status_in_string == 'INVITED'">
               <span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;
-              <span ng-if = "served_quiz.status != 'Serving Completed'">Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
-              <span ng-if = "served_quiz.status == 'Serving Completed'">Quiz expired on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
+              <span ng-if = "served_quiz.status != 'Serving Completed'">Quiz expiring on {{served_quiz.close_date}}</span>
+              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 0">Quiz expired on {{served_quiz.close_date}}</span>
+              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 1">Quiz expired on {{served_quiz.updated_at}}</span>
             </td>
             <td ng-if = "served_quiz.student_sharing.status_in_string == 'PARTIAL'">
               <span style="color:#c64b00; font-weight:bold;">Partial:</span>&nbsp;
-              <span ng-if = "served_quiz.status != 'Serving Completed'">Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
-              <span ng-if = "served_quiz.status == 'Serving Completed'">Quiz expired on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
+              <span ng-if = "served_quiz.status != 'Serving Completed'">Quiz expiring on {{served_quiz.close_date}}</span>
+              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 0">Quiz expired on {{served_quiz.close_date}}</span>
+              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 1">Quiz expired on {{served_quiz.updated_at}}</span>
             </td>
             <td ng-if = "served_quiz.student_sharing.status_in_string == 'COMPLETED'">
               <span style="color:#0069a7; font-weight:bold;">Complete:</span>&nbsp;
-              <span ng-if = "served_quiz.status != 'Serving Completed'">Quiz expiring on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
-              <span ng-if = "served_quiz.status == 'Serving Completed'">Quiz expired on {{served_quiz.close_date}} at {{served_quiz.end_time}}</span>
+              <span ng-if = "served_quiz.status != 'Serving Completed'">Quiz expiring on {{served_quiz.close_date}}</span>
+              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 0">Quiz expired on {{served_quiz.close_date}}</span>
+              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 1">Quiz expired on {{served_quiz.updated_at}}</span>
             </td>
             <td>
               <a ng-if = "served_quiz.status == 'In Process' && served_quiz.student_sharing.status_in_string != 'COMPLETED'" data-toggle = "tooltip" title = "Proceed to Quiz" tooltip-placement = "top" ng-href = "#/quiz/{{served_quiz.id}}/attempt">

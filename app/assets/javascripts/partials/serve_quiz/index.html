@@ -24,27 +24,33 @@
 		<div class="col-xs-12 tag_btns">
     	<table class="table table-striped tag_btns">
       	<thead>
-        	<th class="col-xs-1 manage_section">
-                Title
+        	<th class="col-xs-2 manage_section">
+              Title
           </th>
         	<th class="col-xs-2 manage_section">
-                Start Time
+              Start Time
           </th>
         	<th class="col-xs-2 manage_section">
-                End Time
+              End Time
           </th>
         	<th class="col-xs-2 manage_section">
-                Status
+              Status
           </th>
         	<th class="col-xs-2 manage_section">
-                Student Status
+              Student Status
+          </th>
+          <th class = "col-xs-1 manage_section">
+              Close
           </th>
         </thead>
         <tbody class="text-center">
         	<tr ng-repeat = "served_quiz in served_quizzes | filter: titleFilter">
           	<td>{{served_quiz.cloned_quiz_bank.title}}</td>
           	<td>{{served_quiz.local_date}}&nbsp;{{served_quiz.local_start_time}}</td>
-          	<td>{{served_quiz.local_close_date}}&nbsp;{{served_quiz.local_end_time}}</td>
+          	<td ng-if = "served_quiz.no_expiration == 0">{{served_quiz.local_close_date}}&nbsp;{{served_quiz.local_end_time}}
+            </td>
+            <td ng-if = "served_quiz.no_expiration == 1">No End Time Set
+            </td>
           	<td>
               <span ng-show = "served_quiz.status == 'Serving Completed'">
                 <div style="background-color:#00a404;" class="tags">
@@ -63,6 +69,15 @@
               </span>
             </td>
             <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;<a ng-click = "invited_students(served_quiz.id)" data-toggle = "tooltip" title = "All Students who have not started quiz" tooltip-placement = "top">{{served_quiz.invited_sharings.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Partial:</span>&nbsp;<a ng-click = "pending_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who started but have not completed quiz" tooltip-placement = "top">{{served_quiz.pending_sharings.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;<a data-toggle = "tooltip" title = "Students Completed the quiz" tooltip-placement = "top"ng-click = "completed_students(served_quiz.id)">{{served_quiz.completed_sharings.length}}</a>&nbsp;</td>
+            <td ng-if = "served_quiz.no_expiration == 0 && served_quiz.close_status == 0">
+              N/A
+            </td>
+            <td ng-if = "served_quiz.no_expiration == 1 && served_quiz.close_status == 0">
+              <a ng-click = "close_quiz(served_quiz)">Close</a>
+            </td>
+            <td ng-if = "served_quiz.no_expiration == 1 && served_quiz.close_status == 1">
+              Closed
+            </td>
           </tr>
         </tbody>
 	    </table>

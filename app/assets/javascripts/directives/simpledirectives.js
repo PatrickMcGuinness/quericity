@@ -26,7 +26,6 @@ quizlib.directive("showLinegraph",function(){
   };
 });
 
-
 quizlib.directive("chooseImage",function(){
   return {
     restrict: "A",
@@ -453,6 +452,7 @@ quizlib.directive('ngRightClick', function($parse) {
 });
 
 
+
 quizlib.directive('hidecreaterepo', function () {
   return {
     restrict: 'C',
@@ -467,6 +467,28 @@ quizlib.directive('hidecreaterepo', function () {
     }
   }
 });
+
+quizlib.directive('changeCloseDate',function(){
+  return {
+    restrict: 'A',
+    link: function(scope,element,attr){
+      element.bind("click",function(){
+        if(element.is(":checked")){
+          $(".close-date").css("z-index","-1")
+          // using date.js method
+          //console.log(scope.served_quiz.date)
+          var obj = new Date(scope.served_quiz.date)
+          var date = new Date(obj.getFullYear(), obj.getMonth() + 1,obj.getDate(), obj.getHours(), obj.getMinutes())
+          scope.served_quiz.close_date = date
+        }
+        else{
+          $(".close-date").css("z-index","1")
+        }
+      })
+    }
+  };
+})
+
 quizlib.directive('showcreaterepo', function () {
   return {
     restrict: 'C',
@@ -496,6 +518,21 @@ quizlib.directive('customPopover', function ($compile) {
           $(this).popover("show")
           $(this).next().show()
           $(".popover-maker").not(this).next().hide()
+      })
+    }
+  };
+});
+
+quizlib.directive('toolPopover', function ($compile) {
+  return {
+    restrict: 'A',
+    link: function (scope, el, attrs) {
+      scope.label = attrs.popoverLabel;
+      angular.element(el).popover({
+        trigger: 'click',
+        html: true,
+        content: function() { return $compile(attrs.popoverHtml)(scope);},
+        placement: attrs.popoverPlacement
       })
     }
   };

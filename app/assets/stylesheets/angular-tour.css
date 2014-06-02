@@ -1,8 +1,8 @@
 .tour-tip {
   display: none;
   position: absolute;
-  background: #2A6AAA;
-  color: #FFF;
+  background: white;
+  color: black;
   z-index: 101;
   top: 0;
   left: 2.5%;
@@ -10,11 +10,12 @@
   font-weight: 400;
   max-width: 400px;
   border-radius: 10px;
-  padding: 7px;
+  border: 1px solid #e1e1e1;
+  /*padding: 7px; */
 }
 
 .tour-tip p {
-  color: #CBD0D4;
+  color: #495055;
   font-size: .9em;
   line-height: 1.5em;
   margin: 0 0 1.125em;
@@ -66,27 +67,27 @@
 .tour-tip .tour-arrow.tt-top {
   border-style: solid;
   bottom: -27px;
-  border-color: #2A6AAA transparent transparent !important;
+  border-color: #e1e1e1 transparent transparent !important;
 }
 
 .tour-tip .tour-arrow.tt-bottom {
   border-style: solid;
   top: -28px;
-  border-color: transparent transparent #2A6AAA !important;
+  border-color: transparent transparent #e1e1e1 !important;
 }
 
 .tour-tip .tour-arrow.tt-right {
   border-style: solid;
   left: -27px;
   top: 28px;
-  border-color: transparent #2A6AAA transparent transparent !important;
+  border-color: transparent #e1e1e1 transparent transparent !important;
 }
 
 .tour-tip .tour-arrow.tt-left {
   border-style: solid;
   left: 100%;
   top: 28px;
-  border-color: transparent transparent transparent #2A6AAA !important;
+  border-color: transparent transparent transparent #e1e1e1 !important;
 }
 
 .tour-tip .tour-content-wrapper {

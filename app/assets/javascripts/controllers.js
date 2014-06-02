@@ -99,17 +99,17 @@ quizlib.controller('QuizReportCtrl', ['$scope','ServedQuiz','$routeParams','Time
     ServedQuiz.first_served_quiz().$promise.then(function(data){
       $scope.quiz_detail = data
       $scope.quiz_id = data.served_quiz.id
-      $scope.quiz_detail.served_at = TimeDisplay.get_date(data.served_quiz.created_at) + " " + TimeDisplay.get_time(data.served_quiz.created_at)
-      $scope.quiz_detail.start_time = TimeDisplay.get_date(data.served_quiz.date) + " " + TimeDisplay.get_time(data.served_quiz.start_time)
-      $scope.quiz_detail.end_time = TimeDisplay.get_date(data.served_quiz.close_date)+ " " + TimeDisplay.get_time(data.served_quiz.end_time)
+      $scope.quiz_detail.served_at = TimeDisplay.get_date(data.served_quiz.created_at)
+      $scope.quiz_detail.start_time = TimeDisplay.get_date(data.served_quiz.date)
+      $scope.quiz_detail.end_time = TimeDisplay.get_date(data.served_quiz.close_date)
     })
   }else{
     ServedQuiz.quiz_report($routeParams.quiz_id).$promise.then(function(data){
       $scope.quiz_detail = data
       $scope.quiz_id = data.served_quiz.id
-      $scope.quiz_detail.served_at = TimeDisplay.get_date(data.served_quiz.created_at) + " " + TimeDisplay.get_time(data.served_quiz.created_at)
-      $scope.quiz_detail.start_time = TimeDisplay.get_date(data.served_quiz.date) + " " + TimeDisplay.get_time(data.served_quiz.start_time)
-      $scope.quiz_detail.end_time = TimeDisplay.get_date(data.served_quiz.close_date)+ " " + TimeDisplay.get_time(data.served_quiz.end_time)
+      $scope.quiz_detail.served_at = TimeDisplay.get_date(data.served_quiz.created_at)
+      $scope.quiz_detail.start_time = TimeDisplay.get_date(data.served_quiz.date)
+      $scope.quiz_detail.end_time = TimeDisplay.get_date(data.served_quiz.close_date)
     })
   } 
 }]);
@@ -126,9 +126,9 @@ quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParams','Time
   $scope.student_id = $routeParams.student_id
   ServedQuiz.student_quiz_report($routeParams.id,$routeParams.student_id).$promise.then(function(data){
     $scope.student_quiz_report = data
-    $scope.student_quiz_report.served_at = TimeDisplay.get_date(data.served_quiz.created_at) + " " + TimeDisplay.get_time(data.served_quiz.created_at)
-    $scope.student_quiz_report.start_time = TimeDisplay.get_date(data.served_quiz.date) + " " + TimeDisplay.get_time(data.served_quiz.start_time)
-    $scope.student_quiz_report.end_time = TimeDisplay.get_date(data.served_quiz.close_date)+ " " + TimeDisplay.get_time(data.served_quiz.end_time)
+    $scope.student_quiz_report.served_at = TimeDisplay.get_date(data.served_quiz.created_at)
+    $scope.student_quiz_report.start_time = TimeDisplay.get_date(data.served_quiz.date)
+    $scope.student_quiz_report.end_time = TimeDisplay.get_date(data.served_quiz.close_date)
   }) 
 
 }]);
@@ -151,9 +151,6 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
       
       var obj2 = new Date(value.local_close_date)
       value.local_close_date = TimeDisplay.get_date(value.local_close_date)
-      
-      value.local_start_time = TimeDisplay.get_time(value.local_start_time)
-      value.local_end_time = TimeDisplay.get_time(value.local_end_time)
       
       value.attempted_answers = ServedQuiz.attempted_answers(value.id)
       ServedQuiz.graded_answers(value.id).$promise.then(function(data){
@@ -233,11 +230,8 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
       
       var obj2 = new Date(value.local_close_date)
       value.local_close_date = TimeDisplay.get_date(value.local_close_date)
-      
-      value.local_start_time = TimeDisplay.get_time(value.local_start_time)
-      value.local_end_time = TimeDisplay.get_time(value.local_end_time)
 
-      value.status = QuizStatus.get_status(obj1,obj2,value.local_start_time,value.local_end_time)
+      value.status = QuizStatus.get_status(obj1,obj2,value.close_status)
     })
   })
   
@@ -245,6 +239,18 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
   $rootScope.cancel = function () {
     $rootScope.modalInstance.dismiss('cancel');
   };
+
+  $scope.close_quiz = function(served_quiz){
+    served_quiz.status = 1
+    ServedQuiz.update(served_quiz.id, served_quiz).$promise.then(function(data){
+      index = $scope.served_quizzes.indexOf(served_quiz)
+      served_quiz.status = "Serving Completed"
+      served_quiz.close_status = 1 
+      $scope.served_quizzes[index] = served_quiz
+    })
+    
+
+  }
   $scope.invited_students = function (served_quizId){  
     ServedQuiz.invited(served_quizId).$promise.then(function(data){
       $rootScope.items = data
@@ -577,23 +583,12 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   $scope.quiz = {date: null, close_date: null}
   $scope.selects = {selected_group: null, selected_quiz: null}
   $scope.toggle_display = {show_question_list: true, show_options: true}
-
-  $scope.served_quiz = {}  // to make the angular js work weird
+  $scope.currentStep = 1000
+  $scope.served_quiz = {date: new Date(), close_date: (7).day().fromNow()}  // to make the angular js work weird
 
   QuizBank.all().$promise.then(function(data){
     $scope.quiz_banks = data.result
   })
-  $scope.init = function(){
-    User.get_current_user().$promise.then(function(data){
-      $scope.user = data
-      if($scope.user.show_tour == true){
-        $scope.currentStep = 0
-      }
-      else{
-        $scope.currentStep = 1000
-      }
-    })
-  }
   
   $scope.groups = Group.all()
   $scope.system_students = User.system_students()
@@ -727,9 +722,6 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
       }
       $scope.served_quiz.cloned_quiz_bank_id = cloned_quiz_bank_id
       $scope.served_quiz.quiz_bank_id = $scope.selects.selected_quiz.id
-      $scope.served_quiz.date = $scope.quiz.date
-      $scope.served_quiz.close_date = $scope.quiz.close_date
-      
       ServedQuiz.save($scope.served_quiz).$promise.then(function(data){
         angular.forEach($scope.selected_students,function(value,key){
           Sharing.save(data.id,{user_id: value.id})
@@ -793,17 +785,34 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
   $scope.submitted = false
   $scope.valid = false
   $scope.group = {title: null}
-  $scope.init = function(){
-    User.get_current_user().$promise.then(function(data){
-      $scope.user = data
-      if($scope.user.show_tour == true){
-        $scope.currentStep = 0
-      }
-      else{
-        $scope.currentStep = 1000
-      }
-    })
-  }
+  $scope.user = User.get_current_user()
+  $scope.currentStep = 1000
+  
+  User.get_current_user().$promise.then(function(data){
+    $scope.user = data
+    if($scope.user.show_tour == true){
+      $scope.currentStep = 0
+      $scope.start_tour = true
+    }
+    else{
+      $scope.currentStep = 1000
+      $scope.start_tour = false
+    }
+  })
+
+  $scope.change_display = function(){
+    if($scope.start_tour == true){
+      $scope.start_tour = false
+      $scope.user.show_tour = false
+      User.update($scope.user.id, $scope.user)
+    }
+    else{
+      $scope.start_tour = true
+      $scope.user.show_tour = true
+      User.update($scope.user.id,$scope.user)
+    }
+  } 
+  
   $scope.AddStudent = function(student){
     var check = 0
     if(student.id != undefined){
@@ -813,7 +822,6 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
         }
       })
       if(check == 0){
-      	console.log("students")
         $scope.students.push(student)
       }  
     }

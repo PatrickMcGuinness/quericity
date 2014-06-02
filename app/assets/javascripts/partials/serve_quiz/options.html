@@ -1,5 +1,5 @@
 <div ng-include src="'/assets/partials/common/menu.html'"></div>
-<tour step="currentStep" ng-init = "init()" ng-show = "toggle_display.show_options">
+<tour step="currentStep" ng-show = "toggle_display.show_options">
   <div class="row_bottom">
     <div class="container">
       <div class="sub_nav">
@@ -13,15 +13,7 @@
       <div class="sub_nav">
         <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
         <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new Group" tooltip-placement = "top">Add Group</a></span>
-      </div>
-      <div class="sub_nav" ng-show = "user.show_tour">
-        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-        <span class="sub_nav_link"><a href ng-click = "openTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Open Tour</a></span>
-      </div>
-      <div class="sub_nav" ng-show = "user.show_tour">
-        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-        <span class="sub_nav_link"><a href ng-click = "closeTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Close Tour</a></span>
-      </div>   
+      </div>  
     </div>
   </div>  
   <div class="container" tourtip = "This is the form for options to serve quiz to students" tourtip-step = "0" tourtip-next-label = "Proceed">
@@ -30,8 +22,8 @@
         <div class="col-xs-12">
           <div class="row">
             <div class = "col-xs-12"> 
-              <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.title.$invalid) && (!OptionForm.title.$pristine || option_submitted == true)}">
-                <select class="form-control form_section" ng-model="selects.selected_quiz" ng-options="quiz_bank as quiz_bank.title for quiz_bank in quiz_banks" name = "title" required tourtip-step = "1" tourtip = "Select quiz to serve, this will list all the questions at the bottom of the page">
+              <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.title.$invalid) && (!OptionForm.title.$pristine || option_submitted == true)}">
+                <select class="form-control form_section" ng-model="selects.selected_quiz" ng-options="quiz_bank as quiz_bank.title for quiz_bank in quiz_banks" name = "title" required tourtip-step = "1" tourtip = "Select quiz to serve, this will list all the questions at the bottom of the page" popover="Select one quiz bank from list to serve it to students"  popover-trigger="mouseenter">
                   <option value = "">Select Quiz</option>
                 </select> 
                 <p ng-show="OptionForm.title.$invalid && (!OptionForm.title.$pristine || option_submitted == true)" class="help-block">Required!</p>
@@ -40,18 +32,19 @@
       	  </div>
           <div class="row">
             <div class="col-xs-2 form_section">
-              <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.date.$invalid) && (!OptionForm.date.$pristine || option_submitted == true)}">
-            	 <span class="label_text">Start Date:</span>
+              <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.date.$invalid) && (!OptionForm.date.$pristine || option_submitted == true)}">
+            	 <span class="label_text">Open Date/Time:</span>
                 <span>
-                  <div class="row" ng-controller = "DatePickerCtrl">
+                  <div class="row">
                     <div class="col-xs-12">
-                      <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.date.$invalid) && (!OptionForm.date.$pristine || option_submitted == true)}">
-                        <p class="input-group">
+                      <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.date.$invalid) && (!OptionForm.date.$pristine || option_submitted == true)}">
+                        <quick-datepicker ng-model='served_quiz.date' name = "date" class = "start-date" required popover="Choose opening date for quiz"  popover-trigger="mouseenter"></quick-datepicker>
+                        <!--<p class="input-group">
                           <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="quiz.date" is-open="opened" min="minDate"  datepicker-options="dateOptions"  required close-text="Close" name = "date" tourtip = "Select the date when the quiz will be available to students" tourtip-step = "2"/>
                           <span class="input-group-btn">
                             <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                           </span>
-                        </p>
+                        </p> -->
                          <p ng-show="OptionForm.date.$invalid && (!OptionForm.date.$pristine || option_submitted == true)" class="help-block">Required!</p>
                       </div>   
                     </div>
@@ -59,8 +52,8 @@
                 </span>
               </div>  
             </div>
-            <div class="col-xs-2 form_section">
-              <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.start_time.$invalid) && (!OptionForm.start_time.$pristine || option_submitted == true)}">
+            <!--<div class="col-xs-2 form_section">
+              <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.start_time.$invalid) && (!OptionForm.start_time.$pristine || option_submitted == true)}">
               	<span class="label_text">Start Time:</span>
                 <p class="input-group">
                   <input type = "text" id="timepicker1" class = "form-control" timepick ng-model = "served_quiz.start_time" required name = "start_time" tourtip = "Select time when the quiz should be available to students" tourtip-step = "3"/>
@@ -70,27 +63,33 @@
                 </p>
                 <p ng-show="OptionForm.start_time.$invalid && (!OptionForm.start_time.$pristine || option_submitted == true)" class="help-block">Required!</p>
               </div>  
-            </div>
+            </div> -->
             <div class="col-xs-2 form_section">
-              <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.close_date.$invalid) && (!OptionForm.close_date.$pristine || option_submitted == true)}">
-              	<span class="label_text">End Date:</span>
+              <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.close_date.$invalid) && (!OptionForm.close_date.$pristine || option_submitted == true)}">
+              	<span class="label_text">Close Date/Time:</span>
                 <span>
-                  <div class="row" ng-controller = "DatePickerCtrl">
+                  <div class="row">
                     <div class="col-xs-12">
-                      <p class="input-group">
+                      <quick-datepicker ng-model='served_quiz.close_date' name = "close_date" class = "close-date" required popover="Choose closing date for quiz"  popover-trigger="mouseenter"></quick-datepicker>
+                      <!--<p class="input-group">
                         <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="quiz.close_date" is-open="opened" min="minDate"  datepicker-options="dateOptions"  required close-text="Close" name = "close_date" tourtip-step = "4" tourtip = "Select date when the quiz should be made unavailable"/>
                         <span class="input-group-btn">
                           <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
-                      </p>
+                      </p> -->
                       <p ng-show="OptionForm.close_date.$invalid && (!OptionForm.close_date.$pristine || option_submitted == true)" class="help-block">Required!</p>
                     </div>
                   </div>
                 </span>
               </div>  
             </div>
-            <div class="col-xs-2 form_section">
-              <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.end_time.$invalid) && (!OptionForm.end_time.$pristine || option_submitted == true)}">
+            <div class = "col-xs-6 form_section">
+              <div class = "form-group mar-bot-0 mar-top-20">
+                <input type="checkbox" name="expiration_date" value= "1" ng-model = "served_quiz.no_expiration" tourtip-step = "7" tourtip = "Or make the quiz duration unlimited" change-close-date popover="Check to manually close the quiz"  popover-trigger="mouseenter">&nbsp;&nbsp;Keep quiz open until closed manually
+              </div>
+            </div>
+            <!--<div class="col-xs-2 form_section">
+              <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.end_time.$invalid) && (!OptionForm.end_time.$pristine || option_submitted == true)}">
               	<span class="label_text">End Time:</span>
                 <span class="input-group">
                   <input type = "text" class = "form-control" timepick ng-model = "served_quiz.end_time" required name = "end_time" tourtip-step = "5" tourtip = "Select time when the quiz should be made unavailable"/>
@@ -100,18 +99,18 @@
                 </span>
                 <p ng-show="OptionForm.end_time.$invalid && (!OptionForm.end_time.$pristine || option_submitted == true)" class="help-block">Required!</p>
               </div>  
-            </div>
+            </div> -->
           </div>
           <div class="row">
             <div class="col-xs-2 radio_contorl form_section">
-              <div class = "form-group">
-                <input type="radio" name="time-limit" value = "0" ng-model = "served_quiz.infinite_duration" tourtip-step = "6" tourtip = "You have set the quiz availability time. Now set quiz duration. Either set select this option and set time in minutes">&nbsp;&nbsp;Time Limit:
+              <div class = "form-group mar-bot-0">
+                <input type="radio" name="time-limit" value = "0" ng-model = "served_quiz.infinite_duration" tourtip-step = "6" tourtip = "You have set the quiz availability time. Now set quiz duration. Either set select this option and set time in minutes" popover="Check to to give duration to quiz"  popover-trigger="mouseenter">&nbsp;&nbsp;Quiz Duration:
               </div>  
             </div>
             <div class="col-xs-2 form_section ">
-              <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.duration.$invalid) && (!OptionForm.duration.$pristine || option_submitted == true) || (OptionForm.duration.$error.min)}">
+              <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.duration.$invalid) && (!OptionForm.duration.$pristine || option_submitted == true) || (OptionForm.duration.$error.min)}">
                 <span>
-                  <input type="number" class="label_field col-xs-12" ng-model = "served_quiz.duration" name = "duration" ng-disabled = "served_quiz.infinite_duration == 1" min = "1" style = "height: 38px;" ng-required = "served_quiz.infinite_duration == 0"/>
+                  <input type="number" class="label_field col-xs-12" ng-model = "served_quiz.duration" name = "duration" ng-disabled = "served_quiz.infinite_duration == 1" min = "1" style = "height: 38px;" ng-required = "served_quiz.infinite_duration == 0" popover="Add duration to the quiz"  popover-trigger="mouseenter"/>
                 </span>
                 <p ng-show="(OptionForm.duration.$invalid) && (!OptionForm.duration.$pristine || option_submitted == true)" class="help-block">Required!</p>
                 <p ng-show="OptionForm.duration.$error.min" class="help-block">Cannot pe less then 1.</p>
@@ -122,10 +121,10 @@
                 <option>Minutes</option>
               </select>
             </div>
-            <span class="form_section">&nbsp;&nbsp;&nbsp;or</span>
+            <span class="form_section mar-top-20">&nbsp;&nbsp;&nbsp;or</span>
             <div class="col-xs-2 radio_contorl form_section">
-              <div class = "form-group">
-                <input type="radio" name="time-limit" value= "1" ng-model = "served_quiz.infinite_duration" tourtip-step = "7" tourtip = "Or make the quiz duration unlimited">&nbsp;&nbsp;Unlimited Time
+              <div class = "form-group mar-bot-0">
+                <input type="radio" name="time-limit" value= "1" ng-model = "served_quiz.infinite_duration" tourtip-step = "7" tourtip = "Or make the quiz duration unlimited" popover="Check to set quiz duration to unlimited"  popover-trigger="mouseenter">&nbsp;&nbsp;Unlimited Duration
               </div>   
             </div>
             <div class = "col-xs-12">
@@ -139,15 +138,15 @@
           </div>
           <div class="row">
             <div class="col-xs-3 radio_contorl form_section">
-              <input type="radio" name="questions_per_page" value = "1" ng-model = "served_quiz.show_all_questions" tourtip-step = "8" tourtip = "Now set the layout of the quiz. Select this option if you want all questions on the same page of quiz">&nbsp;&nbsp;All Questions on one page 
+              <input type="radio" name="questions_per_page" value = "1" ng-model = "served_quiz.show_all_questions" tourtip-step = "8" tourtip = "Now set the layout of the quiz. Select this option if you want all questions on the same page of quiz" popover="Check to show all questions on one page"  popover-trigger="mouseenter" popover-placement = "right">&nbsp;&nbsp;All Questions on one page 
             </div>
             <div class="col-xs-0 radio_contorl form_section">
-              <input type="radio" name="questions_per_page" value = "0" ng-model = "served_quiz.show_all_questions" tourtip-step = "9" tourtip = "Or select this option and set the maximum number of questions on each page"> 
+              <input type="radio" name="questions_per_page" value = "0" ng-model = "served_quiz.show_all_questions" tourtip-step = "9" tourtip = "Or select this option and set the maximum number of questions on each page" popover="Check to set questions/page display limit"  popover-trigger="mouseenter"> 
             </div>
             <div class="col-xs-2 form_section">
-              <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.questions_per_page.$invalid) && (!OptionForm.questions_per_page.$pristine || option_submitted == true) || (OptionForm.questions_per_page.$error.min) || (OptionForm.questions_per_page.$error.max)}">
+              <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.questions_per_page.$invalid) && (!OptionForm.questions_per_page.$pristine || option_submitted == true) || (OptionForm.questions_per_page.$error.min) || (OptionForm.questions_per_page.$error.max)}">
                 <span>
-                  <input type="number" class="label_field col-xs-12" ng-model ="served_quiz.questions_per_page" name = "questions_per_page" ng-disabled = "served_quiz.show_all_questions == 1" min = "1" max = "{{quiz_bank_questions.length}}" style = "height:38px;" ng-required = "served_quiz.show_all_questions == 0"/>
+                  <input type="number" class="label_field col-xs-12" ng-model ="served_quiz.questions_per_page" name = "questions_per_page" ng-disabled = "served_quiz.show_all_questions == 1" min = "1" max = "{{quiz_bank_questions.length}}" style = "height:38px;" ng-required = "served_quiz.show_all_questions == 0" popover="Choose number of questions/page"  popover-trigger="mouseenter"/>
                 </span>
                 <p ng-show="(OptionForm.questions_per_page.$invalid) && (!OptionForm.questions_per_page.$pristine || option_submitted == true)" class="help-block">Required!</p>
                 <p ng-show="OptionForm.questions_per_page.$error.min" class="help-block">Cannot pe less then 1.</p>
@@ -167,7 +166,7 @@
               <span>Instructions</span>
             </div>
             <div class="col-xs-9 form_section">
-              <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.instructions.$invalid) && (!OptionForm.instructions.$pristine || option_submitted == true)}">
+              <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.instructions.$invalid) && (!OptionForm.instructions.$pristine || option_submitted == true)}">
                 <span>
                   <textarea type="text" placeholder="Quiz Instructions" class="label_field form-control" ng-model = "served_quiz.instructions" name = "instructions" required tourtip-step = "10" tourtip = "Add the instructions for the quiz">
                   </textarea>
@@ -179,7 +178,7 @@
               <span>Show Answers:</span>
             </div>
             <div class="col-xs-9 form_section">
-              <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.answer.$invalid) && (!OptionForm.answer.$pristine || option_submitted == true)}" tourtip-step = "11" tourtip = "Select if you want to show answers after the quiz or not">
+              <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.answer.$invalid) && (!OptionForm.answer.$pristine || option_submitted == true)}" tourtip-step = "11" tourtip = "Select if you want to show answers after the quiz or not">
                 <select class="form-control" ng-model = "served_quiz.answer" required name = "answer" >
                   <option value = "">When to show answers</option>
                   <option value = "2">After Quiz</option>
@@ -221,7 +220,7 @@
           <div class="row" ng-hide = "toggle_display.show_question_list">
             <div class="col-xs-12">
               <div class="col-xs-12 strip form_section ">
-                <div class = "form-group" ng-class="{ 'has-error' : (OptionForm.number_of_questions.$invalid) && (!OptionForm.number_of_questions.$pristine || option_submitted == true) || (OptionForm.number_of_questions.$error.min) || (OptionForm.number_of_questions.$error.max)}">
+                <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.number_of_questions.$invalid) && (!OptionForm.number_of_questions.$pristine || option_submitted == true) || (OptionForm.number_of_questions.$error.min) || (OptionForm.number_of_questions.$error.max)}">
                   <div class="col-xs-2 ">
                     <span style="float:left;">Number of Questions:</span>
                   </div>
@@ -240,22 +239,6 @@
                   </div>  
                 </div>  
               </div>
-              <!--<div class="col-xs-12 strip">
-                <div class="col-xs-0 pull-left">
-                  <input type="checkbox" name="checkbox" />
-                </div>
-                <div class="col-xs-6 ">
-                  <span style="float:left; margin-left:10px;">Same questions for students</span>
-                </div>
-              </div>
-              <div class="col-xs-12 strip">
-                <div class="col-xs-0 pull-left">
-                  <input type="checkbox" name="checkbox" />
-                </div>
-                <div class="col-xs-6 ">
-                  <span style="float:left; margin-left:10px;">Same questions in same sequence</span>
-                </div>
-              </div> -->
             </div>
           </div>
           <div class = "row">
@@ -273,7 +256,7 @@
     </div>
   </div>
 </tour>
-<tour step="currentStep" ng-init = "init()" ng-hide = "toggle_display.show_options">
+<tour step="currentStep" ng-hide = "toggle_display.show_options">
   <div class="row_bottom">
     <div class="container">
       <div class="sub_nav">
@@ -287,14 +270,6 @@
       <div class="sub_nav">
         <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
         <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new Group" tooltip-placement = "top">Add Group</a></span>
-      </div>
-      <div class="sub_nav" ng-show = "user.show_tour">
-        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-        <span class="sub_nav_link"><a href ng-click = "openTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Open Tour</a></span>
-      </div>
-      <div class="sub_nav" ng-show = "user.show_tour">
-        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-        <span class="sub_nav_link"><a href ng-click = "closeTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Close Tour</a></span>
       </div>   
     </div>
   </div>  
