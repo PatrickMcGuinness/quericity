@@ -381,6 +381,9 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
         if(question.question_options[0].is_correct == true && question.answer == 'true'){
           answer.correct = 'Correct'
         }
+        else if(question.question_options[0].is_correct == false && question.answer == 'false'){
+          answer.correct = 'Correct'
+        }
         else{
           answer.correct = 'Incorrect'
         }
@@ -459,6 +462,9 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
         answer = {question_answer: question.question_options[0].is_correct, 
           answer: question.answer}
         if(question.question_options[0].is_correct == true && question.answer == 'true'){
+          answer.correct = 'Correct'
+        }
+        else if(question.question_options[0].is_correct == false && question.answer == 'false'){
           answer.correct = 'Correct'
         }
         else{
