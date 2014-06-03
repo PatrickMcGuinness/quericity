@@ -36,7 +36,7 @@
 		<div class="col-xs-8 right_section_view_page">
       <div class="col-xs-12 row_space">
         <span class="heading">{{quiz_bank.title}}</span>&nbsp;&nbsp;&nbsp;by {{quiz_bank.user.first_name}} {{quiz_bank.user.last_name}} 
-        <img style="float:right;" src="/assets/info_icon.png" data-toggle = "tooltip" title = "description" tooltip = {{quiz_bank.description}} tooltip-placement = "left"/>
+        <!--<img style="float:right;" src="/assets/info_icon.png" data-toggle = "tooltip" title = "description" tooltip = {{quiz_bank.description}} tooltip-placement = "left"/> -->
       </div>
     	<div class="col-xs-12 row_space">
         <span ng-repeat = "topic in quiz_bank.topics">
@@ -55,6 +55,14 @@
           <b>Sharing Status:</b> Public&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </span>
         <b>Subject:</b> {{quiz_bank.subject}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+      <div class = "col-xs-12 row_space">
+        <label>Description</label>
+        <p>{{quiz_bank.description}}<p>
+      </div>
+      <div class = "col-xs-12 row_space">
+        <label>Instructions</label>
+        <p>{{quiz_bank.instructions}}</p>
       </div>
       <div class="col-xs-12 row_space">
         <ul style = "list-style:none;">

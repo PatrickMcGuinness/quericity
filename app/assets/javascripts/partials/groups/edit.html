@@ -13,14 +13,6 @@
       <div class="sub_nav">
         <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
         <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new Group" tooltip-placement = "top">Add Group</a></span>
-      </div>
-      <div class="sub_nav" ng-show = "user.show_tour">
-        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-        <span class="sub_nav_link"><a href ng-click = "openTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Open Tour</a></span>
-      </div>
-      <div class="sub_nav" ng-show = "user.show_tour">
-        <span class="sub_nav_icon"><img src="/assets/student_group.png" /></span>
-        <span class="sub_nav_link"><a href ng-click = "closeTour()" data-toggle = "tooltip" title = "Take tour of the page" tooltip-placement = "top">Close Tour</a></span>
       </div>	
   	</div>
   </div>
@@ -29,13 +21,13 @@
       <form name="GroupForm" ng-submit="saveGroup(GroupForm.$valid)" novalidate>
         <div class="row add_grp_section">
           <button class = "btn btn-default btn">
-            <span class = "glyphicon glyphicon-floppy-saved"></span>
+            <span class = "glyphicon glyphicon-remove"></span>
             <span>
-              <a ng-href = "/#groups" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top" tourtip-step = "5" tourtip = "Or cancel the changes" tourtip-next-label = "Finish" tourtip-placement = "left">Cancel</a>  
+              <a ng-href = "/#groups/{{group.id}}/view" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top" tourtip-step = "5" tourtip = "Or cancel the changes" tourtip-next-label = "Finish" tourtip-placement = "left">Cancel</a>  
             </span>
           </button>
           <button class = "btn btn-default btn">
-            <span class = "glyphicon glyphicon-remove"></span>
+            <span class = "glyphicon glyphicon-floppy-saved"></span>
             <span>
               <a ng-click = "saveGroup(GroupForm.$valid)" data-toggle = "tooltip" title = "Save new Group" tooltip-placement = "top" tourtip-step = "4" tourtip = "Save all the changes">Save</a>  
             </span>

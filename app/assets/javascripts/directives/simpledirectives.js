@@ -3,11 +3,13 @@ quizlib.directive("removeOption",function(){
     restrict: "A",
     link: function(scope,element,attrs){
       element.bind("click",function(){
-        if($(this).parents("tbody").children("tr").length == 2){
-          alert("need at least two options")
+        console.log(element.parents("tbody").children().length)
+        if(element.parents("tbody").children("tr").length > 2){
+            element.parents("tr").remove()
+
         }
         else{
-          $(this).parents("tr").remove()
+          alert("need at least two options")
         }
       })
     }
@@ -19,10 +21,15 @@ quizlib.directive("addOption",function(){
     restrict: 'A',
     link: function(scope,element,attrs){
       element.bind("focus",function($compile){
-        if($(this).parents("tr").is(":last-child")){
-          //var tpl = "<div></div>"
+        if(element.parents("tr").is(":last-child")){
           //var el = $compile( tpl)( scope );
-          var el = "<tr><td><input type = 'text' class = 'form-control'></td><td><input type = 'radio'></td><td><a><span class = 'glyphicon glyphicon-remove' style = 'color:red' remove-option></span></a></td></tr>"
+          scope.add_mcq_input()
+          console.log(element.parents('tbody').children('tr').length + 1)
+          input_number = element.parents('tbody').children('tr').length + 1
+          var markup = "<tr><td><div class = 'form-group mar-top-10' ng-model = 'mcq_options["+input_number+"]' required add-option><input name = 'input"+input_number+"' type = 'text' class = 'form-control'></div></td><td><div class = 'form-group mar-top-10'><input type='radio' name='correct' ng-model = 'radio' value = '"+input_number+"' ng-click = 'add_correct_option("+input_number+")' ng-init = 'radio = "+input_number+"'></div></td><td><span class = 'glyphicon glyphicon-remove mar-top-20' style = 'color:red;' remove-option ng-click = 'remove_mcq_input("+input_number+")'></span></td></tr>";
+          //element.html(markup);
+          element.parents('tbody').append(markup)
+          //$compile(element.contents())(scope)
           //$compile(el)(scope)
         }
       })

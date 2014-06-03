@@ -34,66 +34,21 @@
           <th class = "col-xs-1"></th>
         </thead>
         <tbody>
-          <tr>
+          <tr ng-repeat = "input in mcq_options track by $index">
             <td>
-              <div class = "form-group mar-top-10" ng-class="{ 'has-error' : (McqForm.input0.$invalid) && submitted == true}">
-                <input name = "input0" type = "text", class = "form-control" ng-model = "input_0" required add-option>
-                <p ng-show="McqForm.input0.$invalid && submitted == true" class="help-block">Required</p>
+              
+              <div class = "form-group mar-top-10" ng-class="{ 'has-error' : (McqForm.input{{$index}}.$invalid) && submitted == true}">
+                <input name = "input{{$index}}" type = "text", class = "form-control" ng-model = "mcq_options[$index]" required add-option>
+                <p ng-show="McqForm.input{{$index}}.$invalid && submitted == true" class="help-block">Required</p>
               </div>  
             </td>
             <td>
               <div class = "form-group mar-top-10">
-                <input type="radio" name="correct" ng-model = "radio" value = "0" >
+                <input type="radio" name="correct" ng-model = "radio" value = "{{$index}}" ng-click = "add_correct_option(radio)" ng-init = "radio = $index">
               </div>
             </td>
             <td>
-              <span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option ng-click = "remove_mcq_input(input_0)"></span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class = "form-group mar-top-10" ng-class="{ 'has-error' : (McqForm.input1.$invalid) && submitted == true}">
-                <input name = "input1" type = "text", class = "form-control" ng-model = "input_1" required add-option>
-                 <p ng-show="McqForm.input1.$invalid && submitted == true" class="help-block">Required</p>
-              </div>  
-            </td>
-            <td>
-              <div class = "form-group mar-top-10">
-                <input type="radio" name="correct" ng-model = "radio" value = "1">  
-              </div>
-            </td>
-            <td>
-              <a><span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option></span></a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class = "form-group mar-top-10">
-                <input type = "text", class = "form-control" ng-model = "input_2" add-option>
-              </div>
-            </td>
-            <td>
-              <div class = "form-group mar-top-10">
-                <input type="radio" name="correct" ng-model = "radio" value = "2">
-              </div>
-            </td>
-            <td>
-              <span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option></span>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class = "form-group mar-top-10">
-                <input type = "text", class = "form-control" ng-model = "input_3" add-option>
-              </div>
-            </td>
-            <td>
-              <div class = "form-group mar-top-10">
-                <input type="radio" name="correct" ng-model = "radio" value = "3">
-              </div>
-            </td>
-            <td>
-              <span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option></span>
+              <span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option ng-click = "remove_mcq_input($index)"></span>
             </td>
           </tr>
           <!--<tr>

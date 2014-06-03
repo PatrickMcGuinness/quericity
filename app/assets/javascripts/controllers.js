@@ -726,7 +726,6 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
         angular.forEach($scope.selected_students,function(value,key){
           Sharing.save(data.id,{user_id: value.id})
         })
-        console.log("$lcoiton")
         $location.path("/served_quizzes")
       })
     })
@@ -1278,7 +1277,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
 
   $scope.selected_difficulty = null
 
-  //$scope.mcq_options = [$scope.input_0 = "asds", $scope.input_1 = "sfsd",$scope.input_2 = "dfgdf",$scope.input_3 = "dfsgsdd"]
+  $scope.mcq_options = ["", "","",""]
 
   $scope.removeData = function(){
     $scope.selected_difficulty = null
@@ -1362,30 +1361,46 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
     }    
   }
 
-  $scope.remove_mcq_input = function(input){
-    console.log($scope.mcq_options)
-    var index = $scope.mcq_options.indexOf(input)
-    $scope.mcq_options.splice(index)
+  $scope.remove_mcq_input = function(index){
+    if($scope.mcq_options.length > 2){
+      $scope.mcq_options.splice(index,1)
+    }
+  }
+  $scope.add_mcq_input = function(){
+    console.log("in addd mcq input")
+    $scope.mcq_options.push('')
     console.log($scope.mcq_options)
   }
-  /*$scope.create_mcq = function(isValid){
+
+  $scope.add_correct_option = function(radio){
+    $scope.correct_input = radio
+    console.log($scope.correct_input)
+  }
+  
+  $scope.create_mcq = function(isValid){
     $scope.submitted = true
-    
     if(isValid){
+      console.log($scope.mcq_options)
       inputs = $scope.mcq_options
-      var correct_input = $scope.radio;
+      console.log($scope.correct_input)
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.question.description,section_id: $scope.section_id,
         question_type: 2,difficulty_level: $scope.selected_difficulty}).$promise.then(function(data){
           $scope.question_id = data.id
           GlobalScope.set_question_id($scope.question_id)
-          for(var i = 0; i<(inputs.length -1) ; i++){
+          console.log(inputs)
+          for(var i = 0; i<(inputs.length) ; i++){
+            console.log(i)
+            console.log(inputs[i])
             if(inputs[i] != undefined){
+              console.log("input is defined")
               is_correct = true
-              if(correct_input == i){
+              if($scope.correct_input == i){
+                console.log("in the if condition")
                 is_correct = true
               }
               else{
+                console.log("in the else condition")
                 is_correct = false
               }
               QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
@@ -1404,43 +1419,6 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
         CKEDITOR.instances['description'].setData("")
         $scope.hideQuestion()
     }
-
-  }*/
-  $scope.create_mcq = function(isValid){
-    $scope.submitted = true
-    if(isValid){
-      inputs = [$scope.input_0,$scope.input_1,$scope.input_2,$scope.input_3]
-      var correct_input = $scope.radio;
-      Question.save($scope.quiz_bank_id, $scope.section_id,
-        {description: $scope.question.description,section_id: $scope.section_id,
-        question_type: 2,difficulty_level: $scope.selected_difficulty}).$promise.then(function(data){
-          $scope.question_id = data.id
-          GlobalScope.set_question_id($scope.question_id)
-          for(var i = 0; i<4; i++){
-            if(inputs[i] != undefined){
-              is_correct = true
-              if(correct_input == i){
-                is_correct = true
-              }
-              else{
-                is_correct = false
-              }
-              QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
-              {question_id: $scope.question_id, answer:inputs[i],is_correct: is_correct})
-            }  
-          }
-
-        })
-        $scope.selected_difficulty = null
-        $scope.submitted = false
-        $scope.radio = null
-        $scope.input_0 = null
-        $scope.input_1 = null
-        $scope.input_2 = null
-        $scope.input_3 = null
-        CKEDITOR.instances['description'].setData("")
-        $scope.hideQuestion()
-    }    
 
   }
 
