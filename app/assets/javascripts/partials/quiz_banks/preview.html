@@ -73,7 +73,6 @@
             <select class="form-control" ng-model = "option.duration_type">
               <option value = "">Select</option>
               <option value = "1">Mintues</option>
-              <option value = "2">Hours</option>
             </select>
           </div>
           <div class = "col-xs-1 mar-top-20"> or
@@ -111,12 +110,12 @@
         </div>
         <div class = "col-xs-12 mar-top-20 mar-left-10">
           <div ng-if = "question.question_type == 1">
-            <input type="radio" name="true_false" value = "true" ng-model = "question.answer">&nbsp;True
-            &nbsp;&nbsp;<input type="radio" name="true_false" value = "false" ng-model = "question.answer">&nbsp;False
+            <input type="radio" name="true_false{{question.id}}" value = true ng-model = "question.answer">&nbsp;True
+            &nbsp;&nbsp;<input type="radio" name="true_false{{question.id}}" value = false ng-model = "question.answer">&nbsp;False
           </div>
           <div ng-if = "question.question_type == 2">
             <div ng-repeat = "question_option in question.question_options">
-              <input type="radio" name="answer" value = "{{question_option.id}}" ng-model = "question.answer">&nbsp;{{question_option.answer}}
+              <input type="radio" name="answer{{question.id}}" value = "{{question_option.id}}" ng-model = "question.answer">&nbsp;{{question_option.answer}}
             </div>
           </div>
           <div ng-if = "question.question_type == 3">
@@ -155,13 +154,13 @@
               Your Answer
             </th>
             <th class = "col-xs-2">
-              Grade
+              Score
             </th>
           </thead>
           <tbody>
             <tr ng-repeat = "answer in show_answers">
               <td>
-                &nbsp;{{answer.question_answer}}
+                {{answer.question_answer}}
               </td>
               <td>
                 {{answer.answer}}

@@ -364,7 +364,7 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
       if($scope.option.duration_type == 1){
         //$scope.counter = ($scope.option.duration * 3600)
         $scope.counter = 60
-        $scope.minutes = $scope.option.duration
+        $scope.minutes = $scope.option.duration - 1
         mytimeout = $timeout($scope.onTimeout,1000);
       }
       if($scope.option.duration_type == 2){
@@ -378,22 +378,25 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
       if(question.question_type == 1){
         answer = {question_answer: question.question_options[0].is_correct, 
           answer: question.answer}
-        if(question.question_options[0].is_correct == question.answer){
-          answer.correct = true
+        if(question.question_options[0].is_correct == true && question.answer == 'true'){
+          answer.correct = 'Correct'
         }
         else{
-          answer.correct = false
+          answer.correct = 'Incorrect'
         }
         $scope.show_answers.push(answer)
       }
       if(question.question_type == 2){
+        answer = {}
         angular.forEach(question.question_options,function(value,key){
           if(question.answer == value.id){
             if(value.is_correct == true){
-              answer = {correct: true,answer: value.answer}
+              answer.correct = 'Correct';
+              answer.answer = value.answer;
             }
             if(value.is_correct == false){
-              answer = {correct: false,answer: value.answer}
+              answer.correct = 'Incorrect';
+              answer.answer = value.answer;
             }
           }
           if(value.is_correct == true){
@@ -407,9 +410,9 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
         answer = {question_answer: question.question_options[0].answer,
           answer: question.answer}
         if(question.question_options[0].answer == question.answer){
-          answer.correct = true
+          answer.correct = 'Correct'
         }else{
-          answer.correct = false
+          answer.correct = 'Incorrect'
         }
         $scope.show_answers.push(answer)
       }
@@ -419,19 +422,30 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
     })
     $scope.show_questions = []
     if($scope.question_done == $scope.questions.length){
+      console.log("in the if question_done == questions.length")
       $scope.show_answer= true 
       $scope.submit = false
     }
-    for(var i = $scope.question_done; i < $scope.questions.length; i++){
-      if($scope.questions[i] != undefined){
-        $scope.show_questions.push($scope.questions[i])
-        $scope.show_questions[$scope.show_questions.length -1].question_options = QuestionOption.all($scope.quiz_bank_id,$scope.questions[i].section_id,$scope.questions[i].id)
-        $scope.question_done = i + 1
-      }
-      else{
-        $scope.questions_done = $scope.questions.length
+    var new_number = parseInt($scope.option.question_number) + parseInt($scope.question_done)
+    if(new_number < $scope.questions.length){
+      for(var i = $scope.question_done; i < new_number;i++){
+         if($scope.questions[i] != undefined){
+          $scope.show_questions.push($scope.questions[i])
+          $scope.show_questions[$scope.show_questions.length -1].question_options = QuestionOption.all($scope.quiz_bank_id,$scope.questions[i].section_id,$scope.questions[i].id)
+          $scope.question_done = i + 1
+        }
       }
     }
+    else{
+      for(var i = $scope.question_done; i < $scope.questions.length; i++){
+        if($scope.questions[i] != undefined){
+          $scope.show_questions.push($scope.questions[i])
+          $scope.show_questions[$scope.show_questions.length -1].question_options = QuestionOption.all($scope.quiz_bank_id,$scope.questions[i].section_id,$scope.questions[i].id)
+          $scope.question_done = i + 1
+        }
+        
+      }
+    }  
   }
   $scope.submitQuiz = function(answered_questions){
     $scope.show_options = false
@@ -444,22 +458,25 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
       if(question.question_type == 1){
         answer = {question_answer: question.question_options[0].is_correct, 
           answer: question.answer}
-        if(question.question_options[0].is_correct == question.answer){
-          answer.correct = true
+        if(question.question_options[0].is_correct == true && question.answer == 'true'){
+          answer.correct = 'Correct'
         }
         else{
-          answer.correct = false
+          answer.correct = 'Incorrect'
         }
         $scope.show_answers.push(answer)
       }
       if(question.question_type == 2){
+        answer = {}
         angular.forEach(question.question_options,function(value,key){
           if(question.answer == value.id){
             if(value.is_correct == true){
-              answer = {correct: true,answer: value.answer}
+              answer.correct = 'Correct';
+              answer.answer = value.answer
             }
             if(value.is_correct == false){
-              answer = {correct: false,answer: value.answer}
+              answer.correct = 'Incorrect';
+              answer.answer = value.answer;
             }
           }
           if(value.is_correct == true){
@@ -473,9 +490,9 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
         answer = {question_answer: question.question_options[0].answer,
           answer: question.answer}
         if(question.question_options[0].answer == question.answer){
-          answer.correct = true
+          answer.correct = 'Correct'
         }else{
-          answer.correct = false
+          answer.correct = 'Incorrect'
         }
         $scope.show_answers.push(answer)
       }
