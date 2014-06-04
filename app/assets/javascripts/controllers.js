@@ -1500,7 +1500,7 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
       $rootScope.show_blank = false
       $rootScope.show_open_ended = false
     }
-    if(question_type == "Mcq"){
+    if(question_type == "Multiple Choice"){
       $rootScope.show_true_false = false
       $rootScope.show_mcq = true
       $rootScope.show_blank = false

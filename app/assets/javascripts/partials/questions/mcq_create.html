@@ -38,7 +38,7 @@
             <td>
               
               <div class = "form-group mar-top-10" ng-class="{ 'has-error' : (McqForm.input{{$index}}.$invalid) && submitted == true}">
-                <input name = "input{{$index}}" type = "text", class = "form-control" ng-model = "mcq_options[$index]" required add-option>
+                <input name = "input{{$index}}" type = "text", class = "form-control" ng-model = "mcq_options[$index]" required>
                 <p ng-show="McqForm.input{{$index}}.$invalid && submitted == true" class="help-block">Required</p>
               </div>  
             </td>
