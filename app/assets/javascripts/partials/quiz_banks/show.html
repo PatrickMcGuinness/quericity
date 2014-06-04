@@ -34,6 +34,7 @@
 		<div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'">
     </div>
 		<div class="col-xs-8 right_section_view_page">
+      <alert class = "mar-top-10" type='success' close="remove_alert()" ng-if = "alert != undefined">{{alert.msg}}</alert>
       <div class="col-xs-12 row_space">
         <span class="heading">{{quiz_bank.title}}</span>&nbsp;&nbsp;&nbsp;by {{quiz_bank.user.first_name}} {{quiz_bank.user.last_name}} 
         <!--<img style="float:right;" src="/assets/info_icon.png" data-toggle = "tooltip" title = "description" tooltip = {{quiz_bank.description}} tooltip-placement = "left"/> -->

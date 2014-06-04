@@ -3,7 +3,6 @@ quizlib.directive("removeOption",function(){
     restrict: "A",
     link: function(scope,element,attrs){
       element.bind("click",function(){
-        console.log(element.parents("tbody").children().length)
         if(element.parents("tbody").children("tr").length > 2){
             element.parents("tr").remove()
 
@@ -24,7 +23,6 @@ quizlib.directive("addOption",function(){
         if(element.parents("tr").is(":last-child")){
           //var el = $compile( tpl)( scope );
           scope.add_mcq_input()
-          console.log(element.parents('tbody').children('tr').length + 1)
           input_number = element.parents('tbody').children('tr').length + 1
           var markup = "<tr><td><div class = 'form-group mar-top-10' ng-model = 'mcq_options["+input_number+"]' required add-option><input name = 'input"+input_number+"' type = 'text' class = 'form-control'></div></td><td><div class = 'form-group mar-top-10'><input type='radio' name='correct' ng-model = 'radio' value = '"+input_number+"' ng-click = 'add_correct_option("+input_number+")' ng-init = 'radio = "+input_number+"'></div></td><td><span class = 'glyphicon glyphicon-remove mar-top-20' style = 'color:red;' remove-option ng-click = 'remove_mcq_input("+input_number+")'></span></td></tr>";
           //element.html(markup);
@@ -124,11 +122,8 @@ quizlib.directive("studentLinegraph",function(){
 
         var line = d3.svg.line()
         .x(function(d,i) { 
-          //console.log('Plotting X value for data point: ' + d + ' using index: ' + i + ' to be at: ' + x(i) + ' using our xScale.');
-          return x(i); 
         })
         .y(function(d) { 
-          //console.log('Plotting Y value for data point: ' + d + ' to be at: ' + y(d) + " using our yScale.");
           return y(d); 
         })
 
@@ -515,8 +510,6 @@ quizlib.directive('changeCloseDate',function(){
       element.bind("click",function(){
         if(element.is(":checked")){
           $(".close-date").css("z-index","-1")
-          // using date.js method
-          //console.log(scope.served_quiz.date)
           var obj = new Date(scope.served_quiz.date)
           var date = new Date(obj.getFullYear(), obj.getMonth() + 1,obj.getDate(), obj.getHours(), obj.getMinutes())
           scope.served_quiz.close_date = date

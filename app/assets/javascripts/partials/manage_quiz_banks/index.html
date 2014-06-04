@@ -25,6 +25,7 @@
     <div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'"></div>
       
     <div class="col-xs-10 right_section">
+      <alert class = "mar-top-10" type='success' close="remove_alert()" ng-if = "alert != undefined">{{alert.msg}}</alert>
       <table class="table table-striped">
         <thead>
           <th class="col-xs-2 manage_section">

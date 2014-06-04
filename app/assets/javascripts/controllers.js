@@ -16,7 +16,6 @@ quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',function($scope
     
   $scope.uploadFile = function(){
       var file = $scope.myFile;
-      //console.log('file is ' + JSON.stringify(file));
       var uploadUrl = "/users/"+ $scope.user.id + "/upload_image";
       $scope.loading = true
       fileUpload.uploadFileToUrl(file, uploadUrl);
@@ -199,7 +198,6 @@ quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz','A
   $scope.correct = function(answer){
     answer.graded_by_teacher = 1
     answer.is_correct = true
-    console.log(answer)
     Answer.update(answer.id,answer).$promise.then(function(){
       index = $scope.answers_to_grade.indexOf(answer)
       $scope.answers_to_grade.splice(index,1)
@@ -215,7 +213,7 @@ quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz','A
   }
 }]);
 
-quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing','QuizStatus','TimeDisplay',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing,QuizStatus,TimeDisplay){
+quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing','QuizStatus','TimeDisplay','Message',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing,QuizStatus,TimeDisplay,Message){
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
@@ -235,7 +233,13 @@ quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz
     })
   })
   
+  $scope.alert = Message.get_message("ServeQuizCtrl")
   
+  $scope.remove_alert = function(){
+    $scope.alert = undefined
+    Message.remove_message_by_controller("ServeQuizCtrl")
+  }
+
   $rootScope.cancel = function () {
     $rootScope.modalInstance.dismiss('cancel');
   };
@@ -425,7 +429,6 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
     })
     $scope.show_questions = []
     if($scope.question_done == $scope.questions.length){
-      console.log("in the if question_done == questions.length")
       $scope.show_answer= true 
       $scope.submit = false
     }
@@ -579,16 +582,12 @@ quizlib.controller('TimePickerCtrl', ['$scope',function($scope){
     $scope.mytime = d;
   };
 
-  $scope.changed = function () {
-    console.log('Time changed to: ' + $scope.mytime);
-  };
-
   $scope.clear = function() {
     $scope.mytime = null;
   };
 }]); 
 
-quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','ClonedQuestionOption','Group','User','Sharing','QuestionOption','$routeParams','$location',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,ClonedQuestionOption,Group,User,Sharing,QuestionOption,$routeParams,$location){
+quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','ClonedQuestionOption','Group','User','Sharing','QuestionOption','$routeParams','$location','Message',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,ClonedQuestionOption,Group,User,Sharing,QuestionOption,$routeParams,$location,Message){
   
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
@@ -749,6 +748,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
         angular.forEach($scope.selected_students,function(value,key){
           Sharing.save(data.id,{user_id: value.id})
         })
+         Message.push_message({type: "success",msg: "You have successfully served quiz",controller: "ServeQuizCtrl"})
         $location.path("/served_quizzes")
       })
     })
@@ -756,7 +756,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
 
 }]);
 
-quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',function($scope,User,Group,StudentGroup){
+quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup','Message',function($scope,User,Group,StudentGroup,Message){
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
@@ -771,10 +771,18 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
       
     })
   })
+  
+  $scope.alert = Message.get_message("GroupListCtrl")
+  $scope.remove_alert = function(){
+    $scope.alert = undefined
+    Message.remove_message_by_controller("GroupListCtrl")
+  } 
+  
   $scope.removeGroup = function(group,idx){
     Group.delete(group.id)
     $scope.groups.splice(idx,1)
   }
+  
   $scope.toggle_title = function(){
     if($scope.title == false){
       $scope.title = true
@@ -783,6 +791,7 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
       $scope.title = false
     }
   }
+  
   $scope.toggle_count = function(){
     if($scope.count == false){
       $scope.count = true
@@ -790,6 +799,7 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
       $scope.count = false
     }
   }
+  
   $scope.toggle_last_updated = function(){
     if($scope.last_updated == false){
       $scope.last_updated = true
@@ -801,7 +811,7 @@ quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup',func
 }]);
 
  
-quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','StudentGroup',function($scope,$location,User,Group,StudentGroup){
+quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','StudentGroup','Message',function($scope,$location,User,Group,StudentGroup,Message){
   
   $scope.students = User.get_students()
   $scope.selected_students = []
@@ -822,8 +832,9 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
       $scope.currentStep = 1000
       $scope.start_tour = false
     }
-  })
+  });
 
+  
   $scope.change_display = function(){
     if($scope.start_tour == true){
       $scope.start_tour = false
@@ -857,8 +868,9 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
         angular.forEach($scope.selected_students,function(value,key){
           StudentGroup.save({student_id: value.id,group_id: data.id})
         })
+        Message.push_message({type: "success",msg: "You have successfully created group",controller: "GroupListCtrl"})
+        $location.path("/groups")
       })
-      $location.path("/groups")
     }
   }
   $scope.selected_student = function(student){
@@ -886,7 +898,7 @@ quizlib.controller('ViewGroupCtrl', ['$scope','$routeParams','Group',function($s
     $scope.group.created_at = obj.getDate() +"-" + (obj.getMonth() + 1) +"-"+obj.getFullYear()
   })
 }]); 
-quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User','Group','StudentGroup',function($scope,$location,$routeParams,User,Group,StudentGroup){
+quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User','Group','StudentGroup','Message',function($scope,$location,$routeParams,User,Group,StudentGroup,Message){
   
   $scope.students = []
   $scope.selected_students = []
@@ -937,8 +949,11 @@ quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User',
         angular.forEach($scope.selected_students,function(value,key){
           StudentGroup.save({student_id: value.id,group_id: $scope.group.id})
         })
+        Message.push_message({type: "success",msg: "You have successfully edited group",controller: "GroupListCtrl"})
+        $location.path("/groups")
       })
-      $location.path("/groups")
+
+      
     }
   }
   $scope.selected_student = function(student){
@@ -957,7 +972,7 @@ quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User',
     }
   }
 }]);
-quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section','FavouriteQuiz', function($scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section,FavouriteQuiz) {
+quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section','FavouriteQuiz','Message', function($scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section,FavouriteQuiz,Message) {
   $scope.my_assessments = Repository.all()
   $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
   $scope.quiz_bank_id = $routeParams.id
@@ -982,6 +997,13 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
       $scope.starred_quiz_banks.push(QuizBank.get(value.quiz_bank_id))
     })
   })
+
+  $scope.alert = Message.get_message("ShowQuizBankCtrl")
+  
+  $scope.remove_alert = function(){
+    $scope.alert = undefined
+    Message.remove_message_by_controller("ShowQuizBankCtrl")
+  }
 
   $scope.deleteQuiz = function(){
     QuizBank.delete($scope.quiz_bank_id)
@@ -1049,7 +1071,7 @@ quizlib.controller("Navigation",['$scope',function($scope){
   }
 
 }]);
-quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz){
+quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz','Message',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz,Message){
 
   $scope.quiz_banks = [] 
   $scope.show_new_repo_div = false
@@ -1064,6 +1086,14 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
     })
     
   })
+
+  $scope.alert = Message.get_message("ManageCtrl")
+  
+  $scope.remove_alert = function(){
+    $scope.alert = undefined
+    Message.remove_message_by_controller("ManageCtrl")
+  }
+  
   $scope.init = function(){
     User.get_current_user().$promise.then(function(data){
       $scope.user = data
@@ -1184,13 +1214,7 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
 
 quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','QuestionOption',function($scope, Question,GlobalScope,QuestionOption){
   $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
-  $scope.sortableOptions = {
-    update: function(e, ui) {
-              angular.forEach($scope.questions,function(value,key){
-                console.log(value.description)
-              })
-            }
-  };
+  
   $scope.$on("question_id_Changed",function(event,question_id){
     $scope.question_id = question_id;
     $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
@@ -1390,40 +1414,29 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
     }
   }
   $scope.add_mcq_input = function(){
-    console.log("in addd mcq input")
     $scope.mcq_options.push('')
-    console.log($scope.mcq_options)
   }
 
   $scope.add_correct_option = function(radio){
     $scope.correct_input = radio
-    console.log($scope.correct_input)
   }
   
   $scope.create_mcq = function(isValid){
     $scope.submitted = true
     if(isValid){
-      console.log($scope.mcq_options)
       inputs = $scope.mcq_options
-      console.log($scope.correct_input)
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.question.description,section_id: $scope.section_id,
         question_type: 2,difficulty_level: $scope.selected_difficulty}).$promise.then(function(data){
           $scope.question_id = data.id
           GlobalScope.set_question_id($scope.question_id)
-          console.log(inputs)
           for(var i = 0; i<(inputs.length) ; i++){
-            console.log(i)
-            console.log(inputs[i])
             if(inputs[i] != undefined){
-              console.log("input is defined")
               is_correct = true
               if($scope.correct_input == i){
-                console.log("in the if condition")
                 is_correct = true
               }
               else{
-                console.log("in the else condition")
                 is_correct = false
               }
               QuestionOption.save($scope.quiz_bank_id, $scope.section_id,$scope.question_id,
@@ -1522,7 +1535,7 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
   
-  $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
+  $scope.question_types = ["True False","Multiple Choice","Fill in blank","Open Ended"]
   $scope.submitted= false
   $scope.show_new_section = false
   $scope.section_submitted = false
@@ -1556,6 +1569,7 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
           QuestionTopic.save($scope.quiz_bank_id,{title: value})
         })
       })
+      Message.push_message({type: "success",msg: "You have successfully cloned quiz bank",controller: "ManageCtrl"})
       $location.path("/manage_quiz_banks")
     }
   }
@@ -1586,7 +1600,7 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
     }
   }
 }])
-quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic',function($scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic){
+quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','Message',function($scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,Message){
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
@@ -1595,7 +1609,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   $scope.quiz_bank_id = $routeParams.id
   $scope.quiz_bank = QuizBank.get($scope.quiz_bank_id)
   $scope.quiz_sections = Section.all($scope.quiz_bank_id)
-  $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
+  $scope.question_types = ["True False","Multiple Choice","Fill in blank","Open Ended"]
   $scope.submitted = false
   $scope.section_submitted = false
   $scope.ckEditors = [];
@@ -1610,8 +1624,9 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
         angular.forEach($scope.show_tags, function(value, key){
           QuestionTopic.save($scope.quiz_bank_id,{title: value})
         })
+        Message.push_message({type: "success",msg: "You have successfully updated quiz bank",controller: "ShowQuizBankCtrl"})
+        $location.path("/quiz_banks/"+$scope.quiz_bank_id+"/show")
       })
-      $location.path("/manage_quiz_banks")
     }
   }
   $scope.addSection = function(isValid){
@@ -1652,14 +1667,14 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   
 
 }])
-quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','User',function($scope, $location,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,User){
+quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','User','Message',function($scope, $location,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,User,Message){
   // Variables for view show hide
 
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
-  $scope.question_types = ["True False","Mcq","Fill in blank","Open Ended"]
+  $scope.question_types = ["True False","Multiple Choice","Fill in blank","Open Ended"]
   $scope.tags = Topic.all()
   $scope.show_tags = []
   $scope.submitted = false
@@ -1703,13 +1718,15 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   $scope.saveQuiz = function(isValid){
     $scope.submitted =true
     if(isValid){
+
       $scope.quiz_bank.status = 1
       QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
         angular.forEach($scope.show_tags, function(value, key){
           QuestionTopic.save($scope.quiz_bank_id,{title: value})
         })
       })
-      $location.path("/manage_quiz_banks")
+      Message.push_message({type: "success",msg: "You have successfully created quiz bank",controller: "ManageCtrl"})
+      $location.path("#/quiz_banks/"+$scope.quiz_bank_id+"/show")
     }
   }
 

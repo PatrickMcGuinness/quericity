@@ -10,7 +10,6 @@ student_quizlib.service('fileUpload', ['$http','$rootScope', function ($http,$ro
       $rootScope.$broadcast('profile_pic_Changed', data.profile_pic);
     })
     .error(function(){
-      console.log("error")
     });
   }
 }]);

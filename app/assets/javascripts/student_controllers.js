@@ -11,7 +11,6 @@ student_quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',functio
     
   $scope.uploadFile = function(){
       var file = $scope.myFile;
-      //console.log('file is ' + JSON.stringify(file));
       var uploadUrl = "/users/"+ $scope.user.id + "/upload_image";
       $scope.loading = true
       fileUpload.uploadFileToUrl(file, uploadUrl);

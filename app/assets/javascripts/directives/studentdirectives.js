@@ -87,11 +87,11 @@ student_quizlib.directive("studentLinegraph",function(){
 
         var line = d3.svg.line()
         .x(function(d,i) { 
-          //console.log('Plotting X value for data point: ' + d + ' using index: ' + i + ' to be at: ' + x(i) + ' using our xScale.');
+          
           return x(i); 
         })
         .y(function(d) { 
-          //console.log('Plotting Y value for data point: ' + d + ' to be at: ' + y(d) + " using our yScale.");
+          
           return y(d); 
         })
 

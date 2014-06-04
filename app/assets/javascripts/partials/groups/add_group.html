@@ -11,7 +11,7 @@
         <span class="sub_nav_link"><a href="#/groups" data-toggle = "tooltip" title = "List Student Groups" tooltip-placement = "top">Student Groups</a></span>
   		</div>
       <div class = "sub_nav pull-right">
-        <span class = "sub_nav_icon"><a tool-popover popover-placement="left" popover-html= "<p>Use this form to add new group. Add students to the group by searching students by their first name.</p><p><strong>Take page tour? </strong>&nbsp;<a ng-hide = 'user.show_tour' ng-click = 'openTour();change_display()'>Start Tour</a><a ng-show = 'user.show_tour' ng-click = 'closeTour();change_display()'>End Tour</a></p><p><strong>Show Tooltips?</strong>&nbsp;<a ng-hide = 'user.show_tooltip'>Show Tooltips</a><a ng-show = 'user.show_tooltip'>Hide Tooltips</a>" class = "popover-maker"><img src = "/assets/tour_icon.png" data-toggle = "tooltip" title = "Take the page tour" tooltip-placement = "top"/></a></span>
+        <span class = "sub_nav_icon"><a tool-popover popover-placement="left" popover-html= "<p>Use this form to add new group. Add students to the group by searching students by their first name.</p><p><strong>Take page tour? </strong>&nbsp;<a ng-hide = 'user.show_tour' ng-click = 'openTour();change_display()'>Start Tour</a><a ng-show = 'user.show_tour' ng-click = 'closeTour();change_display()'>End Tour</a></p>" class = "popover-maker"><img src = "/assets/tour_icon.png" data-toggle = "tooltip" title = "Take the page tour" tooltip-placement = "top"/></a></span>
       </div>	
   	</div>
   </div>
@@ -19,6 +19,7 @@
   	<div class="row">
       <form name="GroupForm" ng-submit="saveGroup(GroupForm.$valid)" novalidate>
         <div class="row add_grp_section">
+          <alert class = "mar-top-10" ng-repeat="alert in alerts" type='success'>{{alert.msg}}</alert>
           <button class = "btn btn-default btn">
             <span class = "glyphicon glyphicon-remove"></span>
             <span>
