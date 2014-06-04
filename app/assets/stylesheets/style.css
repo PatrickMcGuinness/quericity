@@ -164,6 +164,10 @@ body{
 	color:#22A2DC;
 	position: relative;
 	}
+.left_section ul li .complete_row.active:hover a{
+	color:#494949;
+	position: relative;
+	}	
 .left_section ul li .complete_row span.link{
 	cursor: pointer;
 	}
