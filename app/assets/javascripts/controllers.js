@@ -1595,6 +1595,7 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
   }
 
   $scope.addMoreTags = function(){
+    console.log("add more tags")
     if($scope.selected_tag != undefined){
       $scope.show_tags.push($scope.selected_tag)
     }

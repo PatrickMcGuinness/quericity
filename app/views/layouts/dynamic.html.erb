@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>QuizLib</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= javascript_include_tag "ckeditor/init" %>
@@ -40,7 +41,6 @@
     <%= favicon_link_tag '/assets/q_icon.png' %>
     <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
     <%= csrf_meta_tags %>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <%=render "layouts/header"%>

@@ -67,12 +67,12 @@
                   <div class = "col-xs-3">
                     <div class = "row">
                       <div class = "col-xs-12">
-                        <label>Tags</label>
-                        <input type="text" ng-model="selected_tag" typeahead="tag.title for tag in tags | filter:$viewValue | limitTo:8" class="form-control input-sm" enter = "addMoreTags()" placeholder = "Tags" popover="Add Tags"  popover-trigger="mouseenter">
+                        <label>Tags:</label>
+                        <input type="text" ng-model="selected_tag" typeahead="tag.title for tag in tags | filter:$viewValue | limitTo:8" class="form-control input-sm" enter = "addMoreTags()" placeholder = "Tags">
                       </div>
                     </div>    
                   </div>
-                  <div class = "col-xs-9">
+                  <div class = "col-xs-9 mar-top-20">
                     <div class = "row">
                       <ul class = "tag-list">
                         <li ng-repeat = "show_tag in show_tags" ng-hide = "show_tags.length == 0 ">

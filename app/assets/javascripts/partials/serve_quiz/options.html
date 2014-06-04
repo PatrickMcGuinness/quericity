@@ -224,14 +224,16 @@
                   <div class="col-xs-2 ">
                     <span style="float:left;">Number of Questions:</span>
                   </div>
-                  <div class="col-xs-1">
+                  <div class="col-xs-2">
                     <span>
-                      <input type="number" class="label_field col-xs-12" ng-model = "served_quiz.number_of_questions" name = "number_of_questions" min = "1" max = "{{quiz_bank_questions.length}}" style = "height:38px;" ng-required = "served_quiz.random == 1"/>
-                    </span> 
+                      <input class="label_field col-xs-8" ng-model = "served_quiz.number_of_questions" name = "number_of_questions" min = "1" max = "{{quiz_bank_questions.length}}" style = "height:26px;" ng-required = "served_quiz.random == 1"/>
+                    </span>
+
+                    <span>/{{quiz_bank_questions.length}}<span>
                   </div>
-                  <div class="col-xs-2 ">
+                  <!--<div class="col-xs-2 ">
                     <span style="float:left; margin-left:10px;">/{{quiz_bank_questions.length}}</span>
-                  </div>
+                  </div> -->
                   <div class = "col-xs-12">
                     <p ng-show="(OptionForm.number_of_questions.$invalid) && (!OptionForm.number_of_questions.$pristine || option_submitted == true)" class="help-block">Required!</p>
                     <p ng-show="OptionForm.number_of_questions.$error.min" class="help-block">Cannot pe less then 1.</p>

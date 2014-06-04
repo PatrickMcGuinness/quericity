@@ -364,8 +364,12 @@ quizlib.directive('timepick',function(){
 })
 quizlib.directive('enter', function () {
   return function (scope, element, attrs) {
+    console.log("bootstrapped")
     element.bind("keydown", function (event) {
+      console.log("keydown")
       if(event.which === 13) {
+        console.log("enter pressed")
+        console.log(attrs.enter)
         scope.$apply(function (){
             scope.$eval(attrs.enter);
         });
