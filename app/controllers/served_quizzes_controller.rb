@@ -16,7 +16,6 @@ class ServedQuizzesController < ApplicationController
   end
 
   def show
-    #render json: @served_quiz
     render json: ServedQuiz.find(params[:id])
   end
 

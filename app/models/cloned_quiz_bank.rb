@@ -13,7 +13,6 @@ class ClonedQuizBank < ActiveRecord::Base
   												:repository_id => quiz_bank.repository_id, :quiz_bank_id => quiz_bank.id,
   												:title => quiz_bank.title, :subject => quiz_bank.subject,
   												:instructions => quiz_bank.instructions)
-  	#ClonedQuestion.create_the_clone(cloned_quiz_bank,params)
   	cloned_quiz_bank
   end
 

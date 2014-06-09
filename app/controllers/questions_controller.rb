@@ -20,7 +20,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    render json: @section.questions.find(params[:id]).update_attributes(params[:question])
+    render json: @section.questions.find(params[:id]).update_question(params)
   end
 
   private

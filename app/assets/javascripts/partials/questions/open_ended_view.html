@@ -3,17 +3,11 @@
     <span class = "col-xs-2">
       <strong>Difficulty:</strong>
     </span>
-    <span ng-if = "question.difficulty_level == 1" class = "col-xs-8">Easy</span>
-    <span ng-if = "question.difficulty_level == 2" class = "col-xs-8">Medium</span>
-    <span ng-if = "question.difficulty_level == 3" class = "col-xs-8">Hard</span>
-    <span class = "col-xs-2">
-      <a ng-hide = "is_quiz_view" ng-click= "show_edit()" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
-        <span class = "glyphicon glyphicon-edit"></span>
-      </a>
-      <a ng-hide = "is_quiz_view" ng-click = "delete_question(section.id,question.id,$index)" data-toggle = "tooltip" title = "Delete Question" tooltip-placement = "top">  
-        <span class = "glyphicon glyphicon-trash"></span>
-      </a>
-    </span>
+    <div class = "col-xs-8">
+      <span ng-if = "question.difficulty_level == 1">Easy</span>
+      <span ng-if = "question.difficulty_level == 2">Medium</span>
+      <span ng-if = "question.difficulty_level == 3">Hard</span>
+    </div>
   </div>
   <div class = "col-xs-12 mar-top-10">
     <span class = "col-xs-2">
@@ -21,7 +15,6 @@
         Question:
       </strong>
     </span>
-    <!--<span class = "col-xs-10" ng-bind-html="question.description | unsafe"></span> -->
     <span class = "col-xs-10" mathjax-bind = "question.description">{{question.description}}</span>
     
   </div>
@@ -29,8 +22,7 @@
     <span class = "col-xs-2">
       <strong>Answer:</strong>
     </span >
-    <!--<span class = "col-xs-10" ng-bind-html="question_option.answer | unsafe"></span> -->
-    <span class = "col-xs-10" mathjax-bind = "question_option.answer">{{question_option.answer}}</span>
+    <span class = "col-xs-10" mathjax-bind = "question.question_options[0].answer">{{question.question_options[0].answer}}</span>
   </div>
 
 </div>

@@ -13,8 +13,12 @@
       <span class="sub_nav_icon"><img src="/assets/add_group.png" /></span>
       <span class="sub_nav_link"><a href="#/groups/new" data-toggle = "tooltip" title = "Add new group" tooltip-placement = "top">Add Group</a></span>
 		</div>
-    <div class="col-xs-2 pull-right">
-      <input type="Search" placeholder="Search..." class="form-control search" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search Served Quiz by title" tooltip-placement = "top"/>
+
+    <div class="input-group col-xs-2 pull-right">
+      <input type="Search" placeholder="Search..." class="form-control search input-sm" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search Served Quiz by title" tooltip-placement "top"/>
+      <div class="input-group-btn">
+        <span class="search"></span>
+      </div>
     </div>	
 	</div>
 </div>
@@ -37,7 +41,7 @@
         	<th class="col-xs-2 manage_section">
               Status
           </th>
-        	<th class="col-xs-2 manage_section">
+        	<th class="col-xs-3 manage_section">
               Student Status
           </th>
           <th class = "col-xs-1 manage_section">
@@ -47,8 +51,8 @@
         <tbody class="text-center">
         	<tr ng-repeat = "served_quiz in served_quizzes | filter: titleFilter">
           	<td>{{served_quiz.cloned_quiz_bank.title}}</td>
-          	<td>{{served_quiz.local_date}}&nbsp;{{served_quiz.local_start_time}}</td>
-          	<td ng-if = "served_quiz.no_expiration == 0">{{served_quiz.local_close_date}}&nbsp;{{served_quiz.local_end_time}}
+          	<td>{{served_quiz.local_date}} {{served_quiz.local_start_time}}</td>
+          	<td ng-if = "served_quiz.no_expiration == 0">{{served_quiz.local_close_date}} {{served_quiz.local_end_time}}
             </td>
             <td ng-if = "served_quiz.no_expiration == 1">No End Time Set
             </td>
@@ -69,7 +73,7 @@
                 </div>  
               </span>
             </td>
-            <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;<a ng-click = "invited_students(served_quiz.id)" data-toggle = "tooltip" title = "All Students who have not started quiz" tooltip-placement = "top">{{served_quiz.invited_sharings.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Partial:</span>&nbsp;<a ng-click = "pending_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who started but have not completed quiz" tooltip-placement = "top">{{served_quiz.pending_sharings.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;<a data-toggle = "tooltip" title = "Students Completed the quiz" tooltip-placement = "top"ng-click = "completed_students(served_quiz.id)">{{served_quiz.completed_sharings.length}}</a>&nbsp;</td>
+            <td><span style="color:#00a404; font-weight:bold;">Invited:</span><a ng-click = "invited_students(served_quiz.id)" data-toggle = "tooltip" title = "All Students who have not started quiz" tooltip-placement = "top"> {{served_quiz.invited_sharings.length}}</a><span style="color:#c64b00; font-weight:bold;"> Partial:</span><a ng-click = "pending_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who started but have not completed quiz" tooltip-placement = "top"> {{served_quiz.pending_sharings.length}}</a><span style="color:#0069a7; font-weight:bold;"> Completed:</span><a data-toggle = "tooltip" title = "Students Completed the quiz" tooltip-placement = "top"ng-click = "completed_students(served_quiz.id)"> {{served_quiz.completed_sharings.length}}</a></td>
             <td ng-if = "served_quiz.no_expiration == 0 && served_quiz.close_status == 0">
               N/A
             </td>
@@ -85,6 +89,7 @@
 		</div>
 	</div>
 </div>
+
 <script type="text/ng-template" id="Modal.html">
   <div class='modal-header'>
     <a class = "pull-right" ng-click = "cancel()"><span class = "glyphicon glyphicon-remove"></span></a>

@@ -84,6 +84,14 @@ class Sharing < ActiveRecord::Base
     (self.get_correct_answers_count * 100)/(self.served_quiz.cloned_quiz_bank.cloned_questions.count)
   end
 
+  def self.share_with_student_list(served_quiz,selected_students)
+    sharings = []
+    selected_students.each do |selected_student|
+      sharings << served_quiz.sharings.create(user_id: selected_student[:id] )
+    end
+    sharings
+  end
+
   def as_json(opts = nil)
     opts ||={}
     {

@@ -1,12 +1,9 @@
 <div class = "col-xs-12 new-question-box mar-top-10 mar-bot-10" ng-controller = "newQuestionCtrl">
   <div class = "heading col-xs-12">
     <span>Update Question</span>
-    <a ng-click = "hide_update()" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">
-      <span class = "glyphicon glyphicon-remove pull-right" style = "color:red;"></span>
-    </a>
   </div>
   <div class = "col-xs-12 mar-top-10">
-    <label>Difficulty Level *: </label>
+    <label>Difficulty Level: </label>
     <select class="form-control" ng-model="question.difficulty_level" name = "difficulty">
       <option value = "">Select Difficulty</option>
       <option value = "1">Easy</option>
@@ -27,7 +24,7 @@
         <th class = "col-xs-1"></th>
       </thead>
       <tbody>
-        <tr ng-repeat = "option in question_options">
+        <tr ng-repeat = "option in question.question_options">
           <td>
             <input type = "text", class = "form-control" ng-model = "option.answer">
           </td>
@@ -42,6 +39,10 @@
     </table>
   </div>
   <div class = "col-xs-12 question-footer">
-    <button ng-click = "edit_mcq(section.id,question.id,question,question_options)" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question</button>
+    <div class = "pull-right col-xs-5">
+      <button class = "btn btn-danger col-xs-3" style = "margin-top: 5px;" ng-click = "hide_update()" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top"> Cancel</button>
+      <button ng-click = "edit_mcq(section.id,question.id,question,question.question_options)" class = "btn btn-success col-xs-6" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question</button>
+      
+    </div>
   </div>
 </div>

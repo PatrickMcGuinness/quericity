@@ -15,4 +15,8 @@ class TopicsController < ApplicationController
   	render json: Topic.create(params[:create])
   end
 
+  def search
+    render json: Topic.search(params[:query])
+  end
+
 end

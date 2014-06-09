@@ -1,15 +1,12 @@
 <div class = "col-xs-12 new-question-box mar-top-10 mar-bot-10">
   <div class = "heading">
     <span>Update Question</span>
-    <a ng-click = "hide_update()" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">
-      <span class = "glyphicon glyphicon-remove pull-right" style = "color:red;"></span>
-    </a>
   </div>
   <form name="OpenEndedForm" ng-submit="edit_question(section.id,question.id,question,OpenEndedForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (OpenEndedForm.difficulty.$invalid) && (!OpenEndedForm.difficulty.$pristine || submitted == true)}">
         <label>Difficulty Level *:</label>
-        <select class="form-control" ng-model="question.difficulty_level" name = "difficulty" required>
+        <select class="form-control" ng-model="question.difficulty_level" name = "difficulty">
           <option value = "">Select Difficulty</option>
           <option value = "1">Easy</option>
           <option value = "2">Medium</option>
@@ -28,11 +25,14 @@
     </div> 
     <div class = "col-xs-12 mar-top-10">
       <label>Answer Statement :</label>
-      <textarea name="answer" id="answer" rows="3" class = "form-control" placeholder = "Enter answer" ng-model = "question_option.answer" data-ck-editor>
+      <textarea name="answer" id="answer" rows="3" class = "form-control" placeholder = "Enter answer" ng-model = "question.question_options[0].answer" data-ck-editor>
       </textarea>
     </div>
     <div class = "col-xs-12 question-footer mar-top-10">
-      <button type = "submit" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question</button>
+      <div class = "col-xs-5 pull-right">
+        <button class = "btn btn-danger col-xs-3" style = "margin-top: 5px;" ng-click = "hide_update()" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top"> Cancel</button>
+        <button type = "submit" class = "btn btn-success col-xs-6" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question</button>
+      </div>
     </div>
   </form>  
 </div>  

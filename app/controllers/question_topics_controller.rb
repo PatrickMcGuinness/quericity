@@ -15,14 +15,22 @@ class QuestionTopicsController < ApplicationController
   def show
   	render json: @quiz_bank.question_topics.find(params[:id])
   end
+  
   def edit
   	render json: @quiz_bank.question_topics.find(params[:id])
   end
+  
   def update
   	render json: @quiz_bank.question_topics.find(params[:id]).update_attributes(params[:question_topic])
   end
+  
   def destroy
   	render json: @quiz_bank.question_topics.find(params[:id]).destroy
+  end
+
+  def destroy_all
+    @quiz_bank.question_topics.destroy_all
+    render json: true
   end
 
   private

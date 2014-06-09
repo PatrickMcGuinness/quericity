@@ -1,15 +1,12 @@
 <div class = "col-xs-12 new-question-box mar-top-10 mar-bot-10">
   <div class = "heading">
     <span>Update Question</span>
-    <a ng-click = "hide_update()" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">
-      <span class = "glyphicon glyphicon-remove pull-right" style = "color:red;"></span>
-    </a>
   </div>
   <form name="BlankForm" ng-submit="edit_blank(first_statement,second_statement,section.id,question.id,question,BlankForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.difficulty.$invalid) && (!BlankForm.difficulty.$pristine || submitted == true)}">
         <label>Difficulty Level *:</label>
-        <select class="form-control" ng-model="question.difficulty_level" name = "difficulty" required>
+        <select class="form-control" ng-model="question.difficulty_level" name = "difficulty">
           <option value = "">Select Difficulty</option>
           <option value = "1">Easy</option>
           <option value = "2">Medium</option>
@@ -29,7 +26,7 @@
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.blank.$invalid) && (!BlankForm.blank.$pristine || submitted == true)}">
         <label>Blank *:</label>
-        <textarea name="blank" id="blank" rows="2" class = "form-control" ng-model = "question_option.answer" required>
+        <textarea name="blank" id="blank" rows="2" class = "form-control" ng-model = "question.question_options[0].answer" required>
         </textarea>
          <p ng-show="BlankForm.blank.$invalid && (!BlankForm.blank.$pristine || submitted == true)" class="help-block">Blank is required</p>
       </div>  
@@ -42,7 +39,10 @@
       </div>  
     </div>
     <div class = "col-xs-12 question-footer mar-top-10">
-      <button type = "submit" class = "btn btn-success col-xs-3 pull-right" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question </button>
+      <div class = "col-xs-5 pull-right">
+        <button class = "btn btn-danger col-xs-3" style = "margin-top: 5px;" ng-click = "hide_update()" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top"> Cancel</button>
+        <button type = "submit" class = "btn btn-success col-xs-6" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question </button>
+      </div>
     </div>
   </form>  
 </div>  

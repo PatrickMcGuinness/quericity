@@ -8,6 +8,11 @@ class Topic < ActiveRecord::Base
   has_many :quiz_banks, :through => :question_topics
 
   def self.search(search)
-    Topic.where('title ILIKE ?', "#{search}%")
+    topics = Topic.where('title ILIKE ?', "#{search}%")
+    topic_with_text = []
+    topics.each do |topic|
+    	topic_with_text.push({text: topic.title})
+    end
+    topic_with_text
   end
 end

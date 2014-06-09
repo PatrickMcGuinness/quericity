@@ -1,0 +1,10 @@
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1 
+      Quiz Served
+    %h4
+      = "#{@teacher.first_name} #{@teacher.last_name}!"
+    %p
+      = "You have successfully served new quiz #{@served_quiz.cloned_quiz_bank.title} to students."

@@ -550,7 +550,7 @@ quizlib.directive('customPopover', function ($compile) {
         html: true,
         content: function() { return $compile(attrs.popoverHtml)(scope);},
         placement: attrs.popoverPlacement
-      }).on('click',function(e){
+      }).on('mouseover',function(e){
           e.stopPropagation()
           $(this).popover("show")
           $(this).next().show()

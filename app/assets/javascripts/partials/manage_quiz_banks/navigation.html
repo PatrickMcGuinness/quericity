@@ -16,12 +16,12 @@
         </li>
         <li ng-repeat = "repo in my_assessments">
           <div class = "row complete_row" droppable drop= "handleDrop" id ="{{repo.id}}">
-            <a class = "form-group mar-bot-0-7 link showhide">
+            <a class = "mar-bot-0-7 link showhide pull-left">
               <img src = "/assets/nav_right.png" class = "drive-icon right">
               <img src = "/assets/nav_down.png" class = "drive-icon hide down">
               {{repo.title}}   
             </a> 
-            <span class = "col-xs-5">
+            <span class = "col-xs-5 pull-right">
               <span class = "glyphicon glyphicon-pencil link" showtitleedit style = "font-size: 11px;"></span>  
               <span ng-click = "deleteRepo(repo)" class = "glyphicon glyphicon-remove link" style = "font-size:11px;"></span>  
             </span>  

@@ -1,8 +1,11 @@
 <div ng-include src="'/assets/partials/common/menu.html'"></div>
 <div class="row_bottom">
 	<div class="container">
-    <div class="col-xs-2 pull-right">
-      <input type="Search" placeholder="Search..." class="form-control search" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search Served Quiz by title" tooltip-placement = "top"/>
+    <div class="input-group col-xs-2 pull-right">
+      <input type="Search" placeholder="Search..." class="form-control search input-sm" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search Served Quiz by title" tooltip-placement "top"/>
+      <div class="input-group-btn">
+        <span class="search"></span>
+      </div>
     </div>	
 	</div>
 </div>
@@ -23,7 +26,7 @@
         <th class="col-xs-2 manage_section">
             End Time
         </th>
-        <th class="col-xs-2 manage_section">
+        <th class="col-xs-3 manage_section">
             Student Status
         </th>
         <th class="col-xs-2 manage_section">
@@ -39,8 +42,8 @@
           <td>{{served_quiz.local_date}} {{served_quiz.local_start_time}}</td>
           <td ng-if = "served_quiz.no_expiration == 0">{{served_quiz.local_close_date}} {{served_quiz.local_end_time}}</td>
           <td ng-if = "served_quiz.no_expiration == 1"> No End Time Set</td>
-          <td><span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;<a ng-click = "invited_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who have not started quiz" tooltip-placement = "top">{{served_quiz.invited_sharings.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Pending:</span>&nbsp;<a ng-click = "pending_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who have started but not completed the quiz" tooltip-placement = "top">{{served_quiz.pending_sharings.length}}</a>&nbsp;&nbsp;&nbsp;<span style="color:#0069a7; font-weight:bold;">Completed:</span>&nbsp;<a ng-click = "completed_students(served_quiz.id)">{{served_quiz.completed_sharings.length}}</a>&nbsp;</td>
-          <td><span style="color:#00a404; font-weight:bold;">Attempted:</span>&nbsp;{{served_quiz.attempted_answers.length}}&nbsp;&nbsp;&nbsp;<span style="color:#c64b00; font-weight:bold;">Graded:</span>&nbsp;{{served_quiz.graded_answers.length}}</td>
+          <td><span style="color:#00a404; font-weight:bold;">Invited:</span><a ng-click = "invited_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who have not started quiz" tooltip-placement = "top">{{served_quiz.invited_sharings.length}}</a><span style="color:#c64b00; font-weight:bold;"> Pending:</span><a ng-click = "pending_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who have started but not completed the quiz" tooltip-placement = "top"> {{served_quiz.pending_sharings.length}}</a><span style="color:#0069a7; font-weight:bold;"> Completed:</span><a ng-click = "completed_students(served_quiz.id)">{{served_quiz.completed_sharings.length}}</a></td>
+          <td><span style="color:#00a404; font-weight:bold;">Attempted:</span>{{served_quiz.attempted_answers.length}}<span style="color:#c64b00; font-weight:bold;"> Graded:</span>{{served_quiz.graded_answers.length}}</td>
           <td>
             <a ng-href = "#/grade/{{served_quiz.id}}/questions" data-toggle = "tooltip" title = "Grade remaining questions" tooltip-placement = "top"><img src="/assets/grade_icon.png" /></a></td>
         </tr>

@@ -91,7 +91,11 @@ QuizLib::Application.routes.draw do
       post "upload_image"
     end
   end
-  resources :topics
+  resources :topics do
+    collection do
+      get "search"
+    end
+  end
   resources :repositories do
     collection do
       get "default_repo"
@@ -116,7 +120,11 @@ QuizLib::Application.routes.draw do
         resources :cloned_question_options
       end
     end
-    resources :question_topics
+    resources :question_topics do
+      collection do
+        get "destroy_all"
+      end
+    end
     resources :sections do
       resources :questions do
         resources :question_options

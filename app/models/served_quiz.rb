@@ -153,49 +153,46 @@ class ServedQuiz < ActiveRecord::Base
   def self.get_time_zone_hrs_min(user)
     user.time_zone.to_s.split(".").collect{|i| i.to_i}
   end
+  
   def self.create_served_quiz(user,params)
-    
+    quiz_bank = QuizBank.find(params[:served_quiz][:quiz_bank_id])
+    cloned_quiz_bank = ClonedQuizBank.create_the_clone(quiz_bank)
+    if params[:random].to_i == 0
+      ServedQuiz.clone_question_list(params,cloned_quiz_bank)
+    else
+      ClonedQuestion.create_random(cloned_quiz_bank,quiz_bank,params[:number_of_questions].to_i)
+    end
+    params[:served_quiz][:cloned_quiz_bank_id] = cloned_quiz_bank.id
     served_quiz = user.served_quizzes.create(params[:served_quiz])
-    #time_zone_hrs_min = ServedQuiz.get_time_zone_hrs_min(served_quiz.owner)
+    Sharing.share_with_student_list(served_quiz, params[:selected_students])
+    served_quiz.delay.send_emails
+    served_quiz
+  end
+
+  def send_emails
+    self.sharings.each do |sharing|
+      UserMailer.quiz_served_student_email(sharing.user,self.owner,self).deliver
+    end
+
     
-    #quiz_time_array = ServedQuiz.manipulate_time(served_quiz.start_time,time_zone_hrs_min)
-    #quiz_time_day = ServedQuiz.manipulate_day(served_quiz.date,quiz_time_array)
-    
-    #served_quiz.update_attribute("start_time",quiz_time_day[0])
-    #served_quiz.update_attribute("date",quiz_time_day[1])
+  end
 
-    #quiz_time_array = ServedQuiz.manipulate_time(served_quiz.end_time,time_zone_hrs_min)
-    #quiz_time_day = ServedQuiz.manipulate_day(served_quiz.close_date,quiz_time_array)
-
-    #served_quiz.update_attribute("end_time",quiz_time_day[0])
-    #served_quiz.update_attribute("close_date",quiz_time_day[1])
-
-    #served_quiz
+  def self.clone_question_list(params,cloned_quiz_bank)
+    params[:selected_questions].each do |selected_question|
+      ClonedQuestion.create_the_clone(cloned_quiz_bank,selected_question[:id])
+    end
   end
 
   def self.get_start_local_time(served_quiz,user)
     time_zone_hrs_min = ServedQuiz.get_time_zone_hrs_min(user)
     ServedQuiz.local_time(served_quiz.date,time_zone_hrs_min)
-    #quiz_time_array = ServedQuiz.local_time(served_quiz.date,time_zone_hrs_min)
-    #quiz_time_day = ServedQuiz.manipulate_day(served_quiz.date,quiz_time_array)
-
-    #start_time = quiz_time_day[0]
-    #date = quiz_time_day[1]
-
-    #return start_time, date 
 
   end
 
   def self.get_end_local_time(served_quiz,user)
     
     time_zone_hrs_min = ServedQuiz.get_time_zone_hrs_min(user)
-    #quiz_time_array = ServedQuiz.local_time(served_quiz.end_time,time_zone_hrs_min)
-    #quiz_time_day = ServedQuiz.manipulate_day(served_quiz.close_date,quiz_time_array)
 
-    #end_time = quiz_time_day[0]
-    #close_date = quiz_time_day[1]
-
-    #return end_time, close_date
     ServedQuiz.local_time(served_quiz.close_date,time_zone_hrs_min)
   end
 
@@ -239,67 +236,6 @@ class ServedQuiz < ActiveRecord::Base
 
   
   
-  #def self.manipulate_day(quiz_time_day,quiz_time_array)
-    #served_quiz_day = quiz_time_day
-    #if(quiz_time_array[0] < 0)
-      #quiz_time_array[0] = 24 - (quiz_time_array[0].abs)
-      #day = quiz_time_day.day - 1
-      #served_quiz_day = quiz_time_day.change(:day => day)
-    #end
-    
-    #if(quiz_time_array[0] > 24)
-      #quiz_time_array[0] = (quiz_time_array[0].abs)%24
-      #day = quiz_time_day.day + 1
-      #served_quiz_day = quiz_time_day.change(:day => day)
-    #end
-    
-    #quiz_time_array = quiz_time_array.join(":")
-    
-    #return quiz_time_array,served_quiz_day
-  #end
-
-  #def self.manipulate_time(quiz_time,time_zone_hrs_min)
-    
-    #quiz_time_array = quiz_time.to_s(:time).split(":").collect{|i| i.to_i}
-    
-    # if gmt hrs are in plus
-    
-    #if(time_zone_hrs_min[0] > 0)  
-      #quiz_time_array[1] = quiz_time_array[1] - time_zone_hrs_min[1]        # subtract the gmt minutes from entered time
-      #if(quiz_time_array[1] < 0)
-        #quiz_time_array[0] = quiz_time_array[0] - 1
-        #quiz_time_array[1] = 60 - quiz_time_array[1].abs
-      #end
-    #else
-      #if gmt hrs are in minus
-      #quiz_time_array[1] = quiz_time_array[1] + time_zone_hrs_min[1]
-      #if(quiz_time_array[1] > 60)
-        #quiz_time_array[1] = quiz_time_array[1]%60
-        #quiz_time_array[0] = quiz_time_array[0] + 1
-      #end
-    #end
-    #quiz_time_array[0] = quiz_time_array[0] - time_zone_hrs_min[0]
-    #quiz_time_array
-  #end
-
-  #def self.local_time(quiz_time,time_zone_hrs_min)
-    #quiz_time_array = quiz_time.to_s(:time).split(":").collect{|i| i.to_i}
-    #if(time_zone_hrs_min[0] > 0)
-      #quiz_time_array[1] = quiz_time_array[1] + time_zone_hrs_min[1]
-      #if(quiz_time_array[1] > 60)
-        #quiz_time_array[1] = quiz_time_array[1]%60
-        #quiz_time_array[0] = quiz_time_array[0] + 1
-      #end
-    #else
-      #quiz_time_array[1] = quiz_time_array[1] - time_zone_hrs_min[1]
-      #if(quiz_time_array[1] < 0)
-        #quiz_time_array[0] = quiz_time_array[0] - 1
-        #quiz_time_array[1] = 60 - quiz_time_array[1].abs
-      #end
-    #end
-    #quiz_time_array[0] = quiz_time_array[0] + time_zone_hrs_min[0]
-    #quiz_time_array
-  #end
   
   
   
@@ -384,10 +320,8 @@ class ServedQuiz < ActiveRecord::Base
       :show_all_questions => show_all_questions, 
       :questions_per_page => questions_per_page,
       :cloned_quiz_bank => cloned_quiz_bank.as_json(),
-      :local_date => self.date,#ServedQuiz.get_start_local_time(self,self.owner).as_json(),
-      :local_close_date => self.close_date#ServedQuiz.get_end_local_time(self,self.owner).as_json()
-      #:local_start_time => self.start_time,#ServedQuiz.get_start_local_time(self,self.owner)[0].as_json(),
-      #:local_end_time => self.end_time#ServedQuiz.get_end_local_time(self,self.owner)[0].as_json()  
+      :local_date => self.date,
+      :local_close_date => self.close_date  
     }
     
   end

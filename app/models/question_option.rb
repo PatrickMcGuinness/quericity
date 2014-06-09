@@ -1,5 +1,5 @@
 class QuestionOption < ActiveRecord::Base
-  attr_accessible :answer,:question_id,:is_correct
+  attr_accessible :answer,:question_id,:is_correct,:seq
   belongs_to :question
 
   #validates :answer, :question_id, :is_correct, presence: true 
