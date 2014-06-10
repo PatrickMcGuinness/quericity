@@ -180,8 +180,13 @@ class User < ActiveRecord::Base
     User.where('role = ? and first_name ILIKE ?', "Student","%#{search}%").limit(5)
   end
 
-  def self.search_by_email(search)
-    User.where('role = ? and email ILIKE ?',"Student", "%#{search}%").limit(5)
+  def self.search_teacher_by_email(search,user)
+    teachers = User.where('role = ? and email ILIKE ?',"Professor", "%#{search}%").limit(5)
+    email_with_text = []
+    teachers.each do |teacher|
+      email_with_text.push({text: teacher.email})
+    end
+    email_with_text
   end
 
   def display_picture

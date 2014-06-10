@@ -70,19 +70,30 @@
               <span class = "glyphicon glyphicon-tag" style = "color: red;"></span>
               <span>&nbsp;&nbsp;{{quiz_bank.topics[0].title}}</span>
             </td>
-            <td ng-hide = "quiz_bank.public">Private</td>
-            <td ng-show = "quiz_bank.public">Public</td>
+            <td ng-hide = "quiz_bank.public" ng-if = "current_user.id == quiz_bank.user.id">
+              <a ng-href = "#/quiz_banks/{{quiz_bank.id}}/share">
+                Private
+              </a>
+            </td>
+            <td ng-hide = "quiz_bank.public" ng-if = "current_user.id != quiz_bank.user.id">
+                Private
+            </td>
+            <td ng-show = "quiz_bank.public" ng-if = "current_user.id == quiz_bank.user.id">
+              <a ng-href = "#/quiz_banks/{{quiz_bank.id}}/share">
+                Public
+              </a>
+            </td>
+            <td ng-show = "quiz_bank.public" ng-if = "current_user.id != quiz_bank.user.id">
+                Public
+            </td>
             <td>
               <div class = "col-xs-offset-1" ng-class="{ 'col-xs-10' : current_user.id == quiz_bank.user.id}">
                 <a ng-if = "current_user.id == quiz_bank.user.id" ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)" data-toggle = "tooltip" title = "Share Quiz" tooltip-placement = "top">
-                  <span class = "glyphicon glyphicon-cloud"></span>
+                  <img src = "/assets/unlock.png">
                 </a>
                 <a ng-if = "current_user.id == quiz_bank.user.id" ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)" data-toggle = "tooltip" title = "Unshare Quiz" tooltip-placement = "top">
-                  <span  class = "glyphicon glyphicon-user"></span>
+                  <img src = "/assets/lock.png">
                 </a>
-                <!--<a ng-if = "current_user.id != quiz_bank.user.id">
-                  &nbsp;&nbsp;&nbsp;
-                </a>-->
                 <a data-toggle = "tooltip" title = "Clone Quiz Bank" tooltip-placement = "top" ng-href = "#/quiz_banks/{{quiz_bank.id}}/clone">  
                   <img src = '/assets/clone_blue_icon.png'>
                 </a>

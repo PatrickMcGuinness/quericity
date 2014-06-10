@@ -76,4 +76,8 @@ class UsersController < ApplicationController
   def dashboard_line_graph_data
     render json: User.find(params[:id]).line_graph_data
   end
+
+  def search_teacher_by_email
+    render json: User.search_teacher_by_email(params[:query],current_user)
+  end
 end

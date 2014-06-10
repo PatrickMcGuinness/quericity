@@ -1,5 +1,5 @@
 class Share < ActiveRecord::Base
-  attr_accessible :teacher_id, :shareable_id, :shareable_type, :permissions
+  attr_accessible :teacher_id, :shareable_id, :shareable_type, :permissions, :owner_id
 
   belongs_to :shareable, polymorphic: true
 
@@ -38,6 +38,18 @@ class Share < ActiveRecord::Base
 
   def self.get_quiz_bank_shares_count(user,quiz_bank)
     Share.get_quiz_bank_shares(user,quiz_bank).count
+  end
+
+  def as_json(opts = nil)
+    opts ||={}
+    {
+      :id  => id,
+      :teacher => teacher.as_json(), 
+      :shareable_id => shareable_id,
+      :shareable_type => shareable_type,
+      :permissions => permissions, 
+      :owner => owner.as_json()
+    }
   end
 
 

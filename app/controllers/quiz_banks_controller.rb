@@ -56,12 +56,9 @@ class QuizBanksController < ApplicationController
     render json: QuizBank.quiz_banks_list(current_user)
   end
 
-  def quiz_bank_owner
-    @quiz_bank = QuizBank.find(params[:id])
+  def share_with_list
+    render json: QuizBank.find(params[:id]).share_with_list(params[:emails],current_user)
   end
   
   
-
-  
-
 end

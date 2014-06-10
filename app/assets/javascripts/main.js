@@ -4,6 +4,8 @@ quizlib.config(['$routeProvider',function($routeProvider) {
     $routeProvider.
       when('/manage_quiz_banks', 
       {templateUrl: 'assets/partials/manage_quiz_banks/index.html',controller: 'ManageCtrl',activetab: 'manage'}).
+      when('/quiz_banks/:id/share', 
+      {templateUrl: 'assets/partials/manage_quiz_banks/sharing.html',controller: 'ShareCtrl',activetab: 'manage'}).
       when('/quiz_banks/new',
       {templateUrl: 'assets/partials/quiz_banks/new.html',controller: 'NewQuizBankCtrl',activetab: 'manage'}).
       when('/quiz_banks/:id/show',

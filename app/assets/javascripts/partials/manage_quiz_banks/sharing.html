@@ -1,0 +1,52 @@
+<div ng-include src="'/assets/partials/common/menu.html'"></div>
+<div class="row_bottom">
+	<div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
+      <span class="sub_nav_link"><a href="#/serve_quiz/new" data-toggle = "tooltip" title = "Serve new Quiz" tooltip-placement = "top">Change</a></span>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+    <div class="row add_grp_section">
+      <button class = "btn btn-default btn">
+        <span class = "glyphicon glyphicon-remove"></span>
+        <span>
+          <a class = "popover-field" ng-href = "#/manage_quiz_banks" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top" popover="Cancel sharing"  popover-trigger="mouseenter">Cancel</a>  
+        </span>
+      </button>
+      <button class = "btn btn-default btn">
+        <span class = "glyphicon glyphicon-floppy-saved"></span>
+        <span>
+          <a class = "popover-field" ng-click = "share()" data-toggle = "tooltip" title = "Share with email list" tooltip-placement = "top"  popover="Share with email list"  popover-trigger="mouseenter">Share</a>  
+        </span>
+      </button>
+      <div class = "row">
+        <div class = "col-xs-12">
+          <tags-input ng-model="tags" placeholder = "Add teacher emails">
+            <auto-complete source="loadtags($query)"></auto-complete>
+          </tags-input>
+        </div>
+      </div>  
+      <div class="col-xs-12 radio_contorl">
+        <input type="checkbox" name="checkbox" ng-click="predicate = 'first_name'; reverse=!reverse" data-toggle = "tooltip" title = "Sort Students by first name" tooltip-placement = "top"/  popover="Sort student by first name"  popover-trigger="mouseenter" class = "popover-field">&nbsp;&nbsp;Sort by name
+      </div>
+      <ul class="col-xs-12">
+        <li class="col-xs-3 select_section" style = "word-wrap: break-word; width: 30%" ng-repeat = "share in quiz_bank.shares | orderBy:predicate:reverse" ng-class="{ 'adjust-thumbnail' : {{$index%3}} == 0}">
+          <span class="col-xs-4"><img src="{{share.teacher.profile_pic.url}}" class="img-thumbnail" /></span>
+          <span style=" float:right;">
+            <a ng-click = "remove_sharing($index)">
+              <span class = "glyphicon glyphicon-remove"></span>
+            </a>  
+          </span>
+          <span class="col-xs-6">
+            <h4>{{share.teacher.first_name}} {{share.teacher.last_name}}</h4>
+            <p>{{share.teacher.email}}</p>
+          </span>
+        </li>
+      </ul>
+    </div>
+	</div>
+</div>  
+

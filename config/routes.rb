@@ -80,6 +80,7 @@ QuizLib::Application.routes.draw do
       get 'get_students'
       get 'system_students'
       get "get_served_students"
+      get "search_teacher_by_email"
     end
     member do
       get 'get_student_details'
@@ -111,6 +112,7 @@ QuizLib::Application.routes.draw do
       get "repo_quiz_banks"
       get "clone"
       get "questions"
+      get "share_with_list"
     end
     resources :cloned_quiz_banks do
       collection do

@@ -1,6 +1,6 @@
 quizlib.factory('User', ['$resource', function($resource) {
   function User() {
-    this.service = $resource('/users/:id/:get_students:get_served_students:system_students:get_current_user:get_student_details:bar_graph_data:line_graph_data', {id: '@id'},
+    this.service = $resource('/users/:id/:get_students:get_served_students:system_students:get_current_user:get_student_details:bar_graph_data:line_graph_data:search_teacher_by_email', {id: '@id'},
                 {update:{method:"PUT",isArray:false},
                  get_students:{method: "GET",isArray:true},
                  system_students:{method: "GET",isArray:true},
@@ -8,7 +8,8 @@ quizlib.factory('User', ['$resource', function($resource) {
                  get_student_details: {method: "GET",isArray:false},
                  bar_graph_data: {method: "GET",isArray:false},
                  line_graph_data: {method: "GET",isArray:false},
-                 get_served_students: {method: "GET",isArray:true}
+                 get_served_students: {method: "GET",isArray:true},
+                 search_teacher_by_email:{method: "GET",isArray: true}
                 });
   };
   
@@ -44,6 +45,9 @@ quizlib.factory('User', ['$resource', function($resource) {
   }
   User.prototype.line_graph_data = function(StudentId){
     return this.service.line_graph_data({id: StudentId,line_graph_data: "line_graph_data"})
+  }
+  User.prototype.search_teacher_by_email = function(query){
+    return this.service.search_teacher_by_email({"query": query,search_teacher_by_email: "search_teacher_by_email"})
   }
   return new User;
 }]);

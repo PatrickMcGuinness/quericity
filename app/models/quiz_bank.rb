@@ -67,6 +67,16 @@ class QuizBank < ActiveRecord::Base
     Question.where("section_id IN (?)",section_ids)
   end
 
+  def share_with_list(emails,owner)
+    users = User.where("email IN (?)",emails)
+    shares = []
+    users.each do |user|
+      shares << Share.create(teacher_id: user.id, shareable_id: self.id, 
+                shareable_type: "QuizBank",owner_id: self.owner.id)
+    end
+    shares    
+  end
+
   def owner
     self.repository.owner
   end
@@ -99,7 +109,8 @@ class QuizBank < ActiveRecord::Base
       :question_topics => question_topics.as_json(),
       :topics => topics.as_json(),
       :user => owner.as_json(),
-      :sections => sections.as_json()
+      :sections => sections.as_json(),
+      :shares => shares.as_json()
     }
   end
 

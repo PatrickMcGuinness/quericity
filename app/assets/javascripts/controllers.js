@@ -2,11 +2,40 @@ quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
   $scope.$route = $route 
 }]);
 
+
+quizlib.controller('ShareCtrl', ['$scope','$routeParams','QuizBank','User',function($scope,$routeParams,QuizBank,User){
+  $scope.quiz_bank = QuizBank.get($routeParams.id)
+  $scope.tags = [];
+  
+  $scope.loadtags = function(query) {
+    return User.search_teacher_by_email(query).$promise
+  };
+
+  $scope.remove_sharing = function(index){
+    $scope.quiz_bank.shares.splice(index,1)
+  }
+  
+  $scope.share = function(){
+    var email_objects = $scope.tags
+    $scope.tags = []
+    var emails = []
+    angular.forEach(email_objects,function(value,key){
+      emails.push(value.text)
+    })
+    QuizBank.share_with_list($scope.quiz_bank.id,emails).$promise.then(function(data){
+      $scope.quiz_bank.shares.push.apply($scope.quiz_bank.shares,data)
+    })
+  }
+
+}]);
+
+
 quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',function($scope,User,fileUpload){
   $scope.user = User.get_current_user()
 
   $scope.submitted = false
   $scope.loading = false
+  
   $scope.saveUser = function(isValid){
     $scope.submitted = true
     if(isValid){
