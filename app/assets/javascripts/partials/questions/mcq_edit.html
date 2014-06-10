@@ -32,7 +32,7 @@
             <input ng-click = "select_option(option)" type="radio" name="correct" ng-model = "correct" value = "{{$index}}" ng-checked = "option.is_correct == true" >
           </td>
           <td>
-            <span class = "glyphicon glyphicon-remove" style = "color:red" remove-option></span>
+            <a><span class = "glyphicon glyphicon-remove" style = "color:red" remove-option ng-click = "remove_question_option(question,$index)"></span></a>
           </td>
         </tr>
       </tbody>

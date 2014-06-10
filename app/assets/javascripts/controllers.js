@@ -1352,6 +1352,11 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
     }    
   }
 
+  $scope.remove_question_option = function(question,index){
+    if(question.question_options.length > 2){
+      question.question_options.splice(index,1)
+    }
+  }
   $scope.remove_mcq_input = function(index){
     if($scope.mcq_options.length > 2){
       $scope.mcq_options.splice(index,1)

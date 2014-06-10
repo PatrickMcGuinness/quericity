@@ -450,4 +450,8 @@ ul li{
 	border: 1px solid;
 	padding: 5px;
 }
+
+.manage_list td a:hover{
+	text-decoration: none;
+}
 	

@@ -86,7 +86,7 @@ class Question < ActiveRecord::Base
                       is_correct: question_option[:is_correct],
                       question_id: question_option[:question_id])
       end
-    else  
+    else 
       params[:question_options].each do |question_option|
         QuestionOption.find(question_option[:id]).update_attributes(answer: question_option[:answer],
                                                               is_correct: question_option[:is_correct],
