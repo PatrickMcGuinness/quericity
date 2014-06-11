@@ -58,10 +58,10 @@
         <tbody>
           <tr ng-repeat = "quiz_bank in quiz_banks | filter: titleFilter | orderBy:predicate:reverse" class = "manage_list">
             <td>
-              <a ng-href = '#/quiz_banks/{{quiz_bank.id}}/show' ng-if = "current_user.id == quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span ng-show = 'current_user.id == quiz_bank.user.id' class = 'glyphicon glyphicon-trash' style= 'margin-left:4px;'></span><span ng-show = 'current_user.id == quiz_bank.user.id'><a ng-click = deleteQuiz(quiz_bank)>Delete</a></span><span class = 'glyphicon glyphicon-edit' style= 'margin-left:4px;'></span><span><a href = '#/quiz_banks/{{quiz_bank.id}}/edit'>Edit</a></span><span class = 'glyphicon glyphicon-eye-open' style = 'margin-left:4px' ></span><span ><a href = '#/quiz_banks/{{quiz_bank.id}}/preview'>Preview</a></span>" popover-placement="top" class = "popover-maker">
+              <a ng-href = '#/quiz_banks/{{quiz_bank.id}}/show' ng-if = "current_user.id == quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span ng-show = 'current_user.id == quiz_bank.user.id' class = 'glyphicon glyphicon-trash' style= 'margin-left:4px;'></span><span ng-show = 'current_user.id == quiz_bank.user.id'><a ng-click = deleteQuiz(quiz_bank)>Delete</a></span><span class = 'glyphicon glyphicon-edit' style= 'margin-left:4px;'></span><span><a href = '#/quiz_banks/{{quiz_bank.id}}/edit'>Edit</a></span><span class = 'glyphicon glyphicon-play' style = 'margin-left:4px' ></span><span ><a href = '#/quiz_banks/{{quiz_bank.id}}/preview'>Preview</a></span>" popover-placement="top" class = "popover-maker">
                 {{quiz_bank.title}}
               </a>
-              <a ng-href = '#/quiz_banks/{{quiz_bank.id}}/show' ng-if = "current_user.id != quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span style = 'margin-left:4px' class = 'glyphicon glyphicon-eye-open'></span><span ><a href = '#/quiz_banks/{{quiz_bank.id}}/preview'>Preview</a></span>" popover-placement="top" class = "popover-maker">
+              <a ng-href = '#/quiz_banks/{{quiz_bank.id}}/show' ng-if = "current_user.id != quiz_bank.user.id" custom-popover popover-html="<span class = 'glyphicon glyphicon-eye-open'></span><span><a href = '#/quiz_banks/{{quiz_bank.id}}/show'>View</a></span><span style = 'margin-left:4px' class = 'glyphicon glyphicon-play'></span><span ><a href = '#/quiz_banks/{{quiz_bank.id}}/preview'>Preview</a></span>" popover-placement="top" class = "popover-maker">
                 {{quiz_bank.title}}
               </a>  
             </td>
@@ -70,20 +70,28 @@
               <span class = "glyphicon glyphicon-tag" style = "color: red;"></span>
               <span>&nbsp;&nbsp;{{quiz_bank.topics[0].title}}</span>
             </td>
-            <td ng-hide = "quiz_bank.public" ng-if = "current_user.id == quiz_bank.user.id">
+            <td ng-if = "current_user.id == quiz_bank.user.id && (quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == false">
               <a ng-href = "#/quiz_banks/{{quiz_bank.id}}/share">
                 Private
               </a>
             </td>
-            <td ng-hide = "quiz_bank.public" ng-if = "current_user.id != quiz_bank.user.id">
+            <td ng-if = "current_user.id != quiz_bank.user.id && (quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == false">
                 Private
             </td>
-            <td ng-show = "quiz_bank.public" ng-if = "current_user.id == quiz_bank.user.id">
+            <td ng-if = "current_user.id == quiz_bank.user.id && (quiz_bank.public == false || quiz_bank.public == undefined)&& quiz_bank.shared == true">
+              <a ng-href = "#/quiz_banks/{{quiz_bank.id}}/share">
+                Shared
+              </a>
+            </td>
+            <td ng-if = "current_user.id != quiz_bank.user.id && (quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == true">
+              Shared
+            </td>
+            <td ng-if = "current_user.id == quiz_bank.user.id && quiz_bank.public == true">
               <a ng-href = "#/quiz_banks/{{quiz_bank.id}}/share">
                 Public
               </a>
             </td>
-            <td ng-show = "quiz_bank.public" ng-if = "current_user.id != quiz_bank.user.id">
+            <td ng-if = "current_user.id != quiz_bank.user.id && quiz_bank.public == true">
                 Public
             </td>
             <td>

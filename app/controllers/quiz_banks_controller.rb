@@ -59,6 +59,10 @@ class QuizBanksController < ApplicationController
   def share_with_list
     render json: QuizBank.find(params[:id]).share_with_list(params[:emails],current_user)
   end
+
+  def delete_share
+    render json: QuizBank.find(params[:id]).delete_share(params[:share_id])
+  end
   
   
 end

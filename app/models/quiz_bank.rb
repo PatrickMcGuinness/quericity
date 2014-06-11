@@ -43,6 +43,7 @@ class QuizBank < ActiveRecord::Base
     quiz_banks_list = user.quiz_banks.where("status = ?",QuizBank::Status::SAVED)
     repository_ids = user.repositories.pluck(:id)
     quiz_banks_list = quiz_banks_list + QuizBank.where("repository_id NOT IN (?) and public = ?",repository_ids, QuizBank::Public::YES)
+    quiz_banks_list = quiz_banks_list + QuizBank.joins(:shares).where("shares.teacher_id = ?",user.id)
     quiz_banks_list
   end
 
@@ -52,6 +53,10 @@ class QuizBank < ActiveRecord::Base
 
   def is_user_quiz_bank?(user)
     user.quiz_banks.find(self.id).present?
+  end
+
+  def is_shared?
+    self.shares.count > 0
   end    
 
   def create_section
@@ -60,6 +65,10 @@ class QuizBank < ActiveRecord::Base
 
   def default_section
     self.sections.find_by_title("Default Section")
+  end
+
+  def delete_share(share_id)
+    self.shares.find(share_id).destroy
   end
 
   def questions
@@ -74,7 +83,14 @@ class QuizBank < ActiveRecord::Base
       shares << Share.create(teacher_id: user.id, shareable_id: self.id, 
                 shareable_type: "QuizBank",owner_id: self.owner.id)
     end
+    self.delay.email_shares
     shares    
+  end
+
+  def email_shares
+    self.shares.each do |share|
+      UserMailer.quiz_bank_shared_notification(share.teacher,self.owner,self).deliver
+    end
   end
 
   def owner
@@ -110,7 +126,8 @@ class QuizBank < ActiveRecord::Base
       :topics => topics.as_json(),
       :user => owner.as_json(),
       :sections => sections.as_json(),
-      :shares => shares.as_json()
+      :shares => shares.as_json(),
+      :shared => is_shared?.as_json()
     }
   end
 

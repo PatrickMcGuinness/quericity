@@ -11,19 +11,30 @@ quizlib.controller('ShareCtrl', ['$scope','$routeParams','QuizBank','User',funct
     return User.search_teacher_by_email(query).$promise
   };
 
-  $scope.remove_sharing = function(index){
+  $scope.remove_sharing = function(share,index){
     $scope.quiz_bank.shares.splice(index,1)
+    QuizBank.delete_share($scope.quiz_bank.id,share.id)
+    if($scope.quiz_bank.shares.length == 0){
+      $scope.quiz_bank.shared = false
+    }
   }
   
+  $scope.make_public = function(){
+    $scope.quiz_bank.public = true
+    QuizBank.update($scope.quiz_bank.id,$scope.quiz_bank)
+  }
+  $scope.make_private = function(){
+    $scope.quiz_bank.public = false
+    QuizBank.update($scope.quiz_bank.id,$scope.quiz_bank)
+  }
   $scope.share = function(){
     var email_objects = $scope.tags
     $scope.tags = []
-    var emails = []
     angular.forEach(email_objects,function(value,key){
-      emails.push(value.text)
-    })
-    QuizBank.share_with_list($scope.quiz_bank.id,emails).$promise.then(function(data){
-      $scope.quiz_bank.shares.push.apply($scope.quiz_bank.shares,data)
+      QuizBank.share_with_list($scope.quiz_bank.id,value.text).$promise.then(function(data){
+        $scope.quiz_bank.shares.push.apply($scope.quiz_bank.shares,data)
+        $scope.quiz_bank.shared = true
+      })
     })
   }
 

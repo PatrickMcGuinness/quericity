@@ -49,10 +49,13 @@
       <div class="col-xs-12 row_space">
 				<b>Created on:</b> {{created_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <b>Last Edited:</b> {{updated_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span ng-hide = "quiz_bank.public">
+        <span ng-if = "quiz_bank.public == false && quiz_bank.shared == false ">
           <b>Sharing Status:</b> Private&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </span>
-        <span ng-show = "quiz_bank.public">
+        <span ng-if = "quiz_bank.public == false && quiz_bank.shared == true ">
+          <b>Sharing Status:</b> Shared&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <span ng-if = "quiz_bank.public == true">
           <b>Sharing Status:</b> Public&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </span>
         <b>Subject:</b> {{quiz_bank.subject}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

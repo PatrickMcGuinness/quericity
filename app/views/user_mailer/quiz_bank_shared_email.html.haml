@@ -1,0 +1,10 @@
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1 
+      Quiz Bank Shared
+    %h4
+      = "Hello #{@teacher.first_name} #{@teacher.last_name}!"
+    %p
+      = "#{@owner.first_name} {@owner.last_name} has shared a quiz bank named #{@served_quiz.cloned_quiz_bank.title} with you."

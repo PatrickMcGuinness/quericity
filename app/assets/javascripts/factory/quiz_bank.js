@@ -1,6 +1,6 @@
 quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
   function QuizBank() {
-    this.service = $resource('/quiz_banks/:id:shared_quiz_banks:quiz_banks_list/:repo_quiz_banks:change_quiz_bank_repo:clone:questions:share_with_list', {id: '@id'},
+    this.service = $resource('/quiz_banks/:id:shared_quiz_banks:quiz_banks_list/:repo_quiz_banks:change_quiz_bank_repo:clone:questions:share_with_list:delete_share', {id: '@id'},
                   {update:{method:"PUT",isArray:false},
                    query:{method:"GET",transformResponse: [function(data,headersGetter){
                     return {result: JSON.parse(data)}
@@ -10,7 +10,8 @@ quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
                    clone:{method:"GET",isArray:false},
                    questions:{method: "GET", isArray:true},
                    quiz_banks_list:{method: "GET",isArray: true},
-                   share_with_list: {method: "GET",isArray: true}
+                   share_with_list: {method: "GET",isArray: true},
+                   delete_share: {method: "GET",isArray: false}
                  });
   };
   QuizBank.prototype.new = function(){
@@ -48,6 +49,9 @@ quizlib.factory('QuizBank', ['$resource', function($resource,$http) {
   }
   QuizBank.prototype.share_with_list = function(QuizId,emails){
     return this.service.share_with_list({id: QuizId,emails: emails, share_with_list: "share_with_list"})
+  }
+  QuizBank.prototype.delete_share = function(QuizId,ShareId){
+    return this.service.delete_share({id: QuizId,share_id: ShareId,delete_share: "delete_share"})
   }
 
 

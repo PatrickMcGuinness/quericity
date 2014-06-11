@@ -2,13 +2,23 @@
 <div class="row_bottom">
 	<div class="container">
     <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/serve_new_quiz_icon.png" /></span>
-      <span class="sub_nav_link"><a href="#/serve_quiz/new" data-toggle = "tooltip" title = "Serve new Quiz" tooltip-placement = "top">Change</a></span>
+      <span class="sub_nav_icon"><img src="/assets/unlock_darkblue.png" /></span>
+      <span class="sub_nav_link"><a ng-click = "make_public()" data-toggle = "tooltip" title = "Make the quiz public" tooltip-placement = "top">Make Public</a></span>
 		</div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/lock_darkblue.png" /></span>
+      <span class="sub_nav_link"><a ng-click = "make_private()" data-toggle = "tooltip" title = "Make the Quiz private but will be shared to teachers in shared list" tooltip-placement = "top">Make Private</a></span>
+    </div>
 	</div>
 </div>
 <div class="container">
 	<div class="row">
+    <div class = "mar-top-20" style = "text-align: center">
+      <h3>{{quiz_bank.title}}</h3>
+      <span ng-if = "quiz_bank.public == true">Current status: Public</span>
+      <span ng-if = "quiz_bank.public == false && quiz_bank.shared == true">Current status: Shared</span>
+      <span ng-if = "quiz_bank.public == false && quiz_bank.shared == false">Current status: Private</span>
+    </div>
     <div class="row add_grp_section">
       <button class = "btn btn-default btn">
         <span class = "glyphicon glyphicon-remove"></span>
@@ -36,7 +46,7 @@
         <li class="col-xs-3 select_section" style = "word-wrap: break-word; width: 30%" ng-repeat = "share in quiz_bank.shares | orderBy:predicate:reverse" ng-class="{ 'adjust-thumbnail' : {{$index%3}} == 0}">
           <span class="col-xs-4"><img src="{{share.teacher.profile_pic.url}}" class="img-thumbnail" /></span>
           <span style=" float:right;">
-            <a ng-click = "remove_sharing($index)">
+            <a ng-click = "remove_sharing(share,$index)">
               <span class = "glyphicon glyphicon-remove"></span>
             </a>  
           </span>

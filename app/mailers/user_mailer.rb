@@ -19,4 +19,11 @@ class UserMailer < ActionMailer::Base
     mail(to: @teacher.email, subject: "Quiz Served")
   end
 
+  def quiz_bank_shared_notification(teacher,owner,quiz_bank)
+    @teacher = teacher
+    @owner = owner
+    @quiz_bank = quiz_bank
+    mail(to: @teacher.email, subject: "Quiz shared with you")
+  end
+
 end

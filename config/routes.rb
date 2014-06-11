@@ -113,6 +113,7 @@ QuizLib::Application.routes.draw do
       get "clone"
       get "questions"
       get "share_with_list"
+      get "delete_share"
     end
     resources :cloned_quiz_banks do
       collection do
