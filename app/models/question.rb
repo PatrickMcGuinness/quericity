@@ -78,6 +78,16 @@ class Question < ActiveRecord::Base
     end
   end
 
+  def self.create_the_question(section,params)
+    question = section.questions.create(params[:question])
+    params[:question_options].each do |question_option|
+      QuestionOption.create(answer: question_option[:answer],
+                      is_correct: question_option[:is_correct],
+                      question_id: question.id)
+    end
+    question
+  end
+
   def update_question(params)
     if self.is_mcq?
       self.question_options.destroy_all

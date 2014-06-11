@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   respond_to :json
 
   def create
-    render json: @section.questions.create(params[:question])
+    render json: Question.create_the_question(@section,params)
   end
   
   def index

@@ -9,7 +9,6 @@
     </div>
     <!--<div class = "col-xs-9" ng-bind-html="question.description | unsafe"></div> -->
     <div  class = "col-xs-9" mathjax-bind = "question.description">{{question.description}}</div>
-    
     <div class = "col-xs-2">
       <div class = "pull-right">
         <img src = "/assets/arrow.png" ng-hide = "show_details" ng-click = "show_options(section.id,question.id,question.question_type)" data-toggle = "tooltip" title = "See Details" tooltip-placement = "top">
