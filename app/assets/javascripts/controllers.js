@@ -1561,14 +1561,15 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
     $scope.submitted = true
     if(isValid){
       $scope.quiz_bank.status = 1
-      QuestionTopic.destroy_all($scope.quiz_bank_id)
       QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
-        angular.forEach($scope.tags, function(value, key){
-          QuestionTopic.save($scope.quiz_bank_id,{title: value.text})
+        QuestionTopic.destroy_all($scope.quiz_bank_id).$promise.then(function(){
+          angular.forEach($scope.tags, function(value, key){
+            QuestionTopic.save($scope.quiz_bank_id,{title: value.text})
+          })
+          Message.push_message({type: "success",msg: "You have successfully cloned quiz bank",controller: "ManageCtrl"})
+          $location.path("/manage_quiz_banks")
         })
       })
-      Message.push_message({type: "success",msg: "You have successfully cloned quiz bank",controller: "ManageCtrl"})
-      $location.path("/manage_quiz_banks")
     }
   }
   $scope.show_section = function(){
@@ -1620,12 +1621,13 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
     if(isValid){
       $scope.quiz_bank.status = 1
       QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
-        QuestionTopic.destroy_all($scope.quiz_bank_id)
-        angular.forEach($scope.tags, function(value, key){
-          QuestionTopic.save($scope.quiz_bank_id,{title: value.text})
+        QuestionTopic.destroy_all($scope.quiz_bank_id).$promise.then(function(){
+          angular.forEach($scope.tags, function(value, key){
+            QuestionTopic.save($scope.quiz_bank_id,{title: value.text})
+          })
+          Message.push_message({type: "success",msg: "You have successfully updated quiz bank",controller: "ShowQuizBankCtrl"})
+          $location.path("/quiz_banks/"+$scope.quiz_bank_id+"/show")
         })
-        Message.push_message({type: "success",msg: "You have successfully updated quiz bank",controller: "ShowQuizBankCtrl"})
-        $location.path("/quiz_banks/"+$scope.quiz_bank_id+"/show")
       })
     }
   }
@@ -1695,22 +1697,18 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
       }
     })
   }
-  Repository.default_repo().
-      $promise.then(
-        function(data){ 
-          $scope.repository_id = data.result.id
-        }
-      ).then(function(){
-            QuizBank.save({title: "My Quiz Bank", repository_id: $scope.repository_id}).
-            $promise.then(
-              function(data){
-                $scope.quiz_bank_id = data.id;
-                GlobalScope.set_quiz_bank_id($scope.quiz_bank_id)
-                $scope.quiz_bank = data
-                $scope.quiz_sections = Section.all($scope.quiz_bank_id)
-              }
-            ) 
-        })
+  Repository.default_repo().$promise.then(function(data){ 
+    $scope.repository_id = data.result.id
+  }).then(function(){
+    QuizBank.save({title: "My Quiz Bank", repository_id: $scope.repository_id}).
+    $promise.then(
+      function(data){
+        $scope.quiz_bank_id = data.id;
+        GlobalScope.set_quiz_bank_id($scope.quiz_bank_id)
+        $scope.quiz_bank = data
+        $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+      }) 
+  })
   
   $scope.saveQuiz = function(isValid){
     $scope.submitted =true

@@ -1,18 +1,19 @@
 <div class = "col-xs-2 left_section" style="font-size: 12px;">
   <div class = "row"> 
-    <div class = "col-xs-10" style = "font-size: 20px;">
+    <div class = "col-xs-10" style = "font-size: 16px;">
       <strong>
         {{quiz_bank.title}}
-      </strong>  
+      </strong>
+      <hr class = "custom-hr">  
     </div>
   </div>
   <ul class = "row">
     <li class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter" ng-controller = "sectionCtrl">
       <div class = "mar-top-10">
-        <span class = "col-xs-7">
+        <span class = "col-xs-8">
           {{section.title}}
         </span>
-        <span class = "col-xs-5">
+        <span class = "col-xs-4">
           <span class="dropdown-toggle link" ng-Click = "AddQuestion(section.id,$index)" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top">
             <span class = "glyphicon glyphicon-plus-sign"></span>
           </span>

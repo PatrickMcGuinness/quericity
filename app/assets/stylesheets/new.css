@@ -5,6 +5,13 @@ a:active{
 	text-decoration: none;
 }
 
+.custom-hr{
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+	border: 0;
+	border-top: 1px solid #DAD3D3;
+}
+
 .responsive-button{
 	white-space: normal !important;
   min-width: 110px;
