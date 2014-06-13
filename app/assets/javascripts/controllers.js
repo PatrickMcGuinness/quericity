@@ -1446,6 +1446,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
 
 quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',function($scope,$rootScope,Section,Question){
   
+  $scope.show_title = true
   $scope.deleteSection = function(id,idx){
     $scope.quiz_sections.splice(idx, 1);
     Section.delete($scope.quiz_bank_id,id);
@@ -1456,12 +1457,19 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
   $scope.cancelEditSection = function(section){
     $rootScope.section_edit = null
   }
-  $scope.updateSection = function(isValid,section_edit){
-    if(isValid){
-      updated_section = Section.update($scope.quiz_bank_id, section_edit.id, section_edit)
-      $rootScope.section_edit = null
-    }
+
+  $scope.updateSection = function(section_edit){
+    update_section = Section.update($scope.quiz_bank_id,section_edit.id,section_edit)
+    $rootScope.section_edit = null
+    $scope.show_title = true
   }
+
+  // $scope.updateSection = function(isValid,section_edit){
+  //   if(isValid){
+  //     updated_section = Section.update($scope.quiz_bank_id, section_edit.id, section_edit)
+  //     $rootScope.section_edit = null
+  //   }
+  // }
 
   $scope.handleDrop = function(questionId,sectionId,quizBankId,previousSectionId){
     Question.get(quizBankId,previousSectionId,questionId).$promise.then(function(data){
@@ -1621,6 +1629,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
       })
     }
   }
+  
   $scope.addSection = function(isValid){
     $scope.section_submitted = true
     if(isValid){
@@ -1635,6 +1644,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   $scope.show_section = function(){
     $scope.show_new_section = true
   }
+  
   $scope.hide_section = function(){
     $scope.show_new_section = false
     $scope.newSection.title = null

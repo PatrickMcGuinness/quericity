@@ -62,11 +62,13 @@
       </div>
       <div class = "col-xs-12 row_space">
         <label>Description</label>
-        <p>{{quiz_bank.description}}<p>
+        <p ng-if = "quiz_bank.description != undefined">{{quiz_bank.description}}<p>
+        <p ng-if = "quiz_bank.description == undefined">This quiz bank has no description</p>
       </div>
       <div class = "col-xs-12 row_space">
         <label>Instructions</label>
-        <p>{{quiz_bank.instructions}}</p>
+        <p ng-if = "quiz_bank.instructions != undefined">{{quiz_bank.instructions}}</p>
+        <p ng-if = "quiz_bank.instructions == undefined">This quiz bank has no instructions</p>
       </div>
       <div class="col-xs-12 row_space">
         <ul style = "list-style:none;">

@@ -18,11 +18,11 @@
           </span>
           <ul class="dropdown-menu pull-right">
             <li ng-repeat="question in question_types">
-              <span class = "link" ng-Click = "addNewQuestion(question,section)" style = "color:black;">{{question}}</span>
+              <span class = "link" ng-Click = "addNewQuestion(question,section)" style = "color:black;">  {{question}}
+              </span>
             </li>
           </ul>
-          <!--<span class = "glyphicon glyphicon-plus-sign link" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top"></span> -->
-          <span ng-click = "editSection(section)" class = "glyphicon glyphicon-edit link" data-toggle = "tooltip" title = "Edit Section" tooltip-placement = "top"></span>
+          <!--<span ng-click = "show_title = false" class = "glyphicon glyphicon-edit link" data-toggle = "tooltip" title = "Edit Section" tooltip-placement = "top"></span> -->
           <span ng-click = "deleteSection(section.id,$index)" class = "glyphicon glyphicon-trash link" data-toggle = "tooltip" title = "Delete Section" tooltip-placement = "top"></span>
         </span>
       </div>    
