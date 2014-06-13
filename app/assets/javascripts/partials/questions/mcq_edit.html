@@ -18,7 +18,7 @@
       <tbody>
         <tr ng-repeat = "option in question.question_options">
           <td>
-            <input type = "text", class = "form-control" ng-model = "option.answer">
+            <input type = "text", class = "form-control" ng-model = "option.answer" add-option>
           </td>
           <td>
             <input ng-click = "select_option(option)" type="radio" name="correct" ng-model = "correct" value = "{{$index}}" ng-checked = "option.is_correct == true" >
@@ -38,7 +38,7 @@
       <option value = "3">Hard</option>
     </select>
   </div>
-  <div class = "col-xs-12 question-footer">
+  <div class = "col-xs-12 question-footer mar-top-10">
     <div class = "pull-right col-xs-5">
       <button class = "btn btn-danger col-xs-3" style = "margin-top: 5px;" ng-click = "hide_update()" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top"> Cancel</button>
       <button ng-click = "edit_mcq(section.id,question.id,question,question.question_options)" class = "btn btn-success col-xs-6" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question</button>

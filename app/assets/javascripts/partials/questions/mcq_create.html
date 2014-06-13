@@ -23,13 +23,13 @@
             <td>
               
               <div class = "form-group mar-top-10" ng-class="{ 'has-error' : (McqForm.input{{$index}}.$invalid) && submitted == true}">
-                <input name = "input{{$index}}" type = "text", class = "form-control" ng-model = "mcq_options[$index]" required>
+                <input name = "input{{$index}}" type = "text", class = "form-control" ng-model = "mcq_options[$index]" add-option>
                 <p ng-show="McqForm.input{{$index}}.$invalid && submitted == true" class="help-block">Required</p>
               </div>  
             </td>
             <td>
               <div class = "form-group mar-top-10">
-                <input type="radio" name="correct" ng-model = "radio" value = "{{$index}}" ng-click = "add_correct_option(radio)" ng-init = "radio = $index">
+                <input type="radio" name="correct" ng-model = "radio" value = "{{$index}}" ng-click = "add_correct_option(radio)" ng-init = "radio = $index" >
               </div>
             </td>
             <td>

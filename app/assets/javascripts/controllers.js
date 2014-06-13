@@ -1411,9 +1411,9 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
     $scope.submitted = true
     var question_options = []
     inputs = $scope.mcq_options
-    if(isValid){
+    //if(isValid){
       for(var i = 0; i<(inputs.length) ; i++){
-        if(inputs[i] != undefined){
+        if(inputs[i] != ""){
           is_correct = true
           if($scope.correct_input == i){
             is_correct = true
@@ -1443,7 +1443,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
         $scope.input_3 = null
         CKEDITOR.instances['description'].setData("")
         $scope.hideQuestion()
-    }
+    //}
 
   }
 

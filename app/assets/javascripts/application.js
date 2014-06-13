@@ -30,6 +30,7 @@
 //= require ng-quick-date
 //= require date
 //= require ng-tags-input.min 
+//= require sortable
 
 loadingimage =  "<img alt='Please wait' src='/assets/loading.gif' style='margin-left:5px;' class='loading-img'>"
 

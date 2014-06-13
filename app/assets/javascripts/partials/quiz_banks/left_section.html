@@ -7,7 +7,7 @@
       <hr class = "custom-hr">  
     </div>
   </div>
-  <ul class = "row">
+  <ul class = "row" ui-sortable ng-model="quiz_sections">
     <li class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter" ng-controller = "sectionCtrl">
       <div class = "mar-top-10">
         <span class = "col-xs-8">
