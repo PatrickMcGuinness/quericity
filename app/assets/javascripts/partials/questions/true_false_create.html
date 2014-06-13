@@ -4,31 +4,31 @@
   </div>
   <form name="TrueFalseForm" ng-submit="create_true_false(TrueFalseForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
-      <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.difficulty.$invalid) && submitted == true}">
-        <label>Difficulty Level *: </label>
-        <select class="form-control" ng-model="selected_difficulty" name = "difficulty">
-          <option value = "">Select Difficulty</option>
-          <option value = "1">Easy</option>
-          <option value = "2">Medium</option>
-          <option value = "3">Hard</option>
-        </select>
-        <p ng-show="TrueFalseForm.difficulty.$invalid && submitted == true" class="help-block">Difficulty level is required.</p>
-      </div>
-    </div>
-    <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.true_false_question_statement.$invalid) && submitted == true}">
-        <label>Question Statement *:</label>
+        <label>Question:</label>
         <textarea name="true_false_question_statement" id="true_false_question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "true_false_question_statement" data-ck-editor required>
         </textarea>
         <p ng-show="TrueFalseForm.true_false_question_statement.$invalid && submitted == true" class="help-block">Question is required.</p>
       </div>  
     </div>
     <div class = "col-xs-12 mar-top-10">
+      <label>Answer:</label>
       <div class = "form-group" ng-class="{ 'has-error' : (selected_true_false_option == undefined)}">
         <input type="radio" name="correct" ng-model = "selected_true_false_option" name = "selected_true_false_option" value="true" required>True
         <input type="radio" name="correct" ng-model = "selected_true_false_option" name = "selected_true_false_option" value="false" required>False
         <p ng-show="selected_true_false_option == undefined && submitted == true" class="help-block">Select at least one option.</p>
       </div>  
+    </div>
+    <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.difficulty.$invalid) && submitted == true}">
+        <label>Difficulty Level: </label>
+        <select class="form-control" ng-model="selected_difficulty" name = "difficulty" ng-init = "selected_difficulty = 2">
+          <option value = "1">Easy</option>
+          <option value = "2">Medium</option>
+          <option value = "3">Hard</option>
+        </select>
+        <p ng-show="TrueFalseForm.difficulty.$invalid && submitted == true" class="help-block">Difficulty level is required.</p>
+      </div>
     </div>
     <div class = "col-xs-12 question-footer mar-top-10">
       <div class = "col-xs-5 pull-right">

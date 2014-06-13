@@ -97,10 +97,10 @@
             <div id = {{section.id}} class = "col-xs-12 mar-top-10 section-well">
               <div class = "col-xs-6">
                 <input type="hidden" ng-model="section_id" ng-init="section_id= section.id" value="{{section.id}}" class = "col-xs-12">
-                <span ng-show = "show_title" class = "col-xs-9">
+                <span ng-show = "show_title" class = "col-xs-9 row">
                   <strong >{{section.title}}</strong>
                 </span>
-                <span ng-hide = "show_title" class = "col-xs-9">  
+                <span ng-hide = "show_title" class = "col-xs-9 row">  
                   <input type = "text" ng-model = "section.title" class = "form-control input-sm" enter = "updateSection(section)" hide-on-enter>
                 </span>
                 <span class = "col-xs-3" style = "margin-top: 5px;">

@@ -1308,6 +1308,11 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
     $scope.section_id = section_id;
   })
 
+  $scope.$watch('selected_type', function() {
+    console.log($scope.selected_type)  
+  }) 
+
+
   //$scope.selected_difficulty = {}
 
   $scope.mcq_options = ["", "","",""]
