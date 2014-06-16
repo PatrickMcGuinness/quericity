@@ -1402,12 +1402,16 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
   $scope.add_mcq_input = function(){
     $scope.mcq_options.push('')
   }
+  $scope.add_question_option = function(question){
+    question.question_options.push({question_id: question.id, is_correct :false, answer: null})
+  }
 
   $scope.add_correct_option = function(radio){
     $scope.correct_input = radio
   }
   
   $scope.create_mcq = function(isValid){
+    console.log($scope.correct_input)
     $scope.submitted = true
     var question_options = []
     inputs = $scope.mcq_options

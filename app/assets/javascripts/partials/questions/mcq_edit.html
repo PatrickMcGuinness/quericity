@@ -18,7 +18,7 @@
       <tbody>
         <tr ng-repeat = "option in question.question_options">
           <td>
-            <input type = "text", class = "form-control" ng-model = "option.answer" add-option>
+            <input type = "text", class = "form-control" ng-model = "option.answer" edit-add-option = "add_question_option(question)">
           </td>
           <td>
             <input ng-click = "select_option(option)" type="radio" name="correct" ng-model = "correct" value = "{{$index}}" ng-checked = "option.is_correct == true" >

@@ -21,17 +21,34 @@ quizlib.directive("addOption",['$compile',function($compile){
     link: function(scope,element,attrs){
       element.bind("focus",function(){
         if(element.parents("tr").is(":last-child")){
-          //var el = $compile( tpl)( scope );
-          console.log("last-child")
           scope.add_mcq_input()
           input_number = element.parents('tbody').children('tr').length + 1
-          var html = "<tr><td><div class = 'form-group mar-top-10' ng-model = 'mcq_options["+input_number+"]' required add-option><input name = 'input"+input_number+"' type = 'text' class = 'form-control'></div></td><td><div class = 'form-group mar-top-10'><input type='radio' name='correct' ng-model = 'radio' value = '"+input_number+"' ng-click = 'add_correct_option("+input_number+")' ng-init = 'radio = "+input_number+"'></div></td><td><span class = 'glyphicon glyphicon-remove mar-top-20' style = 'color:red;' remove-option ng-click = 'remove_mcq_input("+input_number+")'></span></td></tr>";
-          //console.log(html)         
+          var html = "<tr><td><div class = 'form-group mar-top-10' ng-model = 'mcq_options["+input_number+"]' required add-option><input name = 'input"+input_number+"' type = 'text' class = 'form-control'></div></td><td><div class = 'form-group mar-top-10'><input type='radio' name='correct' ng-model = 'radio' value = '"+input_number+"' ng-click = 'add_correct_option("+input_number+")' ng-init = 'radio = "+input_number+"'></div></td><td><span class = 'glyphicon glyphicon-remove mar-top-20' style = 'color:red;' remove-option ng-click = 'remove_mcq_input("+input_number+")'></span></td></tr>";        
           var el = angular.element(html);
           compiled = $compile(el);
-          element.parents('tbody').append(el)
+          //element.parents('tbody').append(el)
           compiled(scope)
-          element.parents("tbody").children("tr").last().remove()
+          //element.parents("tbody").children("tr").last().remove()
+        }
+      })
+    }
+  };
+}])
+quizlib.directive("editAddOption",['$compile',function($compile){
+  return {
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("focus",function(){
+        if(element.parents("tr").is(":last-child")){
+          scope.$apply(function (){
+            scope.$eval(attrs.editAddOption);
+          });
+          input_number = element.parents('tbody').children('tr').length + 1;
+          var html = "<tr><td><div class = 'form-group mar-top-10' ng-model = 'mcq_options["+input_number+"]' required add-option><input name = 'input"+input_number+"' type = 'text' class = 'form-control'></div></td><td><div class = 'form-group mar-top-10'><input type='radio' name='correct' ng-model = 'radio' value = '"+input_number+"' ng-click = 'add_correct_option("+input_number+")' ng-init = 'radio = "+input_number+"'></div></td><td><span class = 'glyphicon glyphicon-remove mar-top-20' style = 'color:red;' remove-option ng-click = 'remove_mcq_input("+input_number+")'></span></td></tr>";        
+          var el = angular.element(html);
+          compiled = $compile(el);
+          //element.parents('tbody').append(compiled(scope));
+          compiled(scope)
         }
       })
     }
