@@ -15,6 +15,51 @@ quizlib.directive("removeOption",function(){
   };
 })
 
+
+quizlib.directive("checkResolution",function(){
+  return {
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      if(window.innerWidth < 800){  
+        element.addClass("hide")
+      }
+        if(window.innerWidth >= 800){
+        element.removeClass("hide")
+      }
+      $(window).resize(function(){
+        if(window.innerWidth < 800){  
+          element.addClass("hide")
+        }
+        if(window.innerWidth >= 800){
+          element.removeClass("hide")
+        }
+      })
+    }
+  };
+})
+
+quizlib.directive("updateResolution",function(){
+  return {
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      if(window.innerWidth < 800){
+        element.addClass("col-xs-12").removeClass("col-xs-9")
+      }
+      if(window.innerWidth >= 800){
+        element.removeClass("col-xs-12").addClass("col-xs-9")
+      }
+      
+      $(window).resize(function(){
+        if(window.innerWidth < 800){
+          element.addClass("col-xs-12").removeClass("col-xs-9")
+        }
+        if(window.innerWidth >= 800){
+          element.removeClass("col-xs-12").addClass("col-xs-9")
+        }
+      })
+    }
+  };
+})
 quizlib.directive("addOption",['$compile',function($compile){
   return {
     restrict: 'A',
@@ -26,9 +71,7 @@ quizlib.directive("addOption",['$compile',function($compile){
           var html = "<tr><td><div class = 'form-group mar-top-10' ng-model = 'mcq_options["+input_number+"]' required add-option><input name = 'input"+input_number+"' type = 'text' class = 'form-control'></div></td><td><div class = 'form-group mar-top-10'><input type='radio' name='correct' ng-model = 'radio' value = '"+input_number+"' ng-click = 'add_correct_option("+input_number+")' ng-init = 'radio = "+input_number+"'></div></td><td><span class = 'glyphicon glyphicon-remove mar-top-20' style = 'color:red;' remove-option ng-click = 'remove_mcq_input("+input_number+")'></span></td></tr>";        
           var el = angular.element(html);
           compiled = $compile(el);
-          //element.parents('tbody').append(el)
           compiled(scope)
-          //element.parents("tbody").children("tr").last().remove()
         }
       })
     }
@@ -47,7 +90,6 @@ quizlib.directive("editAddOption",['$compile',function($compile){
           var html = "<tr><td><div class = 'form-group mar-top-10' ng-model = 'mcq_options["+input_number+"]' required add-option><input name = 'input"+input_number+"' type = 'text' class = 'form-control'></div></td><td><div class = 'form-group mar-top-10'><input type='radio' name='correct' ng-model = 'radio' value = '"+input_number+"' ng-click = 'add_correct_option("+input_number+")' ng-init = 'radio = "+input_number+"'></div></td><td><span class = 'glyphicon glyphicon-remove mar-top-20' style = 'color:red;' remove-option ng-click = 'remove_mcq_input("+input_number+")'></span></td></tr>";        
           var el = angular.element(html);
           compiled = $compile(el);
-          //element.parents('tbody').append(compiled(scope));
           compiled(scope)
         }
       })

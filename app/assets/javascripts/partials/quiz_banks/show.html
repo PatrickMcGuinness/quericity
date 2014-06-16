@@ -29,11 +29,11 @@
 		</div>
 	</div>
 </div>
-<div class="">
-	<div class="">
+<div class="col-xs-12">
+	<div class="row">
 		<div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'">
     </div>
-		<div class="col-xs-8 right_section_view_page">
+		<div class="col-xs-9 right_section_view_page" update-resolution>
       <alert class = "mar-top-10" type='success' close="remove_alert()" ng-if = "alert != undefined">{{alert.msg}}</alert>
       <div class="col-xs-12 row_space">
         <span class="heading">{{quiz_bank.title}}</span>&nbsp;&nbsp;&nbsp;by {{quiz_bank.user.first_name}} {{quiz_bank.user.last_name}} 

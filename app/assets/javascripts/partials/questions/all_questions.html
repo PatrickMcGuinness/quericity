@@ -11,8 +11,10 @@
     <div  class = "col-xs-9" mathjax-bind = "question.description">{{question.description}}</div>
     <div class = "col-xs-2">
       <div class = "pull-right">
-        <img src = "/assets/arrow.png" ng-hide = "show_details" ng-click = "show_options(section.id,question.id,question.question_type)" data-toggle = "tooltip" title = "See Details" tooltip-placement = "top">
-        <img src = "/assets/arrow_hover.png" ng-show = "show_details" ng-click = "show_details = false" data-toggle = "tooltip" title = "Hide Details" tooltip-placement = "top">
+        <a>
+          <img src = "/assets/arrow.png" ng-hide = "show_details" ng-click = "show_options(section.id,question.id,question.question_type)" data-toggle = "tooltip" title = "See Details" tooltip-placement = "top">
+          <img src = "/assets/arrow_hover.png" ng-show = "show_details" ng-click = "show_details = false" data-toggle = "tooltip" title = "Hide Details" tooltip-placement = "top">
+        </a>
         <a ng-if = "question.question_type != 4" ng-hide = "is_quiz_view" ng-click= "show_edit()" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
           <img src = "/assets/edit.png">
         </a>

@@ -20,37 +20,41 @@ body{
 	color:#003656;
 	padding-top:33px;
 	}
-	
-.menu{
-	background-color:#003656;
-	height:45px;
-	padding-top:12px;
+@media only screen and (min-width: 550px){
+	.menu{
+		background-color:#003656;
+		height:45px;
+		padding-top:12px;
 	}
 	
-.menu ul li{
-	display:inline;
-	padding:23px; 0;
+	.menu ul li{
+		display:inline;
+		padding:23px; 0;
 	}
 	
-.menu ul li a{
-	text-decoration: none;
-	color:#ffffff;
+	.menu ul li a{
+		text-decoration: none;
+		color:#ffffff;
 	}
-.menu ul li:hover{
-
-  background-color:#999;
-  padding:13px 23px 15px 23px;
-
-}	
-/*.menu ul li a:hover{
-	color:#b1cdde;
-	display:inline;
+	.menu ul li:hover{
+  	background-color:#999;
+  	padding:13px 23px 15px 23px;
+	}		
+	.menu ul li.active{
+		background-color:#999;
+		padding:13px 23px 15px 23px;	
 	}
-*/	
-.menu ul li.active{
-	background-color:#999;
-	padding:13px 23px 15px 23px;	
 }
+@media only screen and (max-width: 549px){
+	.menu{
+		background-color: #003656;
+		padding-top:12px;
+	}
+	.menu ul li{
+		width: 100%;
+	}
+}	
+
 
 .sub_links{
 	margin-bottom:20px;

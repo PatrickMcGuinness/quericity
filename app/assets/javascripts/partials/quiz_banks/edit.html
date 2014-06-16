@@ -35,154 +35,148 @@
   </div>
 </div>          
             
-<div>
-  <div class = "col-xs-12">
-    <div>
-      <div class = "row">
-        <div ng-include src="'/assets/partials/quiz_banks/left_section.html'">
-        </div>             
-
-        <div class = "col-xs-8 right-list mar-top-20">
-          <form name="QuizForm" ng-submit="saveQuiz(QuizForm.$valid)" novalidate>
+<div class = "col-xs-12"> 
+  <div class = "row">
+    <div ng-include src="'/assets/partials/quiz_banks/left_section.html'"></div>             
+    <div class = "col-xs-9 right-list mar-top-20" update-resolution>
+      <form name="QuizForm" ng-submit="saveQuiz(QuizForm.$valid)" novalidate>
+        <div class = "row">
+          <div class = "col-xs-12">
+            <div class = "form-group" ng-class="{ 'has-error' : (QuizForm.title.$invalid) && (!QuizForm.title.$pristine || submitted == true)}">
+              <label>Title:</label>
+              <input type = "text"  ng-model = "quiz_bank.title"  class = "form-control input-sm"  placeholder = "Enter Title" name = "title" required popover="Edit the title"  popover-trigger="mouseenter">
+              <p ng-show="QuizForm.title.$invalid && (!QuizForm.title.$pristine || submitted == true)" class="help-block">Title is required.</p>
+            </div>  
+          </div>
+        </div>
+        <div class = "row mar-top-10">
+          <div class = "col-xs-2">
             <div class = "row">
               <div class = "col-xs-12">
-                <div class = "form-group" ng-class="{ 'has-error' : (QuizForm.title.$invalid) && (!QuizForm.title.$pristine || submitted == true)}">
-                  <label>Title:</label>
-                  <input type = "text"  ng-model = "quiz_bank.title"  class = "form-control input-sm"  placeholder = "Enter Title" name = "title" required popover="Edit the title"  popover-trigger="mouseenter">
-                  <p ng-show="QuizForm.title.$invalid && (!QuizForm.title.$pristine || submitted == true)" class="help-block">Title is required.</p>
-                </div>  
+                <div class = "form-group" ng-class="{ 'has-error' : QuizForm.subject.$invalid && (!QuizForm.subject.$pristine || submitted == true)}">
+                  <label>Subject:</label>
+                  <input type = "text" ng-model = "quiz_bank.subject" class = "form-control input-sm" placeholder = "Subject" name = "subject" required popover="Edit Subject"  popover-trigger="mouseenter" style = "margin-top:6px;">
+                  <p ng-show="QuizForm.subject.$invalid && (!QuizForm.subject.$pristine || submitted == true)" class="help-block">Required!</p>
+                </div>    
               </div>
+            </div>  
+          </div> 
+          <div class = "col-xs-10">
+            <div class = "row">
+              <label style = "margin-left: 16px;">Tags:</label>
+              <tags-input ng-model="tags">
+                <auto-complete source="loadtags($query)"></auto-complete>
+              </tags-input>
             </div>
-            <div class = "row mar-top-10">
-              <div class = "col-xs-2">
-                <div class = "row">
-                  <div class = "col-xs-12">
-                    <div class = "form-group" ng-class="{ 'has-error' : QuizForm.subject.$invalid && (!QuizForm.subject.$pristine || submitted == true)}">
-                      <label>Subject:</label>
-                      <input type = "text" ng-model = "quiz_bank.subject" class = "form-control input-sm" placeholder = "Subject" name = "subject" required popover="Edit Subject"  popover-trigger="mouseenter" style = "margin-top:6px;">
-                      <p ng-show="QuizForm.subject.$invalid && (!QuizForm.subject.$pristine || submitted == true)" class="help-block">Required!</p>
-                    </div>    
-                  </div>
-                </div>  
-              </div> 
-              <div class = "col-xs-10">
-                <div class = "row">
-                  <label style = "margin-left: 16px;">Tags:</label>
-                  <tags-input ng-model="tags">
-                    <auto-complete source="loadtags($query)"></auto-complete>
-                  </tags-input>
-                </div>
-              </div>   
-            </div>              
-            <div class = "row mar-top-10">  
-              <div class = "col-xs-12">
-                <div class = "form-group">
-                  <label>Description:</label>
-                  <textarea ng-model = "quiz_bank.description" class =  "form-control"  rows = 2 placeholder = "Description" popover="Add small description of the quiz bank"  popover-trigger="mouseenter">
-                  </textarea>
-                </div>
-              </div>
-            </div>   
-            <div class = "row mar-top-10">      
-              <div class = "col-xs-12">
-                <div class = "form-group">
-                  <label>Instructions:</label>
-                  <textarea ng-model = "quiz_bank.instructions" class = "form-control"  rows = 2 placeholder = "Instructions" popover="Add instructions for the quiz bank"  popover-trigger="mouseenter">
-                  </textarea>
-                </div>  
-              </div>
-            </div>
-          </form>      
-          <div class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter" ng-controller = "sectionCtrl">
-            <div id = {{section.id}} class = "col-xs-12 mar-top-10 section-well">
-              <div class = "col-xs-6">
-                <input type="hidden" ng-model="section_id" ng-init="section_id= section.id" value="{{section.id}}" class = "col-xs-12">
-                <span ng-show = "show_title" class = "col-xs-9 row">
-                  <strong >{{section.title}}</strong>
-                </span>
-                <span ng-hide = "show_title" class = "col-xs-9 row">  
-                  <input type = "text" ng-model = "section.title" class = "form-control input-sm" enter = "updateSection(section)" hide-on-enter>
-                </span>
-                <span class = "col-xs-3" style = "margin-top: 5px;">
-                   <a ng-hide = "show_title" ng-click = "updateSection(section)">
-                    <span class = "glyphicon glyphicon-ok" style = "color:white"></span>
-                  </a>
-                  <a ng-hide = "show_title" ng-click = "show_title = true">
-                    <span class = "glyphicon glyphicon-remove" style = "color:white"></span>
-                  </a>
-                </span>  
-              </div>
-              <div class = "col-xs-4 pull-right">
-                <a ng-Click = "deleteSection(section.id,$index)" data-toggle = "tooltip" title = "Delete the Section" tooltip-placement = "top">
-                  <span class = "glyphicon glyphicon-trash pull-right mar-left-5" style = "color: white;" ></span>
-                </a>
-                <a ng-Click = "show_title = false" data-toggle = "tooltip" title = "Edit Section" tooltip-placement = "top">
-                  <span class = "glyphicon glyphicon-edit pull-right mar-left-5" style = "color: white;" ></span>
-                </a>
-                
-                <div class="dropdown">
-                  <a class="dropdown-toggle" ng-Click = "AddQuestion(section.id,$index)" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top">
-                    <span class = "glyphicon glyphicon-plus-sign pull-right mar-left-5" style = "color:white;"></span>
-                  </a>
-                  <ul class="dropdown-menu pull-right mar-top-20">
-                    <li ng-repeat="question in question_types">
-                      <a ng-Click = "addNewQuestion(question,section)" clear-ckeditor>{{question}}</a>
-                    </li>
-                  </ul>
-                </div>
-                
-                
-              </div>
-            </div>
-            <!--<div class = "col-xs-12 new-section-box mar-top-10 mar-bot-10" ng-if = "section == section_edit">
-              <form name="UpdateSectionForm" ng-submit="updateSection(UpdateSectionForm.$valid,section_edit)">
-                <div class = "form-group" ng-class="{ 'has-error' : UpdateSectionForm.title.$invalid && !UpdateSectionForm.title.$pristine}">
-                  <span class = "col-xs-1" style = "margin-top: 4px;">Title:</span>
-                  <span class = "col-xs-9">
-                    <input ng-model = "section_edit.title" type = "text" class = "form-control mar-bot-10" name = "title" required>
-                    <p ng-show="UpdateSectionForm.title.$invalid && !UpdateSectionForm.title.$pristine" class="help-block">Title is required.</p>
-                  </span>
-                  <span class = "col-xs-2 pull-right" style = "margin-top:4px">
-                    <a type = "submit" ng-Click = "updateSection(UpdateSectionForm.$valid,section_edit)"> Save</a>
-                    <a ng-Click = "cancelEditSection()"> Cancel</a>
-                  </span>
-                </div>
-              </form>    
-            </div> -->
-            <div class = "section-questions" ng-controller = "viewQuestionsCtrl" >
-              <div ng-include src="'/assets/partials/questions/all_questions.html'"></div>
-            </div>
-            <div>
-              <div ng-if = "question_section == section" ng-Show = "show_true_false" ng-include src="'/assets/partials/questions/true_false_create.html'">
-              </div>  
-              <div ng-if = "question_section == section" ng-Show = "show_mcq" ng-include src="'/assets/partials/questions/mcq_create.html'">
-              </div>
-              <div ng-if = "question_section == section" ng-Show = "show_blank" ng-include src="'/assets/partials/questions/fill_in_the_blank_create.html'">
-              </div>
-              <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'">
-              </div>
-            </div>     
-            
-          </div>                  
-          <div ng-show = "show_new_section" class = "new-section-div">
-            <div class = "col-xs-12 new-section-box mar-top-20">
-              <form name="NewSectionForm" ng-submit="addSection(NewSectionForm.$valid)">
-                <div class = "form-group" ng-class="{ 'has-error' : NewSectionForm.title.$invalid && section_submitted == true}">
-                  <span class = "col-xs-1" style = "margin-top: 4px;">Title:</span>
-                  <span class = "col-xs-9">
-                    <input ng-model = "newSection.title" name = "title" type= "text" class= "form-control mar-bot-10" required>
-                     <p ng-show="NewSectionForm.title.$invalid && section_submitted == true" class="help-block">Title is required.</p>
-                  </span>
-                  <span class = "col-xs-2 pull-right" style= "margin-top: 4px;">
-                    <a type = "submit" ng-Click = "addSection(NewSectionForm.$valid)"> Save</a>
-                    <a ng-click = "hide_section()"> Cancel</a>
-                  </span>
-              </form>  
+          </div>   
+        </div>              
+        <div class = "row mar-top-10">  
+          <div class = "col-xs-12">
+            <div class = "form-group">
+              <label>Description:</label>
+              <textarea ng-model = "quiz_bank.description" class =  "form-control"  rows = 2 placeholder = "Description" popover="Add small description of the quiz bank"  popover-trigger="mouseenter">
+              </textarea>
             </div>
           </div>
+        </div>   
+        <div class = "row mar-top-10">      
+          <div class = "col-xs-12">
+            <div class = "form-group">
+              <label>Instructions:</label>
+              <textarea ng-model = "quiz_bank.instructions" class = "form-control"  rows = 2 placeholder = "Instructions" popover="Add instructions for the quiz bank"  popover-trigger="mouseenter">
+              </textarea>
+            </div>  
+          </div>
+        </div>
+      </form>      
+      <div class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter" ng-controller = "sectionCtrl">
+        <div id = {{section.id}} class = "col-xs-12 mar-top-10 section-well">
+          <div class = "col-xs-6">
+            <input type="hidden" ng-model="section_id" ng-init="section_id= section.id" value="{{section.id}}" class = "col-xs-12">
+            <span ng-show = "show_title" class = "col-xs-9 row">
+              <strong >{{section.title}}</strong>
+            </span>
+            <span ng-hide = "show_title" class = "col-xs-9 row">  
+              <input type = "text" ng-model = "section.title" class = "form-control input-sm" enter = "updateSection(section)" hide-on-enter>
+            </span>
+            <span class = "col-xs-3" style = "margin-top: 5px;">
+               <a ng-hide = "show_title" ng-click = "updateSection(section)">
+                <span class = "glyphicon glyphicon-ok" style = "color:white"></span>
+              </a>
+              <a ng-hide = "show_title" ng-click = "show_title = true">
+                <span class = "glyphicon glyphicon-remove" style = "color:white"></span>
+              </a>
+            </span>  
+          </div>
+          <div class = "col-xs-4 pull-right">
+            <a ng-Click = "deleteSection(section.id,$index)" data-toggle = "tooltip" title = "Delete the Section" tooltip-placement = "top">
+              <span class = "glyphicon glyphicon-trash pull-right mar-left-5" style = "color: white;" ></span>
+            </a>
+            <a ng-Click = "show_title = false" data-toggle = "tooltip" title = "Edit Section" tooltip-placement = "top">
+              <span class = "glyphicon glyphicon-edit pull-right mar-left-5" style = "color: white;" ></span>
+            </a>
+            
+            <div class="dropdown">
+              <a class="dropdown-toggle" ng-Click = "AddQuestion(section.id,$index)" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top">
+                <span class = "glyphicon glyphicon-plus-sign pull-right mar-left-5" style = "color:white;"></span>
+              </a>
+              <ul class="dropdown-menu pull-right mar-top-20">
+                <li ng-repeat="question in question_types">
+                  <a ng-Click = "addNewQuestion(question,section)" clear-ckeditor>{{question}}</a>
+                </li>
+              </ul>
+            </div>
+            
+            
+          </div>
+        </div>
+        <!--<div class = "col-xs-12 new-section-box mar-top-10 mar-bot-10" ng-if = "section == section_edit">
+          <form name="UpdateSectionForm" ng-submit="updateSection(UpdateSectionForm.$valid,section_edit)">
+            <div class = "form-group" ng-class="{ 'has-error' : UpdateSectionForm.title.$invalid && !UpdateSectionForm.title.$pristine}">
+              <span class = "col-xs-1" style = "margin-top: 4px;">Title:</span>
+              <span class = "col-xs-9">
+                <input ng-model = "section_edit.title" type = "text" class = "form-control mar-bot-10" name = "title" required>
+                <p ng-show="UpdateSectionForm.title.$invalid && !UpdateSectionForm.title.$pristine" class="help-block">Title is required.</p>
+              </span>
+              <span class = "col-xs-2 pull-right" style = "margin-top:4px">
+                <a type = "submit" ng-Click = "updateSection(UpdateSectionForm.$valid,section_edit)"> Save</a>
+                <a ng-Click = "cancelEditSection()"> Cancel</a>
+              </span>
+            </div>
+          </form>    
+        </div> -->
+        <div class = "section-questions" ng-controller = "viewQuestionsCtrl" >
+          <div ng-include src="'/assets/partials/questions/all_questions.html'"></div>
+        </div>
+        <div>
+          <div ng-if = "question_section == section" ng-Show = "show_true_false" ng-include src="'/assets/partials/questions/true_false_create.html'">
+          </div>  
+          <div ng-if = "question_section == section" ng-Show = "show_mcq" ng-include src="'/assets/partials/questions/mcq_create.html'">
+          </div>
+          <div ng-if = "question_section == section" ng-Show = "show_blank" ng-include src="'/assets/partials/questions/fill_in_the_blank_create.html'">
+          </div>
+          <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'">
+          </div>
+        </div>     
+        
+      </div>                  
+      <div ng-show = "show_new_section" class = "new-section-div">
+        <div class = "col-xs-12 new-section-box mar-top-20">
+          <form name="NewSectionForm" ng-submit="addSection(NewSectionForm.$valid)">
+            <div class = "form-group" ng-class="{ 'has-error' : NewSectionForm.title.$invalid && section_submitted == true}">
+              <span class = "col-xs-1" style = "margin-top: 4px;">Title:</span>
+              <span class = "col-xs-9">
+                <input ng-model = "newSection.title" name = "title" type= "text" class= "form-control mar-bot-10" required>
+                 <p ng-show="NewSectionForm.title.$invalid && section_submitted == true" class="help-block">Title is required.</p>
+              </span>
+              <span class = "col-xs-2 pull-right" style= "margin-top: 4px;">
+                <a type = "submit" ng-Click = "addSection(NewSectionForm.$valid)"> Save</a>
+                <a ng-click = "hide_section()"> Cancel</a>
+              </span>
+          </form>  
         </div>
       </div>
     </div>
   </div>
-</div>                
+</div>               
               
