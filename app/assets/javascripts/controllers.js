@@ -1583,6 +1583,7 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
   }
   $scope.show_section = function(){
     $scope.show_new_section = true
+
   }
   $scope.hide_section = function(){
     $scope.show_new_section = false
@@ -1654,6 +1655,9 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
 
   $scope.show_section = function(){
     $scope.show_new_section = true
+    console.log("clicked")
+    console.log($("#new-section-div"))
+    window.scrollTo(0, $("#new-section-div")[0].offsetTop); 
   }
   
   $scope.hide_section = function(){

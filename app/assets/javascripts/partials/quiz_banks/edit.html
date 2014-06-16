@@ -22,7 +22,7 @@
       <span class="sub_nav_icon"><span class = "glyphicon glyphicon-plus-sign"></span></span>
       </span>
       <span class="sub_nav_link">
-        <a ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top">Add Section</a>
+        <a ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top" scroll-to-new-section>Add Section</a>
       </span>
     </div>
     <div class="input-group col-xs-2 pull-right">
@@ -160,7 +160,7 @@
         </div>     
         
       </div>                  
-      <div ng-show = "show_new_section" class = "new-section-div">
+      <div ng-show = "show_new_section" class = "new-section-div" id = "new-section-div">
         <div class = "col-xs-12 new-section-box mar-top-20">
           <form name="NewSectionForm" ng-submit="addSection(NewSectionForm.$valid)">
             <div class = "form-group" ng-class="{ 'has-error' : NewSectionForm.title.$invalid && section_submitted == true}">

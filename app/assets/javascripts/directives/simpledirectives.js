@@ -1,3 +1,18 @@
+quizlib.directive("scrollToNewSection",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("click",function(){
+        //console.log("clicked")
+        //var element = $("#new-section-div");
+        //console.log(element[0].offsetTop)
+        //window.scrollTo(0, element[0].offsetTop ); 
+      })
+    }
+  };
+})
+
+
 quizlib.directive("removeOption",function(){
   return {
     restrict: "A",
@@ -14,7 +29,27 @@ quizlib.directive("removeOption",function(){
     }
   };
 })
-
+quizlib.directive("hideSearch",function(){
+  return {
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      if(window.innerWidth < 530){  
+        element.addClass("hide")
+      }
+        if(window.innerWidth >= 530){
+        element.removeClass("hide")
+      }
+      $(window).resize(function(){
+        if(window.innerWidth < 530){  
+          element.addClass("hide")
+        }
+        if(window.innerWidth >= 530){
+          element.removeClass("hide")
+        }
+      })
+    }
+  };
+})
 
 quizlib.directive("checkResolution",function(){
   return {
