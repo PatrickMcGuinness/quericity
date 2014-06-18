@@ -1,6 +1,6 @@
 class ClonedQuestion < ActiveRecord::Base
   attr_accessible :seq, :description, :question_type,:difficulty_level,
-                  :reference_url,:cloned_section_id, :cloned_quiz_bank_id
+                  :reference_url,:cloned_section_id, :cloned_quiz_bank_id, :score
 
   has_many :cloned_question_options
   has_many :answers
@@ -54,10 +54,10 @@ class ClonedQuestion < ActiveRecord::Base
     answer
   end
 
-  def self.create_the_clone(cloned_quiz_bank,question_id)
+  def self.create_the_clone(cloned_quiz_bank,question_id, question_score)
     question = Question.find(question_id)
     cloned_question = ClonedQuestion.create(seq: question.seq, description: question.description, question_type: question.question_type,difficulty_level: question.difficulty_level,
-                  cloned_quiz_bank_id: cloned_quiz_bank.id)
+                  cloned_quiz_bank_id: cloned_quiz_bank.id, score: question_score)
     ClonedQuestionOption.create_the_clone(question,cloned_question)
     cloned_question
   end
@@ -65,10 +65,10 @@ class ClonedQuestion < ActiveRecord::Base
   def self.create_random(cloned_quiz_bank,quiz_bank,number_of_questions)
     questions = quiz_bank.questions.sample(number_of_questions)
     questions.each do |question|
-      cloned_question = ClonedQuestion.create(:seq => question.seq, 
-                          :description => question.description, :question_type => question.question_type,
-                          :difficulty_level => question.difficulty_level,
-                          :cloned_quiz_bank_id => cloned_quiz_bank.id)
+      cloned_question = ClonedQuestion.create(seq: question.seq, 
+                          description: question.description, question_type: question.question_type,
+                          difficulty_level: question.difficulty_level,
+                          cloned_quiz_bank_id: cloned_quiz_bank.id, score: 1)
       ClonedQuestionOption.create_the_clone(question,cloned_question)
     end  
   end
@@ -86,7 +86,8 @@ class ClonedQuestion < ActiveRecord::Base
       :reference_url => reference_url,
       :cloned_section_id => cloned_section_id,
       :cloned_quiz_bank_id => cloned_quiz_bank_id,
-      :cloned_question_options => cloned_question_options.as_json()
+      :cloned_question_options => cloned_question_options.as_json(),
+      :score => score
     }
     
   end

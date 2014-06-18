@@ -1,12 +1,9 @@
-quizlib.directive("scrollToNewSection",function(){
+quizlib.directive("changeQuestionValue",function(){
   return{
     restrict: 'A',
     link: function(scope,element,attrs){
-      element.bind("click",function(){
-        //console.log("clicked")
-        //var element = $("#new-section-div");
-        //console.log(element[0].offsetTop)
-        //window.scrollTo(0, element[0].offsetTop ); 
+      element.bind("change",function(){
+        $(".question-score").val(element.val())
       })
     }
   };

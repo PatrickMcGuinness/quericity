@@ -646,7 +646,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   $scope.selects = {selected_group: null, selected_quiz: null}
   $scope.toggle_display = {show_question_list: true, show_options: true}
   $scope.currentStep = 1000
-  $scope.served_quiz = {date: new Date(), close_date: (7).day().fromNow()}  // to make the angular js work weird
+  $scope.served_quiz = {random: 0, basic_scoring: true, default_score: 1 ,date: new Date(), close_date: (7).day().fromNow()}  // to make the angular js work weird
 
   QuizBank.all().$promise.then(function(data){
     $scope.quiz_banks = data.result
@@ -1655,9 +1655,6 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
 
   $scope.show_section = function(){
     $scope.show_new_section = true
-    console.log("clicked")
-    console.log($("#new-section-div"))
-    window.scrollTo(0, $("#new-section-div")[0].offsetTop); 
   }
   
   $scope.hide_section = function(){

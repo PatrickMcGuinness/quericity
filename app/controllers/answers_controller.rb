@@ -5,10 +5,10 @@ class AnswersController < ApplicationController
   respond_to :json
 
   def create
-    render json: current_user.answers.create(:cloned_question_id => params[:cloned_question_id],
-            :student_answer=>params[:student_answer], :answer=>params[:answer],
-            :is_correct => params[:is_correct], :graded_by_teacher=>params[:graded_by_teacher],
-            :served_quiz_id => params[:served_quiz_id])
+    render json: current_user.answers.create(cloned_question_id: params[:cloned_question_id],
+            student_answer: params[:student_answer], answer: params[:answer],
+            is_correct: params[:is_correct], graded_by_teacher: params[:graded_by_teacher],
+            served_quiz_id: params[:served_quiz_id], student_score: params[:student_score])
   end
 
   def show

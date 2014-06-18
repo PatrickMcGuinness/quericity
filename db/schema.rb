@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140530101109) do
+ActiveRecord::Schema.define(:version => 20140617111050) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20140530101109) do
     t.datetime "updated_at",                        :null => false
     t.integer  "served_quiz_id"
     t.integer  "graded_by_teacher",  :default => 0
+    t.integer  "student_score"
   end
 
   add_index "answers", ["cloned_question_id"], :name => "index_answers_on_cloned_question_id"
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20140530101109) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.integer  "cloned_quiz_bank_id"
+    t.integer  "score"
   end
 
   add_index "cloned_questions", ["cloned_quiz_bank_id"], :name => "index_cloned_questions_on_cloned_quiz_bank_id"
@@ -227,8 +229,8 @@ ActiveRecord::Schema.define(:version => 20140530101109) do
   create_table "served_quizzes", :force => true do |t|
     t.integer  "owner_id"
     t.integer  "quiz_bank_id"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.datetime "date"
     t.datetime "close_date"
     t.integer  "duration"
@@ -246,6 +248,7 @@ ActiveRecord::Schema.define(:version => 20140530101109) do
     t.integer  "questions_per_page"
     t.integer  "no_expiration",       :default => 0
     t.integer  "status",              :default => 0
+    t.boolean  "basic_scoring",       :default => true
   end
 
   add_index "served_quizzes", ["id"], :name => "index_served_quizzes_on_id"

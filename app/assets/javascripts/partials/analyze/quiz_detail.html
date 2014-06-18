@@ -54,12 +54,9 @@
           <div>
             &nbsp;{{answer.answer}}
           </div>
-          &nbsp;<strong>Grade</strong>
-          <div ng-if = "answer.is_correct == true">
-            &nbsp; 1
-          </div>
-          <div ng-if = "answer.is_correct == false">
-            &nbsp; 0
+          &nbsp;<strong>Score</strong>
+          <div>
+            &nbsp; {{answer.student_score}}
           </div>
         </div>  
       </div>

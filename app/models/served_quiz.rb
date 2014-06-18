@@ -1,6 +1,6 @@
 class ServedQuiz < ActiveRecord::Base
   attr_accessible :owner_id, :no_expiration,:quiz_bank_id,:answer, :duration, :date, :close_date,:end_time, 
-                  :instructions,:random,:start_time,:infinite_duration,:number_of_questions, :status,
+                  :instructions,:random,:start_time,:infinite_duration,:number_of_questions, :status, :basic_scoring,
                   :same_questions,:show_in_sequence, :show_all_questions, :questions_per_page,:cloned_quiz_bank_id
 
   #validates :owner_id, presence:true
@@ -179,7 +179,7 @@ class ServedQuiz < ActiveRecord::Base
 
   def self.clone_question_list(params,cloned_quiz_bank)
     params[:selected_questions].each do |selected_question|
-      ClonedQuestion.create_the_clone(cloned_quiz_bank,selected_question[:id])
+      ClonedQuestion.create_the_clone(cloned_quiz_bank,selected_question[:id], selected_question[:score])
     end
   end
 
@@ -299,7 +299,7 @@ class ServedQuiz < ActiveRecord::Base
       :duration => duration,
       :date => date,
       :close_date => close_date,
-      :end_time => end_time,
+      :basic_scoring => basic_scoring,
       :no_expiration => no_expiration,
       :close_status => status,
       :created_at => created_at,
@@ -312,7 +312,6 @@ class ServedQuiz < ActiveRecord::Base
       :invited_sharings => invited_sharings.as_json(),
       :instructions => instructions,
       :random => random,
-      :start_time => start_time,
       :infinite_duration => infinite_duration,
       :number_of_questions => number_of_questions, 
       :same_questions => same_questions,

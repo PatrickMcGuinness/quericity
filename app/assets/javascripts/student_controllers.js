@@ -236,13 +236,15 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
           }
           if(question.answer == answer){
             var is_correct = true
+            var student_score = question.score 
           }
           else{
             var is_correct = false
+            var student_score = 0
           }
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: answer, 
             is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, 
-            graded_by_teacher: 0}).$promise.then(function(data){
+            graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_status()
             })
@@ -261,14 +263,16 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
             if(value.id == question.answer){
               if(value.is_correct == true){
                 var is_correct = true
+                var student_score = question.score
               }
               else{
                 var is_correct = false
+                var student_score = 0
               }
               var student_answer = value.answer
               Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
                 answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id,
-                graded_by_teacher: 0}).$promise.then(function(data){
+                graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
                   $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
                   check_status()
                 })
@@ -281,7 +285,7 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
         if(question.question_type == 3){
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: false,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: 0}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_status()
             })
@@ -292,13 +296,15 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
         if(question.question_type == 4){
           if(question.answer.toLowerCase() == question.cloned_question_options[0].answer.toLowerCase()){
             var is_correct = true
+            var student_score = question.score
           }
           else{
             var is_correct = false
+            var student_score = 0
           }
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: is_correct,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_status()
             })
@@ -337,13 +343,15 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
           }
           if(question.answer == answer){
             var is_correct = true
+            var student_score = question.score
           }
           else{
             var is_correct = false
+            var student_score = 0
           }
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, 
-            graded_by_teacher: 0}).$promise.then(function(data){
+            graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_status()
             })
@@ -361,14 +369,16 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
             if(value.id == question.answer){
               if(value.is_correct == true){
                 var is_correct = true
+                var student_score = question.score
               }
               else{
                 var is_correct = false
+                var student_score = 0
               }
               var student_answer = value.answer
               Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
                 answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, 
-                graded_by_teacher: 0}).$promise.then(function(data){
+                graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
                   $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
                   check_status()
                 })
@@ -379,7 +389,7 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
         if(question.question_type == 3){
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: false,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: 0}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_status()
             })
@@ -390,13 +400,15 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
         if(question.question_type == 4){
           if(question.answer.toLowerCase() == question.cloned_question_options[0].answer.toLowerCase()){
             var is_correct = true
+            var student_score = question.score
           }
           else{
             var is_correct = false
+            var student_score = 0
           }
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: 
-            is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+            is_correct,served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_status()
             })
@@ -455,13 +467,15 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
           }
           if(question.answer == answer){
             var is_correct = true
+            var student_score = question.score
           }
           else{
             var is_correct = false
+            var student_score = 0
           }
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, 
-            graded_by_teacher: 0}).$promise.then(function(data){
+            graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_more_questions()
             })
@@ -479,14 +493,16 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
             if(value.id == question.answer){
               if(value.is_correct == true){
                 var is_correct = true
+                var student_score = question.score
               }
               else{
                 var is_correct = false
+                var student_score = 0
               }
               var student_answer = value.answer
               Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
                   answer: correct_answer, is_correct: is_correct,
-                  served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+                  served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
                     $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
                     check_more_questions()
                   })
@@ -497,7 +513,7 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
         if(question.question_type == 3){
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: false,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: 0}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_more_questions()
             })
@@ -508,13 +524,15 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
         if(question.question_type == 4){
           if(question.answer.toLowerCase() == question.cloned_question_options[0].answer.toLowerCase()){
             var is_correct = true
+            var student_score = question.score
           }
           else{
             var is_correct = false
+            var student_score = 0
           }
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: is_correct,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_more_questions()
             })
@@ -634,13 +652,15 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
           }
           if(question.answer == answer){
             var is_correct = true
+            var student_score = question.score
           }
           else{
             var is_correct = false
+            var student_score = 0
           }
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id,
-             graded_by_teacher: 0}).$promise.then(function(data){
+             graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
                 $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
                 check_more_questions()
              })
@@ -658,14 +678,16 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
             if(value.id == question.answer){
               if(value.is_correct == true){
                 var is_correct = true
+                var student_score = question.score
               }
               else{
                 var is_correct = false
+                var student_score = 0
               }
               var student_answer = value.answer
               Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
                 answer: correct_answer, is_correct: is_correct,served_quiz_id: 
-                $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+                $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
                   $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
                   check_more_questions()
                 })
@@ -676,7 +698,7 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
         if(question.question_type == 3){
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: false,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: 0}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_more_questions()
             })
@@ -687,13 +709,15 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
         if(question.question_type == 4){
           if(question.answer.toLowerCase() == question.cloned_question_options[0].answer.toLowerCase()){
             var is_correct = true
+            var student_score = question.score
           }
           else{
             var is_correct = false
+            var student_score = 0
           }
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: is_correct,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0}).$promise.then(function(data){
+            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
               $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
               check_more_questions()
             })

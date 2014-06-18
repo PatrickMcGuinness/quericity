@@ -24,7 +24,7 @@
         <thead>
           <th class = "col-xs-5">Your Answer</th>
           <th class = "col-xs-5">Correct Answer</th>
-          <th class = "col-xs-2">Result</th>
+          <th class = "col-xs-2">Score</th>
         </thead>
         <tbody>
           <tr ng-repeat = "answer in served_quiz.answers">
@@ -32,7 +32,7 @@
           <td>{{answer.student_answer}}</td>
           <td ng-if = "answer.cloned_question.question_type !=3">{{answer.answer}}</td>
           <td ng-if = "answer.cloned_question.question_type == 3" mathjax-bind = "answer.answer">
-          <td ng-if = "answer.cloned_question.question_type != 3">{{answer.is_correct}}</td>
+          <td ng-if = "answer.cloned_question.question_type != 3">{{answer.student_score}}</td>
           <td ng-if = "answer.cloned_question.question_type == 3">Teacher will grade</td>
           </tr>
         </tbody>

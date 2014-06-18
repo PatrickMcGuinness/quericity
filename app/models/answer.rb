@@ -1,5 +1,6 @@
 class Answer < ActiveRecord::Base
-  attr_accessible :student_id, :cloned_question_id, :student_answer, :answer, :is_correct, :served_quiz_id, :graded_by_teacher
+  attr_accessible :student_id, :cloned_question_id, :student_answer, :answer, :is_correct, 
+                  :served_quiz_id, :graded_by_teacher, :student_score
 
 
   belongs_to :student, :class_name => "User", :foreign_key => "student_id"
@@ -66,14 +67,17 @@ class Answer < ActiveRecord::Base
       :student_answer => student_answer,
       :answer => answer,
       :is_correct => is_correct,
-      :served_quiz_id => served_quiz_id, 
+      :served_quiz_id => served_quiz_id,
+      :served_quiz => served_quiz.as_json(), 
       :graded_by_teacher => graded_by_teacher,
       :questions_to_attempt => questions_to_attempt.as_json(),
       :created_at => created_at,
-      :updated_at => updated_at, 
+      :updated_at => updated_at,
+      :student_score => student_score,
     }
     
   end
+  
   def manual_check_the_answer(string)
     self.is_correct = true if string == "correct"
     self.is_correct = false if string == "wrong"
