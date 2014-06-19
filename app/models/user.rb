@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :role, :invited_by, :provider, :uid,:time_zone, :show_tour, :show_tooltip
   attr_accessible :first_name, :last_name,:profile_pic, :role, :encrypted_password,:reset_password_token, :reset_password_sent_at, :remember_created_at,
   :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip,:confirmation_token,
-  :confirmed_at, :confirmation_sent_at, :unconfirmed_email
+  :confirmed_at, :confirmation_sent_at, :unconfirmed_email, :terms_accepted
   
   has_many :repositories, dependent: :destroy 
   has_many :served_quizzes, :class_name => 'ServedQuiz', :foreign_key => 'owner_id'
@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   after_create :create_default_repo
   after_create :confirm_the_user
 
-  #validates :first_name, presence: true
+  validates :terms_accepted, presence: true
   #validates :last_name, presence: true
   #validates :email, presence: true
   #validates :password, presence: true

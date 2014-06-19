@@ -18,13 +18,6 @@
         <a ng-Click = "cancelQuiz()" ng-href = "#/quiz_banks/{{quiz_bank.id}}/show" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">Cancel</a>
       </span>
     </div>
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><span class = "glyphicon glyphicon-plus-sign"></span></span>
-      </span>
-      <span class="sub_nav_link">
-        <a ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top" scroll-to-new-section>Add Section</a>
-      </span>
-    </div>
     <div class="input-group col-xs-2 pull-right">
       <input type="Search" placeholder="Search..." class="form-control search input-sm" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search Section by title" tooltip-placement "top"/>
       <div class="input-group-btn">
@@ -158,8 +151,8 @@
           <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'">
           </div>
         </div>     
-        
-      </div>                  
+      </div>
+                  
       <div ng-show = "show_new_section" class = "new-section-div" id = "new-section-div">
         <div class = "col-xs-12 new-section-box mar-top-20">
           <form name="NewSectionForm" ng-submit="addSection(NewSectionForm.$valid)">
@@ -173,8 +166,13 @@
                 <a type = "submit" ng-Click = "addSection(NewSectionForm.$valid)"> Save</a>
                 <a ng-click = "hide_section()"> Cancel</a>
               </span>
+            </div>  
           </form>  
         </div>
+      </div>
+      <div class="row mar-top-20 pull-left">
+        <a ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top" scroll-to-new-section class = "btn btn-primary">
+        <span class = "glyphicon glyphicon-plus"></span>Add Section</a>
       </div>
     </div>
   </div>

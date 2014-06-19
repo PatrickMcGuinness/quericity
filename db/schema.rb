@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140617111050) do
+ActiveRecord::Schema.define(:version => 20140619061839) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -339,6 +339,7 @@ ActiveRecord::Schema.define(:version => 20140617111050) do
     t.string   "time_zone"
     t.boolean  "show_tour",              :default => true
     t.boolean  "show_tooltip",           :default => true
+    t.boolean  "terms_accepted"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

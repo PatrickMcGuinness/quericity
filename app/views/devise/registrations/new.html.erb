@@ -4,9 +4,7 @@
 		<div class = "col-xs-5 col-xs-offset-4" style="text-align:center;">
 			<div class="mar-top-20">New to QuizLib?</div>
 				<h3 class = "mar-top-10">Sign up</h3>
-
-				<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal", id: "sign-up"}) do |f| %>
-				  
+				<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal", id: "sign-up"}) do |f| %>				  
 			    <div class="form-group">
 			    	<div class="col-xs-12">
 						  <select class="form-control size_area" id="role" name="user[role]">
@@ -73,9 +71,14 @@
                 <option value="12.0">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
               </select>
             </div> 
+          </div>
+          <div class = "form_group" style= "text-align:left">
+          	<div class="mar-bot-10">
+          		<%= f.check_box :terms_accepted %> &nbsp; I accept the terms of service <br/>
+          	</div>
           </div>  
 				  <div class="form-group">
-				  	<div class="col-xs-12">
+				  	<div class = "col-xs-12">
 				  	  <%= f.submit "Sign up!", :class => "btn btn-success btn-lg col-xs-12 responsive-button" %>
 				  	</div>  
 				  </div></br>

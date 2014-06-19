@@ -683,6 +683,12 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
     }
   }
 
+  $scope.check_date = function(){
+    if($scope.served_quiz.date == null){
+      $scope.served_quiz.date == Date.now()
+    }
+  }
+
   $scope.student_to_right = function(student){
     index = $scope.students_to_right.indexOf(student);
     if(index == -1){
@@ -1341,7 +1347,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
           $scope.question_id  = data.id
           GlobalScope.set_question_id($scope.question_id)
           $scope.true_false_question_statement = null
-          $scope.selected_difficulty = null
+          $scope.selected_difficulty = 2
           $scope.selected_true_false_option = null
           $scope.submitted = false
           CKEDITOR.instances['true_false_question_statement'].setData("")
@@ -1360,7 +1366,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
           GlobalScope.set_question_id($scope.question_id)
           $scope.open_ended_statement = null
           $scope.open_ended_answer = null
-          $scope.difficulty_level = null
+          $scope.difficulty_level = 2
           $scope.submitted = false
           CKEDITOR.instances['open_ended_question_statement'].setData("")
           CKEDITOR.instances['answer'].setData("")
@@ -1380,7 +1386,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
           GlobalScope.set_question_id($scope.question_id)
           $scope.blank_statement = {}
           $scope.blank = null
-          $scope.selected_difficulty = null
+          $scope.selected_difficulty = 2
           $scope.submitted = false
           CKEDITOR.instances['blank_statement'].setData("Put [] in question statement where you want the blank")
           $scope.hideQuestion() 
@@ -1435,10 +1441,8 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
         question_type: 2,difficulty_level: $scope.selected_difficulty,question_options: question_options}).$promise.then(function(data){
           $scope.question_id = data.id
           GlobalScope.set_question_id($scope.question_id)
-          
-
         })
-        $scope.selected_difficulty = null
+        $scope.selected_difficulty = 2
         $scope.submitted = false
         $scope.radio = null
         $scope.input_0 = null

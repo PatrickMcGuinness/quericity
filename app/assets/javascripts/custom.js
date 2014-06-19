@@ -17,6 +17,9 @@ $(document).ready(function(){
         },
         'user[password]': {
           required: true
+        },
+        'user[terms_accepted]':{
+          required: true
         }           
     },
     messages: {
@@ -35,6 +38,9 @@ $(document).ready(function(){
         },
         'user[password]':{
           required: "Please enter Password"
+        },
+        'user[terms_accepted]':{
+          required: "Please accept terms"
         }
     },
     highlight: function(element) {

@@ -1,57 +1,98 @@
-<%= devise_error_messages! %>	
-<div class = "container">
-	<div class="hero-unit">
-		<div style="text-align:center;">
-			<div style="display:inline-block;">
-				<div class="lead f_size">New to QuizLib?</div>
-				<h3 class = "mar_top">Sign up</h3>
-
-				<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal" }) do |f| %>
-				  
-			    <div class="form-group">
-			    	<div class="col-sm-10">
-						  <select class="form-control size_area" id="role" name="user[role]">
-						    <option disabled="disabled" selected="selected">Select Role</option>
-						    <option>Professor</option>
-						    <option>Student</option>
-						  </select>
-						</div>  
-					  <br/>
-			    </div>
-			    <div class="form-group">
-			    	<div class="signup_email col-sm-10">
-			        <%= f.text_field :first_name,:class => "form-control size_area",:placeholder => "First Name", :id => 'user_registeration_f_name' %>
-			      </div>
-			    </div>
-			    <div class="form-group">
-			    	<div class="signup_email col-sm-10">
-			        <%= f.text_field :last_name,:class => "form-control size_area",:placeholder => "Last Name", :id => 'user_registeration_l_name' %>
-			      </div>
-			    </div>
-			    <div class="form-group">
-			    	<div class="signup_email col-sm-10">
-			        <%= f.email_field :email,:class => "form-control size_area",:placeholder => "Email", :id => 'user_registeration_email' %>
-			      </div>
-			    </div>
-			    <div class="form-group">
-			    	<div class="signup_password col-sm-10">
-			        <%= f.hidden_field :password,:class => "form-control size_area",:placeholder => "Choose a Password", :id => 'user_registeration_password' %>
+<%= devise_error_messages! %>
+<div class = "row">
+  <div class = "container">
+    <div class = "col-xs-5 col-xs-offset-4" style="text-align:center;">
+      <div class="mar-top-20">New to QuizLib?</div>
+        <h3 class = "mar-top-10">Sign up</h3>
+        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal", id: "sign-up" }) do |f| %>     
+          <div class="form-group">
+            <div class="col-xs-12">
+              <select class="form-control size_area" id="role" name="user[role]">
+                <option disabled="disabled" selected="selected">Select Role</option>
+                <option>Professor</option>
+                <option>Student</option>
+              </select>
+            </div>  
+            <br/>
+          </div>
+          <div class="form-group">
+            <div class="signup_email col-xs-12">
+              <%= f.text_field :first_name,:class => "form-control size_area",:placeholder => "First Name", :id => 'user_registeration_f_name' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="signup_email col-xs-12">
+              <%= f.text_field :last_name,:class => "form-control size_area",:placeholder => "Last Name", :id => 'user_registeration_l_name' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="signup_email col-xs-12">
+              <%= f.email_field :email,:class => "form-control size_area",:placeholder => "Email", :id => 'user_registeration_email' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="signup_password col-xs-12">
+              <%= f.hidden_field :password,:class => "form-control size_area",:placeholder => "Choose a Password", :id => 'user_registeration_password' %>
               <%= f.hidden_field :provider %>
               <%= f.hidden_field :uid %>
-			      </div>
-			    </div>
-				  <div class="form-group">
-				  	<div class="col-sm-10">
-				  	  <%= f.submit "Sign up!", :class => "pad btn btn-default btn-lg active form-control size_area" %>
-				  	</div>  
-				  </div></br>
-				  <div class = "fbook_text">or sign up with Facebook:</div>
-				  <%= link_to "Facebook Sign Up", user_omniauth_authorize_path(:facebook), :class => "size_area btn btn-primary btn-block btn-large"%></br>
-				<% end %>
-			  <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-			    <%= link_to "Forgot your password?", new_password_path(resource_name), :class => "mov_l" %><br />
-			  <% end -%>
-		  </div>
-	  </div>
+            </div>
+          </div>
+          <div class = "form-group">
+            <div class = "col-xs-12">
+              <select id="time_zone" name = "user[time_zone]" class = "form-control">
+                <option value="-12.0">(GMT -12:00) Eniwetok, Kwajalein</option>
+                <option value="-11.0">(GMT -11:00) Midway Island, Samoa</option>
+                <option value="-10.0">(GMT -10:00) Hawaii</option>
+                <option value="-9.0">(GMT -9:00) Alaska</option>
+                <option value="-8.0">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+                <option value="-7.0">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+                <option value="-6.0">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
+                <option value="-5.0">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
+                <option value="-4.0">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+                <option value="-3.30">(GMT -3:30) Newfoundland</option>
+                <option value="-3.0">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+                <option value="-2.0">(GMT -2:00) Mid-Atlantic</option>
+                <option value="-1.0">(GMT -1:00 hour) Azores, Cape Verde Islands</option>
+                <option value="0.0">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+                <option value="1.0">(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
+                <option value="2.0">(GMT +2:00) Kaliningrad, South Africa</option>
+                <option value="3.0">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+                <option value="3.30">(GMT +3:30) Tehran</option>
+                <option value="4.0">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+                <option value="4.30">(GMT +4:30) Kabul</option>
+                <option value="5.0">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+                <option value="5.30">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
+                <option value="5.45">(GMT +5:45) Kathmandu</option>
+                <option value="6.0">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+                <option value="7.0">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+                <option value="8.0">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+                <option value="9.0">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+                <option value="9.30">(GMT +9:30) Adelaide, Darwin</option>
+                <option value="10.0">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+                <option value="11.0">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+                <option value="12.0">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+              </select>
+            </div> 
+          </div>
+          <div class = "form_group" style= "text-align:left">
+            <div class="mar-bot-10">
+              <%= f.check_box :terms_accepted %> &nbsp; I accept the terms of service <br/>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <%= f.submit "Sign up!", :class => "btn btn-success btn-lg col-xs-12 responsive-button" %>
+            </div>  
+          </div></br>
+          <div class = "fbook_text">or sign up with Facebook:</div>
+          <%= link_to "Facebook Sign Up", user_omniauth_authorize_path(:facebook), :class => "btn btn-primary btn-lg mar-top-10 col-xs-12 responsive-button"%></br>
+        <% end %>
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+          <%= link_to "Forgot your password?", new_password_path(resource_name)%><br />
+        <% end -%>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</div>	
+
