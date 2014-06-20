@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140619061839) do
+ActiveRecord::Schema.define(:version => 20140619122118) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(:version => 20140619061839) do
   add_index "answers", ["id"], :name => "index_answers_on_id"
   add_index "answers", ["served_quiz_id"], :name => "index_answers_on_served_quiz_id"
   add_index "answers", ["student_id"], :name => "index_answers_on_student_id"
+
+  create_table "attempts", :force => true do |t|
+    t.integer  "sharing_id"
+    t.integer  "served_quiz_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -249,6 +256,7 @@ ActiveRecord::Schema.define(:version => 20140619061839) do
     t.integer  "no_expiration",       :default => 0
     t.integer  "status",              :default => 0
     t.boolean  "basic_scoring",       :default => true
+    t.integer  "number_of_attempts",  :default => 1
   end
 
   add_index "served_quizzes", ["id"], :name => "index_served_quizzes_on_id"

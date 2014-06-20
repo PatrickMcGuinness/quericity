@@ -3,7 +3,18 @@
     <span>Add a Question</span>
   </div>
   <form name="BlankForm" ng-submit="create_blank(BlankForm.$valid)" novalidate>
-    
+    <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group">
+        <label>Change Question Type: </label>
+        <select class="form-control" ng-model="selected_type" name = "selected_type">
+          <option value = "">Change Question Type</option>
+          <option value = "True False">True False</option>
+          <option value = "Multiple Choice">Multiple Choice</option>
+          <option value = "Fill in blank">Fill in Blank</option>
+          <option value = "Open Ended">Open Ended</option>
+        </select>
+      </div>
+    </div>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.first_statement.$invalid) && (!BlankForm.first_statement.$pristine || submitted == true)}">
         <label>Question:</label>

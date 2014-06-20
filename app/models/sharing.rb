@@ -6,6 +6,8 @@ class Sharing < ActiveRecord::Base
   belongs_to :user, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :served_quiz
 
+  has_many :attempts
+
   validates :user_id, presence: true
   
   class Status
