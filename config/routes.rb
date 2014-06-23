@@ -36,7 +36,8 @@ QuizLib::Application.routes.draw do
   
   
   resources :student_groups 
-  resources :invites
+  resources :invites 
+
   resources :answers do
     member do
       get "student_answers_in_served_quiz"
@@ -63,6 +64,7 @@ QuizLib::Application.routes.draw do
       get "first_served_quiz"
     end
     resources :sharings do
+      resources :attempts
       collection do
         get "student_sharing"
       end

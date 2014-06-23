@@ -5,9 +5,8 @@
   <form name="OpenEndedForm" ng-submit="create_open_ended(OpenEndedForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group">
-        <label>Change Question Type: </label>
-        <select class="form-control" ng-model="selected_type" name = "selected_type">
-          <option value = "">Change Question Type</option>
+        <label>Question Type: </label>
+        <select class="form-control" ng-model="selected_type" name = "selected_type" ng-change="change_question()">
           <option value = "True False">True False</option>
           <option value = "Multiple Choice">Multiple Choice</option>
           <option value = "Fill in blank">Fill in Blank</option>

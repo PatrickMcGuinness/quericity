@@ -100,6 +100,9 @@ class QuizBank < ActiveRecord::Base
   def clone_the_quiz(user)
     new_quiz_bank = user.quiz_banks.create(:title => self.title, :description => self.description,
       :repository_id => user.default_repo.id, subject: self.subject,public: 0, instructions: self.instructions)
+
+    new_quiz_bank.sections.destroy_all
+
     self.sections.each do |section|
       section.clone_the_section(new_quiz_bank)
     end
@@ -125,7 +128,7 @@ class QuizBank < ActiveRecord::Base
       :question_topics => question_topics.as_json(),
       :topics => topics.as_json(),
       :user => owner.as_json(),
-      :sections => sections.as_json(),
+      :sections => sections.order("created_at ASC").as_json(),
       :shares => shares.as_json(),
       :shared => is_shared?.as_json()
     }

@@ -5,7 +5,7 @@ class SectionsController < ApplicationController
   respond_to :json
 
   def index
-    render json: QuizBank.find(params[:quiz_bank_id]).sections
+    render json: QuizBank.find(params[:quiz_bank_id]).sections.order("created_at ASC")
   end
 
   def show

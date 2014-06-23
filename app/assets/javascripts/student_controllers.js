@@ -174,7 +174,7 @@ student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','
 
 }]);
 
-student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer',function($scope,$timeout,ServedQuiz,Sharing,Answer){
+student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer','Attempt',function($scope,$timeout,ServedQuiz,Sharing,Answer,Attempt){
   $scope.time_running = true
   
   $scope.onTimeout = function(){  
@@ -324,7 +324,7 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
   }
 }]);
 
-student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQuiz','Sharing','Answer',function($scope,ServedQuiz,Sharing,Answer){
+student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQuiz','Sharing','Answer','Attempt',function($scope,ServedQuiz,Sharing,Answer,Attempt){
   
   $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
   
@@ -385,7 +385,9 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
             }
           })         
         }
-        /*if questios in open ended*/
+        
+        /*if question is open ended*/
+        
         if(question.question_type == 3){
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: false,
@@ -430,7 +432,7 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
 
 }]);
 
-student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz','Sharing','Answer',function($scope,ServedQuiz,Sharing,Answer){
+student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz','Sharing','Answer','Attempt',function($scope,ServedQuiz,Sharing,Answer,Attempt){
 
   ServedQuiz.get($scope.served_quiz_id).$promise.then(function(data){
     $scope.served_quiz = data
@@ -565,7 +567,7 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
 
 }]);
 
-student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer',function($scope,$timeout,ServedQuiz,Sharing,Answer){
+student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer','Attempt',function($scope,$timeout,ServedQuiz,Sharing,Answer,Attempt){
   $scope.time_running = true
 
   ServedQuiz.get($scope.served_quiz_id).$promise.then(function(data){

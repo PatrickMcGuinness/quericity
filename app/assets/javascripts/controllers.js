@@ -1189,6 +1189,23 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
 
   }
   $scope.hide_update = function(){$scope.show_details_view = true}
+
+  $scope.change_question = function(selected_type,question){
+    console.log(selected_type)
+    if(selected_type = "True False"){
+      question.question_type = 1
+    }
+    if(selected_type = "Multiple Choice"){
+      console.log("in the multiple choice question")
+      question.question_type = 2
+    }
+    if(selected_type = "Fill in blank"){
+      question.question_type = 3
+    }
+    if(selected_type = "Open Ended"){
+      question.question_type = 4
+    }
+  }
   
   $scope.edit_question = function(section_id,question_id,question,isValid){
     $scope.submitted = true
@@ -1242,11 +1259,9 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
     $scope.section_id = section_id;
   })
 
-  $scope.$watch('selected_type', function() {
-    if($scope.selected_type != undefined){
-      $scope.addNewQuestion($scope.selected_type,$scope.section)
-    }  
-  })
+  $scope.change_question = function(){
+    $scope.addNewQuestion($scope.selected_type,$scope.section)
+  }
 
   $scope.mcq_options = ["", "","",""]
 
@@ -1404,13 +1419,6 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
     $scope.show_title = true
   }
 
-  // $scope.updateSection = function(isValid,section_edit){
-  //   if(isValid){
-  //     updated_section = Section.update($scope.quiz_bank_id, section_edit.id, section_edit)
-  //     $rootScope.section_edit = null
-  //   }
-  // }
-
   $scope.handleDrop = function(questionId,sectionId,quizBankId,previousSectionId){
     Question.get(quizBankId,previousSectionId,questionId).$promise.then(function(data){
       $scope.question_to_update = data
@@ -1424,8 +1432,8 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
   $rootScope.show_open_ended = false
   $rootScope.question_section = null
   $scope.addNewQuestion = function(question_type,section){
-
     $rootScope.question_section = section
+    $scope.selected_type = question_type
     if(question_type == "True False"){
       $rootScope.show_true_false = true
       $rootScope.show_mcq = false
@@ -1437,6 +1445,7 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
       $rootScope.show_mcq = true
       $rootScope.show_blank = false
       $rootScope.show_open_ended = false
+
     }
     if(question_type == "Fill in blank"){
       $rootScope.show_true_false = false
@@ -1456,6 +1465,7 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
     $rootScope.show_mcq = false
     $rootScope.show_blank = false
     $rootScope.show_open_ended = false
+    $scope.selected_type = null
   }
 
 }])
@@ -1548,15 +1558,23 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   $.removeCookie("main_repo")
   
   $scope.quiz_bank_id = $routeParams.id
-  $scope.quiz_bank = QuizBank.get($scope.quiz_bank_id)
-  $scope.quiz_sections = Section.all($scope.quiz_bank_id)
   $scope.question_types = ["True False","Multiple Choice","Fill in blank","Open Ended"]
   $scope.submitted = false
   $scope.section_submitted = false
   $scope.ckEditors = [];
   $scope.newSection = null
-  $scope.show_new_section = false  
+  $scope.show_new_section = false
+  $scope.show_new_question = false  
 
+  QuizBank.get($scope.quiz_bank_id).$promise.then(function(data){
+    $scope.quiz_sections = data.sections
+    $scope.quiz_bank = data
+  })
+
+  // $scope.show_question_in_section = function(){
+  //   $scope.addNewQuestion($scope.select_type,$scope.section_for_question)
+  // }
+  
   $scope.saveQuiz = function(isValid){
     $scope.submitted =true
     if(isValid){
@@ -1588,6 +1606,9 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
     $scope.show_new_section = true
   }
   
+  $scope.show_question = function(){
+    $scope.show_new_question = true
+  }
   $scope.hide_section = function(){
     $scope.show_new_section = false
     $scope.newSection.title = null
@@ -1615,6 +1636,7 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
+  
   $scope.question_types = ["True False","Multiple Choice","Fill in blank","Open Ended"]
   $scope.submitted = false
   $scope.section_submitted = false
@@ -1654,7 +1676,6 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   $scope.saveQuiz = function(isValid){
     $scope.submitted =true
     if(isValid){
-
       $scope.quiz_bank.status = 1
       QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
         angular.forEach($scope.tags, function(value, key){

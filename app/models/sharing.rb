@@ -103,10 +103,9 @@ class Sharing < ActiveRecord::Base
       :user_id => user_id,
       :user => user.as_json(),
       :status_in_string => status_in_string.as_json(),
-      :local_date => self.served_quiz.date,#ServedQuiz.get_start_local_time(self.served_quiz,self.user).as_json(),
-      :local_close_date => self.served_quiz.close_date#ServedQuiz.get_end_local_time(self.served_quiz,self.user).as_json(),
-      #:local_start_time => ServedQuiz.get_start_local_time(self.served_quiz,self.user)[0].as_json(),
-      #:local_end_time => ServedQuiz.get_end_local_time(self.served_quiz,self.user)[0].as_json()
+      :local_date => self.served_quiz.date,
+      :local_close_date => self.served_quiz.close_date,
+      :attempts => attempts.as_json()
     }
   end  
 

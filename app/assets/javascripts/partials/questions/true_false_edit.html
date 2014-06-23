@@ -4,6 +4,17 @@
   </div>
   <form name="TrueFalseForm" ng-submit="edit_question(section.id,question.id,question,TrueFalseForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
+      <div class = "form-group">
+        <label>Question Type: </label>
+        <select class="form-control" ng-model="selected_type" name = "selected_type" ng-change="change_question()">
+          <option value = "True False">True False</option>
+          <option value = "Multiple Choice">Multiple Choice</option>
+          <option value = "Fill in blank">Fill in Blank</option>
+          <option value = "Open Ended">Open Ended</option>
+        </select>
+      </div>
+    </div>
+    <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.question_statement.$invalid) && (!TrueFalseForm.question_statement.$pristine || submitted == true)}">
         <label>Question:</label>
         <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor required>
