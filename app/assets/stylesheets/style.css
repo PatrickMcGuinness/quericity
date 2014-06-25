@@ -20,6 +20,9 @@ body{
 	color:#003656;
 	padding-top:33px;
 	}
+.menu-link{
+  padding: 0px 5px;
+}  
 @media only screen and (min-width: 550px){
 	.menu{
 		background-color:#003656;
@@ -458,4 +461,5 @@ ul li{
 .manage_list td a:hover{
 	text-decoration: none;
 }
-	
+
+

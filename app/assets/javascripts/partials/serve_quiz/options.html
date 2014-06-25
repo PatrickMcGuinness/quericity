@@ -172,13 +172,19 @@
           <div class="row line_bg"></div>
           
           <div class="row">
-            <div class="col-xs-4 form_section">
+            <div class = "col-xs-3 form_section">
+              <span>
+                <input type = "radio" name = "question-option" value = "2" ng-model = "served_quiz.random" ng-click = "toggle_display.show_question_list = true;select_all_questions()" select-questions>
+                <span style = "margin-left:10px;">Use all Questions</span>
+              </span>
+            </div>
+            <div class="col-xs-3 form_section">
               <span>
                 <input type="radio" name="question-option" value = "0" checked ng-click = "toggle_display.show_question_list = true" ng-model = "served_quiz.random" tourtip-step = "12" tourtip = "Select this option and then select from the questions list all the questions you want to include in the quiz">
               </span>
               <span style = "margin-left:10px">Select from questions list</span>
             </div>
-            <div class = "col-xs-4 form_section">  
+            <div class = "col-xs-3 form_section">  
               <span>
                 <input type="radio" name="question-option" value = "1" ng-click = "toggle_display.show_question_list = false" ng-model = "served_quiz.random" tourtip-step = "13" tourtip = "Or select this options to allow the system to randomly select from the questions list">
               </span>
@@ -190,7 +196,7 @@
               <p ng-show="served_quiz.random == undefined" class="help-block" style = "color: #A94442;">Select one question selection option</p>
             </div>
           </div>
-          <div class = "row" ng-if = "toggle_display.show_question_list == true">
+          <div class = "row" ng-if = "served_quiz.random == 2 || served_quiz.random == 0">
             <div class = "col-xs-4 form_section">
               <span>
                 <input type = "radio"  name = "basic_scoring" ng-value = true ng-model = "served_quiz.basic_scoring">
@@ -222,7 +228,7 @@
           	<div class="col-xs-12">
               <div class="col-xs-12 strip form_section" ng-repeat = "question in quiz_bank_questions">
                 <div class="col-xs-0 pull-left">
-                  <input type="checkbox" name="checkbox" value = "{{question.id}}" ng-click = "select_question(question)"/>
+                  <input type="checkbox" name="checkbox" value = "{{question.id}}" ng-click = "select_question(question)" checked = "true" class = "question-checkbox"/>
                 </div>
                 <div class="col-xs-8 ">
                   <span style="float:left; margin-left:10px;" ng-bind-html="question.description | unsafe"></span>

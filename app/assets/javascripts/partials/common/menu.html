@@ -1,10 +1,38 @@
 <div class="menu" ng-controller = "MenuCtrl">
   <div class="container">
     <ul>
-      <li ng-class="{active: $route.current.activetab == 'manage'}"><a href="#/manage_quiz_banks">MANAGE</a></li>
-      <li ng-class="{active: $route.current.activetab == 'serve'}"><a ng-href='#/served_quizzes'>SERVE</a></li>
-      <li ng-class="{active: $route.current.activetab == 'grade'}"><a href="#/grade">GRADE</a></li>
-      <li ng-class="{active: $route.current.activetab == 'analyze'}"><a href="#/analyze/quiz_report">ANALYZE</a></li>
+      <li ng-class="{active: $route.current.activetab == 'manage'}">
+        <span class = "sub_nav_icon">
+          <img src = "/assets/manage_menu_icon.png">
+        </span> 
+        <span class = "menu-link">
+          <a href="#/manage_quiz_banks"> MANAGE</a> 
+        </span>
+      </li>
+      <li ng-class="{active: $route.current.activetab == 'serve'}">
+        <span class = "sub_nav_icon">
+          <img src = "/assets/serve_quiz.png">
+        </span>
+        <span class = "menu-link">
+          <a ng-href='#/served_quizzes'>SERVE</a>
+        </span>  
+      </li>
+      <li ng-class="{active: $route.current.activetab == 'grade'}">
+        <span class = "sub_nav_icon">
+          <img src = "/assets/grade_menu_icon.png">
+        </span>
+        <span class = "menu-link">
+          <a href="#/grade">GRADE</a>
+        </span>  
+      </li>
+      <li ng-class="{active: $route.current.activetab == 'analyze'}">
+        <span class = "sub_nav_icon">
+          <img src = "/assets/analyse_menu_icon.png">
+        </span>
+        <span class = "menu-link">  
+          <a href="#/analyze/quiz_report">ANALYZE</a>
+        </span>
+      </li>
     </ul>
-  </div>
+  </div> 
 </div>

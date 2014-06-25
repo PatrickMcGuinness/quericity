@@ -1,3 +1,14 @@
+quizlib.directive("selectQuestions",function(){
+  return {
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("click",function(){
+        $(".question-checkbox").prop('checked', true);
+      })
+    }
+  };
+});
+
 quizlib.directive("changeQuestionValue",function(){
   return{
     restrict: 'A',
@@ -7,6 +18,115 @@ quizlib.directive("changeQuestionValue",function(){
       })
     }
   };
+})
+
+quizlib.directive("changeCloneOnHover",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("mouseover",function(){
+        element.attr("src","/assets/clone_hover.png")
+      });
+      element.bind("mouseout",function(){
+        element.attr("src","/assets/clone.png")
+      });
+    }
+  }
+})
+quizlib.directive("changeTransferOnHover",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("mouseover",function(){
+        element.attr("src","/assets/transfer_hover.png")
+      });
+      element.bind("mouseout",function(){
+        element.attr("src","/assets/transfer.png")
+      });
+    }
+  }
+})
+quizlib.directive("changeDeleteOnHover",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("mouseover",function(){
+        element.attr("src","/assets/delete_hover.png")
+      });
+      element.bind("mouseout",function(){
+        element.attr("src","/assets/delete.png")
+      });
+    }
+  }
+})
+
+quizlib.directive("changeEditOnHover",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("mouseover",function(){
+        element.attr("src","/assets/edit_hover.png")
+      });
+      element.bind("mouseout",function(){
+        element.attr("src","/assets/edit.png")
+      });
+    }
+  }
+})
+
+quizlib.directive("changeStartOnHover",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("mouseover",function(){
+        element.attr("src","/assets/start_hover.png")
+      });
+      element.bind("mouseout",function(){
+        element.attr("src","/assets/start.png")
+      });
+    }
+  }
+})
+
+quizlib.directive("changeStartDownOnHover",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("mouseover",function(){
+        element.attr("src","/assets/start_down_hover.png")
+      });
+      element.bind("mouseout",function(){
+        element.attr("src","/assets/start_down.png")
+      });
+    }
+  }
+})
+
+quizlib.directive("changeStarOnHover",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("mouseover",function(){
+        element.attr("src","/assets/star_hover.png")
+      });
+      element.bind("mouseout",function(){
+        element.attr("src","/assets/star.png")
+      });
+    }
+  }
+})
+quizlib.directive("changeStarEmptyOnHover",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("mouseover",function(){
+        element.attr("src","/assets/star_empty_hover.png")
+      });
+      element.bind("mouseout",function(){
+        element.attr("src","/assets/star_empty.png")
+      });
+    }
+  }
 })
 
 

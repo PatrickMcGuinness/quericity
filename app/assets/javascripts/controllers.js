@@ -574,7 +574,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   $scope.selects = {selected_group: null, selected_quiz: null}
   $scope.toggle_display = {show_question_list: true, show_options: true}
   $scope.currentStep = 1000
-  $scope.served_quiz = {random: 0, number_of_attempts: 1, basic_scoring: true, default_score: 1 ,date: new Date(), close_date: (7).day().fromNow()}  // to make the angular js work weird
+  $scope.served_quiz = {random:2, number_of_attempts: 1, basic_scoring: true, default_score: 1 ,date: new Date(), close_date: (7).day().fromNow()}  // to make the angular js work weird
 
   QuizBank.all().$promise.then(function(data){
     $scope.quiz_banks = data.result
@@ -590,7 +590,12 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   }
   $scope.$watch('selects.selected_quiz', function() {
     if($scope.selects.selected_quiz != undefined){
-      $scope.quiz_bank_questions = QuizBank.questions($scope.selects.selected_quiz.id)
+      $scope.quiz_bank_questions = QuizBank.questions($scope.selects.selected_quiz.id).$promise.then(function(data){
+        $scope.quiz_bank_questions = data
+        angular.forEach($scope.quiz_bank_questions,function(value,key){
+          $scope.selected_questions.push(value)
+        })
+      })
       QuizBank.get($scope.selects.selected_quiz.id).$promise.then(function(data){
         $scope.quiz_bank = data
         //$scope.served_quiz.instructions = data.instructions
@@ -604,6 +609,11 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
     }
   })
 
+  $scope.select_all_questions = function(){
+    angular.forEach($scope.quiz_bank_questions,function(value,key){
+      $scope.selected_questions.push(value)
+    })
+  }
   $scope.AddStudent = function(student){
     index = $scope.group_students.indexOf(student);
     if(index == -1){

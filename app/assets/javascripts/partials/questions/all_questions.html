@@ -11,20 +11,20 @@
     <div  class = "col-xs-9" mathjax-bind = "question.description">{{question.description}}</div>
     <div class = "col-xs-2">
       <div class = "pull-right">
-        <a class = "btn btn-sm blue-button" ng-hide = "show_details" ng-click = "show_options(section.id,question.id,question.question_type)" data-toggle = "tooltip" title = "See Details" tooltip-placement = "top">
-          <img src = "/assets/arrow.png" >
+        <a ng-hide = "show_details" ng-click = "show_options(section.id,question.id,question.question_type)" data-toggle = "tooltip" title = "See Details" tooltip-placement = "top">
+          <img src = "/assets/start.png" change-start-on-hover>
         </a>
-        <a class = "btn btn-sm blue-button" ng-show = "show_details" ng-click = "show_details = false" data-toggle = "tooltip" title = "Hide Details" tooltip-placement = "top">  
-          <img src = "/assets/arrow_hover.png" >
+        <a ng-show = "show_details" ng-click = "show_details = false" data-toggle = "tooltip" title = "Hide Details" tooltip-placement = "top">  
+          <img src = "/assets/start_down.png" change-start-down-on-hover>
         </a>
-        <a ng-if = "question.question_type != 4" ng-hide = "is_quiz_view" ng-click= "show_edit()" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top" class = "btn btn-sm green-button">
-          <img src = "/assets/edit.png">
+        <a ng-if = "question.question_type != 4" ng-hide = "is_quiz_view" ng-click= "show_edit()" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
+          <img src = "/assets/edit.png" change-edit-on-hover>
         </a>
-        <a ng-if = "question.question_type == 4" ng-hide = "is_quiz_view" ng-click= "show_edit();show_blank_edit(question)" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top" class = "btn btn-sm green-button">
-          <img src = "/assets/edit.png">
+        <a ng-if = "question.question_type == 4" ng-hide = "is_quiz_view" ng-click= "show_edit();show_blank_edit(question)" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
+          <img src = "/assets/edit.png" change-edit-on-hover>
         </a>
-        <a ng-hide = "is_quiz_view" ng-click = "delete_question(section.id,question.id,$index)" data-toggle = "tooltip" title = "Delete Question" tooltip-placement = "top" class = "btn btn-sm red-button">  
-          <img src = "/assets/delete.png">
+        <a ng-hide = "is_quiz_view" ng-click = "delete_question(section.id,question.id,$index)" data-toggle = "tooltip" title = "Delete Question" tooltip-placement = "top">  
+          <img src = "/assets/delete.png" change-delete-on-hover>
         </a>
       </div>       
     </div>

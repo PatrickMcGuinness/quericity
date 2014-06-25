@@ -21,6 +21,7 @@
         </div>
       </div>
     </div>
+    
   </div>
 
 
@@ -71,49 +72,49 @@
               <span>&nbsp;&nbsp;{{quiz_bank.topics[0].title}}</span>
             </td>
             <td ng-if = "current_user.id == quiz_bank.user.id && (quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == false">
+              <img src = "/assets/lock.png">
               <a ng-href = "#/quiz_banks/{{quiz_bank.id}}/share">
                 Private
               </a>
             </td>
             <td ng-if = "current_user.id != quiz_bank.user.id && (quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == false">
+                <img src = "/assets/lock.png">
                 Private
             </td>
             <td ng-if = "current_user.id == quiz_bank.user.id && (quiz_bank.public == false || quiz_bank.public == undefined)&& quiz_bank.shared == true">
+              <img src = "/assets/share_icon.png"> 
               <a ng-href = "#/quiz_banks/{{quiz_bank.id}}/share">
                 Shared
-              </a>
+              </a>  
             </td>
             <td ng-if = "current_user.id != quiz_bank.user.id && (quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == true">
+              <img src = "/assets/share_icon.png">  
               Shared
             </td>
             <td ng-if = "current_user.id == quiz_bank.user.id && quiz_bank.public == true">
+              <img src = "/assets/unlock.png">
               <a ng-href = "#/quiz_banks/{{quiz_bank.id}}/share">
                 Public
               </a>
             </td>
             <td ng-if = "current_user.id != quiz_bank.user.id && quiz_bank.public == true">
+                <img src = "/assets/lock.png">
                 Public
             </td>
             <td>
-              <div class = "col-xs-offset-1" ng-class="{ 'col-xs-10' : current_user.id == quiz_bank.user.id}">
-                <a ng-if = "current_user.id == quiz_bank.user.id" ng-hide = "quiz_bank.public" ng-click = "make_public(quiz_bank)" data-toggle = "tooltip" title = "Share Quiz" tooltip-placement = "top">
-                  <img src = "/assets/lock.png">
-                </a>
-                <a ng-if = "current_user.id == quiz_bank.user.id" ng-show = "quiz_bank.public" ng-click = "make_private(quiz_bank)" data-toggle = "tooltip" title = "Unshare Quiz" tooltip-placement = "top">
-                  <img src = "/assets/unlock.png">
-                </a>
+              <div class = "col-xs-offset-1" >
                 <a data-toggle = "tooltip" title = "Clone Quiz Bank" tooltip-placement = "top" ng-href = "#/quiz_banks/{{quiz_bank.id}}/clone">  
-                  <img src = '/assets/clone_blue_icon.png'>
+                  <img src = '/assets/clone.png' change-clone-on-hover>
                 </a>
                 <a ng-show = "quiz_bank.is_favourite" ng-click = "make_unfavourite(quiz_bank)" data-toggle = "tooltip" title = "Unlike Quiz" tooltip-placement = "top">
-                  <span class = "glyphicon glyphicon-star"></span>
+                  <img src = "/assets/star.png" change-star-on-hover>
                 </a>
                 <a ng-hide = "quiz_bank.is_favourite" ng-click = "make_favourite(quiz_bank)" data-toggle = "tooltip" title = "Like Quiz" tooltip-placement = "top">
-                  <span class = "glyphicon glyphicon-star-empty"></span>
+                  <img src = "/assets/star_empty.png" change-star-empty-on-hover>
                 </a>
 
                 <a data-toggle = "tooltip" title = "Serve Quiz" tooltip-placement = "top" ng-href = "#/serve_quiz/new?selected_quiz={{quiz_bank.id}}">  
-                  <span class = "glyphicon glyphicon-transfer"> </span>
+                  <img src = "/assets/transfer.png" change-transfer-on-hover>
                 </a>
               </div>  
             </td>

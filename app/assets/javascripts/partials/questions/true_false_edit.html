@@ -3,7 +3,7 @@
     <span>Update Question</span>
   </div>
   <form name="TrueFalseForm" ng-submit="edit_question(section.id,question.id,question,TrueFalseForm.$valid)" novalidate>
-    <div class = "col-xs-12 mar-top-10">
+    <!-- <div class = "col-xs-12 mar-top-10">
       <div class = "form-group">
         <label>Question Type: </label>
         <select class="form-control" ng-model="selected_type" name = "selected_type" ng-change="change_question()">
@@ -13,7 +13,7 @@
           <option value = "Open Ended">Open Ended</option>
         </select>
       </div>
-    </div>
+    </div> -->
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.question_statement.$invalid) && (!TrueFalseForm.question_statement.$pristine || submitted == true)}">
         <label>Question:</label>

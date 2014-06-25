@@ -1,14 +1,6 @@
 <div ng-include src="'/assets/partials/common/menu.html'"></div>
 <div class="row_bottom">
 	<div class="container">
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/unlock_darkblue.png" /></span>
-      <span class="sub_nav_link"><a ng-click = "make_public()" data-toggle = "tooltip" title = "Make the quiz public" tooltip-placement = "top">Make Public</a></span>
-		</div>
-    <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/lock_darkblue.png" /></span>
-      <span class="sub_nav_link"><a ng-click = "make_private()" data-toggle = "tooltip" title = "Make the Quiz private but will be shared to teachers in shared list" tooltip-placement = "top">Make Private</a></span>
-    </div>
 	</div>
 </div>
 <div class="container">
@@ -32,6 +24,17 @@
           <a class = "popover-field" ng-click = "share()" data-toggle = "tooltip" title = "Share with email list" tooltip-placement = "top"  popover="Share with email list"  popover-trigger="mouseenter">Share</a>  
         </span>
       </button>
+      <button class = "btn btn-default btn">
+        <span><img src="/assets/lock_darkblue.png" /></span>
+        <span>
+          <a ng-click = "make_private()" data-toggle = "tooltip" title = "Make the Quiz private but will be shared to teachers in shared list" tooltip-placement = "top">Make Private</a>  
+        </span>
+      </button>
+      <button class = "btn btn-default btn">
+        <span><img src="/assets/unlock_darkblue.png" /></span>
+        <span><a ng-click = "make_public()" data-toggle = "tooltip" title = "Make the quiz public" tooltip-placement = "top">Make Public</a></span>
+      </button>
+      
       <div class = "row">
         <div class = "col-xs-12">
           <tags-input ng-model="tags" placeholder = "Add teacher emails">

@@ -81,7 +81,8 @@
             </div>  
           </div>
         </div>
-      </form>      
+      </form>
+    
       <div class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter" ng-controller = "sectionCtrl">
         <div id = {{section.id}} class = "col-xs-12 mar-top-10 section-well">
           <div class = "col-xs-6">
@@ -134,7 +135,7 @@
           <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'">
           </div>
         </div>     
-      </div>
+      </div>  
                   
       <div ng-show = "show_new_section" class = "new-section-div" id = "new-section-div">
         <div class = "col-xs-12 new-section-box mar-top-20">
