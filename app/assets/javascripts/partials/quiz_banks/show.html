@@ -5,6 +5,10 @@
       <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
       <span class="sub_nav_link"><a ng-href  ='#/quiz_banks/new' data-toggle = "tooltip" title = "Create Quiz Bank">Create</a></span>
 		</div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><img src="/assets/preview_icon.png" /></span>
+      <span class="sub_nav_link"><a class = "active" ng-href  ='#/quiz_banks/{{quiz_bank.id}}/show' data-toggle = "tooltip" title = "View Quiz Bank">View</a></span>
+    </div>
     <div class="sub_nav" ng-if = "quiz_bank.user.id == current_user.id">
       <span class="sub_nav_icon"><img src="/assets/edit_icon.png" /></span>
       <span class="sub_nav_link"><a ng-href  ='#/quiz_banks/{{quiz_bank.id}}/edit' data-toggle = "tooltip" title = "Edit Quiz Bank">Edit</a></span>

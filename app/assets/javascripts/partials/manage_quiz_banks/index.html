@@ -94,7 +94,7 @@
               </a>  
             </td>
             <td ng-if = "current_user.id != quiz_bank.user.id && (quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == true" style = "text-align:left;">
-              <img src = "/assets/share_icon.png">  
+              <img src = "/assets/share_black.png">  
               Shared
             </td>
             <td ng-if = "current_user.id == quiz_bank.user.id && quiz_bank.public == true" style = "text-align:left;">
@@ -104,7 +104,7 @@
               </a>
             </td>
             <td ng-if = "current_user.id != quiz_bank.user.id && quiz_bank.public == true" style = "text-align:left;">
-              <img src = "/assets/lock.png">
+              <img src = "/assets/unlock_black.png">
               Public
             </td>
             <td style = "text-align:left;">
