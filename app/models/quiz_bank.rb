@@ -130,7 +130,8 @@ class QuizBank < ActiveRecord::Base
       :user => owner.as_json(),
       :sections => sections.order("created_at ASC").as_json(),
       :shares => shares.as_json(),
-      :shared => is_shared?.as_json()
+      :shared => is_shared?.as_json(),
+      :questions => self.questions.as_json()
     }
   end
 

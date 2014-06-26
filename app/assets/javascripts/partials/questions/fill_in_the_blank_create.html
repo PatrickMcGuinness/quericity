@@ -17,7 +17,7 @@
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.first_statement.$invalid) && (!BlankForm.first_statement.$pristine || submitted == true)}">
         <label>Question:</label>
-        <textarea name="blank_statement" id="blank_statement" rows="3" class = "form-control" ng-model = "blank_statement" data-ck-editor required>Put [] in question statement where you want the blank
+        <textarea name="blank_statement" id="blank_statement" rows="3" class = "form-control" ng-model = "blank_statement" data-ck-editor required>Put [blank] in question statement where you want the blank
         </textarea>
         <p ng-show="BlankForm.blank_statement.$invalid && (!BlankForm.blank_statement.$pristine || submitted == true)" class="help-block">Statement is required.</p>
       </div>  

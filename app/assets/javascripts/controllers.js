@@ -1227,7 +1227,7 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
   $scope.edit_blank = function(statement,section_id,question_id,question,isValid){
     $scope.submitted = true
     if(isValid){
-      var array  = statement.split("[]")
+      var array  = statement.split("[blank]")
       question.description = array[0] + "_________" + array[1]
       Question.update($scope.quiz_bank_id,section_id,question_id,question)
       $scope.show_details_view = true
@@ -1328,7 +1328,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
   }
   $scope.create_blank = function(isValid){
     $scope.submitted = true
-    var array = $scope.blank_statement.split("[]")
+    var array = $scope.blank_statement.split("[blank]")
     $scope.blank_statement = array[0] + "________" + array[1]
     if(isValid){
       Question.save($scope.quiz_bank_id, $scope.section_id,
@@ -1340,7 +1340,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
           $scope.blank = null
           $scope.selected_difficulty = 2
           $scope.submitted = false
-          CKEDITOR.instances['blank_statement'].setData("Put [] in question statement where you want the blank")
+          CKEDITOR.instances['blank_statement'].setData("Put [blank] in question statement where you want the blank")
           $scope.hideQuestion() 
         }) 
     } 

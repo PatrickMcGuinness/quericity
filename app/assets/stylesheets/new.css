@@ -1,3 +1,4 @@
+
 a:hover{
 	text-decoration: none;
 }
@@ -61,8 +62,12 @@ a:active{
   font-size: 18px;
 }
 .popover{
-	max-width: 300px !important;
+	max-width: 500px !important;
 }
+.popover-content{
+	width: 400px !important;
+}
+
 .section-well{
 	background-color: #22A2DC;
 	padding: 10px;
