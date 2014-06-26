@@ -97,8 +97,8 @@
               <img src = "/assets/share_icon.png">  
               Shared
             </td>
-            <td ng-if = "current_user.id == quiz_bank.user.id && quiz_bank.public == true">
-              <img src = "/assets/unlock.png" style = "text-align:left;">
+            <td ng-if = "current_user.id == quiz_bank.user.id && quiz_bank.public == true" style = "text-align:left;">
+              <img src = "/assets/unlock.png" >
               <a ng-href = "#/quiz_banks/{{quiz_bank.id}}/share">
                 Public
               </a>
