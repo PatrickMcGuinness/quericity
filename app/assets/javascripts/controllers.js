@@ -1193,7 +1193,7 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
   $scope.show_blank_edit = function(question){
     $scope.show_details_view = false
     statements = question.description.split("_")
-    $scope.statement = statements[0] + " [] " + statements[statements.length - 1]   
+    $scope.statement = statements[0] + " [blank] " + statements[statements.length - 1]   
     //$scope.first_statement = question.description
     //$scope.second_statement = statements[statements.length - 1]
 
