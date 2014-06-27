@@ -470,3 +470,56 @@ ul.list li ul{
 	margin-top: -14px;
 	width: 376px;
 }
+/*********** edit section ***********/
+tags-input .host{
+	display: inline;
+	width: 88%;
+
+}
+textarea.form-control{
+	display:inline;
+	width : 85%;
+	margin-left: 5px;
+
+}
+#Title-input input{
+	font-size:18px;
+	width:90%;
+	display:inline;
+	margin-left:8px;
+
+}
+#Title-input label {
+	margin-top: 4px;
+}
+
+#subject-input input {
+	margin-top:6px;
+	margin-left:6px; 
+	display:inline;
+       	width:68%;
+
+}
+
+#subject-input label {
+	margin-top:3%;
+}
+
+#subject-div {
+	width:30%;
+}
+
+#tags-input-box {
+	display:inline; 
+	width : 70%;
+
+}
+
+#tags-input-box label {
+	margin-top: 1.5%; 
+	display:inline; 
+	float:left
+}
+
+
+
