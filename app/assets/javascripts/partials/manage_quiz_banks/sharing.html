@@ -28,15 +28,18 @@
         <span><img src="/assets/unlock_darkblue.png" /></span>
         <span> Make Public </span>
       </a>
-      
+      <a class = "btn btn-default btn" ng-href = "#/manage_quiz_banks" data-toggle = "tooltip" title = "Done" tooltip-placement = "top">
+        <span class = "glyphicon glyphicon-ok"></span>
+        <span> Done </span>
+      </a> 
       <div class = "row">
         <div class = "col-xs-12">
-          <tags-input ng-model="tags" placeholder = "Add teacher emails">
+          <tags-input ng-model="tags" placeholder = "Add teacher emails" adjust-width>
             <auto-complete source="loadtags($query)"></auto-complete>
           </tags-input>
-        </div>
+        </div>   
       </div>  
-      <div class="col-xs-12 radio_contorl">
+      <div class="radio_contorl">
         <input type="checkbox" name="checkbox" ng-click="predicate = 'first_name'; reverse=!reverse" data-toggle = "tooltip" title = "Sort Students by first name" tooltip-placement = "top"/  popover="Sort student by first name"  popover-trigger="mouseenter" class = "popover-field">&nbsp;&nbsp;Sort by name
       </div>
       <ul class="col-xs-12">

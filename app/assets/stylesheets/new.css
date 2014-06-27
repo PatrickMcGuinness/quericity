@@ -61,11 +61,17 @@ a:active{
   min-width: 110px;
   font-size: 18px;
 }
-.popover{
+.private-popover-div{
 	max-width: 500px !important;
 }
-.popover-content{
+.private-popover-content-div{
 	width: 400px !important;
+}
+.shared-popover-div{
+	max-width: 280px !important;
+}
+.shared-popover-content-div{
+	width: 280px !important;
 }
 
 .section-well{

@@ -1,3 +1,10 @@
+quizlib.directive("adjustWidth",function(){
+  return {
+    link: function(scope,element,attrs){
+      $(".host").removeClass("col-xs-12")
+    }
+  };
+});
 quizlib.directive("selectQuestions",function(){
   return {
     restrict: 'A',
@@ -767,8 +774,16 @@ quizlib.directive('customPopover', function ($compile) {
           $(this).popover("show")
           $(this).next().show()
           $(".popover-maker").not(this).next().hide()
+          if($(this).hasClass("private-quiz-bank")){
+            $(".popover").addClass("private-popover-div").removeClass("shared-popver-div")
+            $(".popover-content").addClass("private-popover-content-div").removeClass("shared-popover-content-div")
+          }
+          if($(this).hasClass("shared-quiz-bank")){
+            $(".popover").removeClass("private-popover-div").addClass("shared-popver-div")
+            $(".popover-content").removeClass("private-popover-content-div").addClass("shared-popover-content-div")
+          }
       })
-    }
+    }  
   };
 });
 

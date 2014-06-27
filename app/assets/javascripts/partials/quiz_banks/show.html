@@ -58,7 +58,7 @@
 				<b>Created on:</b> {{created_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <b>Last Edited:</b> {{updated_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span ng-if = "quiz_bank.public == false && quiz_bank.shared == false ">
-          <b>Sharing Status:</b> Private&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <b>Sharing Status:</b> <a ng-href = "#quiz_banks/{{quiz_bank.id}}/share">Private</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </span>
         <span ng-if = "quiz_bank.public == false && quiz_bank.shared == true ">
           <b>Sharing Status:</b> Shared&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
