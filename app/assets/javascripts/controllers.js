@@ -934,6 +934,7 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
     $scope.quiz_bank = data
     $scope.created_at = obj.getDate() +"-" + obj.getMonth() +"-"+obj.getFullYear()
     $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()   
+
   })
 
   Repository.default_repo().$promise.then(function(data){
@@ -1579,6 +1580,10 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   QuizBank.get($scope.quiz_bank_id).$promise.then(function(data){
     $scope.quiz_sections = data.sections
     $scope.quiz_bank = data
+    var obj = new Date(data.created_at)
+    var obj2 = new Date(data.updated_at)
+    $scope.created_at = obj.getDate() +"-" + obj.getMonth() +"-"+obj.getFullYear()
+    $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()
   })
 
   // $scope.show_question_in_section = function(){

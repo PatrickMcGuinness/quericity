@@ -517,7 +517,7 @@ textarea.form-control{
 
 #tags-input-box {
 	display:inline; 
-	width : 70%;
+	width : 69.5%;
 
 }
 
@@ -526,6 +526,7 @@ textarea.form-control{
 	display:inline; 
 	float:left
 }
-
-
+#quiz-info-display {
+	width : 25%;
+}
 
