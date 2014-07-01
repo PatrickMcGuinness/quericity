@@ -153,9 +153,27 @@
           </form>  
         </div>
       </div>
-      <div class="row mar-top-20 pull-left">
+        
+      <div class=" col-xs- 12 mar-top-20 pull-left">
         <a ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top" scroll-to-new-section class = "btn btn-primary">
-        <span class = "glyphicon glyphicon-plus"></span>Add Section</a>
+        <span class = "glyphicon glyphicon-plus"></span>Add Section
+        </a>
+        <div class="btn-group" ng-controller = "sectionCtrl">
+          <button type="button" class="btn btn-warning">
+            <span class = "glyphicon glyphicon-plus"></span>
+            Add Question
+          </button>
+          <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a ng-click="addNewQuestion('True False',last_section)" style = "padding: 0px 18px;">True False</a></li>
+            <li><a ng-click="addNewQuestion('Multiple Choice',last_section)" style = "padding: 0px 18px;">Multiple Choice</a></li>
+            <li><a ng-click="addNewQuestion('Fill in blank',last_section)" style = "padding: 0px 18px;">Fill in blank</a></li>
+            <li><a ng-click="addNewQuestion('Open Ended',last_section)" style = "padding: 0px 18px;">Open ended</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

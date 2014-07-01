@@ -1443,7 +1443,9 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
   $rootScope.question_section = null
   $scope.addNewQuestion = function(question_type,section){
     $rootScope.question_section = section
+    console.log(question_type)
     $scope.selected_type = question_type
+    console.log($scope.selected_type)
     if(question_type == "True False"){
       $rootScope.show_true_false = true
       $rootScope.show_mcq = false
@@ -1578,6 +1580,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
 
   QuizBank.get($scope.quiz_bank_id).$promise.then(function(data){
     $scope.quiz_sections = data.sections
+    $scope.last_section = data.sections[data.sections.length - 1]
     $scope.quiz_bank = data
   })
 
