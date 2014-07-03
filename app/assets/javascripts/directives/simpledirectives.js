@@ -1,3 +1,52 @@
+quizlib.directive("changeArrow",function(){
+  return {
+    link: function(scope,element,attrs){
+      element.hover(function() {
+        $(this).css('cursor','pointer');
+      }, function() {
+        $(this).css('cursor','auto');
+      })
+    }
+  };
+})
+
+quizlib.directive("removeChildrenMargin",function(){
+  return{
+    link:function(scope,element,attrs){
+      angular.forEach(element.children(),function(value,key){
+        $(value).css("margin", "0px");
+      });
+    }
+  };
+})
+
+quizlib.directive("sectionRight",function(){
+  return {
+    restrict: "C",
+    link: function(scope,element,attrs){
+      element.bind("click",function(){
+        element.addClass("hide")
+        element.siblings().removeClass("hide")
+        element.parents(".title-div").children(".questions-list-div").removeClass("hide")
+      })
+      
+    }
+  };
+});
+
+quizlib.directive("sectionDown",function(){
+  return {
+    restrict: "C",
+    link: function(scope,element,attrs){
+      element.bind("click",function(){
+        element.addClass("hide")
+        element.siblings().removeClass("hide")
+        element.parents(".title-div").children(".questions-list-div").addClass("hide")
+      })
+      
+    }
+  };
+})
 quizlib.directive("adjustWidth",function(){
   return {
     link: function(scope,element,attrs){

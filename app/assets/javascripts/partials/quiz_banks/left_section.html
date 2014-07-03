@@ -8,10 +8,12 @@
     </div>
   </div>
   <ul class = "row" ui-sortable ng-model="quiz_sections">
-    <li class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter" ng-controller = "sectionCtrl">
-      <div class = "mar-top-10">
+    <li class = "title-div" ng-repeat = "section in quiz_sections | filter: titleFilter" ng-controller = "sectionCtrl">
+      <div> 
         <span class = "col-xs-8">
-          {{section.title}}
+          <img src = "/assets/nav_right.png" class="section-right" change-arrow>
+          <img src = "/assets/nav_down.png" class="section-down hide" change-arrow>
+          <span>{{section.title}}</span>
         </span>
         <span class = "col-xs-4">
           <span class="dropdown-toggle link" ng-Click = "AddQuestion(section.id,$index)" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top">
@@ -23,9 +25,15 @@
               </span>
             </li>
           </ul>
-          <!--<span ng-click = "show_title = false" class = "glyphicon glyphicon-edit link" data-toggle = "tooltip" title = "Edit Section" tooltip-placement = "top"></span> -->
           <span ng-click = "deleteSection(section.id,$index)" class = "glyphicon glyphicon-trash link" data-toggle = "tooltip" title = "Delete Section" tooltip-placement = "top"></span>
         </span>
+      </div>
+      <div class = "questions-list-div hide">
+        <ul class = "row">
+          <li ng-repeat = "section_question in section.questions" class = "col-xs-12">
+            <div mathjax-bind = "section_question.description" remove-children-margin>{{section_question.description}}</div>
+          </li>
+        </ul>
       </div>    
     </li> 
   </ul>

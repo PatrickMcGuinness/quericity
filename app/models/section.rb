@@ -27,4 +27,16 @@ class Section < ActiveRecord::Base
       question.clone_the_question(new_section)
     end
   end
+
+  def as_json(opts = nil)
+    opts ||={}
+    {
+      :id  => id,
+      :title   => title,
+      :quiz_bank_id => quiz_bank_id,
+      :created_at => created_at,
+      :updated_at => updated_at,
+      :questions => self.questions.as_json()
+    }
+  end
 end

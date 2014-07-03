@@ -1177,7 +1177,7 @@ quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','Quest
 
 }])
 
-quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','GlobalScope',function($scope,QuestionOption,Question,GlobalScope){
+quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Question','GlobalScope',function($scope,$rootScope,QuestionOption,Question,GlobalScope){
   
   $scope.show_details = false
 
@@ -1194,9 +1194,8 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
   $scope.show_blank_edit = function(question){
     $scope.show_details_view = false
     statements = question.description.split("_")
-    $scope.statement = statements[0] + " [blank] " + statements[statements.length - 1]   
-    //$scope.first_statement = question.description
-    //$scope.second_statement = statements[statements.length - 1]
+    var blank = question.question_options[0].answer
+    $scope.statement = statements[0] + " [" + blank + "] " + statements[statements.length - 1]   
 
   }
   $scope.hide_update = function(){$scope.show_details_view = true}
@@ -1223,17 +1222,19 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
     if(isValid){
       Question.update($scope.quiz_bank_id,section_id,question_id,question)
       $scope.show_details_view = true
+      $rootScope.$broadcast("question_changed")
     }  
   }
   $scope.edit_blank = function(statement,section_id,question_id,question,isValid){
     $scope.submitted = true
     if(isValid){
-      var array  = statement.split("[blank]")
-      question.description = array[0] + "_________" + array[1]
+      var temp  = statement.split("[")
+      var array = temp[1].split("]")
+      question.description = temp[0] + "_________" + array[1]
       Question.update($scope.quiz_bank_id,section_id,question_id,question)
       $scope.show_details_view = true
+      $rootScope.$broadcast("question_changed")
     }
-
   }
   $scope.edit_mcq = function(section_id,question_id,question,question_options){
     angular.forEach(question_options,function(value,key){
@@ -1242,12 +1243,14 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
     })
     Question.update($scope.quiz_bank_id,section_id,question_id,question)
     $scope.show_details_view = true
+    $rootScope.$broadcast("question_changed")
   }
   
   $scope.delete_question = function(section_id,question_id,idx){
     Question.delete($scope.quiz_bank_id,section_id,question_id)
     $scope.questions.splice(idx, 1);
     $scope.show_details = false
+    $rootScope.$broadcast("question_changed")
   }
   
   $scope.select_option = function(option){
@@ -1258,7 +1261,7 @@ quizlib.controller("viewQuestionCtrl",['$scope','QuestionOption','Question','Glo
 
 
 
-quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','QuestionOption',function($scope, Question, GlobalScope,QuestionOption){
+quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalScope','QuestionOption',function($scope,$rootScope,Question, GlobalScope,QuestionOption){
   
   $scope.submitted = false
   
@@ -1305,6 +1308,7 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
           $scope.submitted = false
           CKEDITOR.instances['true_false_question_statement'].setData("")
           $scope.hideQuestion()
+          $rootScope.$broadcast("question_created")
         })
         
        }
@@ -1324,13 +1328,15 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
           CKEDITOR.instances['open_ended_question_statement'].setData("")
           CKEDITOR.instances['answer'].setData("")
           $scope.hideQuestion()
+          $rootScope.$broadcast("question_created")
       })
     }    
   }
   $scope.create_blank = function(isValid){
     $scope.submitted = true
-    var array = $scope.blank_statement.split("[blank]")
-    $scope.blank_statement = array[0] + "________" + array[1]
+    var temp = $scope.blank_statement.split("[")
+    var array = temp[1].split("]")
+    $scope.blank_statement = temp[0] + "________" + array[1]
     if(isValid){
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.blank_statement,section_id: $scope.section_id,
@@ -1342,7 +1348,8 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
           $scope.selected_difficulty = 2
           $scope.submitted = false
           CKEDITOR.instances['blank_statement'].setData("Put [blank] in question statement where you want the blank")
-          $scope.hideQuestion() 
+          $scope.hideQuestion()
+          $rootScope.$broadcast("question_created") 
         }) 
     } 
   }
@@ -1374,38 +1381,34 @@ quizlib.controller("newQuestionCtrl",['$scope','Question','GlobalScope','Questio
     $scope.submitted = true
     var question_options = []
     inputs = $scope.mcq_options
-    //if(isValid){
-      for(var i = 0; i<(inputs.length) ; i++){
-        if(inputs[i] != ""){
+    for(var i = 0; i<(inputs.length) ; i++){
+      if(inputs[i] != ""){
+        is_correct = true
+        if($scope.correct_input == i){
           is_correct = true
-          if($scope.correct_input == i){
-            is_correct = true
-          }
-          else{
-            is_correct = false
-          }
-          question_options.push({answer:inputs[i],is_correct: is_correct})
-          
-        }  
-      }
-      
-      Question.save($scope.quiz_bank_id, $scope.section_id,
-        {description: $scope.question.description,section_id: $scope.section_id,
-        question_type: 2,difficulty_level: $scope.selected_difficulty,question_options: question_options}).$promise.then(function(data){
-          $scope.question_id = data.id
-          GlobalScope.set_question_id($scope.question_id)
-        })
-        $scope.selected_difficulty = 2
-        $scope.submitted = false
-        $scope.radio = null
-        $scope.input_0 = null
-        $scope.input_1 = null
-        $scope.input_2 = null
-        $scope.input_3 = null
-        CKEDITOR.instances['description'].setData("")
-        $scope.hideQuestion()
-    //}
-
+        }
+        else{
+          is_correct = false
+        }
+        question_options.push({answer:inputs[i],is_correct: is_correct}) 
+      }  
+    }
+    Question.save($scope.quiz_bank_id, $scope.section_id,
+      {description: $scope.question.description,section_id: $scope.section_id,
+      question_type: 2,difficulty_level: $scope.selected_difficulty,question_options: question_options}).$promise.then(function(data){
+        $scope.question_id = data.id
+        GlobalScope.set_question_id($scope.question_id)
+      })
+      $scope.selected_difficulty = 2
+      $scope.submitted = false
+      $scope.radio = null
+      $scope.input_0 = null
+      $scope.input_1 = null
+      $scope.input_2 = null
+      $scope.input_3 = null
+      CKEDITOR.instances['description'].setData("")
+      $scope.hideQuestion()
+      $rootScope.$broadcast("question_created")
   }
 
 }])
@@ -1502,7 +1505,6 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
   QuizBank.clone($routeParams.id).$promise.then(function(data){
     $scope.quiz_bank = data
     $scope.quiz_bank_id = data.id
-    //$scope.quiz_sections = Section.all($scope.quiz_bank_id)
     $scope.quiz_sections = data.sections
     $scope.last_section = data.sections[data.sections.length - 1]
     
@@ -1511,6 +1513,10 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
     $scope.loadtags = function(query) {
     return Topic.search(query).$promise
     };
+
+    $scope.$on("question_created",function(event){
+      $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+    })
     
     QuestionTopic.all($scope.quiz_bank_id).$promise.then(function(data){
       angular.forEach(data.result,function(value,key){
@@ -1598,7 +1604,9 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
     $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()
   })
 
-  
+  $scope.$on("question_created",function(event){
+    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+  })
   $scope.saveQuiz = function(isValid){
     $scope.submitted =true
     if(isValid){
@@ -1701,6 +1709,10 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
         $scope.last_section = data.sections[data.sections.length -1]
         $scope.$broadcast("last_section_changed",$scope.last_section) 
       }) 
+  });
+
+  $scope.$on("question_created",function(event){
+    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
   })
   
   $scope.saveQuiz = function(isValid){
