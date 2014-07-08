@@ -11,9 +11,15 @@ quizlib.directive("changeArrow",function(){
 })
 
 quizlib.directive("removeChildrenMargin",function(){
+
   return{
     link:function(scope,element,attrs){
+      console.log("i am in margin")
+      console.log(element)
+      console.log(element.children())
       angular.forEach(element.children(),function(value,key){
+        console.log(value)
+        console.log($(value))
         $(value).css("margin", "0px");
       });
     }
@@ -28,6 +34,7 @@ quizlib.directive("sectionRight",function(){
         element.addClass("hide")
         element.siblings().removeClass("hide")
         element.parents(".title-div").children(".questions-list-div").removeClass("hide")
+        $(".list-questions").children("p").css("line-height","20px")
       })
       
     }

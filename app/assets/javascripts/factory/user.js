@@ -1,6 +1,6 @@
 quizlib.factory('User', ['$resource', function($resource) {
   function User() {
-    this.service = $resource('/users/:id/:get_students:get_served_students:system_students:get_current_user:get_student_details:bar_graph_data:line_graph_data:search_teacher_by_email', {id: '@id'},
+    this.service = $resource('/users/:id/:get_students:quiz_banks:get_served_students:system_students:get_current_user:get_student_details:bar_graph_data:line_graph_data:search_teacher_by_email', {id: '@id'},
                 {update:{method:"PUT",isArray:false},
                  get_students:{method: "GET",isArray:true},
                  system_students:{method: "GET",isArray:true},
@@ -9,7 +9,8 @@ quizlib.factory('User', ['$resource', function($resource) {
                  bar_graph_data: {method: "GET",isArray:false},
                  line_graph_data: {method: "GET",isArray:false},
                  get_served_students: {method: "GET",isArray:true},
-                 search_teacher_by_email:{method: "GET",isArray: true}
+                 search_teacher_by_email:{method: "GET",isArray: true},
+                 quiz_banks:{method: "GET", isArray: true}
                 });
   };
   
@@ -27,6 +28,9 @@ quizlib.factory('User', ['$resource', function($resource) {
   }
   User.prototype.get_students = function(){
     return this.service.get_students({get_students: "get_students"})
+  }
+  User.prototype.quiz_banks = function(){
+    return this.service.quiz_banks({quiz_banks: "quiz_banks"})
   }
   User.prototype.get_served_students = function(){
     return this.service.get_served_students({get_served_students: "get_served_students"})

@@ -83,6 +83,7 @@ QuizLib::Application.routes.draw do
       get 'system_students'
       get "get_served_students"
       get "search_teacher_by_email"
+      get "quiz_banks"
     end
     member do
       get 'get_student_details'

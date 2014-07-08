@@ -1,4 +1,12 @@
 
+.manage-list{
+	padding: 5px 8px 0px 8px !important;
+	text-align: left !important;
+}
+
+.custom-padding{
+	padding: 5px 8px 0px 8px !important;
+}
 a:hover{
 	text-decoration: none;
 }

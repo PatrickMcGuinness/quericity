@@ -150,47 +150,46 @@
           </div>
           <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'">
           </div>
+          <div ng-if = "question_section == section" ng-Show = "show_matching_pairs" ng-include src = "'/assets/partials/questions/matching_pairs_create.html'">
         </div>     
       </div>
-                  
-      <div ng-show = "show_new_section" class = "new-section-div" id = "new-section-div">
-        <div class = "col-xs-12 new-section-box mar-top-20">
-          <form name="NewSectionForm" ng-submit="addSection(NewSectionForm.$valid)">
-            <div class = "form-group" ng-class="{ 'has-error' : NewSectionForm.title.$invalid && section_submitted == true}">
-              <span class = "col-xs-1" >Title:</span>
-              <span class = "col-xs-9">
-                <input ng-model = "newSection.title" name = "title" type= "text" class= "form-control mar-bot-10" required>
-                 <p ng-show="NewSectionForm.title.$invalid && section_submitted == true" class="help-block">Title is required.</p>
-              </span>
-              <span class = "col-xs-2 pull-right" style= "margin-top: 4px;">
-                <a type = "submit" ng-Click = "addSection(NewSectionForm.$valid)"> Save</a>
-                <a ng-click = "hide_section()"> Cancel</a>
-              </span>
-            </div>  
-          </form>  
-        </div>
+    </div>
+     <div ng-show = "show_new_section" class = "new-section-div" id = "new-section-div">
+      <div class = "col-xs-12 new-section-box mar-top-20">
+        <form name="NewSectionForm" ng-submit="addSection(NewSectionForm.$valid)">
+          <div class = "form-group" ng-class="{ 'has-error' : NewSectionForm.title.$invalid && section_submitted == true}">
+            <span class = "col-xs-1" >Title:</span>
+            <span class = "col-xs-9">
+              <input ng-model = "newSection.title" name = "title" type= "text" class= "form-control mar-bot-10" required>
+               <p ng-show="NewSectionForm.title.$invalid && section_submitted == true" class="help-block">Title is required.</p>
+            </span>
+            <span class = "col-xs-2 pull-right" style= "margin-top: 4px;">
+              <a type = "submit" ng-Click = "addSection(NewSectionForm.$valid)"> Save</a>
+              <a ng-click = "hide_section()"> Cancel</a>
+            </span>
+          </div>  
+        </form>  
       </div>
-        
-      <div class="mar-top-20 pull-left">
-        <a ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top" scroll-to-new-section class = "btn btn-primary">
-        <span class = "glyphicon glyphicon-plus"></span>Add Section
-        </a>
-        <div class="btn-group" ng-controller = "sectionCtrl">
-          <button type="button" class="btn btn-warning">
-            <span class = "glyphicon glyphicon-plus"></span>
-            Add Question
-          </button>
-          <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a ng-click="addNewQuestion('True False',last_section)" style = "padding: 0px 18px;">True False</a></li>
-            <li><a ng-click="addNewQuestion('Multiple Choice',last_section)" style = "padding: 0px 18px;">Multiple Choice</a></li>
-            <li><a ng-click="addNewQuestion('Fill in blank',last_section)" style = "padding: 0px 18px;">Fill in blank</a></li>
-            <li><a ng-click="addNewQuestion('Open Ended',last_section)" style = "padding: 0px 18px;">Open ended</a></li>
-          </ul>
-        </div>
+    </div>
+    <div class="mar-top-20 pull-left">
+      <a ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top" scroll-to-new-section class = "btn btn-primary">
+      <span class = "glyphicon glyphicon-plus"></span>Add Section
+      </a>
+      <div class="btn-group" ng-controller = "sectionCtrl">
+        <button type="button" class="btn btn-warning">
+          <span class = "glyphicon glyphicon-plus"></span>
+          Add Question
+        </button>
+        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a ng-click="addNewQuestion('True False',last_section)" style = "padding: 0px 18px;">True False</a></li>
+          <li><a ng-click="addNewQuestion('Multiple Choice',last_section)" style = "padding: 0px 18px;">Multiple Choice</a></li>
+          <li><a ng-click="addNewQuestion('Fill in blank',last_section)" style = "padding: 0px 18px;">Fill in blank</a></li>
+          <li><a ng-click="addNewQuestion('Open Ended',last_section)" style = "padding: 0px 18px;">Open ended</a></li>
+        </ul>
       </div>
     </div>
   </div>

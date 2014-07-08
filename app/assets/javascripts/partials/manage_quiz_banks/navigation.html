@@ -1,8 +1,24 @@
 <div class="col-xs-2 left_section" ng-controller = "Navigation" check-resolution>
   <ul class = "row">
     <li style = "margin-right: 0px;">
+      <div class = "complete_row" ng-class="{ 'active' : (no_all_assessments_cookie() == false)}">
+        <a ng-href = "#/manage_quiz_banks" ng-click = "update_status('all_assessments')" ng-right-click = "$event.stopPropagation()" data-toggle = "tooltip" title = "List of quizzes shared on quizlib" tooltip-placement = "top">
+          <img src = "/assets/nav_right.png" class = "drive-icon" ng-if = "no_all_assessments_cookie() == true">
+          <img src = "/assets/nav_down.png" class = "drive-icon" ng-if = " no_all_assessments_cookie() == false">
+          All Assessments
+        </a>
+      </div>  
+      <ul ng-class="{ 'hide' : (no_all_assessments_cookie() == true)}">
+        <li ng-repeat = "quiz_bank in quiz_banks" style = "margin-right: 0px;">
+          <div class = "complete_row">
+            <a id = "{{quiz_bank.id}}" ng-href="#/quiz_banks/{{quiz_bank.id}}/show">{{quiz_bank.title}}</a>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <li style = "margin-right: 0px;">
       <div class = "complete_row" ng-class="{ 'active' : (no_my_assessments_cookie() == false)}">
-        <a ng-href = "#/manage_quiz_banks" ng-click = "update_status('my_assessments')"  data-toggle = "tooltip" title = "List of your repos and quizzes" tooltip-placement = "top">
+        <a ng-href = "#/manage_quiz_banks/my_quiz_banks" ng-click = "update_status('my_assessments')"  data-toggle = "tooltip" title = "List of your repos and quizzes" tooltip-placement = "top">
           <img src = "/assets/nav_right.png" class = "drive-icon" ng-if = "no_my_assessments_cookie() == true">
           <img src = "/assets/nav_down.png" class = "drive-icon" ng-if = "no_my_assessments_cookie() == false">
           My Assessments
@@ -38,29 +54,32 @@
               </div>    
             </li>
           </ul>
+        </li>
+        <li>
+          <div class = "row complete_row">
+            <a class = "mar-bot-0-7 link showhide pull-left" data-toggle = "tooltip" title = "Your main folder" tooltip-placement = "top">
+              <img src = "/assets/nav_right.png" class = "drive-icon right">
+              <img src = "/assets/nav_down.png" class = "drive-icon hide down">
+              Main Folder
+            </a>
+          </div>  
+          <ul class = "hide row ul">
+            <li ng-repeat = "main_quiz in main_repo_quizzes" style = "margin-right: 0px;">
+              <div class = "complete_row">
+                <a  id = "{{main_quiz.id}}" item = "main_quiz" draggable ng-href="#/quiz_banks/{{main_quiz.id}}/show">
+                  {{main_quiz.title}}
+                </a>
+              </div>
+            </li>     
+          </ul>
         </li>     
       </ul>
+
     </li>
-    <li style = "margin-right: 0px;">
-      <div class = "complete_row" ng-class="{ 'active' : (no_main_repo_cookie() == false)}">
-        <a ng-click = "update_status('main_repo')" data-toggle = "tooltip" title = "Your default repo" tooltip-placement = "top">
-          <img src = "/assets/nav_right.png" class = "drive-icon" ng-if = "no_main_repo_cookie() == true">
-          <img src = "/assets/nav_down.png" class = "drive-icon" ng-if = "no_main_repo_cookie() == false">
-          Main Folder
-        </a>
-      </div>  
-      <ul ng-class="{ 'hide' : (no_main_repo_cookie() == true)}">
-        <li ng-repeat = "main_quiz in main_repo_quizzes" style = "margin-right: 0px;">
-          <div class = "complete_row">
-            <a  id = "{{main_quiz.id}}" item = "main_quiz" draggable ng-href="#/quiz_banks/{{main_quiz.id}}/show">
-            {{main_quiz.title}}</a>
-          </div>
-        </li>     
-      </ul>
-    </li>
+    
     <li style = "margin-right: 0px;">
       <div class = "complete_row" ng-class="{ 'active' : (no_shared_cookie() == false)}">
-        <a ng-click = "update_status('shared_assessments')" ng-right-click = "$event.stopPropagation()" data-toggle = "tooltip" title = "List of quizzes shared on quizlib" tooltip-placement = "top">
+        <a ng-href = "#/manage_quiz_banks/shared_quiz_banks" ng-click = "update_status('shared_assessments')" ng-right-click = "$event.stopPropagation()" data-toggle = "tooltip" title = "List of quizzes shared on quizlib" tooltip-placement = "top">
           <img src = "/assets/nav_right.png" class = "drive-icon" ng-if = "no_shared_cookie() == true">
           <img src = "/assets/nav_down.png" class = "drive-icon" ng-if = " no_shared_cookie() == false">
           Shared Assessments
@@ -76,7 +95,7 @@
     </li>
     <li style = "margin-right: 0px;">
       <div class="complete_row" ng-class="{ 'active' : (no_starred_cookie() == false)}">
-        <a ng-click = "update_status('starred_assessments')" ng-right-click = "$event.stopPropagation()" data-toggle = "tooltip" title = "List of your favourite quizzes" tooltip-placement = "top">
+        <a ng-click = "update_status('starred_assessments')" ng-right-click = "$event.stopPropagation()" data-toggle = "tooltip" title = "List of your favourite quizzes" tooltip-placement = "top" ng-href = "#/manage_quiz_banks/starred_quiz_banks">
           <img src = "/assets/nav_right.png" class = "drive-icon" ng-if = "no_starred_cookie() == true">
           <img src = "/assets/nav_down.png" class = "drive-icon" ng-if = " no_starred_cookie() == false">
           Starred Assessments

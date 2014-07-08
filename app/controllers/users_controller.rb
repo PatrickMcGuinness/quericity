@@ -57,6 +57,10 @@ class UsersController < ApplicationController
     render json: current_user.served_students.find(params[:id]).get_details
   end
 
+  def quiz_banks
+    render json: current_user.quiz_banks
+  end
+
   def bar_graph_data
     render json: current_user.served_students.find(params[:id]).bar_graph_data
   end

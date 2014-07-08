@@ -898,9 +898,7 @@ quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User',
         })
         Message.push_message({type: "success",msg: "You have successfully edited group",controller: "GroupListCtrl"})
         $location.path("/groups")
-      })
-
-      
+      })      
     }
   }
   $scope.selected_student = function(student){
@@ -959,8 +957,41 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
   
 }]);
 
-quizlib.controller("Navigation",['$scope',function($scope){
+quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scope,Repository,QuizBank){
   
+  $scope.deleteRepo = function(repo){
+    Repository.delete(repo.id)
+    index = $scope.my_assessments.indexOf(repo);
+    $scope.my_assessments.splice(index,1)  
+  }
+
+  $scope.handleDrop = function(quizId,repoId) {
+    QuizBank.get(quizId).$promise.then(function(data){
+      quiz_bank = data
+      quiz_bank.repository_id = repoId
+      QuizBank.update(quizId,quiz_bank)
+    })
+  }
+
+  $scope.deleteRepo = function(repo){
+    Repository.delete(repo.id)
+  }
+  $scope.editRepo = function(repo){
+    Repository.update(repo.id,repo)
+  }
+  $scope.addRepo = function(){
+    $scope.show_new_repo_div = false
+    Repository.save($scope.repository).$promise.then(function(data){
+      $scope.my_assessments.push(data)
+      $scope.repository = {}
+    })  
+  }
+
+  $scope.my_assessments = Repository.all()
+
+  Repository.default_repo().$promise.then(function(data){
+    $scope.main_repo_quizzes = QuizBank.repo_quiz_banks(data.result.id)
+  })
 
   $scope.no_starred_cookie = function(){
     if($.cookie("starred_assessments") == undefined){
@@ -981,6 +1012,11 @@ quizlib.controller("Navigation",['$scope',function($scope){
     else{return false}
   }
 
+  $scope.no_all_assessments_cookie = function(){
+    if($.cookie("all_assessments") == undefined){return true}
+    else{return false}
+  }
+
 
   $scope.update_status = function(state){
     if(state == "my_assessments"){
@@ -992,12 +1028,12 @@ quizlib.controller("Navigation",['$scope',function($scope){
       }
       
     }
-    if(state == "main_repo"){
-      if($.cookie("main_repo") == undefined){
-        $.cookie("main_repo","main_repo")
+    if(state == "all_assessments"){
+      if($.cookie("all_assessments") == undefined){
+        $.cookie("all_assessments","all_assessments")
       }
       else{
-        $.removeCookie("main_repo");
+        $.removeCookie("all_assessments");
       }
     }
     if(state == "shared_assessments"){
@@ -1019,7 +1055,8 @@ quizlib.controller("Navigation",['$scope',function($scope){
   }
 
 }]);
-quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz','Message',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz,Message){
+
+quizlib.controller("ManageStarredCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz','Message',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz,Message){
 
   $scope.quiz_banks = [] 
   $scope.show_new_repo_div = false
@@ -1027,13 +1064,7 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
   $scope.repository = {title: null}
   $scope.my_assessments = []
   
-  Repository.all().$promise.then(function(data){
-    $scope.my_assessments = data
-    angular.forEach(data,function(value,key){
-      value.quiz_banks = QuizBank.repo_quiz_banks(value.id)
-    })
-    
-  })
+  
 
   $scope.alert = Message.get_message("ManageCtrl")
   
@@ -1079,31 +1110,24 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
     }
   }
 
-  $scope.deleteRepo = function(repo){
-    Repository.delete(repo.id)
-  }
-  $scope.editRepo = function(repo){
-    Repository.update(repo.id,repo)
-  }
-  $scope.addRepo = function(){
-    $scope.show_new_repo_div = false
-    Repository.save($scope.repository).$promise.then(function(data){
-      $scope.my_assessments.push(data)
-      $scope.repository = {}
-    })
-    
-  }
+  
 
-  $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
-  FavouriteQuiz.all().$promise.then(function(data){
-    angular.forEach(data.result,function(value,key){
-      $scope.starred_quiz_banks.push(QuizBank.get(value.quiz_bank_id))
+  QuizBank.shared_quiz_banks().$promise.then(function(data){
+    $scope.shared_quiz_banks = data
+    angular.forEach($scope.shared_quiz_banks,function(value,key){
+      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
+        value.is_favourite = data.result
+      })
     })
   })
-
-
-  Repository.default_repo().$promise.then(function(data){
-    $scope.main_repo_quizzes = QuizBank.repo_quiz_banks(data.result.id)
+  
+  FavouriteQuiz.all().$promise.then(function(data){
+    angular.forEach(data.result,function(value,key){
+      QuizBank.get(value.quiz_bank_id).$promise.then(function(data){
+        data.is_favourite = true
+        $scope.starred_quiz_banks.push(data)
+      })
+    })
   })
 
   $scope.current_user = User.get_current_user()
@@ -1116,19 +1140,7 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
       })
     });
   })
-
   
-  $scope.make_public = function(quiz){
-    quiz.public = 1
-    QuizBank.update(quiz.id,quiz)
-    $scope.shared_quiz_banks.push(quiz)
-  }
-  $scope.make_private = function(quiz){
-    quiz.public = 0
-    QuizBank.update(quiz.id,quiz)
-    index = $scope.shared_quiz_banks.indexOf(quiz);
-    $scope.shared_quiz_banks.splice(index,1)
-  }
   $scope.make_favourite = function(quiz_bank){
     FavouriteQuiz.save({quiz_bank_id: quiz_bank.id})
     quiz_bank.is_favourite = true
@@ -1140,25 +1152,325 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
     index = $scope.starred_quiz_banks.indexOf(quiz_bank);
     $scope.starred_quiz_banks.splice(index,1)
   }
-  $scope.deleteRepo = function(repo){
-    Repository.delete(repo.id)
-    index = $scope.my_assessments.indexOf(repo);
-    $scope.my_assessments.splice(index,1)  
+  $scope.deleteQuiz = function(quiz){
+    index = $scope.quiz_banks.indexOf(quiz);
+    $scope.quiz_banks.splice(index,1)
+    QuizBank.delete(quiz.id)
+  }
+}]); 
+
+quizlib.controller("ManageSharedCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz','Message',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz,Message){
+
+  $scope.quiz_banks = [] 
+  $scope.show_new_repo_div = false
+  $scope.starred_quiz_banks = []
+  $scope.repository = {title: null}
+  $scope.my_assessments = []
+  
+  
+
+  $scope.alert = Message.get_message("ManageCtrl")
+  
+  $scope.remove_alert = function(){
+    $scope.alert = undefined
+    Message.remove_message_by_controller("ManageCtrl")
+  }
+  
+  $scope.init = function(){
+    User.get_current_user().$promise.then(function(data){
+      $scope.user = data
+      if($scope.user.show_tour == true){
+        $scope.currentStep = 0
+      }
+      else{
+        $scope.currentStep = 1000
+      }
+    })
+  }
+
+  $scope.toggle_title = function(){
+    if($scope.quiz_title == false){
+      $scope.quiz_title = true
+    }
+    else{
+      $scope.quiz_title = false
+    }
+  }
+
+  $scope.toggle_name = function(){
+    if($scope.owner_name == false){
+      $scope.owner_name = true
+    }else{
+      $scope.owner_name = false
+    }
+  }
+  $scope.toggle_tags = function(){
+    if($scope.quiz_tag == false){
+      $scope.quiz_tag = true
+    }
+    else{
+      $scope.quiz_tag = false
+    }
+  }
+
+  
+
+  QuizBank.shared_quiz_banks().$promise.then(function(data){
+    $scope.shared_quiz_banks = data
+    angular.forEach($scope.shared_quiz_banks,function(value,key){
+      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
+        value.is_favourite = data.result
+      })
+    })
+  })
+  
+  FavouriteQuiz.all().$promise.then(function(data){
+    angular.forEach(data.result,function(value,key){
+      QuizBank.get(value.quiz_bank_id).$promise.then(function(data){
+        data.is_favourite = true
+        $scope.starred_quiz_banks.push(data)
+      })
+    })
+  })
+
+  $scope.current_user = User.get_current_user()
+  
+  QuizBank.quiz_banks_list().$promise.then(function(data){
+    $scope.quiz_banks = data
+    angular.forEach(data, function(value, key){
+      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
+        value.is_favourite = data.result
+      })
+    });
+  })
+  
+  $scope.make_favourite = function(quiz_bank){
+    FavouriteQuiz.save({quiz_bank_id: quiz_bank.id})
+    quiz_bank.is_favourite = true
+    $scope.starred_quiz_banks.push(quiz_bank)
+  }
+  $scope.make_unfavourite = function(quiz_bank){
+    FavouriteQuiz.delete(quiz_bank.id)
+    quiz_bank.is_favourite = false
+    index = $scope.starred_quiz_banks.indexOf(quiz_bank);
+    $scope.starred_quiz_banks.splice(index,1)
   }
   $scope.deleteQuiz = function(quiz){
     index = $scope.quiz_banks.indexOf(quiz);
     $scope.quiz_banks.splice(index,1)
     QuizBank.delete(quiz.id)
   }
-  $scope.handleDrop = function(quizId,repoId) {
-    QuizBank.get(quizId).$promise.then(function(data){
-      quiz_bank = data
-      quiz_bank.repository_id = repoId
-      QuizBank.update(quizId,quiz_bank)
-    })
+}]); 
+
+quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz','Message',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz,Message){
+
+  $scope.quiz_banks = [] 
+  $scope.show_new_repo_div = false
+  $scope.starred_quiz_banks = []
+  $scope.repository = {title: null}
+  $scope.my_assessments = []
+  
+  
+
+  $scope.alert = Message.get_message("ManageCtrl")
+  
+  $scope.remove_alert = function(){
+    $scope.alert = undefined
+    Message.remove_message_by_controller("ManageCtrl")
   }
   
-}])
+  $scope.init = function(){
+    User.get_current_user().$promise.then(function(data){
+      $scope.user = data
+      if($scope.user.show_tour == true){
+        $scope.currentStep = 0
+      }
+      else{
+        $scope.currentStep = 1000
+      }
+    })
+  }
+
+  $scope.toggle_title = function(){
+    if($scope.quiz_title == false){
+      $scope.quiz_title = true
+    }
+    else{
+      $scope.quiz_title = false
+    }
+  }
+
+  $scope.toggle_name = function(){
+    if($scope.owner_name == false){
+      $scope.owner_name = true
+    }else{
+      $scope.owner_name = false
+    }
+  }
+  $scope.toggle_tags = function(){
+    if($scope.quiz_tag == false){
+      $scope.quiz_tag = true
+    }
+    else{
+      $scope.quiz_tag = false
+    }
+  }
+
+  
+
+  QuizBank.shared_quiz_banks().$promise.then(function(data){
+    $scope.shared_quiz_banks = data
+    angular.forEach($scope.shared_quiz_banks,function(value,key){
+      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
+        value.is_favourite = data.result
+      })
+    })
+  })
+  
+  FavouriteQuiz.all().$promise.then(function(data){
+    angular.forEach(data.result,function(value,key){
+      QuizBank.get(value.quiz_bank_id).$promise.then(function(data){
+        data.is_favourite = true
+        $scope.starred_quiz_banks.push(data)
+      })
+    })
+  })
+
+  $scope.current_user = User.get_current_user()
+  
+  QuizBank.quiz_banks_list().$promise.then(function(data){
+    $scope.quiz_banks = data
+    angular.forEach(data, function(value, key){
+      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
+        value.is_favourite = data.result
+      })
+    });
+  })
+  
+  $scope.make_favourite = function(quiz_bank){
+    FavouriteQuiz.save({quiz_bank_id: quiz_bank.id})
+    quiz_bank.is_favourite = true
+    $scope.starred_quiz_banks.push(quiz_bank)
+  }
+  $scope.make_unfavourite = function(quiz_bank){
+    FavouriteQuiz.delete(quiz_bank.id)
+    quiz_bank.is_favourite = false
+    index = $scope.starred_quiz_banks.indexOf(quiz_bank);
+    $scope.starred_quiz_banks.splice(index,1)
+  }
+  $scope.deleteQuiz = function(quiz){
+    index = $scope.quiz_banks.indexOf(quiz);
+    $scope.quiz_banks.splice(index,1)
+    QuizBank.delete(quiz.id)
+  }
+}]);
+
+quizlib.controller("ManageMyCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz','Message',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz,Message){
+
+  $scope.quiz_banks = [] 
+  $scope.show_new_repo_div = false
+  $scope.starred_quiz_banks = []
+  $scope.repository = {title: null}
+  $scope.my_assessments = []
+  
+  
+
+  $scope.alert = Message.get_message("ManageCtrl")
+  
+  $scope.remove_alert = function(){
+    $scope.alert = undefined
+    Message.remove_message_by_controller("ManageCtrl")
+  }
+  
+  $scope.init = function(){
+    User.get_current_user().$promise.then(function(data){
+      $scope.user = data
+      if($scope.user.show_tour == true){
+        $scope.currentStep = 0
+      }
+      else{
+        $scope.currentStep = 1000
+      }
+    })
+  }
+
+  $scope.toggle_title = function(){
+    if($scope.quiz_title == false){
+      $scope.quiz_title = true
+    }
+    else{
+      $scope.quiz_title = false
+    }
+  }
+
+  $scope.toggle_name = function(){
+    if($scope.owner_name == false){
+      $scope.owner_name = true
+    }else{
+      $scope.owner_name = false
+    }
+  }
+  $scope.toggle_tags = function(){
+    if($scope.quiz_tag == false){
+      $scope.quiz_tag = true
+    }
+    else{
+      $scope.quiz_tag = false
+    }
+  }
+
+  
+
+  QuizBank.shared_quiz_banks().$promise.then(function(data){
+    $scope.shared_quiz_banks = data
+    angular.forEach($scope.shared_quiz_banks,function(value,key){
+      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
+        value.is_favourite = data.result
+      })
+    })
+  })
+  
+  FavouriteQuiz.all().$promise.then(function(data){
+    angular.forEach(data.result,function(value,key){
+      QuizBank.get(value.quiz_bank_id).$promise.then(function(data){
+        data.is_favourite = true
+        $scope.starred_quiz_banks.push(data)
+      })
+    })
+  })
+
+  $scope.current_user = User.get_current_user()
+
+
+  
+  QuizBank.quiz_banks_list().$promise.then(function(data){
+    $scope.quiz_banks = data
+    angular.forEach(data, function(value, key){
+      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
+        value.is_favourite = data.result
+      })
+    });
+  })
+
+  $scope.my_quiz_banks = User.quiz_banks()
+  
+  $scope.make_favourite = function(quiz_bank){
+    FavouriteQuiz.save({quiz_bank_id: quiz_bank.id})
+    quiz_bank.is_favourite = true
+    $scope.starred_quiz_banks.push(quiz_bank)
+  }
+  $scope.make_unfavourite = function(quiz_bank){
+    FavouriteQuiz.delete(quiz_bank.id)
+    quiz_bank.is_favourite = false
+    index = $scope.starred_quiz_banks.indexOf(quiz_bank);
+    $scope.starred_quiz_banks.splice(index,1)
+  }
+  $scope.deleteQuiz = function(quiz){
+    index = $scope.quiz_banks.indexOf(quiz);
+    $scope.quiz_banks.splice(index,1)
+    QuizBank.delete(quiz.id)
+  }
+}]);
 
 quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','QuestionOption',function($scope, Question,GlobalScope,QuestionOption){
   $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
@@ -1517,6 +1829,10 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
     $scope.$on("question_created",function(event){
       $scope.quiz_sections = Section.all($scope.quiz_bank_id)
     })
+
+    $scope.$on("question_changed",function(event){
+      $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+    })
     
     QuestionTopic.all($scope.quiz_bank_id).$promise.then(function(data){
       angular.forEach(data.result,function(value,key){
@@ -1607,6 +1923,11 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   $scope.$on("question_created",function(event){
     $scope.quiz_sections = Section.all($scope.quiz_bank_id)
   })
+  
+  $scope.$on("question_changed",function(event){
+    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+  })
+  
   $scope.saveQuiz = function(isValid){
     $scope.submitted =true
     if(isValid){
@@ -1712,6 +2033,10 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   });
 
   $scope.$on("question_created",function(event){
+    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+  })
+
+  $scope.$on("question_changed",function(event){
     $scope.quiz_sections = Section.all($scope.quiz_bank_id)
   })
   

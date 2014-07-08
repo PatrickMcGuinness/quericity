@@ -58,7 +58,7 @@
           
         </thead>
         <tbody>
-          <tr ng-repeat = "quiz_bank in quiz_banks | filter: titleFilter | orderBy:predicate:reverse" class = "manage_list">
+          <tr ng-repeat = "quiz_bank in my_quiz_banks | filter: titleFilter | orderBy:predicate:reverse" class = "manage_list">
             <td style = "text-align:left;" class = "custom-padding">
               <a ng-show = "quiz_bank.is_favourite" ng-click = "make_unfavourite(quiz_bank)" data-toggle = "tooltip" title = "Unlike Quiz" tooltip-placement = "top">
                 <img src = "/assets/star.png" change-star-on-hover>

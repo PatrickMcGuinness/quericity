@@ -4,6 +4,12 @@ quizlib.config(['$routeProvider',function($routeProvider) {
     $routeProvider.
       when('/manage_quiz_banks', 
       {templateUrl: 'assets/partials/manage_quiz_banks/index.html',controller: 'ManageCtrl',activetab: 'manage'}).
+      when('/manage_quiz_banks/starred_quiz_banks', 
+      {templateUrl: 'assets/partials/manage_quiz_banks/starred_assessments.html',controller: 'ManageStarredCtrl',activetab: 'manage'}).
+      when('/manage_quiz_banks/shared_quiz_banks', 
+      {templateUrl: 'assets/partials/manage_quiz_banks/shared_assessments.html',controller: 'ManageSharedCtrl',activetab: 'manage'}).
+      when('/manage_quiz_banks/my_quiz_banks', 
+      {templateUrl: 'assets/partials/manage_quiz_banks/my_assessments.html',controller: 'ManageMyCtrl',activetab: 'manage'}).
       when('/quiz_banks/:id/share', 
       {templateUrl: 'assets/partials/manage_quiz_banks/sharing.html',controller: 'ShareCtrl',activetab: 'manage'}).
       when('/quiz_banks/new',

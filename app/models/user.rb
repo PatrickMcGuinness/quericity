@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
 
   def quiz_banks
     repo_ids = self.repositories.pluck(:id)
-    QuizBank.where("repository_id IN (?)", repo_ids)
+    QuizBank.where("repository_id IN (?) and status = ?", repo_ids, QuizBank::Status::SAVED)
   end
   
   def favourite_quiz_banks_to_show
@@ -130,7 +130,10 @@ class User < ActiveRecord::Base
 
 
   def shared_quiz_banks
-    QuizBank.where("public = ?",QuizBank::Public::YES)
+    quiz_banks = QuizBank.where("public = ?",QuizBank::Public::YES)
+    #quiz_banks << QuizBank.joins(:shares).where("shares.teacher_id = ? OR shares.owner_id = ?",self.id,self.id)
+    #quiz_banks << QuizBank.joins(:shares).where("shares.teacher_id = ? OR shares.owner_id = ?",self.id,self.id)
+    quiz_banks
   end
 
   def is_owner_of_quiz_bank?(quiz_bank)

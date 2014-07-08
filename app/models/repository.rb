@@ -55,7 +55,8 @@ class Repository < ActiveRecord::Base
       :created_at => created_at,
       :updated_at => updated_at,
       :quiz_banks => quiz_banks.as_json(),
-      :user => user.as_json()
+      :user => user.as_json(),
+      :quiz_banks => quiz_banks.as_json()
     }
   end
 end
