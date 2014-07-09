@@ -13,8 +13,8 @@
         <span class = "col-xs-8">
           <img src = "/assets/nav_right.png" class="section-right" change-arrow>
           <img src = "/assets/nav_down.png" class="section-down hide" change-arrow>
-          <span ng-if = "section.title.length < 11">{{section.title}}</span>
-          <span ng-if = "section.title.lenght == 1 || section.title.lenght > 11">{{section.title.subtring(1,12)}}</span>
+          <span ng-if = "section.title.length < 11 || section.title.length == 11" data-toggle = "tooltip" title = "{{section.title}}" tooltip-placement = "top">{{section.title}}</span>
+          <span ng-if = "section.title.length > 11" data-toggle = "tooltip" title = "{{section.title}}" tooltip-placement = "top">{{section.title | substring:0:11 }}</span>
         </span>
         <span class = "col-xs-4">
           <span class="dropdown-toggle link" ng-Click = "AddQuestion(section.id,$index)" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top">
@@ -32,7 +32,8 @@
       <div class = "questions-list-div hide">
         <ul class = "row">
           <li ng-repeat = "section_question in section.questions" class = "col-xs-12">
-            <div mathjax-bind = "section_question.description" class = "list-questions">{{section_question.description}}</div>
+            <span mathjax-bind = "section_question.description" class = "list-questions">{{section_question.description}}
+            </span>
           </li>
         </ul>
       </div>    

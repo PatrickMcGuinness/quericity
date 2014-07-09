@@ -972,10 +972,6 @@ quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scop
       QuizBank.update(quizId,quiz_bank)
     })
   }
-
-  $scope.deleteRepo = function(repo){
-    Repository.delete(repo.id)
-  }
   $scope.editRepo = function(repo){
     Repository.update(repo.id,repo)
   }
@@ -1022,15 +1018,23 @@ quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scop
     if(state == "my_assessments"){
       if($.cookie("my_assessments") == undefined){
         $.cookie("my_assessments", "my_assessments");
+        $.removeCookie("all_assessments");
+        $.removeCookie("shared_assessments");
+        $.removeCookie("starred_assessments");
       }
       else{
         $.removeCookie("my_assessments");
+       
+
       }
       
     }
     if(state == "all_assessments"){
       if($.cookie("all_assessments") == undefined){
         $.cookie("all_assessments","all_assessments")
+        $.removeCookie("my_assessments");
+        $.removeCookie("shared_assessments");
+        $.removeCookie("starred_assessments");
       }
       else{
         $.removeCookie("all_assessments");
@@ -1039,6 +1043,9 @@ quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scop
     if(state == "shared_assessments"){
       if($.cookie("shared_assessments") == undefined){
         $.cookie("shared_assessments","shared_assessments")
+        $.removeCookie("my_assessments");
+        $.removeCookie("all_assessments");
+        $.removeCookie("starred_assessments");
       }
       else{
         $.removeCookie("shared_assessments");
@@ -1047,6 +1054,9 @@ quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scop
     if(state == "starred_assessments"){
       if($.cookie("starred_assessments") == undefined){
         $.cookie("starred_assessments","starred_assessments")
+        $.removeCookie("all_assessments");
+        $.removeCookie("shared_assessments");
+        $.removeCookie("my_assessments");
       }
       else{
         $.removeCookie("starred_assessments");

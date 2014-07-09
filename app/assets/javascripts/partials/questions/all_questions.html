@@ -1,6 +1,6 @@
-<ul data-quiz-bank-id = {{quiz_bank_id}} id = {{section.id}} section-droppable drop= "handleDrop" class = "questions-list">
+<ul data-quiz-bank-id = {{quiz_bank_id}} id = {{section.id}} class = "questions-list" sortable>
   <li ng-if = "questions.length == 0" class = "col-xs-12 no-record">No questions in sections</li>
-  <li ng-if = "questions.length > 0" id = {{question.id}} ng-repeat = "question in questions" class = "col-xs-12" ng-controller = "viewQuestionCtrl" draggable>
+  <li ng-if = "questions.length > 0" data-id = {{question.id}} id = "question_{{question.id}}" ng-repeat = "question in questions" class = "col-xs-12" ng-controller = "viewQuestionCtrl">
     <div class = "col-xs-1">
       <img ng-if = "question.question_type == 1" src = "/assets/true_false.png" data-toggle = "tooltip" title = "True False Question" tooltip-placement = "top">
       <img ng-if = "question.question_type == 4" src = "/assets/fill_in_the_blanks.png" data-toggle = "tooltip" title = "Fill in the blank question" tooltip-placement = "top">

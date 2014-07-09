@@ -1,3 +1,18 @@
+quizlib.directive("sortable",function(){
+  return{
+    link: function(scope,element,attrs){
+      element.sortable({
+        update: function(){
+          $.ajax({
+            url: "/quiz_banks/change_question_positions",
+            method: "POST",
+            data: $(this).sortable("serialize"),                  
+          })
+        }
+      })
+    }
+  };
+})
 quizlib.directive("changeArrow",function(){
   return {
     link: function(scope,element,attrs){
@@ -11,12 +26,8 @@ quizlib.directive("changeArrow",function(){
 })
 
 quizlib.directive("removeChildrenMargin",function(){
-
   return{
     link:function(scope,element,attrs){
-      console.log("i am in margin")
-      console.log(element)
-      console.log(element.children())
       angular.forEach(element.children(),function(value,key){
         console.log(value)
         console.log($(value))
@@ -35,6 +46,10 @@ quizlib.directive("sectionRight",function(){
         element.siblings().removeClass("hide")
         element.parents(".title-div").children(".questions-list-div").removeClass("hide")
         $(".list-questions").children("p").css("line-height","20px")
+        // var children = element.parents(".title-div").find(".list-questions").children()
+        // $.each(children,function(key,value){
+        //   $(value).html((key + 1) + ") "+$(value).html())
+        // })
       })
       
     }
@@ -49,8 +64,7 @@ quizlib.directive("sectionDown",function(){
         element.addClass("hide")
         element.siblings().removeClass("hide")
         element.parents(".title-div").children(".questions-list-div").addClass("hide")
-      })
-      
+      })  
     }
   };
 })
@@ -932,9 +946,12 @@ quizlib.directive('droppable', function() {
           if (e.stopPropagation) e.stopPropagation();
           var binId = this.id;
           this.classList.remove('over');
+          console.log(e.dataTransfer.getData('Text'))
           var item = document.getElementById(e.dataTransfer.getData('Text'));
-          $(this).parent("li").children('ul').append("<li></li>")
-          $(this).parent("li").children("ul").children("li").last().append($(item))
+          console.log(item);
+          console.log($(this))
+          $(this).parent("li").children('ul').append("<li><div class = 'complete_row'></div></li>")
+          $(this).parent("li").children("ul").children("li").last().children(".complete_row").append($(item))
           scope.$apply(function(scope) {
             var fn = scope.drop();
             if ('undefined' !== typeof fn) {

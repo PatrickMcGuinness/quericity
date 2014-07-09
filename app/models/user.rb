@@ -130,10 +130,7 @@ class User < ActiveRecord::Base
 
 
   def shared_quiz_banks
-    quiz_banks = QuizBank.where("public = ?",QuizBank::Public::YES)
-    #quiz_banks << QuizBank.joins(:shares).where("shares.teacher_id = ? OR shares.owner_id = ?",self.id,self.id)
-    #quiz_banks << QuizBank.joins(:shares).where("shares.teacher_id = ? OR shares.owner_id = ?",self.id,self.id)
-    quiz_banks
+    QuizBank.joins("Left outer join shares on shares.shareable_id = quiz_banks.id").where("quiz_banks.public = ? OR shares.teacher_id = ? OR shares.owner_id = ?",QuizBank::Public::YES, self.id, self.id)
   end
 
   def is_owner_of_quiz_bank?(quiz_bank)

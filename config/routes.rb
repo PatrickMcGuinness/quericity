@@ -110,6 +110,7 @@ QuizLib::Application.routes.draw do
     collection do
       get "shared_quiz_banks"
       get "quiz_banks_list"
+      post "change_question_positions"
     end
     member do
       get "repo_quiz_banks"

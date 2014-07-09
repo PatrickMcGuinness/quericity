@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_filter :set_variables
+  before_filter :set_variables 
   respond_to :json
 
   def create
@@ -9,7 +9,7 @@ class QuestionsController < ApplicationController
   end
   
   def index
-    render json: @section.questions
+    render json: @section.questions.order("seq ASC")
   end
   def show
     render json: @section.questions.find(params[:id])
@@ -22,6 +22,8 @@ class QuestionsController < ApplicationController
   def update
     render json: @section.questions.find(params[:id]).update_question(params)
   end
+
+  
 
   private
     def set_variables

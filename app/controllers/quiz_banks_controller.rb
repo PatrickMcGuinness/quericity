@@ -63,6 +63,13 @@ class QuizBanksController < ApplicationController
   def delete_share
     render json: QuizBank.find(params[:id]).delete_share(params[:share_id])
   end
+
+  def change_question_positions
+    params[:"question"].each_with_index do |id, index|
+      Question.update_all({seq: index+1},{id: id})
+    end    
+    render nothing: true
+  end
   
   
 end
