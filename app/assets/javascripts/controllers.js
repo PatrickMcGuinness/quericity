@@ -1024,8 +1024,6 @@ quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scop
       }
       else{
         $.removeCookie("my_assessments");
-       
-
       }
       
     }

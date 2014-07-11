@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140620122456) do
+ActiveRecord::Schema.define(:version => 20140711054933) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(:version => 20140620122456) do
     t.string   "slug"
     t.integer  "public"
     t.integer  "status",        :default => 0
+    t.integer  "grade"
   end
 
   add_index "quiz_banks", ["id"], :name => "index_quiz_banks_on_id"

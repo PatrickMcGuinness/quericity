@@ -18,8 +18,14 @@
     <div class = "col-xs-4 col-xs-offset-4">
       <h2>{{user.first_name}} Profile</h2>
       <form name="UserForm" ng-submit="saveUser(UserForm.$valid)" entype = "multipart/form-data" class = "form-horizontal" novalidate>
-        <div class = "form-group" ng-class="{ 'has-error' : (UserForm.first_name.$invalid) && (!UserForm.first_name.$pristine || submitted == true)}">
+        <div class = "form-group">
           <div class = "col-xs-12 mar-top-20">
+            <label>Role:</label> 
+            <input type: "text" class = "form-control" ng-model = "user.role" placeholder = "Enter First Name" name = "first_name" disabled>
+          </div>
+        </div>
+        <div class = "form-group" ng-class="{ 'has-error' : (UserForm.first_name.$invalid) && (!UserForm.first_name.$pristine || submitted == true)}">
+          <div class = "col-xs-12">
             <label>First Name *:</label> 
             <input type: "text" class = "form-control" ng-model = "user.first_name" placeholder = "Enter First Name" name = "first_name" required>
             <p ng-show="UserForm.first_name.$invalid && (!QuizForm.first_name.$pristine || submitted == true)" class="help-block">First Name is required.</p>

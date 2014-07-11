@@ -5,7 +5,7 @@ class QuizBank < ActiveRecord::Base
   #extend FriendlyId
   #friendly_id :title, use: :slugged
   
-  attr_accessible :description, :title, :repository_id, :subject, :instructions,:public,:status
+  attr_accessible :description, :title, :repository_id, :subject, :instructions,:public,:status, :grade
   
   #validates :title,:repository_id,:subject,:presence => true 
 
@@ -123,6 +123,7 @@ class QuizBank < ActiveRecord::Base
       :instructions => instructions,
       :public => public,
       :status => status,
+      :grade => grade,
       :created_at => created_at,
       :updated_at => updated_at,
       :question_topics => question_topics.as_json(),

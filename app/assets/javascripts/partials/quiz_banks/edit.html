@@ -70,8 +70,19 @@
                 </div>    
               </div>
             </div>  
+          </div>
+          <div class = "col-xs-2"  id = "subject-div">
+            <div class = "row">
+              <div class = "col-xs-12">
+                <div class = "form-group" id = "subject-input"  ng-class="{ 'has-error' : QuizForm.grade.$invalid && (!QuizForm.grade.$pristine || submitted == true)}">
+                  <label>Grade:</label>
+                  <input type = "text"  ng-model = "quiz_bank.grade" class = "form-control input-sm" placeholder = "Grade" name = "grade" required popover="Edit Grade"  popover-trigger="mouseenter" >
+                  <p ng-show="QuizForm.grade.$invalid && (!QuizForm.grade.$pristine || submitted == true)" class="help-block">Required!</p>
+                </div>    
+              </div>
+            </div>  
           </div> 
-          <div class = "col-xs-10" id = "tags-input-box">
+          <div class = "col-xs-8" id = "tags-input-box">
             <div class = "row">
               <label >Tags:</label>
               <tags-input ng-model="tags">

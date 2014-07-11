@@ -27,7 +27,7 @@
       <ul id = "new-repo-holder" ng-class="{ 'hide' : (no_my_assessments_cookie() == true)}">
         <li class = "hide" id = "create-repo-div">
           {{repository.title}}
-          <input type = "text", ng-model = "repository.title" class = "form-control input-sm" enter = "addRepo()" placeholder = "Enter title and press enter" hideonenter>
+          <input type = "text", ng-model = "repository.title" class = "form-control input-sm" enter = "addRepo()" placeholder = "Enter folder name and press enter" hideonenter>
           
         </li>
         <li ng-repeat = "repo in my_assessments">
@@ -55,8 +55,13 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li ng-repeat = "main_quiz in main_repo_quizzes">
           <div class = "row complete_row">
+            <a  id = "{{main_quiz.id}}" item = "main_quiz" draggable ng-href="#/quiz_banks/{{main_quiz.id}}/show">
+              {{main_quiz.title}}
+            </a>
+          </div>
+          <!-- <div class = "row complete_row">
             <a class = "mar-bot-0-7 link showhide pull-left" data-toggle = "tooltip" title = "Your main folder" tooltip-placement = "top">
               <img src = "/assets/nav_right.png" class = "drive-icon right">
               <img src = "/assets/nav_down.png" class = "drive-icon hide down">
@@ -71,7 +76,7 @@
                 </a>
               </div>
             </li>     
-          </ul>
+          </ul> -->
         </li>     
       </ul>
 

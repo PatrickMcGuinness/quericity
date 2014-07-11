@@ -1,18 +1,103 @@
-quizlib.directive("sortable",function(){
+quizlib.directive("sortAndDrop",function(){
   return{
     link: function(scope,element,attrs){
-      element.sortable({
-        update: function(){
-          $.ajax({
-            url: "/quiz_banks/change_question_positions",
-            method: "POST",
-            data: $(this).sortable("serialize"),                  
+      
+      var adjustment
+      
+      $(".simple_with_animation").sortable({
+        group: 'simple_with_animation',
+        pullPlaceholder: false,
+        // animation on drop
+        onDrop: function  (item, targetContainer, _super) {
+          var clonedItem = $('<li/>').css({height: 0})
+          
+          item.before(clonedItem)
+          clonedItem.animate({'height': item.height()})
+          
+          item.animate(clonedItem.position(), function  () {
+            clonedItem.detach()
+            _super(item)
+          })
+          console.log(item)
+          console.log(targetContainer)
+          console.log($(item).attr("id"))
+          console.log(targetContainer.target[0].id)
+        },
+
+        // set item relative to cursor position
+        onDragStart: function ($item, container, _super) {
+          console.log("drag start")
+          var offset = $item.offset(),
+          pointer = container.rootGroup.pointer
+
+          adjustment = {
+            left: pointer.left - offset.left,
+            top: pointer.top - offset.top
+          }
+
+          _super($item, container)
+        },
+        onDrag: function ($item, position) {
+          console.log("drag")
+          $item.css({
+            left: position.left - adjustment.left,
+            top: position.top - adjustment.top
           })
         }
       })
     }
   };
 })
+
+// quizlib.directive("sortable",function(){
+//   return{
+//     link: function(scope,element,attrs){
+//       element.sortable({
+//         update: function(){
+//           $.ajax({
+//             url: "/quiz_banks/change_question_positions",
+//             method: "POST",
+//             data: $(this).sortable("serialize"),                  
+//           })
+//         }
+//       })
+      
+//     }
+//   };
+// })
+// quizlib.directive("questionDraggable",function(){
+//   return{
+//     link: function(scope,element,attrs){
+//        element.draggable({
+//         containment : "#container",
+//         helper : 'clone',
+//         revert: 'invalid'
+//       });
+//     }
+//   };
+// })
+
+// quizlib.directive("questionDroppable",function(){
+//   return{
+//     link: function(scope,element,attrs){
+//       element.droppable({
+//         hoverClass : 'ui-state-highlight',
+//         drop : function(ev, ui) {
+//           console.log("drop")
+//           $(ui.draggable).clone().appendTo($(".questions-list"));
+//           console.log($(ui.draggable))
+//           $(ui.draggable).remove();
+//           $(".question-item").draggable({
+//             containment : "#container",
+//             helper : 'clone',
+//             revert : 'invalid'
+//           });
+//         }
+//       });
+//     }
+//   };
+// })
+
 quizlib.directive("changeArrow",function(){
   return {
     link: function(scope,element,attrs){

@@ -1,3 +1,21 @@
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+ul.example li.placeholder {
+  position: relative;
+  /** More li styles **/
+}
+ul.example li.placeholder:before {
+  position: absolute;
+  /** Define arrowhead **/
+}
 
 .manage-list{
 	padding: 5px 8px 0px 8px !important;
@@ -492,13 +510,13 @@ tags-input .host{
 }
 textarea.edit-form{
 	display:inline;
-	width : 85%;
+	width : 88%;
 	margin-left: 5px;
 
 }
 #Title-input input{
 	font-size:18px;
-	width:90%;
+	width:92%;
 	display:inline;
 	margin-left:8px;
 
@@ -511,7 +529,7 @@ textarea.edit-form{
 	margin-top:6px;
 	margin-left:6px; 
 	display:inline;
-       	width:68%;
+       	width:46%;
 
 }
 
@@ -520,12 +538,12 @@ textarea.edit-form{
 }
 
 #subject-div {
-	width:30%;
+	width:22%;
 }
 
 #tags-input-box {
 	display:inline; 
-	width : 69.5%;
+	width : 55.5%;
 
 }
 
