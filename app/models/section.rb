@@ -36,7 +36,7 @@ class Section < ActiveRecord::Base
       :quiz_bank_id => quiz_bank_id,
       :created_at => created_at,
       :updated_at => updated_at,
-      :questions => self.questions.order("seq ").as_json()
+      :questions => self.questions.order("created_at ASC").as_json()
     }
   end
 end

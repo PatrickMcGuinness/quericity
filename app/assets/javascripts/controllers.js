@@ -1,5 +1,11 @@
 quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
-  $scope.$route = $route 
+  $scope.$route = $route
+  $scope.$watch('titleFilter', function() {
+    if($scope.titleFilter != undefined){
+      console.log($scope.titleFilter)
+      $scope.$broadcast("title_filter_changed",$scope.titleFilter)
+    }  
+  }) 
 }]);
 
 
@@ -1278,10 +1284,16 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
   $scope.repository = {title: null}
   $scope.my_assessments = []
   
-  
+  // $scope.titleFilter = undefined
 
   $scope.alert = Message.get_message("ManageCtrl")
   
+  $scope.$on("title_filter_changed",function(event,titleFilter){
+    console.log("title filter chnaged")
+    $scope.titleFilter = titleFilter
+    console.log($scope.titleFilter)
+  })
+
   $scope.remove_alert = function(){
     $scope.alert = undefined
     Message.remove_message_by_controller("ManageCtrl")
@@ -1593,7 +1605,8 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
     $scope.section_id = section_id;
   })
 
-  $scope.change_question = function(){
+  $scope.change_question = function(selected_type){
+    $scope.selected_type = selected_type
     $scope.addNewQuestion($scope.selected_type,$scope.section)
   }
 
@@ -1831,15 +1844,23 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
     $scope.tags = [];
 
     $scope.loadtags = function(query) {
-    return Topic.search(query).$promise
+      return Topic.search(query).$promise
     };
 
     $scope.$on("question_created",function(event){
-      $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+      Section.all($scope.quiz_bank_id).$promise.then(function(){
+        $scope.quiz_sections = data
+        $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1] 
+        $scope.$broadcast("last_section_changed",$scope.last_section)
+      })
     })
 
     $scope.$on("question_changed",function(event){
-      $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+      Section.all($scope.quiz_bank_id).$promise.then(function(){
+        $scope.quiz_sections = data
+        $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
+        $scope.$broadcast("last_section_changed",$scope.last_section)
+      })
     })
     
     QuestionTopic.all($scope.quiz_bank_id).$promise.then(function(data){
@@ -1847,7 +1868,6 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
         Topic.get(value.topic_id).$promise.then(function(data){
           $scope.tags.push({text: data.title})
         })
-
       })
     })
   })
@@ -1929,11 +1949,23 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   })
 
   $scope.$on("question_created",function(event){
-    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+    Section.all($scope.quiz_bank_id).$promise.then(function(data){
+      $scope.quiz_sections = data
+      $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
+      $scope.$broadcast("last_section_changed",$scope.last_section);
+    })
   })
   
   $scope.$on("question_changed",function(event){
-    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+    Section.all($scope.quiz_bank_id).$promise.then(function(data){
+      $scope.quiz_sections = data
+      $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
+      $scope.$broadcast("last_section_changed",$scope.last_section)
+    })
+  })
+
+  $scope.$on("last_section_changed",function(event,section){
+    $scope.last_section = section;
   })
   
   $scope.saveQuiz = function(isValid){

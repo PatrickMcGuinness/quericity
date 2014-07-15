@@ -34,6 +34,15 @@ body{
 		display:inline;
 		padding:23px; 0;
 	}
+
+  .menu ul li.search-bar{
+    display: inline;
+    padding: 0px;
+  }
+
+  .menu ul li.search-bar:hover{
+    padding: 0px;
+  }
 	
 	.menu ul li a{
 		text-decoration: none;
@@ -103,9 +112,9 @@ body{
 }	
 	
 .search{
-	width:210px;
+	width:256px;
 	height:30px;
-	margin-top:5px;
+	/*margin-top:5px;*/
 	padding:5px;
 	
 	}
@@ -399,7 +408,7 @@ h4{
 ul li{
 	text-decoration:none;
 	display:inline;
-	margin-right:20px;
+	margin-right:10px;
 	}
 	
 .top200 { margin-top:200px; }

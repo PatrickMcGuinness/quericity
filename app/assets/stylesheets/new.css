@@ -1,20 +1,11 @@
-body.dragging, body.dragging * {
-  cursor: move !important;
+.question-option-tab{
+  color: white;
+  background-color: #22A2DC
 }
 
-.dragged {
-  position: absolute;
-  opacity: 0.5;
-  z-index: 2000;
-}
-
-ul.example li.placeholder {
-  position: relative;
-  /** More li styles **/
-}
-ul.example li.placeholder:before {
-  position: absolute;
-  /** Define arrowhead **/
+.question-option-tab.active{
+  color: white;
+  background-color: #003656
 }
 
 .manage-list{

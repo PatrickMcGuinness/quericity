@@ -4,7 +4,11 @@
   </div>
   <form name="TrueFalseForm" ng-submit="create_true_false(TrueFalseForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
-      <div class = "form-group">
+      <a class = "col-xs-2 btn question-option-tab active pull-left" ng-click = "change_question('True False')"> True False</a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" ng-click = "change_question('Multiple Choice')"> Multiple Choice</a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" ng-click = "change_question('Fill in blank')">Fill in Blank </a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" ng-click =  "change_question('Open Ended')">Open Ended</a>
+      <!-- <div class = "form-group">
         <label>Question Type: </label>
         <select class="form-control" ng-model="selected_type" name = "selected_type" ng-change="change_question()">
           <option value = "True False">True False</option>
@@ -12,7 +16,7 @@
           <option value = "Fill in blank">Fill in Blank</option>
           <option value = "Open Ended">Open Ended</option>
         </select>
-      </div>
+      </div> -->
     </div>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.true_false_question_statement.$invalid) && submitted == true}">

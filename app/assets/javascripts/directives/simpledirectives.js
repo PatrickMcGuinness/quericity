@@ -18,10 +18,6 @@ quizlib.directive("sortAndDrop",function(){
             clonedItem.detach()
             _super(item)
           })
-          console.log(item)
-          console.log(targetContainer)
-          console.log($(item).attr("id"))
-          console.log(targetContainer.target[0].id)
         },
 
         // set item relative to cursor position
@@ -698,7 +694,9 @@ quizlib.directive("mathjaxBind", function() {
         var $script = angular.element("<script type='math/tex'>")
             .html(value == undefined ? "" : value);
         var $small_script = $($($($script[0].innerHTML)[0]).find("span")[0]).html()
+        console.log($small_script)
         $small_script = String($small_script).substring(2,String($small_script).length -1);
+        console.log($small_script)
         $script.html("")
         $script.append($small_script)
         $element.html("")

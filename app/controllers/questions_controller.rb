@@ -9,7 +9,7 @@ class QuestionsController < ApplicationController
   end
   
   def index
-    render json: @section.questions.order("seq ASC")
+    render json: @section.questions.order("created_at ASC")
   end
   def show
     render json: @section.questions.find(params[:id])

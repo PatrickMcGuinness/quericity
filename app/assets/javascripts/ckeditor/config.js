@@ -46,7 +46,7 @@ CKEDITOR.editorConfig = function(config) {
   config.extraPlugins = 'lineutils,widget,mathjax';
 	config.toolbar_mini =
 	[		
-		['Bold','Italic','NumberedList','BulletedList','Outdent','Indent','mathjax','Image','Link','Unlink','SpecialChar','Table','Maximize']
+		['Bold','Italic','NumberedList','BulletedList','Outdent','Indent','mathjax','Image','Link','Unlink','SpecialChar','Table','FontSize','Maximize']
 	];
 	
 	config.toolbar_toolbarLight =
