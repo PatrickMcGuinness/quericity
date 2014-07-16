@@ -1512,7 +1512,7 @@ quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','Quest
 quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Question','GlobalScope',function($scope,$rootScope,QuestionOption,Question,GlobalScope){
   
   $scope.show_details = false
-
+  $scope.options_alphabets = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N"]
   $scope.show_details_edit = false
   $scope.submitted = false
   $scope.show_options = function(section_id,question_id,question_type){
@@ -1931,6 +1931,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   
   $scope.quiz_bank_id = $routeParams.id
   $scope.question_types = ["True False","Multiple Choice","Fill in blank","Open Ended"]
+  
   $scope.submitted = false
   $scope.section_submitted = false
   $scope.ckEditors = [];
