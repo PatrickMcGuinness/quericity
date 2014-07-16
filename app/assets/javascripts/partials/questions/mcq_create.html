@@ -8,15 +8,6 @@
       <a class = "col-xs-2 btn question-option-tab pull-left active" ng-click = "change_question('Multiple Choice')"> Multiple Choice</a>
       <a class = "col-xs-2 btn question-option-tab pull-left" ng-click = "change_question('Fill in blank')">Fill in Blank </a>
       <a class = "col-xs-2 btn question-option-tab pull-left" ng-click =  "change_question('Open Ended')">Open Ended</a>
-      <!-- <div class = "form-group">
-        <label>Question Type: </label>
-        <select class="form-control" ng-model="selected_type" ng-change="change_question()">
-          <option value = "True False">True False</option>
-          <option value = "Multiple Choice">Multiple Choice</option>
-          <option value = "Fill in blank">Fill in Blank</option>
-          <option value = "Open Ended">Open Ended</option>
-        </select>
-      </div> -->
     </div>
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (McqForm.description.$invalid) && submitted == true}">
@@ -38,7 +29,7 @@
             <td>
               
               <div class = "form-group mar-top-10" ng-class="{ 'has-error' : (McqForm.input{{$index}}.$invalid) && submitted == true}">
-                <input name = "input{{$index}}" type = "text", class = "form-control" ng-model = "mcq_options[$index]" add-option>
+                <input name = "input{{$index}}" type = "text", class = "form-control" ng-model = "mcq_options[$index]" add-option disable-enter>
                 <p ng-show="McqForm.input{{$index}}.$invalid && submitted == true" class="help-block">Required</p>
               </div>  
             </td>
@@ -50,18 +41,7 @@
             <td>
               <a><span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option ng-click = "remove_mcq_input($index)"></span><a>
             </td>
-          </tr>
-          <!--<tr>
-            <td class = "col-xs-12">
-              <div class = "form-group" ng-class="{ 'has-error' : (selected_true_false_option == undefined)}">
-                <p ng-show="radio == undefined && submitted == true" class="help-block">Select at least one option.</p>
-              </div>  
-            </td>
-            <td>
-            </td>  
-          </tr> -->  
-
-
+          </tr> 
         </tbody>
       </table>
     </div>

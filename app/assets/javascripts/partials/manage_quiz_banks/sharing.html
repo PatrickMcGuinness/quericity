@@ -12,26 +12,27 @@
       <span ng-if = "quiz_bank.public == false && quiz_bank.shared == false">Current status: Private</span>
     </div>
     <div class="row add_grp_section">
-      <a class = "btn btn-default btn popover-field" ng-href = "#/manage_quiz_banks" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">
+      <a class = "btn btn-danger btn popover-field" ng-href = "#/manage_quiz_banks" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">
         <span class = "glyphicon glyphicon-remove"></span>
         <span> Cancel </span>
       </a>
-      <a class = "btn btn-default btn popover-field" ng-click = "share()" data-toggle = "tooltip" title = "Share with email list" tooltip-placement = "top">
+      <a class = "btn btn-success btn" ng-href = "#/manage_quiz_banks" data-toggle = "tooltip" title = "Done" tooltip-placement = "top">
+        <span class = "glyphicon glyphicon-ok"></span>
+        <span> Done </span>
+      </a>
+      <a class = "btn question-option-tab pull-left" ng-click = "make_private()" data-toggle = "tooltip" title = "Make the Quiz private but will be shared to teachers in shared list" tooltip-placement = "top" ng-class="{ 'active' : quiz_bank.public == false && quiz_bank.shared == false}">
+        <span><img src="/assets/lock_white.png" /></span>
+        <span> Make Private  </span>
+      </a>
+      <a class = "btn question-option-tab pull-left" ng-click = "make_public()" data-toggle = "tooltip" title = "Make the quiz public" tooltip-placement = "top" ng-class="{ 'active' : quiz_bank.public == true}">
+        <span><img src="/assets/unlock_white.png" /></span>
+        <span> Make Public </span>
+      </a>
+      <a class = "btn question-option-tab popover-field pull-left" ng-click = "share()" data-toggle = "tooltip" title = "Share with email list" tooltip-placement = "top" ng-class="{ 'active' : quiz_bank.public == false && quiz_bank.shared == true}">
         <span class = "glyphicon glyphicon-floppy-saved"></span>
         <span>Share  </span>
       </a>
-      <a class = "btn btn-default btn" ng-click = "make_private()" data-toggle = "tooltip" title = "Make the Quiz private but will be shared to teachers in shared list" tooltip-placement = "top">
-        <span><img src="/assets/lock_darkblue.png" /></span>
-        <span> Make Private  </span>
-      </a>
-      <a class = "btn btn-default btn" ng-click = "make_public()" data-toggle = "tooltip" title = "Make the quiz public" tooltip-placement = "top">
-        <span><img src="/assets/unlock_darkblue.png" /></span>
-        <span> Make Public </span>
-      </a>
-      <a class = "btn btn-default btn" ng-href = "#/manage_quiz_banks" data-toggle = "tooltip" title = "Done" tooltip-placement = "top">
-        <span class = "glyphicon glyphicon-ok"></span>
-        <span> Done </span>
-      </a> 
+       
       <div class = "row">
         <div class = "col-xs-12">
           <tags-input ng-model="tags" placeholder = "Add teacher emails" adjust-width>

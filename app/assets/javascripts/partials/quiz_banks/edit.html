@@ -53,9 +53,9 @@
             <b>Author: </b> {{quiz_bank.user.last_name}}
           </div>
           <div class = "col-xs-4" id = "quiz-info-display">
-            <b ng-if = "(quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == false">Sharing: Private</b>
-	          <b ng-if = "(quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == true">Sharing: Shared </b>
-            <b ng-if = "quiz_bank.public == true">Sharing: Public </b>	  
+            <b ng-if = "(quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == false">Sharing: <a ng-href = "#quiz_banks/{{quiz_bank.id}}/share">Private</a></b>
+	          <b ng-if = "(quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == true">Sharing: <a ng-href = "#quiz_banks/{{quiz_bank.id}}/share"> Shared </a></b>
+            <b ng-if = "quiz_bank.public == true">Sharing: <a ng-href = "#quiz_banks/{{quiz_bank.id}}/share"> Public </a></b>	  
           </div>
         </div>
  	 
@@ -160,9 +160,7 @@
           <div ng-if = "question_section == section" ng-Show = "show_blank" ng-include src="'/assets/partials/questions/fill_in_the_blank_create.html'">
           </div>
           <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'">
-          </div>
-          <div ng-if = "question_section == section" ng-Show = "show_matching_pairs" ng-include src = "'/assets/partials/questions/matching_pairs_create.html'">
-        </div>     
+          </div>    
       </div>
     </div>
      <div ng-show = "show_new_section" class = "new-section-div" id = "new-section-div">

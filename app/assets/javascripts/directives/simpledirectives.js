@@ -685,7 +685,15 @@ quizlib.directive("studentBargraph",function(){
   };
 })
 
-
+quizlib.directive("disableEnter",function(){
+  return {
+    link: function(scope,element,attrs){
+      element.bind("keydown", function (event) {
+        if(event.which === 13) {event.preventDefault();}
+      });    
+    }
+  };
+});
 quizlib.directive("mathjaxBind", function() {
   return {
     restrict: "A",
@@ -694,9 +702,7 @@ quizlib.directive("mathjaxBind", function() {
         var $script = angular.element("<script type='math/tex'>")
             .html(value == undefined ? "" : value);
         var $small_script = $($($($script[0].innerHTML)[0]).find("span")[0]).html()
-        console.log($small_script)
         $small_script = String($small_script).substring(2,String($small_script).length -1);
-        console.log($small_script)
         $script.html("")
         $script.append($small_script)
         $element.html("")
