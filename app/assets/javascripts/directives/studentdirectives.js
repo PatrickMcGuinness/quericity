@@ -27,6 +27,36 @@ student_quizlib.directive("showActiveTag",function(){
   };
 });
 
+student_quizlib.directive("addCustomClass",function(){
+  return {
+    restrict: 'A',
+    link: function(scope, element,attr){
+      if(window.innerWidth < 990){
+        element.removeClass("custom_width")
+      }
+      if(window.innerWidth > 990 && window.innerWidth < 1200){
+        element.addClass("custom_width")
+      }
+      if(window.innerWidth > 1300){
+        element.addClass("custom_width")
+      }
+      
+      $(window).resize(function(){
+        console.log(window.innerWidth)
+        if(window.innerWidth < 990){
+          element.removeClass("custom_width")
+        }
+        if(window.innerWidth > 990 && window.innerWidth < 1200){
+          element.addClass("custom_width")
+        }
+        if(window.innerWidth > 1300){
+          element.addClass("custom_width")
+        }
+      });
+    }
+  };
+});
+
 student_quizlib.directive("chooseImage",function(){
   return {
     restrict: "A",

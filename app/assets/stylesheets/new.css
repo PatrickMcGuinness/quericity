@@ -3,6 +3,10 @@
   background-color: #22A2DC
 }
 
+.custom_width{
+	width: 200px;
+}
+
 .question-option-tab.active{
   color: white;
   background-color: #003656
