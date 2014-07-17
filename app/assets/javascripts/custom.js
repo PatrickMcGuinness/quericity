@@ -88,5 +88,36 @@ $(document).ready(function(){
     }
   });
 
+  $("#new_user").validate({
+    rules: {
+        'user[password]': {
+          required: true
+        },
+        'user[password_confirmation]': {
+          required: true
+        }           
+    },
+    messages: {
+        'user[password]': {
+          required: "Please enter password"
+        },
+        'user[password_confirmation]':{
+          required: "Please enter Password confirmation"
+        }
+    },
+    highlight: function(element) {
+        $(element).addClass("input-error").removeClass("input-success")
+        $(element).siblings('label').remove();
+        $(element).closest('.control_validate').removeClass('success').addClass('error');
+    },
+    // The success function receives label as element
+    success: function(element) {
+        // $("#" + $(element).attr('for')).css('border', 'black');
+        $(element).siblings().addClass("input-success").removeClass("input-error")
+        $(element).remove();
+        $(element).closest('.control_validate').removeClass('error').addClass('success');
+    }
+  });
+
 
 }); 

@@ -1699,13 +1699,17 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
     }
   }
   $scope.add_mcq_input = function(){
+    console.log("in the add mcq input")
+    console.log($scope.mcq_options)
     $scope.mcq_options.push('')
+    console.log($scope.mcq_options)
   }
   $scope.add_question_option = function(question){
     question.question_options.push({question_id: question.id, is_correct :false, answer: null})
   }
 
   $scope.add_correct_option = function(radio){
+    console.log(radio)
     $scope.correct_input = radio
   }
   
@@ -1931,7 +1935,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   
   $scope.quiz_bank_id = $routeParams.id
   $scope.question_types = ["True False","Multiple Choice","Fill in blank","Open Ended"]
-  
+
   $scope.submitted = false
   $scope.section_submitted = false
   $scope.ckEditors = [];
