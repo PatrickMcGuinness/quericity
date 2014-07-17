@@ -158,9 +158,11 @@ class ServedQuiz < ActiveRecord::Base
   def self.create_served_quiz(user,params)
     quiz_bank = QuizBank.find(params[:served_quiz][:quiz_bank_id])
     cloned_quiz_bank = ClonedQuizBank.create_the_clone(quiz_bank)
-    if params[:random].to_i == 0
+    if params[:random].to_i == 0 || params[:random].to_i == 2 
+      puts "@@@@@@@@@@@@@@@@@@ random == 0"
       ServedQuiz.clone_question_list(params,cloned_quiz_bank)
     else
+      puts "@@@@@@@@@@@@@@@@@@ random == 1"
       ClonedQuestion.create_random(cloned_quiz_bank,quiz_bank,params[:number_of_questions].to_i)
     end
     params[:served_quiz][:cloned_quiz_bank_id] = cloned_quiz_bank.id
@@ -179,7 +181,9 @@ class ServedQuiz < ActiveRecord::Base
   end
 
   def self.clone_question_list(params,cloned_quiz_bank)
+    puts "@@@@@@@@@@@@@@@@@@@",params[:selected_questions]
     params[:selected_questions].each do |selected_question|
+      puts "$$$$$$$$$$$$$$$$",selected_question
       ClonedQuestion.create_the_clone(cloned_quiz_bank,selected_question[:id], selected_question[:score])
     end
   end
