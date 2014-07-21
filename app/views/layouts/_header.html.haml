@@ -7,12 +7,38 @@
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        %a.navbar-brand{href:"/",style:"margin-left:60px;"}
+        %a.navbar-brand{href:"/",style:"margin-left:30px;"}
           %span.header
-            %img{src: "/assets/logo.png",style: "height: 55px;"}
+            %img{src: "/assets/logo.png",style: "height: 55px;width:135px;"}
 
       .collapse.navbar-collapse#bs-example-navbar-collapse-1
         -if user_signed_in?
+          %ul.nav.navbar-nav.navbar-left.menu
+            %ng-view
+              %li
+                %span.sub_nav_icon
+                  %img{src:"/assets/manage_menu_icon.png"} 
+                %span.menu-link
+                  %a{href:"#/manage_quiz_banks"}
+                    = "Manage"
+              %li
+                %span.sub_nav_icon
+                  %img{src: "/assets/serve_quiz.png"}
+                %span.menu-link
+                  %a{href: '#/served_quizzes'}
+                    = "Serve"
+              %li
+                %span.sub_nav_icon
+                  %img{src: "/assets/grade_menu_icon.png"}
+                %span.menu-link
+                  %a{href:"#/grade"}
+                    = "Grade"
+              %li
+                %span.sub_nav_icon
+                  %img{src: "/assets/analyse_menu_icon.png"}
+                %span.menu-link  
+                  %a{href:"#/analyze/quiz_report"}
+                    = "Analyze"
           %ul.nav.navbar-nav.navbar-right.my-header-nav{style: "margin-right: 10px;"}
             .dropdown.name
               %a{id:"dLabel",role:"button",href:"#",data:{toggle:"dropdown",target:"#"}}
@@ -43,4 +69,24 @@
               =link_to 'Sign up' , new_user_registration_path
             %li
               =link_to 'Log in' , new_user_session_path  
-        
+
+:javascript
+  $(document).ready(function(){
+    if(window.innerWidth < 747){
+      $(".menu li").addClass("col-xs-12")
+    }
+    else{
+      $(".menu li").removeClass("col-xs-12")
+    }
+    $(window).resize(function(){
+      console.log("hello")
+      if(window.innerWidth < 747){
+        console.log("in the inner if")
+        $(".menu li").addClass("col-xs-12")
+      }
+      else{
+        console.log("in the else")
+        $(".menu li").removeClass("col-xs-12")
+      }
+    })
+  })        
