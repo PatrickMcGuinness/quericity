@@ -550,4 +550,15 @@ textarea.edit-form{
 #quiz-info-display {
 	width : 25%;
 }
+quiz-bargraph {
+	        display: block;
+		        width:700px;
+			        height:300px;
+				            }
+student-bargraph {
+                display: block;
+                        width:700px;
+                                height:300px;
+                                            }
+
 

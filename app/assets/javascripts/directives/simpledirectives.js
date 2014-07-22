@@ -521,78 +521,79 @@ quizlib.directive("studentLinegraph",function(){
     }
   };
 });
+
 quizlib.directive("quizBargraph",function(){
   return {
     restrict: "E",
     replace: false,
     link: function(scope,element,attrs){
       scope.$on("Quiz_Histogram_Ready",function(){
-        
-        var data = scope.students
-
-        var margin = {top: 30, right: 30, bottom: 30, left: 40},
-        width = 800 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
-
-        var y = d3.scale.linear()
-        .range([height,0])
-        .domain([0, d3.max(data)])
-
-        var x = d3.scale.ordinal()
-        .domain(scope.averages)
-        .rangeRoundBands([0, width], .1);
-
-        var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom");
-
-        var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left").ticks(d3.max(data)).tickFormat(d3.format(',f'));
-
-        var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .html(function(d) {
-          return "<strong>Students:</strong> <span style='color:red'>" + d + "</span>";
-        });
+		  		  
+		  makePLotData = function(data){
+			  plotData = []
+			  increment = 0;
+			  for(i=0;i<data.length;i++){
+				  tmpArray = []
+				  tmpArray.push(increment)
+				  tmpArray.push(data[i])
+				  plotData.push(tmpArray)
+				  increment++ 
+			  }
+			  return plotData
+		  }
+		  
+		  yAxisData = makePLotData(scope.students)
+		  xAxisData = makePLotData(scope.averages)
       
-        var chart = d3.select(".chart")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-  
-        chart.call(tip);
-        
-        var barWidth= width/data.length    
-  
-        var bar = chart.selectAll("g")
-        .data(data)
-        .enter().append("g")
-        .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
+	
+		  var dataset = [
+			    { label: "Students Performance in Quiz", data: yAxisData, color: "#5482FF" }
+		  ];
+            			
+		 
+		  var options = {
+		 	 series: {
+		 	     bars: {
+		 	         show: true
+		 	     }
+		 	 },
+		 	 bars: {
+		 	     align: "center",
+		 	     barWidth: 0.5
+		 	 },
+		 	 xaxis: {
+		 	     axisLabel: "Scores",
+		 	     axisLabelUseCanvas: true,
+		 	     axisLabelFontSizePixels: 12,
+		 	     axisLabelFontFamily: 'Verdana, Arial',
+		 	     axisLabelPadding: 10,
+		 	     ticks: xAxisData
+		 	 },
+		 	 yaxis: {
+		 	     axisLabel: "No of Students",
+		 	     axisLabelUseCanvas: true,
+		 	     axisLabelFontSizePixels: 12,
+		 	     axisLabelFontFamily: 'Verdana, Arial',
+		 	     axisLabelPadding: 3,
+				 tickDecimals: 0,
+				 min: 0
+					  		   
+		 	   
+		 	 },
+		 	 legend: {
+		 	     noColumns: 0,
+		 	     labelBoxBorderColor: "#000000",
+		 	     position: "nw"
+		 	 },
+		 	 grid: {
+		 	     hoverable: true,
+		 	     borderWidth: 2,
+		 	     backgroundColor: { colors: ["#ffffff", "#EDF5FF"] }
+		 	 }
+		 }; 	
 
-        bar.append("rect")
-        .attr("y", function(d){return y(d);})
-        .attr("height",function(d){return height - y(d)})
-        .attr("width",barWidth - 1)
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-
-        bar.append("text")
-        .attr("x",barWidth/2)
-        .attr("y",function(d){return y(d) + 3;})
-        .attr("dy",".75em")
-        .text(function(d){return d})
-      
-        chart.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-
-        chart.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
+		   
+		$.plot(element, dataset,options);   
       
       })
     }
@@ -600,90 +601,85 @@ quizlib.directive("quizBargraph",function(){
 });
 
 quizlib.directive("studentBargraph",function(){
-  return {
-    restrict: "E",
-    replace: false,
-    link: function(scope,element,attrs){
+	return {
+    	restrict: "E",
+    	replace: false,
+    	link: function(scope,element,attrs){
+			scope.$on("Student_Bar_Graph_Ready",function(){
+    	    	//var data = [4, 8, 15, 16, 23, 42,30,23,20,10];
+				console.log(scope.names)
+	  		  makePLotData = function(data){
+	  			  plotData = []
+	  			  increment = 0;
+	  			  for(i=0;i<data.length;i++){
+	  				  tmpArray = []
+	  				  tmpArray.push(increment)
+	  				  tmpArray.push(data[i])
+	  				  plotData.push(tmpArray)
+	  				  increment++ 
+	  			  }
+	  			  return plotData
+	  		  }
+		  
+	  		  yAxisData = makePLotData(scope.scores)
+	  		  xAxisData = makePLotData(scope.names)
       
-      scope.$on("Student_Bar_Graph_Ready",function(){
-        //var data = [4, 8, 15, 16, 23, 42,30,23,20,10];
-        var data = []
-        var average_data = [4,5]
+	
+	  		  var dataset = [
+	  			    { label: "Performance per Quiz", data: yAxisData, color: "#5482FF" }
+	  		  ];
+            			
+		 
+	  		  var options = {
+	  		 	 series: {
+	  		 	     bars: {
+	  		 	         show: true
+	  		 	     }
+	  		 	 },
+	  		 	 bars: {
+	  		 	     align: "center",
+	  		 	     barWidth: 0.5
+	  		 	 },
+	  		 	 xaxis: {
+	  		 	     axisLabel: "Scores",
+	  		 	     axisLabelUseCanvas: true,
+	  		 	     axisLabelFontSizePixels: 12,
+	  		 	     axisLabelFontFamily: 'Verdana, Arial',
+	  		 	     axisLabelPadding: 10,
+	  		 	     ticks: xAxisData
+	  		 	 },
+	  		 	 yaxis: {
+	  		 	     axisLabel: "No of Students",
+	  		 	     axisLabelUseCanvas: true,
+	  		 	     axisLabelFontSizePixels: 12,
+	  		 	     axisLabelFontFamily: 'Verdana, Arial',
+	  		 	     axisLabelPadding: 3,
+	  				 tickDecimals: 0,
+	  				 min: 0
+					  		   
+		 	   
+	  		 	 },
+	  		 	 legend: {
+	  		 	     noColumns: 0,
+	  		 	     labelBoxBorderColor: "#000000",
+	  		 	     position: "nw"
+	  		 	 },
+	  		 	 grid: {
+	  		 	     hoverable: true,
+	  		 	     borderWidth: 2,
+	  		 	     backgroundColor: { colors: ["#ffffff", "#EDF5FF"] }
+	  		 	 }
+	  		 }; 	
 
-        angular.forEach(scope.scores,function(value,key){
-          data.push({score: value, max_score: scope.maxscores[key]})
-        })
-
-        var margin = {top: 30, right: 30, bottom: 30, left: 40},
-        width = 800 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
-        
-        var y = d3.scale.linear()
-        .range([height,0])
-        .domain([0, d3.max(scope.scores)])
-
-        var x = d3.scale.ordinal()
-        .domain(scope.names)
-        .rangeRoundBands([0, width], .1);
-
-        var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .html(function(d) {
-          return "<div><strong>Total Marks:</strong> <span style='color:red'>" + d.max_score + "</span></div>"
-                  + "<div><strong>Marks Obtained:</strong> <span style = 'color:green'>"+ d.score +"</span></div>";
-        });
-
-        var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom");
-
-        var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left");
-      
-        var chart = d3.select(".chart")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        chart.call(tip);
-  
-        var barWidth= width/data.length    
-  
-        var bar = chart.selectAll("g")
-        .data(data)
-        .enter().append("g")
-        .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
-
-        bar.append("rect")
-        .attr("y", function(d){return y(d.score);})
-        .attr("height",function(d){return height - y(d.score)})
-        .attr("width",barWidth - 1)
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-
-        bar.append("text")
-        .attr("x",barWidth/2)
-        .attr("y",function(d){return y(d.score) + 3;})
-        .attr("dy",".75em")
-        .text(function(d){return d.score})
-
-
-      
-        chart.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-
-        chart.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-      })  
-    }
-  };
-})
+		   
+	  		$.plot(element, dataset,options);   
+				
+				
+			});
+			
+		}
+	}	
+});
 
 quizlib.directive("disableEnter",function(){
   return {
