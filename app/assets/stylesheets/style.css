@@ -37,7 +37,7 @@ body{
 
 .menu li .menu-link a{
 	color: #00426A;
-	font-size: 15px;
+	font-size: 16px;
 }
 .menu li .menu-link a:hover{
 	/*background-color:#999;
@@ -62,7 +62,8 @@ body{
 	
 .row_bottom{
 	height:45px;
-	color:#003656;
+	background-color:#003656;
+	color: white;
 	font-size:14px;
 	/*border-bottom: 2px solid #e1e1e1 */
 	-webkit-box-shadow: 0 7px 6px -5px #777;
@@ -85,7 +86,7 @@ body{
 	}
 .sub_nav_link a{
 	text-decoration:none;
-	color:#003656;
+	color:white;
 	}
 .sub_nav_link a:hover{
 	text-decoration:none;

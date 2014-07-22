@@ -1,20 +1,20 @@
-<div ng-include src="'/assets/partials/common/menu.html'"></div>
+<!-- <div ng-include src="'/assets/partials/common/menu.html'"></div> -->
 <div class="row_bottom">
 	<div class="container">
     <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/create_icon.png" /></span>
+      <span class="sub_nav_icon"><img src="/assets/create_icon_white.png" /></span>
       <span class="sub_nav_link"><a ng-href  ='#/quiz_banks/new' data-toggle = "tooltip" title = "Create Quiz Bank">Create</a></span>
 		</div>
     <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/preview_icon.png" /></span>
+      <span class="sub_nav_icon"><img src="/assets/preview_icon_white.png" /></span>
       <span class="sub_nav_link"><a class = "active" ng-href  ='#/quiz_banks/{{quiz_bank.id}}/show' data-toggle = "tooltip" title = "View Quiz Bank">View</a></span>
     </div>
     <div class="sub_nav" ng-if = "quiz_bank.user.id == current_user.id">
-      <span class="sub_nav_icon"><img src="/assets/edit_icon.png" /></span>
+      <span class="sub_nav_icon"><img src="/assets/edit_icon_white.png" /></span>
       <span class="sub_nav_link"><a ng-href  ='#/quiz_banks/{{quiz_bank.id}}/edit' data-toggle = "tooltip" title = "Edit Quiz Bank">Edit</a></span>
 		</div>
     <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/clone_icon.png" /></span>
+      <span class="sub_nav_icon"><img src="/assets/clone_icon_white.png" /></span>
       <span class="sub_nav_link"><a href="#/quiz_banks/{{quiz_bank_id}}/clone" data-toggle = "tooltip" title = "Clone Quiz Bank">Clone</a></span>
 		</div>
     <div class="sub_nav" ng-if = "quiz_bank.user.id == current_user.id">
@@ -22,15 +22,15 @@
       <span class="sub_nav_link"><a ng-href="#/manage_quiz_banks" ng-click = "deleteQuiz()" data-toggle = "tooltip" title = "Delete Quiz Bank">Delete</a></span>
     </div>
     <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/preview_icon.png" /></span>
+      <span class="sub_nav_icon"><img src="/assets/preview_icon_white.png" /></span>
       <span class="sub_nav_link"><a href="#/quiz_banks/{{quiz_bank_id}}/preview" data-toggle = "tooltip" title = "Preview Quiz Bank">Preview</a></span>
 		</div>
     <div class="sub_nav">
-      <span class="sub_nav_icon"><img src="/assets/serve_quiz_blue.png" /></span>
+      <span class="sub_nav_icon"><img src="/assets/serve_quiz_white.png" /></span>
       <span class="sub_nav_link"><a href = "#/serve_quiz/new?selected_quiz={{quiz_bank.id}}" data-toggle = "tooltip" title = "Serve Quiz Bank">Serve</a></span>
     </div>
     <div class="input-group col-xs-2 pull-right" hide-search>
-			<input type="Search" placeholder="Search..." class="form-control search" />
+			<input type="Search" placeholder="Search..." class="form-control search clear-search" />
       <div class="input-group-btn">
         <span class="search"></span>
 			</div>
