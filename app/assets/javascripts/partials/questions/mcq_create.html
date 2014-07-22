@@ -28,18 +28,18 @@
           <tr ng-repeat = "input in mcq_options track by $index">
             <td>
               
-              <div class = "form-group mar-top-10" ng-class="{ 'has-error' : (McqForm.input{{$index}}.$invalid) && submitted == true}">
+              <div class = "form-group" ng-class="{ 'has-error' : (McqForm.input{{$index}}.$invalid) && submitted == true}" style = "margin-bottom: 0px;">
                 <input name = "input{{$index}}" type = "text", class = "form-control" ng-model = "mcq_options[$index]" add-option disable-enter>
                 <p ng-show="McqForm.input{{$index}}.$invalid && submitted == true" class="help-block">Required</p>
               </div>  
             </td>
             <td>
-              <div class = "form-group mar-top-10">
+              <div class = "form-group" style= "margin-bottom: 0px;">
                 <input type="radio" name="correct" ng-model = "radio" value = "{{$index}}" ng-click = "add_correct_option(radio)" ng-init = "radio = $index" >
               </div>
             </td>
             <td>
-              <a><span class = "glyphicon glyphicon-remove mar-top-20" style = "color:red;" remove-option ng-click = "remove_mcq_input($index)"></span><a>
+              <a><span class = "glyphicon glyphicon-remove" style = "color:red;" remove-option ng-click = "remove_mcq_input($index)"></span><a>
             </td>
           </tr> 
         </tbody>
