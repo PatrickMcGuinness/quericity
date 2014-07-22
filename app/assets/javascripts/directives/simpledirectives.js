@@ -1,49 +1,49 @@
-quizlib.directive("sortAndDrop",function(){
-  return{
-    link: function(scope,element,attrs){
+// quizlib.directive("sortAndDrop",function(){
+//   return{
+//     link: function(scope,element,attrs){
       
-      var adjustment
+//       var adjustment
       
-      $(".simple_with_animation").sortable({
-        group: 'simple_with_animation',
-        pullPlaceholder: false,
-        // animation on drop
-        onDrop: function  (item, targetContainer, _super) {
-          var clonedItem = $('<li/>').css({height: 0})
+//       $(".simple_with_animation").sortable({
+//         group: 'simple_with_animation',
+//         pullPlaceholder: false,
+//         // animation on drop
+//         onDrop: function  (item, targetContainer, _super) {
+//           var clonedItem = $('<li/>').css({height: 0})
           
-          item.before(clonedItem)
-          clonedItem.animate({'height': item.height()})
+//           item.before(clonedItem)
+//           clonedItem.animate({'height': item.height()})
           
-          item.animate(clonedItem.position(), function  () {
-            clonedItem.detach()
-            _super(item)
-          })
-        },
+//           item.animate(clonedItem.position(), function  () {
+//             clonedItem.detach()
+//             _super(item)
+//           })
+//         },
 
-        // set item relative to cursor position
-        onDragStart: function ($item, container, _super) {
-          console.log("drag start")
-          var offset = $item.offset(),
-          pointer = container.rootGroup.pointer
+//         // set item relative to cursor position
+//         onDragStart: function ($item, container, _super) {
+//           console.log("drag start")
+//           var offset = $item.offset(),
+//           pointer = container.rootGroup.pointer
 
-          adjustment = {
-            left: pointer.left - offset.left,
-            top: pointer.top - offset.top
-          }
+//           adjustment = {
+//             left: pointer.left - offset.left,
+//             top: pointer.top - offset.top
+//           }
 
-          _super($item, container)
-        },
-        onDrag: function ($item, position) {
-          console.log("drag")
-          $item.css({
-            left: position.left - adjustment.left,
-            top: position.top - adjustment.top
-          })
-        }
-      })
-    }
-  };
-})
+//           _super($item, container)
+//         },
+//         onDrag: function ($item, position) {
+//           console.log("drag")
+//           $item.css({
+//             left: position.left - adjustment.left,
+//             top: position.top - adjustment.top
+//           })
+//         }
+//       })
+//     }
+//   };
+// })
 
 // quizlib.directive("sortable",function(){
 //   return{
@@ -94,6 +94,15 @@ quizlib.directive("sortAndDrop",function(){
 //   };
 // })
 
+quizlib.directive("goBack",function(){
+  return{
+    link: function(scope,element,attrs){
+      element.on('click', function() {
+        window.history.back();
+      });
+    }
+  };
+})
 quizlib.directive("changeArrow",function(){
   return {
     link: function(scope,element,attrs){
@@ -110,8 +119,6 @@ quizlib.directive("removeChildrenMargin",function(){
   return{
     link:function(scope,element,attrs){
       angular.forEach(element.children(),function(value,key){
-        console.log(value)
-        console.log($(value))
         $(value).css("margin", "0px");
       });
     }

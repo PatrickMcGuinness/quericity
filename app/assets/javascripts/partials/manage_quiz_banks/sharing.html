@@ -12,11 +12,11 @@
       <span ng-if = "quiz_bank.public == false && quiz_bank.shared == false">Current status: Private</span>
     </div>
     <div class="row add_grp_section">
-      <a class = "btn btn-danger btn popover-field" ng-href = "#/manage_quiz_banks" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">
+      <a class = "btn btn-danger btn popover-field" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top" go-back>
         <span class = "glyphicon glyphicon-remove"></span>
         <span> Cancel </span>
       </a>
-      <a class = "btn btn-success btn" ng-href = "#/manage_quiz_banks" data-toggle = "tooltip" title = "Done" tooltip-placement = "top">
+      <a class = "btn btn-success btn" data-toggle = "tooltip" title = "Done" tooltip-placement = "top" go-back>
         <span class = "glyphicon glyphicon-ok"></span>
         <span> Done </span>
       </a>

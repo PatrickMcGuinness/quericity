@@ -119,17 +119,9 @@
             <a ng-Click = "show_title = false" data-toggle = "tooltip" title = "Edit Section" tooltip-placement = "top">
               <span class = "glyphicon glyphicon-edit pull-right mar-left-5" style = "color: white;" ></span>
             </a>
-            
-            <div class="dropdown">
-              <a class="dropdown-toggle" ng-Click = "AddQuestion(section.id,$index)" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top">
-                <span class = "glyphicon glyphicon-plus-sign pull-right mar-left-5" style = "color:white;"></span>
-              </a>
-              <ul class="dropdown-menu pull-right mar-top-20">
-                <li ng-repeat="question in question_types">
-                  <a ng-Click = "addNewQuestion(question,section)" clear-ckeditor>{{question}}</a>
-                </li>
-              </ul>
-            </div>           
+            <a class="dropdown-toggle" ng-Click = "addNewQuestion('Multiple Choice',section)" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top">
+              <span class = "glyphicon glyphicon-plus-sign pull-right mar-left-5" style = "color:white;"></span>
+            </a>           
           </div>
         </div>
         <div class = "section-questions" ng-controller = "viewQuestionsCtrl" >
@@ -166,23 +158,13 @@
       </div>
       <div class="mar-top-20 pull-left">
         <a ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top" scroll-to-new-section class = "btn btn-primary">
-        <span class = "glyphicon glyphicon-plus"></span>Add Section
+          <span class = "glyphicon glyphicon-plus"></span>Add Section
         </a>
-        <div class="btn-group" ng-controller = "sectionCtrl">
-          <button type="button" class="btn btn-warning">
+        <div ng-controller = "sectionCtrl" class = "pull-left">
+          <a ng-click = "addNewQuestion('Multiple Choice',last_section)" class="btn btn-warning">
             <span class = "glyphicon glyphicon-plus"></span>
             Add Question
-          </button>
-          <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a ng-click="addNewQuestion('True False',last_section)" style = "padding: 0px 18px;">True False</a></li>
-            <li><a ng-click="addNewQuestion('Multiple Choice',last_section)" style = "padding: 0px 18px;">Multiple Choice</a></li>
-            <li><a ng-click="addNewQuestion('Fill in blank',last_section)" style = "padding: 0px 18px;">Fill in blank</a></li>
-            <li><a ng-click="addNewQuestion('Open Ended',last_section)" style = "padding: 0px 18px;">Open ended</a></li>
-          </ul>
+          </a>
         </div>
       </div>
     </div>

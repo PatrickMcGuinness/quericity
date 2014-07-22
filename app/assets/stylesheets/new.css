@@ -312,6 +312,10 @@ ul.navigation li ul li a{
 	padding: 10px;
 	border-top: 0px;
 }
+.edit-question-box{
+	padding: 10px;
+	border-top: 0px;
+}
 .view-question-box{
 	border-top:1px solid #bdbdbd;
 	padding:10px;
@@ -323,8 +327,16 @@ ul.navigation li ul li a{
 	width:100%;
 	padding: 5px;
 }
+
+.edit-question-box .heading{
+	border-bottom: 1px solid #bdbdbd;
+	color: green;
+	font-size: 14px;
+	width:100%;
+	padding: 5px;
+}
 .question-footer{
-	background-color: grey;
+	/*background-color: grey; */
 	min-height: 44px;
 }
 ul.tag-list{

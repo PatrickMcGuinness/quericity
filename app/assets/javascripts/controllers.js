@@ -1949,8 +1949,8 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
     $scope.quiz_bank = data
     var obj = new Date(data.created_at)
     var obj2 = new Date(data.updated_at)
-    $scope.created_at = obj.getDate() +"-" + obj.getMonth() +"-"+obj.getFullYear()
-    $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()
+    $scope.created_at = (obj.getMonth() + 1) + "-" + obj.getDate() + "-" +obj.getFullYear()
+    $scope.updated_at = (obj2.getMonth() + 1) + "-" + obj2.getDate() + "-" +obj2.getFullYear()
   })
 
   $scope.$on("question_created",function(event){
@@ -2078,11 +2078,23 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   });
 
   $scope.$on("question_created",function(event){
-    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+    Section.all($scope.quiz_bank_id).$promise.then(function(data){
+      $scope.quiz_sections = data
+      $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
+      $scope.$broadcast("last_section_changed",$scope.last_section);
+    })
+  })
+  
+  $scope.$on("question_changed",function(event){
+    Section.all($scope.quiz_bank_id).$promise.then(function(data){
+      $scope.quiz_sections = data
+      $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
+      $scope.$broadcast("last_section_changed",$scope.last_section)
+    })
   })
 
-  $scope.$on("question_changed",function(event){
-    $scope.quiz_sections = Section.all($scope.quiz_bank_id)
+  $scope.$on("last_section_changed",function(event,section){
+    $scope.last_section = section;
   })
   
   $scope.saveQuiz = function(isValid){

@@ -136,17 +136,9 @@
             <a ng-Click = "show_title = false" data-toggle = "tooltip" title = "Edit Section" tooltip-placement = "top">
               <span class = "glyphicon glyphicon-edit pull-right mar-left-5" style = "color: white;" ></span>
             </a>
-            
-            <div class="dropdown">
-              <a class="dropdown-toggle" ng-Click = "AddQuestion(section.id,$index)" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top">
-                <span class = "glyphicon glyphicon-plus-sign pull-right mar-left-5" style = "color:white;"></span>
-              </a>
-              <ul class="dropdown-menu pull-right mar-top-20">
-                <li ng-repeat="question in question_types">
-                  <a ng-Click = "addNewQuestion(question,section)" clear-ckeditor>{{question}}</a>
-                </li>
-              </ul>
-            </div>           
+            <a class="dropdown-toggle" ng-Click = "addNewQuestion('Multiple Choice',section)" data-toggle = "tooltip" title = "Add new Question" tooltip-placement = "top">
+              <span class = "glyphicon glyphicon-plus-sign pull-right mar-left-5" style = "color:white;"></span>
+            </a>        
           </div>
         </div>
         <div class = "section-questions" ng-controller = "viewQuestionsCtrl" >

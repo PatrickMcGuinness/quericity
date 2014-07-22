@@ -75,7 +75,7 @@
           <div class="col-xs-2 mar-top-20">
             <select class="form-control" ng-model = "option.duration_type">
               <option value = "">Select</option>
-              <option value = "1">Mintues</option>
+              <option value = "1">Minutes</option>
             </select>
           </div>
           <div class = "col-xs-1 mar-top-20"> or
@@ -157,7 +157,7 @@
               Your Answer
             </th>
             <th class = "col-xs-2">
-              Score
+              Result
             </th>
           </thead>
           <tbody>
@@ -168,8 +168,11 @@
               <td>
                 {{answer.answer}}
               </td>
-              <td>
-                {{answer.correct}}
+              <td ng-if = "answer.correct == 'Correct'">
+                <img src="/assets/mcqtick.png" />
+              </td>
+              <td = ng-if = "answer.correct == 'Incorrect'">
+                <img src="/assets/mcqcross.png" />
               </td>
             </tr>
             <tr ng-repeat = "answer_to_grade in to_be_graded">
