@@ -75,7 +75,7 @@
             </td>
             <td style = "text-align:left;" class = "custom-padding">{{quiz_bank.user.first_name}} {{quiz_bank.user.last_name}}</td>
             <td class = "custom-padding">
-              {{quiz_bank.questions.length}}
+              {{quiz_bank.questions}}
             </td>
             <td class = "custom-padding" ng-if = "current_user.id == quiz_bank.user.id && (quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == false" style = "text-align:left;">
               <img src = "/assets/lock.png">

@@ -58,7 +58,7 @@ class UsersController < ApplicationController
   end
 
   def quiz_banks
-    render json: current_user.quiz_banks
+    render json: QuizBank.make_json_for_list(current_user.quiz_banks,current_user)
   end
 
   def bar_graph_data

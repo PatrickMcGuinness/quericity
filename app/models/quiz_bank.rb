@@ -39,12 +39,24 @@ class QuizBank < ActiveRecord::Base
     self.public == QuizBank::Public::YES
   end
 
+  def self.make_json_for_list(quiz_banks,user)
+    quiz_bank_json = []
+    favourite_quiz_banks = user.favourite_quiz_banks
+    quiz_banks.each do |quiz_bank|
+      quiz_bank_json.push({title: quiz_bank.title, id: quiz_bank.id, repository_id: quiz_bank.repository_id, 
+        topics: quiz_bank.topics.map{|topic| {title: topic.title}}, public: quiz_bank.public, questions: quiz_bank.questions.count.as_json(),
+        shared: quiz_bank.is_shared?,is_favourite: favourite_quiz_banks.select{|f| f.quiz_bank_id == quiz_bank.id}.present?,user: {id: quiz_bank.owner.id, first_name: quiz_bank.owner.first_name, last_name: quiz_bank.owner.last_name}})
+    end
+    quiz_bank_json
+  end
+
   def self.quiz_banks_list(user)
+    
     quiz_banks_list = user.quiz_banks.where("status = ?",QuizBank::Status::SAVED)
     repository_ids = user.repositories.pluck(:id)
     quiz_banks_list = quiz_banks_list + QuizBank.where("repository_id NOT IN (?) and public = ?",repository_ids, QuizBank::Public::YES)
-    quiz_banks_list = quiz_banks_list + QuizBank.joins(:shares).where("shares.teacher_id = ?",user.id)
-    quiz_banks_list
+    quiz_banks_list = quiz_banks_list + QuizBank.joins(:shares).where("shares.teacher_id = ?",user.id)    
+    quiz_bank_json = QuizBank.make_json_for_list(quiz_banks_list,user)
   end
 
   def is_favourite?(user)

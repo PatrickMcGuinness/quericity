@@ -2,9 +2,6 @@ quizlib.factory('FavouriteQuiz', ['$resource', function($resource,$http) {
   function FavouriteQuiz() {
     this.service = $resource('/favourite_quiz_banks/:id/:is_favourite', {id: '@id'},
                   {update:{method:"PUT",isArray:false},
-                   query:{method:"GET",transformResponse: [function(data,headersGetter){
-                    return {result: JSON.parse(data)}
-                   }]},
                    is_favourite:{method:"GET",isArray:false,transformResponse: [function(data,headersGetter){
                     return {result: JSON.parse(data)}
                    }]}

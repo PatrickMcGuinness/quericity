@@ -39,7 +39,7 @@ class QuizBanksController < ApplicationController
   end
 
   def repo_quiz_banks
-    render json: current_user.repositories.find(params[:id]).quiz_banks.where("status = ?",QuizBank::Status::SAVED)
+    render json: current_user.repo_quiz_banks(params)
   end
 
   def clone
@@ -54,6 +54,7 @@ class QuizBanksController < ApplicationController
 
   def quiz_banks_list
     render json: QuizBank.quiz_banks_list(current_user)
+    #render json: 
   end
 
   def share_with_list

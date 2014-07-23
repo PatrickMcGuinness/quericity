@@ -1126,34 +1126,10 @@ quizlib.controller("ManageStarredCtrl",['$scope','QuizBank','Repository','User',
 
   
 
-  QuizBank.shared_quiz_banks().$promise.then(function(data){
-    $scope.shared_quiz_banks = data
-    angular.forEach($scope.shared_quiz_banks,function(value,key){
-      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
-        value.is_favourite = data.result
-      })
-    })
-  })
-  
-  FavouriteQuiz.all().$promise.then(function(data){
-    angular.forEach(data.result,function(value,key){
-      QuizBank.get(value.quiz_bank_id).$promise.then(function(data){
-        data.is_favourite = true
-        $scope.starred_quiz_banks.push(data)
-      })
-    })
-  })
-
+  $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
   $scope.current_user = User.get_current_user()
-  
-  QuizBank.quiz_banks_list().$promise.then(function(data){
-    $scope.quiz_banks = data
-    angular.forEach(data, function(value, key){
-      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
-        value.is_favourite = data.result
-      })
-    });
-  })
+  $scope.quiz_banks = QuizBank.quiz_banks_list()
+  $scope.starred_quiz_banks = FavouriteQuiz.all()
   
   $scope.make_favourite = function(quiz_bank){
     FavouriteQuiz.save({quiz_bank_id: quiz_bank.id})
@@ -1229,34 +1205,13 @@ quizlib.controller("ManageSharedCtrl",['$scope','QuizBank','Repository','User','
 
   
 
-  QuizBank.shared_quiz_banks().$promise.then(function(data){
-    $scope.shared_quiz_banks = data
-    angular.forEach($scope.shared_quiz_banks,function(value,key){
-      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
-        value.is_favourite = data.result
-      })
-    })
-  })
-  
-  FavouriteQuiz.all().$promise.then(function(data){
-    angular.forEach(data.result,function(value,key){
-      QuizBank.get(value.quiz_bank_id).$promise.then(function(data){
-        data.is_favourite = true
-        $scope.starred_quiz_banks.push(data)
-      })
-    })
-  })
-
+  $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
+  $scope.quiz_banks = QuizBank.quiz_banks_list()
   $scope.current_user = User.get_current_user()
+  $scope.starred_quiz_banks = FavouriteQuiz.all()
+
   
-  QuizBank.quiz_banks_list().$promise.then(function(data){
-    $scope.quiz_banks = data
-    angular.forEach(data, function(value, key){
-      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
-        value.is_favourite = data.result
-      })
-    });
-  })
+  
   
   $scope.make_favourite = function(quiz_bank){
     FavouriteQuiz.save({quiz_bank_id: quiz_bank.id})
@@ -1288,11 +1243,6 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
 
   $scope.alert = Message.get_message("ManageCtrl")
   
-  $scope.$on("title_filter_changed",function(event,titleFilter){
-    console.log("title filter chnaged")
-    $scope.titleFilter = titleFilter
-    console.log($scope.titleFilter)
-  })
 
   $scope.remove_alert = function(){
     $scope.alert = undefined
@@ -1337,35 +1287,10 @@ quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','Questi
   }
 
   
-
-  QuizBank.shared_quiz_banks().$promise.then(function(data){
-    $scope.shared_quiz_banks = data
-    angular.forEach($scope.shared_quiz_banks,function(value,key){
-      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
-        value.is_favourite = data.result
-      })
-    })
-  })
-  
-  FavouriteQuiz.all().$promise.then(function(data){
-    angular.forEach(data.result,function(value,key){
-      QuizBank.get(value.quiz_bank_id).$promise.then(function(data){
-        data.is_favourite = true
-        $scope.starred_quiz_banks.push(data)
-      })
-    })
-  })
-
   $scope.current_user = User.get_current_user()
-  
-  QuizBank.quiz_banks_list().$promise.then(function(data){
-    $scope.quiz_banks = data
-    angular.forEach(data, function(value, key){
-      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
-        value.is_favourite = data.result
-      })
-    });
-  })
+  $scope.quiz_banks = QuizBank.quiz_banks_list()
+  $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
+  $scope.starred_quiz_banks = FavouriteQuiz.all()
   
   $scope.make_favourite = function(quiz_bank){
     FavouriteQuiz.save({quiz_bank_id: quiz_bank.id})
@@ -1441,38 +1366,12 @@ quizlib.controller("ManageMyCtrl",['$scope','QuizBank','Repository','User','Ques
 
   
 
-  QuizBank.shared_quiz_banks().$promise.then(function(data){
-    $scope.shared_quiz_banks = data
-    angular.forEach($scope.shared_quiz_banks,function(value,key){
-      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
-        value.is_favourite = data.result
-      })
-    })
-  })
-  
-  FavouriteQuiz.all().$promise.then(function(data){
-    angular.forEach(data.result,function(value,key){
-      QuizBank.get(value.quiz_bank_id).$promise.then(function(data){
-        data.is_favourite = true
-        $scope.starred_quiz_banks.push(data)
-      })
-    })
-  })
-
-  $scope.current_user = User.get_current_user()
-
-
-  
-  QuizBank.quiz_banks_list().$promise.then(function(data){
-    $scope.quiz_banks = data
-    angular.forEach(data, function(value, key){
-      FavouriteQuiz.is_favourite(value.id).$promise.then(function(data){
-        value.is_favourite = data.result
-      })
-    });
-  })
-
+  $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
   $scope.my_quiz_banks = User.quiz_banks()
+  $scope.quiz_banks = QuizBank.quiz_banks_list()
+  $scope.current_user = User.get_current_user()
+  $scope.starred_quiz_banks = FavouriteQuiz.all()
+
   
   $scope.make_favourite = function(quiz_bank){
     FavouriteQuiz.save({quiz_bank_id: quiz_bank.id})

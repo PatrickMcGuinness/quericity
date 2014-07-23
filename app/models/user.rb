@@ -91,7 +91,9 @@ class User < ActiveRecord::Base
   end
   
   def favourite_quiz_banks_to_show
-    self.favourite_quiz_banks.joins(:quiz_bank).where("quiz_banks.deleted_at IS NULL")
+    #self.favourite_quiz_banks.joins(:quiz_bank).where("quiz_banks.deleted_at IS NULL")
+    quiz_banks = QuizBank.joins(:favourite_quiz_banks).where("quiz_banks.deleted_at IS NULL and favourite_quiz_banks.user_id = ?",self.id)
+    QuizBank.make_json_for_list(quiz_banks,self)
   end
 
   def student_served_quizzes
@@ -128,9 +130,15 @@ class User < ActiveRecord::Base
     {quizzes: self.sharings.map{|s| s.get_average}} 
   end
 
+  def repo_quiz_banks(params)
+    quiz_banks = self.repositories.find(params[:id]).quiz_banks.where("status = ?",QuizBank::Status::SAVED)
+    QuizBank.make_json_for_list(quiz_banks,self)
+  end
+
 
   def shared_quiz_banks
-    QuizBank.joins("Left outer join shares on shares.shareable_id = quiz_banks.id").where("quiz_banks.public = ? OR shares.teacher_id = ? OR shares.owner_id = ?",QuizBank::Public::YES, self.id, self.id)
+    quiz_banks = QuizBank.joins("Left outer join shares on shares.shareable_id = quiz_banks.id").where("quiz_banks.public = ? OR shares.teacher_id = ? OR shares.owner_id = ?",QuizBank::Public::YES, self.id, self.id)
+    QuizBank.make_json_for_list(quiz_banks,self)
   end
 
   def is_owner_of_quiz_bank?(quiz_bank)
