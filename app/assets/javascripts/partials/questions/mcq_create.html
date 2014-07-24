@@ -12,7 +12,7 @@
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (McqForm.description.$invalid) && submitted == true}">
         <label>Question:</label>
-        <textarea name="description" rows="3" class = "form-control" ng-model = "question.description" data-ck-editor required>
+        <textarea name="description" rows="2" class = "form-control" ng-model = "question.description" data-ck-editor required>
         </textarea>
         <p ng-show="McqForm.description.$invalid && submitted == true" class="help-block">Question is required.</p>
       </div>  
@@ -21,25 +21,20 @@
       <table class = "table table-bordered">
         <thead>
           <th class = "col-xs-10">Answers</th>
-          <th class = "col-xs-1">Correct</th>
-          <th class = "col-xs-1"></th>
         </thead>
         <tbody>
           <tr ng-repeat = "input in mcq_options track by $index">
             <td>
-              
-              <div class = "form-group" ng-class="{ 'has-error' : (McqForm.input{{$index}}.$invalid) && submitted == true}" style = "margin-bottom: 0px;">
-                <input name = "input{{$index}}" type = "text", class = "form-control" ng-model = "mcq_options[$index]" add-option disable-enter>
-                <p ng-show="McqForm.input{{$index}}.$invalid && submitted == true" class="help-block">Required</p>
-              </div>  
-            </td>
-            <td>
-              <div class = "form-group" style= "margin-bottom: 0px;">
+              <div class = "form-group" style= "margin-bottom: 0px; float:left margin-top: 6px;">
                 <input type="radio" name="correct" ng-model = "radio" value = "{{$index}}" ng-click = "add_correct_option(radio)" ng-init = "radio = $index" >
               </div>
-            </td>
-            <td>
-              <a><span class = "glyphicon glyphicon-remove" style = "color:red;" remove-option ng-click = "remove_mcq_input($index)"></span><a>
+              <div class = "form-group col-xs-11" ng-class="{ 'has-error' : (McqForm.input{{$index}}.$invalid) && submitted == true}" style = "margin-bottom: 0px;">
+                <input name = "input{{$index}}" type = "text", class = "form-control" ng-model = "mcq_options[$index]" add-option disable-enter>
+                <p ng-show="McqForm.input{{$index}}.$invalid && submitted == true" class="help-block">Required</p>
+              </div>
+              <div style = "margin-top: 6px;">
+                <a><span class = "glyphicon glyphicon-trash" style = "color:red;" remove-option ng-click = "remove_mcq_input($index)"></span><a>
+              </a>    
             </td>
           </tr> 
         </tbody>

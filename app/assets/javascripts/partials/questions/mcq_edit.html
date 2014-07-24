@@ -11,19 +11,19 @@
     <table class = "table table-bordered">
       <thead>
         <th class = "col-xs-10">Answers</th>
-        <th class = "col-xs-1">Correct</th>
-        <th class = "col-xs-1"></th>
       </thead>
       <tbody>
         <tr ng-repeat = "option in question.question_options">
           <td>
-            <input type = "text", class = "form-control" ng-model = "option.answer" edit-add-option = "add_question_option(question)" disable-enter>
-          </td>
-          <td>
-            <input ng-click = "select_option(option)" type="radio" name="correct" ng-model = "correct" value = "{{$index}}" ng-checked = "option.is_correct == true" >
-          </td>
-          <td>
-            <a><span class = "glyphicon glyphicon-remove" style = "color:red" remove-option ng-click = "remove_question_option(question,$index)"></span></a>
+            <div style= "margin-top:6px; float:left">
+              <input ng-click = "select_option(option)" type="radio" name="correct" ng-model = "option.is_correct" value = "{{$index}}" ng-checked = "option.is_correct == true" >
+            </div>
+            <div class = "col-xs-11">
+              <input type = "text", class = "form-control" ng-model = "option.answer" edit-add-option = "add_question_option(question)" disable-enter>
+            </div>
+            <div style = "margin-top:6px">
+              <a><span class = "glyphicon glyphicon-trash" style = "color:red" remove-option ng-click = "remove_question_option(question,$index)"></span></a>
+            </div>  
           </td>
         </tr>
       </tbody>

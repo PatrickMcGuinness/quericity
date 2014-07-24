@@ -1598,22 +1598,17 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
     }
   }
   $scope.add_mcq_input = function(){
-    console.log("in the add mcq input")
-    console.log($scope.mcq_options)
     $scope.mcq_options.push('')
-    console.log($scope.mcq_options)
   }
   $scope.add_question_option = function(question){
     question.question_options.push({question_id: question.id, is_correct :false, answer: null})
   }
 
   $scope.add_correct_option = function(radio){
-    console.log(radio)
     $scope.correct_input = radio
   }
   
   $scope.create_mcq = function(isValid){
-    console.log($scope.correct_input)
     $scope.submitted = true
     var question_options = []
     inputs = $scope.mcq_options
@@ -1626,7 +1621,7 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
         else{
           is_correct = false
         }
-        question_options.push({answer:inputs[i],is_correct: is_correct}) 
+        question_options.push({answer:inputs[i],is_correct: is_correct, seq: i}) 
       }  
     }
     Question.save($scope.quiz_bank_id, $scope.section_id,

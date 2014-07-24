@@ -83,7 +83,7 @@ class Question < ActiveRecord::Base
     params[:question_options].each do |question_option|
       QuestionOption.create(answer: question_option[:answer],
                       is_correct: question_option[:is_correct],
-                      question_id: question.id)
+                      question_id: question.id, seq: question_option[:seq])
     end
     question
   end
@@ -94,13 +94,15 @@ class Question < ActiveRecord::Base
       params[:question_options].each do |question_option|
         QuestionOption.create(answer: question_option[:answer],
                       is_correct: question_option[:is_correct],
-                      question_id: question_option[:question_id])
+                      question_id: question_option[:question_id],
+                      seq: question_option[:seq])
       end
     else 
       params[:question_options].each do |question_option|
         QuestionOption.find(question_option[:id]).update_attributes(answer: question_option[:answer],
                                                               is_correct: question_option[:is_correct],
-                                                              question_id:question_option[:question_id])
+                                                              question_id:question_option[:question_id],
+                                                              seq: question_option[:seq])
       end
     end  
     self.update_attributes(params[:question])
@@ -139,7 +141,7 @@ class Question < ActiveRecord::Base
       :difficulty_level => difficulty_level,
       :reference_url => reference_url,
       :section_id => section_id,
-      :question_options => self.question_options.as_json()
+      :question_options => self.question_options.order("seq ASC").as_json()
     }
   end
    
