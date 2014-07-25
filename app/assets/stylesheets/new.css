@@ -2,6 +2,44 @@
   color: white;
   background-color: #22A2DC
 }
+.home-button{
+	width: 140px;
+	color:white !important;
+	font-size: 28px;
+}
+.home-signup{
+	background-color: #008000
+}
+.home-login{
+	background-color: #0047FF
+}
+.home-signup:hover{
+	background-color: #009000
+}
+.home-login:hover{
+	background-color: #0057FF
+}
+
+.header-button
+{
+	border-radius: 12px;
+	padding: 7px !important;
+	width: 145px;
+	text-align: center;
+	color: white !important;
+	font-size: 20px;
+	margin-top: 12px;
+}
+.header-button:hover
+{
+	border-radius: 12px ;
+	padding: 7px;
+	width: 145px;
+	text-align: center;
+	color: black !important;
+	font-size: 20px;
+	margin-top: 12px;
+}
 
 .clear-search{
 	margin-top: 8px;

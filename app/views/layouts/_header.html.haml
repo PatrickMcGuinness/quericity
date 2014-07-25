@@ -66,9 +66,9 @@
         -else
           %ul.nav.navbar-nav.navbar-right{style: "margin-top:10px;"}
             %li
-              =link_to 'Sign up' , new_user_registration_path
+              =link_to 'Sign up' , new_user_registration_path, class: "home-signup header-button"
             %li
-              =link_to 'Log in' , new_user_session_path  
+              =link_to 'Log in' , new_user_session_path, class: "home-login header-button"  
 
 :javascript
   $(document).ready(function(){
@@ -81,11 +81,9 @@
     $(window).resize(function(){
       console.log("hello")
       if(window.innerWidth < 747){
-        console.log("in the inner if")
         $(".menu li").addClass("col-xs-12")
       }
       else{
-        console.log("in the else")
         $(".menu li").removeClass("col-xs-12")
       }
     })
