@@ -1,3 +1,20 @@
+.btn-red{
+	background-color: #D94A38 !important;
+	color:white !important;
+}
+.search-bar-icon{
+	position: absolute;
+	z-index: 1000;
+	color: black;
+	margin-top: 14px;
+}
+.large-search-icon{
+	margin-left: -20px;
+}
+.create-buttons{
+	margin-right: 0px !important;
+	text-align: center
+}
 .question-option-tab{
   color: white;
   background-color: #22A2DC

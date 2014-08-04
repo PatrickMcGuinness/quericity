@@ -1,5 +1,9 @@
 <div class="col-xs-2 left_section" ng-controller = "Navigation" check-resolution>
   <ul class = "row">
+    <li class = "create-buttons">
+      <a class = "showcreaterepo btn-sm btn-red" data-toggle = "tooltip" title = "Create new repo" tooltip-placement = "top">Create Folder</a>
+      <a ng-href  ='#/quiz_banks/new' data-toggle = "tooltip" title = "Create new quiz" tooltip-placement = "top" class = "btn-sm btn-red">Create Quiz</a>
+    </li>
     <li style = "margin-right: 0px;">
       <div class = "complete_row" ng-class="{ 'active' : (no_all_assessments_cookie() == false)}">
         <a ng-href = "#/manage_quiz_banks" ng-click = "update_status('all_assessments')" ng-right-click = "$event.stopPropagation()" data-toggle = "tooltip" title = "List of quizzes shared on quizlib" tooltip-placement = "top">

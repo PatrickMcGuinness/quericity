@@ -99,7 +99,7 @@
         {{quiz_bank.instructions}}
         </p>
     </div>        
-    <div class="col-xs-12">
+    <div class="col-xs-12" ng-hide = "show_answer">
       <div class="col-xs-12 strip" ng-repeat = "question in show_questions">
         <div class="col-xs-12 ">
           <span class = "pull-left">{{$index + 1}})</span>
@@ -130,15 +130,20 @@
         </div>
       </div>
       <div class="col-xs-12 strip" ng-show = "submit">
-        <span class = "col-xs-2 col-xs-offset-4">
+        <span class = "col-xs-3 col-xs-offset-4">
           <button ng-if = "option.all_questions == 1" class = "btn btn-success" ng-click = "submitQuiz(show_questions)">
             <span class = "glyphicon glyphicon-thumbs-up"></span>
             <span>Submit</span>
           </button>
-          <button ng-if = "option.all_questions == 0" class = "btn btn-success" ng-click = "submitQuestion(show_questions)">
-            <span class = "glyphicon glyphicon-thumbs-up"></span>
-            <span>Submit</span>
+          <button ng-if = "option.all_questions == 0" class = "btn btn-success" ng-click = "next_questions()">
+            <span>Next</span>
+            <span class = "glyphicon glyphicon-chevron-right"></span>
           </button>
+          <button ng-if = "option.all_questions == 0" class = "btn btn-success" ng-click = "previous_questions()">
+            <span class = "glyphicon glyphicon-chevron-left"></span>
+            <span>Previous</span>
+          </button>
+
         </span>
       </div>
 
@@ -161,30 +166,24 @@
             </th>
           </thead>
           <tbody>
-            <tr ng-repeat = "answer in show_answers">
-              <td>
-                {{answer.question_answer}}
+            <tr ng-repeat = "question in answered_questions">
+              <td ng-if = "question.question_type == 3">
+                <span mathjax-bind = "question.question_answer"></span>
+              </td>
+              <td ng-if = "question.question_type !=3">
+                {{question.question_answer}}
               </td>
               <td>
-                {{answer.answer}}
+                {{question.answer}}
               </td>
-              <td ng-if = "answer.correct == 'Correct'">
+              <td ng-if = "question.correct == 'Correct'">
                 <img src="/assets/mcqtick.png" />
               </td>
-              <td = ng-if = "answer.correct == 'Incorrect'">
+              <td = ng-if = "question.correct == 'Incorrect'">
                 <img src="/assets/mcqcross.png" />
               </td>
-            </tr>
-            <tr ng-repeat = "answer_to_grade in to_be_graded">
-              <td class = "row">
-                <span mathjax-bind = "answer_to_grade.question_answer"></span>
-                <!--{{answer_to_grade.question_answer}} -->
-              </td>
-              <td>
-                {{answer_to_grade.answer}}
-              </td>
-              <td>
-                {{answer_to_grade.status}}
+              <td ng-if = "question.correct != 'Correct' && question.correct != 'Incorrect'">
+                {{question.correct}}
               </td>
             </tr>
           </tbody>
