@@ -31,10 +31,10 @@
 	background-color: #0047FF
 }
 .home-signup:hover{
-	background-color: #009000
+	background-color: #009000 !important
 }
 .home-login:hover{
-	background-color: #0057FF
+	background-color: #0057FF !important
 }
 
 .header-button
