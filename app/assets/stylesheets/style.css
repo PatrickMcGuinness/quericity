@@ -91,12 +91,12 @@ body{
 .sub_nav_link a:hover{
 	text-decoration:none;
 	padding-bottom: 10px;
-	border-bottom: 3px solid #003656;
+	border-bottom: 3px solid white;
 	}
 .sub_nav_link a.active{
   text-decoration:none;
   padding-bottom: 10px;
-  border-bottom: 3px solid #003656;
+  border-bottom: 3px solid white;
 }	
 	
 .search{

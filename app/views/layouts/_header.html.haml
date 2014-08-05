@@ -15,29 +15,29 @@
         -if user_signed_in?
           %ul.nav.navbar-nav.navbar-left.menu
             %ng-view
-              %li
+              %li{"ng-contoller" => "MenuCtrl"}
                 %span.sub_nav_icon
                   %img{src:"/assets/manage_menu_icon.png"} 
                 %span.menu-link
-                  %a{href:"#/manage_quiz_banks"}
+                  %a.manage-link.header-link{href:"#/manage_quiz_banks"}
                     = "Manage"
               %li
                 %span.sub_nav_icon
                   %img{src: "/assets/serve_quiz.png"}
                 %span.menu-link
-                  %a{href: '#/served_quizzes'}
+                  %a.serve-link.header-link{href: '#/served_quizzes'}
                     = "Serve"
               %li
                 %span.sub_nav_icon
                   %img{src: "/assets/grade_menu_icon.png"}
                 %span.menu-link
-                  %a{href:"#/grade"}
+                  %a.grade-link.header-link{href:"#/grade"}
                     = "Grade"
               %li
                 %span.sub_nav_icon
                   %img{src: "/assets/analyse_menu_icon.png"}
                 %span.menu-link  
-                  %a{href:"#/analyze/quiz_report"}
+                  %a.analyze-link.header-link{href:"#/analyze/quiz_report"}
                     = "Analyze"
           %ul.nav.navbar-nav.navbar-right.my-header-nav{style: "margin-right: 10px;"}
             .dropdown.name

@@ -44,11 +44,12 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <%=render "layouts/header"%>
+    <%=render "layouts/header"%>    
     <div ng-app="quizlib">
-      <ng-view>
-        <%= yield %>
-      </ng-view>
+        <ng-view>
+            <div check-active></div>
+            <%= yield %>
+        </ng-view>
     </div>
     <%=render "layouts/footer"%>   
     

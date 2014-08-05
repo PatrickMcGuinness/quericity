@@ -94,6 +94,26 @@
 //   };
 // })
 
+quizlib.directive("checkActive",function($route){
+  return{
+    link: function(scope,element,attrs){
+      $(".header-link").removeClass("active")
+      if($route.current.activetab == "manage"){
+        $(".manage-link").addClass("active")
+      }
+      if($route.current.activetab == "grade"){
+        $(".grade-link").addClass("active")
+      }
+      if($route.current.activetab == "serve"){
+        $(".serve-link").addClass("active")
+      }
+      if($route.current.activetab == "analyze"){
+        $(".analyze-link").addClass("active")
+      }
+    }
+  };
+})
+
 quizlib.directive("goBack",function(){
   return{
     link: function(scope,element,attrs){
