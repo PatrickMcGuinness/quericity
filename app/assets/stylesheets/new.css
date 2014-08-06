@@ -648,9 +648,14 @@ quiz-bargraph {
 			        height:300px;
 				            }
 student-bargraph {
-                display: block;
-                        width:700px;
-                                height:300px;
-                                            }
+	display: block;
+        width:700px;
+        height:300px;
+}
+student-linegraph {
+	display: block;
+	width:700px;
+	height:350px;
+}
 
 

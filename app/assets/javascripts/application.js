@@ -33,7 +33,7 @@
 //= require jquery-sortable
 //= require jquery.flot
 //=require jquery.flot.symbol
-
+//=require jquery.flot.axislabels
 loadingimage =  "<img alt='Please wait' src='/assets/loading.gif' style='margin-left:5px;' class='loading-img'>"
 
 function get_ajax_loader_html() {
