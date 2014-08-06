@@ -12,46 +12,47 @@
             %img{src: "/assets/logo.png",style: "height: 55px;width:180px;"}
 
       .collapse.navbar-collapse#bs-example-navbar-collapse-1
-        -if user_signed_in? and current_user.is_professor?
-          %ul.nav.navbar-nav.navbar-left.menu
-            %ng-view
-              %li{"ng-contoller" => "MenuCtrl"}
-                %span.sub_nav_icon
-                  %img{src:"/assets/manage_menu_icon.png"} 
-                %span.menu-link
-                  %a.manage-link.header-link{href:"#/manage_quiz_banks"}
-                    = "Manage"
-              %li
-                %span.sub_nav_icon
-                  %img{src: "/assets/serve_quiz.png"}
-                %span.menu-link
-                  %a.serve-link.header-link{href: '#/served_quizzes'}
-                    = "Serve"
-              %li
-                %span.sub_nav_icon
-                  %img{src: "/assets/grade_menu_icon.png"}
-                %span.menu-link
-                  %a.grade-link.header-link{href:"#/grade"}
-                    = "Grade"
-              %li
-                %span.sub_nav_icon
-                  %img{src: "/assets/analyse_menu_icon.png"}
-                %span.menu-link  
-                  %a.analyze-link.header-link{href:"#/analyze/quiz_report"}
-                    = "Analyze"
-        -if user_signed_in? and current_user.is_student?
-          %ul.nav.navbar-nav.navbar-left.menu
-            %ng-view
-              %li
-                %span.sub_nav_icon
-                  %img{src: "/assets/manage_menu_icon.png"}
-                %span.menu-link  
-                  %a{href:"#/dashboard"}Dashboard
-              %li
-                %span.sub_nav_icon
-                  %img{src:"/assets/serve_quiz.png"}
-                %span.menu-link  
-                  %a{href:"#/quizlist"}Quiz        
+        -if user_signed_in?
+          -if current_user.is_professor?
+            %ul.nav.navbar-nav.navbar-left.menu
+              %ng-view
+                %li{"ng-contoller" => "MenuCtrl"}
+                  %span.sub_nav_icon
+                    %img{src:"/assets/manage_menu_icon.png"} 
+                  %span.menu-link
+                    %a.manage-link.header-link{href:"#/manage_quiz_banks"}
+                      = "Manage"
+                %li
+                  %span.sub_nav_icon
+                    %img{src: "/assets/serve_quiz.png"}
+                  %span.menu-link
+                    %a.serve-link.header-link{href: '#/served_quizzes'}
+                      = "Serve"
+                %li
+                  %span.sub_nav_icon
+                    %img{src: "/assets/grade_menu_icon.png"}
+                  %span.menu-link
+                    %a.grade-link.header-link{href:"#/grade"}
+                      = "Grade"
+                %li
+                  %span.sub_nav_icon
+                    %img{src: "/assets/analyse_menu_icon.png"}
+                  %span.menu-link  
+                    %a.analyze-link.header-link{href:"#/analyze/quiz_report"}
+                      = "Analyze"
+          -if current_user.is_student?
+            %ul.nav.navbar-nav.navbar-left.menu
+              %ng-view
+                %li
+                  %span.sub_nav_icon
+                    %img{src: "/assets/manage_menu_icon.png"}
+                  %span.menu-link  
+                    %a{href:"#/dashboard"}Dashboard
+                %li
+                  %span.sub_nav_icon
+                    %img{src:"/assets/serve_quiz.png"}
+                  %span.menu-link  
+                    %a{href:"#/quizlist"}Quiz        
           %ul.nav.navbar-nav.navbar-right.my-header-nav{style: "margin-right: 10px;"}
             .dropdown.name
               %a{id:"dLabel",role:"button",href:"#",data:{toggle:"dropdown",target:"#"}}
