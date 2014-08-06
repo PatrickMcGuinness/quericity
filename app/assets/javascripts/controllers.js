@@ -345,6 +345,7 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   $scope.show_answers = []
   $scope.to_be_graded = []
   $scope.shown_questions = []
+  $scope.option = {all_questions: 1, unlimited: 1}
   
   $scope.stopQuiz = function(){
     $scope.show_options = true
