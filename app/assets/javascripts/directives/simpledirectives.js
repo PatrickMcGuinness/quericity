@@ -498,51 +498,70 @@ quizlib.directive("studentLinegraph",function(){
     link: function(scope,element,attrs){
       
       scope.$on("Student_Line_Graph_Ready",function(){
-        //var data = [65,55,22,34,67,88,90,78,65,44];
-        var data = scope.averages
-        var margin = {top: 20, right: 20, bottom: 30, left: 50},
-        width = 800 - margin.left - margin.right,
-        height = 330 - margin.top - margin.bottom;
+        var data = [65,55,22,34,67,88,90,78,65,44];
+	console.log(scope.averages)
+  makePLotData = function(data){
+	  plotData = []
+	  increment = 0;
+	  for(i=0;i<data.length;i++){
+		  tmpArray = []
+		  tmpArray.push(increment)
+		  tmpArray.push(data[i])
+		  plotData.push(tmpArray)
+		  increment++ 
+	  }
+	  return plotData
+  }
+  
+  graphData = makePLotData(data)
+  var dataset = [
+              { label: "Performance Over Time", data: graphData, points: { symbol: "triangle"} }
+			  ]
+
+	var options = {
+	            series: {
+	                lines: {
+	                    show: true
+	                },
+	                points: {
+	                    radius: 3,
+	                    fill: true,
+	                    show: true
+	                }
+	            },
+	            xaxis: {
+	                
+	                tickLength: 0,
+	                axisLabel: "quizzes in chronological order",
+	                axisLabelUseCanvas: true,
+	                axisLabelFontSizePixels: 12,
+	                axisLabelFontFamily: 'Verdana, Arial',
+	                axisLabelPadding: 10
+	            },
+	            yaxis: {
+	                axisLabel: "Percentage Marks",
+	                axisLabelUseCanvas: true,
+	                axisLabelFontSizePixels: 12,
+	                axisLabelFontFamily: 'Verdana, Arial',
+	                axisLabelPadding: 3
+	               
+	            },
+	            legend: {
+	                noColumns: 0,
+	                labelBoxBorderColor: "#000000",
+	                position: "nw"
+	            },
+	            grid: {
+	                hoverable: true,
+	                borderWidth: 2,
+	                borderColor: "#633200",
+	                backgroundColor: { colors: ["#ffffff", "#EDF5FF"] }
+	            },
+	            colors: ["#FF0000", "#0022FF"]
+	        };
+
+			$.plot(element, dataset,options);
       
-
-        var x = d3.scale.linear()
-        .range([0,width])
-        .domain([0,data.length])
-        
-        var y = d3.scale.linear()
-        .range([height, 0])
-        .domain([0, d3.max(data)])
-
-        var graph = d3.select(".line-chart")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        var line = d3.svg.line()
-        .x(function(d,i) { 
-        })
-        .y(function(d) { 
-          return y(d); 
-        })
-
-        var xAxis = d3.svg.axis().scale(x).tickSize(-height).tickSubdivide(true).ticks(data.length).tickFormat(d3.format(',f'));
-        // Add the x-axis.
-
-        graph.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-   
-        // create left yAxis
-        var yAxis = d3.svg.axis().scale(y).ticks(4).orient("left");
-        
-        graph.append("g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(-25,0)")
-        .call(yAxis);
-        
-        graph.append("path").attr("d", line(data));
         
       })
     }
