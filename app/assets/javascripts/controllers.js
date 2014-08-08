@@ -353,7 +353,7 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
     $scope.show_questions = []
     $scope.show_answers = []
     $scope.to_be_graded = []
-    $scope.option = {}
+    $scope.option = {all_questions: 1, unlimited: 1}
     $scope.show_answer = false
     $scope.submit = false
     $scope.counter = 0
@@ -1443,6 +1443,8 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
   $scope.options_alphabets = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N"]
   $scope.show_details_edit = false
   $scope.submitted = false
+
+
   $scope.show_options = function(section_id,question_id,question_type){
     $scope.show_details = true
     $scope.show_details_view = true
@@ -1459,6 +1461,8 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
 
   }
   $scope.hide_update = function(){$scope.show_details_view = true}
+
+
 
   $scope.change_question = function(selected_type,question){
     console.log(selected_type)
