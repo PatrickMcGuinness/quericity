@@ -15,9 +15,11 @@
       <tbody>
         <tr ng-repeat = "option in question.question_options">
           <td>
-            <div style= "margin-top:6px; float:left">
-              {{option.is_correct}}
-              <input ng-click = "select_option(option)" type="radio" name="correct" ng-model = "option.is_correct" value = "{{$index}}">
+            <div style= "margin-top:6px; float:left" ng-init = "check_for_true(option)">
+            <img ng-if = "option != selected_option" src="/assets/mcqtick.png" ng-click = "select_option(option)"/>
+            <img ng-if = "option == selected_option" src="/assets/correct_tick.png" ng-click = "select_option(option)"/>
+             <!-- <input class = "radio-button" ng-click = "select_option(option)" type= "radio" name = "correct", flavour = "{{option.is_correct}}" mark-as-check value = ng-model = "option.is_correct" value = "$index"> --> 
+              <!-- <input ng-click = "select_option(option)" type="radio" name="correct" mark-as-check> -->
             </div>
             <div class = "col-xs-11">
               <input type = "text", class = "form-control" ng-model = "option.answer" edit-add-option = "add_question_option(question)" disable-enter>

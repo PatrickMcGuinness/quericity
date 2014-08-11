@@ -94,6 +94,7 @@
 //   };
 // })
 
+
 quizlib.directive("checkActive",function($route){
   return{
     link: function(scope,element,attrs){
@@ -110,6 +111,16 @@ quizlib.directive("checkActive",function($route){
       if($route.current.activetab == "analyze"){
         $(".analyze-link").addClass("active")
       }
+    }
+  };
+})
+
+quizlib.directive("markAsCheck",function(){
+  return{
+    link: function(scope,element,attrs){
+      
+        element.attr('checked', 'checked');
+      
     }
   };
 })

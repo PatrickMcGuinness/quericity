@@ -1421,12 +1421,14 @@ quizlib.controller("ManageMyCtrl",['$scope','QuizBank','Repository','User','Ques
 }]);
 
 quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','QuestionOption',function($scope, Question,GlobalScope,QuestionOption){
+  
   $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
   
   $scope.$on("question_id_Changed",function(event,question_id){
     $scope.question_id = question_id;
     $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
   })
+  
   $scope.$on('my-sorted',function(ev,val){
     $scope.questions.splice(val.to, 0, $scope.questions.splice(val.from, 1)[0]);
   })
@@ -1443,6 +1445,8 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
   $scope.options_alphabets = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N"]
   $scope.show_details_edit = false
   $scope.submitted = false
+
+
 
 
   $scope.show_options = function(section_id,question_id,question_type){
@@ -1465,12 +1469,10 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
 
 
   $scope.change_question = function(selected_type,question){
-    console.log(selected_type)
     if(selected_type = "True False"){
       question.question_type = 1
     }
     if(selected_type = "Multiple Choice"){
-      console.log("in the multiple choice question")
       question.question_type = 2
     }
     if(selected_type = "Fill in blank"){
@@ -1521,6 +1523,21 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
     $scope.selected_option = option
   }
 
+  $scope.check_for_true = function(option){
+    if(option.is_correct == true){ 
+      console.log("in the true")
+      $scope.selected_option = option
+    }
+  }
+  $scope.is_true = function(option){
+    if(option.is_correct == true){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
 }])
 
 
@@ -1536,6 +1553,8 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
   $scope.$on("section_id_Changed",function(event,section_id){
     $scope.section_id = section_id;
   })
+
+  
 
   $scope.change_question = function(selected_type){
     $scope.selected_type = selected_type
