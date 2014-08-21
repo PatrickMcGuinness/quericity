@@ -4,10 +4,32 @@
   </div>
   <form name="BlankForm" ng-submit="create_blank(BlankForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
-      <a class = "col-xs-2 btn question-option-tab pull-left" ng-click = "change_question('True False')"> True False</a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" style="margin-left: 0px;"ng-click = "change_question('True False')"> True False</a>
       <a class = "col-xs-2 btn question-option-tab pull-left" ng-click = "change_question('Multiple Choice')"> Multiple Choice</a>
       <a class = "col-xs-2 btn question-option-tab pull-left active" ng-click = "change_question('Fill in blank')">Fill in Blank </a>
       <a class = "col-xs-2 btn question-option-tab pull-left" ng-click =  "change_question('Open Ended')">Open Ended</a>
+
+      <div class="icon-links pull-right" "> 
+        <button type = "submit" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"style="background:none;border:none;">  
+            <img src = "/assets/floppy.png" change-delete-on-hover-new> </img>
+        </button >
+
+        <a ng-click = "hideQuestion();removeData();" data-toggle = "tooltip" title = "Cancle Saving"  tooltip-placement = "top">
+            <img src = "/assets/back.png" ng-click = "hide_update()">
+        </a>
+        
+      </div>
+      <br>
+
+      <div class="editor_links" style="margin-top: 9px;">
+        <a ng-show = "!full_editor" ng-click = "full_editor = true" data-toggle = "tooltip" title = "show full editor" tooltip-placement = "top" style = "float:right;" show-upper-bar-ck-mcq>  
+          <u> Full Editor </u>
+        </a>
+        <a ng-show = "full_editor" ng-click = "full_editor = false" data-toggle = "tooltip" title = "hide full editor" tooltip-placement = "top" style = "float:right;" hide-uper-bar-mcq>  
+           <u> Text Only </u>
+        </a>
+      </div>
+
       <!-- <div class = "form-group">
         <label>Question Type: </label>
         <select class="form-control" ng-model="selected_type" name = "selected_type" ng-change="change_question()">
@@ -18,9 +40,8 @@
         </select>
       </div> -->
     </div>
-    <div class = "col-xs-12 mar-top-10">
+    <div class = "col-xs-12 ">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.first_statement.$invalid) && (!BlankForm.first_statement.$pristine || submitted == true)}">
-        <label>Question:</label>
         <textarea name="blank_statement" id="blank_statement" rows="3" class = "form-control" ng-model = "blank_statement" data-ck-editor required>Put [blank] in question statement where you want the blank
         </textarea>
         <p ng-show="BlankForm.blank_statement.$invalid && (!BlankForm.blank_statement.$pristine || submitted == true)" class="help-block">Statement is required.</p>
@@ -29,7 +50,7 @@
     <div class = "col-xs-12 mar-top-10">
       <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.blank.$invalid) && (!BlankForm.blank.$pristine || submitted == true)}">
         <label>Answer:</label>
-        <textarea name="blank" id="blank" rows="2" class = "form-control" ng-model = "blank" required>
+        <textarea name="blank" id="blank" rows="2" class = "form-control" ng-model = "blank" data-ck-editor required>
         </textarea>
         <p ng-show="BlankForm.blank.$invalid && (!BlankForm.blank.$pristine || submitted == true)" class="help-block">Blank is required</p>
       </div>  
@@ -55,8 +76,8 @@
     </div> -->
     <div class = "col-xs-12 question-footer">
       <div class = "col-xs-5 pull-right">
-        <button class = "btn btn-danger col-xs-3" ng-click = "hideQuestion();removeData();" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">Cancel</button>
-        <button type = "submit" class = "btn btn-success col-xs-6" data-toggle = "tooltip" title = "Create new question" tooltip-placement = "top"> Save Question</button>
+        <!-- <button class = "btn btn-danger col-xs-3" ng-click = "hideQuestion();removeData();" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">Cancel</button>
+        <button type = "submit" class = "btn btn-success col-xs-6" data-toggle = "tooltip" title = "Create new question" tooltip-placement = "top"> Save Question</button> -->
       </div>  
     </div>
   </form>  

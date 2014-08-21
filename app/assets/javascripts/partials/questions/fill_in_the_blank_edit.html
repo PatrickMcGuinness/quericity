@@ -28,10 +28,10 @@
       <br>
 
       <div class="editor_links" style="margin-top: 9px;">
-        <a ng-show = "is_quiz_view && !full_editor " ng-click = "full_editor = true" data-toggle = "tooltip" title = "show full editor" tooltip-placement = "top" style = "float:right;margin-right:16px;" show-upper-bar-ck-blank>  
+        <a ng-show = "!full_editor " ng-click = "full_editor = true" data-toggle = "tooltip" title = "show full editor" tooltip-placement = "top" style = "float:right;margin-right:16px;" show-upper-bar-ck-blank>  
           <u> Full Editor </u>
         </a>
-        <a ng-show = "is_quiz_view && full_editor" ng-click = "full_editor = false" data-toggle = "tooltip" title = "hide full editor" tooltip-placement = "top" style = "float:right;margin-right: 16px;" hide-uper-bar-blank>  
+        <a ng-show = "full_editor" ng-click = "full_editor = false" data-toggle = "tooltip" title = "hide full editor" tooltip-placement = "top" style = "float:right;margin-right: 16px;" hide-uper-bar-blank>  
            <u> Text Only </u>
         </a>
       </div>

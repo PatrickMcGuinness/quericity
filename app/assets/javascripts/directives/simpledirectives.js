@@ -1060,6 +1060,8 @@ quizlib.directive('hideUperBar', function () {
       element.bind('click', function () {
         element.parents('.edit-question-box').find('.cke_top').hide()
         element.parents('.edit-question-box').find(".cke_contents").css("height","110px")
+        element.parents('.new-question-box').find('.cke_top').hide()
+        element.parents('.new-question-box').find(".cke_contents").css("height","110px")
       })
     }
   }
@@ -1071,9 +1073,10 @@ quizlib.directive('showUpperBarCk', function () {
     restrict: 'A',
     link: function (scope, element, attr) {
       element.bind('click', function () {
-        console.log(element.parent())
         element.parents('.edit-question-box').find('.cke_top').show()
         element.parents('.edit-question-box').find(".cke_contents ").css("height","110px")
+        element.parents('.new-question-box').find('.cke_top').show()
+        element.parents('.new-question-box').find(".cke_contents").css("height","110px")
       })
     }
   }
