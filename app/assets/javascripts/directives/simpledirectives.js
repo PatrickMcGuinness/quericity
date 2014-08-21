@@ -175,6 +175,19 @@ quizlib.directive("sectionRight",function(){
   };
 });
 
+quizlib.directive("thisIsTestDirective",function(){
+  return {
+    restrict: "A",
+    link: function(scope,element,attrs){
+      element.bind("click",function(){
+        console.log("aaaaaaaaaaaaaaaaa")
+        console.log(attrs)
+        console.log("wwwwwwwwwwwwwwwww")
+      })  
+    }
+  };
+})
+
 quizlib.directive("sectionDown",function(){
   return {
     restrict: "C",
@@ -247,7 +260,7 @@ quizlib.directive("changeDeleteOnHover",function(){
     restrict: 'A',
     link: function(scope,element,attrs){
       element.bind("mouseover",function(){
-        element.attr("src","/assets/delete_hover.png")
+        element.attr("src","/assets/delete.png")
       });
       element.bind("mouseout",function(){
         element.attr("src","/assets/delete.png")
@@ -261,7 +274,7 @@ quizlib.directive("changeEditOnHover",function(){
     restrict: 'A',
     link: function(scope,element,attrs){
       element.bind("mouseover",function(){
-        element.attr("src","/assets/edit_hover.png")
+        element.attr("src","/assets/edit.png")
       });
       element.bind("mouseout",function(){
         element.attr("src","/assets/edit.png")
@@ -269,6 +282,35 @@ quizlib.directive("changeEditOnHover",function(){
     }
   }
 })
+
+quizlib.directive("changeDeleteOnHovernew",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("mouseover",function(){
+        element.attr("src","/assets/delete_icon.png")
+      });
+      element.bind("mouseout",function(){
+        element.attr("src","/assets/delete_sm_icon.png")
+      });
+    }
+  }
+})
+
+quizlib.directive("changeEditOnHovernew",function(){
+  return{
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      element.bind("mouseover",function(){
+        element.attr("src","/assets/edit_icon.png")
+      });
+      element.bind("mouseout",function(){
+        element.attr("src","/assets/edit_sm_icon.png")
+      });
+    }
+  }
+})
+
 
 quizlib.directive("changeStartOnHover",function(){
   return{
@@ -431,6 +473,7 @@ quizlib.directive("editAddOption",['$compile',function($compile){
     link: function(scope,element,attrs){
       element.bind("focus",function(){
         if(element.parents("tr").is(":last-child")){
+
           scope.$apply(function (){
             scope.$eval(attrs.editAddOption);
           });
@@ -971,6 +1014,71 @@ quizlib.directive('showcreaterepo', function () {
   }
 });
 
+quizlib.directive('hideUperBarOnchange', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      console.log("jjjjjjjjjjjjjjjjjjjjjjjjjccccccccccccccccccccc")
+      element.bind('click', function () {
+        element.parent().parent().find('.cke_top').hide()
+        $(".cke_contents ").css("height","110px")
+      })
+    }
+  }
+});
+
+quizlib.directive('hideUperBarOnEdit', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      console.log("jjjjjjjjjjjjjjjjjjjjjjjjjccccccccccccccccccccc")
+      element.bind('click', function () {
+        element.parents().eq(5).find('.cke_top').hide()
+        $(".cke_contents ").css("height","110px")
+      })
+    }
+  }
+});
+
+quizlib.directive('hideEdtior', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      element.bind('click', function () {
+        console.log("aaaaaaaaaaaaaaaaaaqweqwe")
+        element.hide()
+        element.css("height","110px")
+      })
+    }
+  }
+});
+
+
+quizlib.directive('hideUperBar', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      element.bind('click', function () {
+        element.parents('.edit-question-box').find('.cke_top').hide()
+        $(".cke_contents ").css("height","110px")
+      })
+    }
+  }
+});
+
+
+quizlib.directive('showUpperBarCk', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      element.bind('click', function () {
+        console.log(element.parent())
+         element.parent().parent().siblings().find('.cke_top').show()
+        $(".cke_contents ").css("height","110px")
+      })
+    }
+  }
+});
 quizlib.directive('customPopover', function ($compile) {
   return {
     restrict: 'A',

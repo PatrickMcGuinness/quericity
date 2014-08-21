@@ -1,16 +1,69 @@
-<div class = "col-xs-12 edit-question-box mar-top-10">
-  <div class = "heading">
+<div class = "col-xs-12 edit-question-box" style= "margin-top:-20px;">
+  <!-- <div class = "heading">
     <span>Update Question</span>
-  </div>
+  </div> -->
+  
+  
   <form name="TrueFalseForm" ng-submit="edit_question(section.id,question.id,question,TrueFalseForm.$valid)" novalidate>
-    <div class = "col-xs-12 mar-top-10">
+
+    <div class = "change_question_type_link">
+      <a class = "col-xs-2 btn question-option-tab active pull-left" 
+      ng-click = "change_question('True False',question)" hide-uper-bar-on-edit> True False</a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" 
+      ng-click = "change_question('Multiple Choice',question)" hide-uper-bar-on-edit> Multiple Choice</a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" 
+      ng-click = "change_question('Fill in blank',question)" hide-uper-bar-on-edit>Fill in Blank </a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" 
+      ng-click =  "change_question('Open Ended',question)" hide-uper-bar-on-edit>Open Ended</a>
+      <div class="icon-links pull-right" style="margin-right: 17px;"> 
+        
+        <button ng-show = "is_quiz_view" type="submit" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top" style="background:none;border:none;">  
+            <img src = "/assets/floppy.png" change-delete-on-hover-new>
+        </button >
+        <a  ng-click = "make_clone" data-toggle = "tooltip" title = "Cancle Editing" tooltip-placement = "top">
+            <img src = "/assets/back.png" ng-click = "hide_update()">
+        </a>
+        <a ng-show = "is_quiz_view" ng-click = "delete_question(section.id,question.id,$index)" data-toggle = "tooltip" title = "Delete Question" tooltip-placement = "top">  
+            <img src = "/assets/delete_sm_icon.png" change-delete-on-hover-new>
+        </a>
+        <a  ng-click = "make_clone" data-toggle = "tooltip" title = "make copy of question" tooltip-placement = "top">  <img src = "/assets/clone_icon.png" ng-click="clone_question(quiz_bank_id,section.id,question)">
+        </a>
+      </div>
+      <br>
+
+      <div class="editor_links" style="margin-top: 9px;">
+
+        <a ng-show = "is_quiz_view && !full_editor " ng-click = "full_editor = true" data-toggle = "tooltip" title = "show full editor" tooltip-placement = "top" style = "float:right;margin-right:16px;" show-upper-bar-ck  >  
+          <u> Full Editor </u>
+        </a>
+
+        <a ng-show = "is_quiz_view && full_editor" ng-click = "full_editor = false" data-toggle = "tooltip" title = "hide full editor" tooltip-placement = "top" style = "float:right;margin-right: 16px;" hide-uper-bar  >  
+           <u> Text Only </u>
+        </a>
+      </div>
+    </div>
+
+    
+    <div class = "col-xs-12 " ng-hide="full_editor">
       <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.question_statement.$invalid) && (!TrueFalseForm.question_statement.$pristine || submitted == true)}">
-        <label>Question:</label>
-        <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor required>
+        <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor hide-edtior required>
         </textarea>
         <p ng-show="TrueFalseForm.question_statement.$invalid && (!TrueFalseForm.question_statement.$pristine || submitted == true)" class="help-block">Question is required.</p>
       </div>  
     </div>
+
+
+   <div class = "col-xs-12 " ng-show="full_editor">
+      <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.question_statement.$invalid) && (!TrueFalseForm.question_statement.$pristine || submitted == true)}">
+        <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor hide-edtior required>
+        </textarea>
+        <p ng-show="TrueFalseForm.question_statement.$invalid && (!TrueFalseForm.question_statement.$pristine || submitted == true)" class="help-block">Question is required.</p>
+      </div>  
+    </div>
+
+    
+
+
     <div class = "col-xs-12 mar-top-10" >
       <label>Answer:</label>
       <br>
@@ -22,8 +75,37 @@
       </span>
     </div>
     <div class = "col-xs-12 mar-top-10">
-      <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.difficulty.$invalid) && (!TrueFalseForm.difficulty.$pristine || submitted == true)}">
+      
+    
+    <div>  
+      <a ng-show = "is_quiz_view && !extra_details" ng-click = "extra_details = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+           <u> Show extra details </u>
+      </a>
+      <a ng-show = "is_quiz_view && extra_details"  ng-click = "extra_details = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+           <u> Hide extra details </u>
+      </a>
+    <div>
+
+
+    </div>
+ 
+  
+
+
+    <div class="extra-details-class mar-top-10" ng-show = "is_quiz_view && extra_details">
+     
+        <span class = "col-xs-4">
+          <strong> Default Score:</strong>  
+        </span> 
+        <div class = "col-xs-2" style= "margin-left: -168px;margin-right: 100px;margin-bottom: 10px;">
+        <input type="text" ng-model="question.default_score" class="form-control input-sm ng-scope ng-pristine ng-valid ng-valid-required" placeholder="score" name="score" required="" popover="Edit Score" popover-trigger="mouseenter">
+      </div> 
+
+      <div class = "col-xs-8 pull-left">
+        <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.difficulty.$invalid) && (!TrueFalseForm.difficulty.$pristine || submitted == true)}"  style="display: inline-flex;">
+        <span style= "width: 223px;">
         <label>Difficulty Level: </label>
+        </span>
         <select class="form-control" ng-model="question.difficulty_level" name = "difficulty">
           <option value = "1">Easy</option>
           <option value = "2">Medium</option>
@@ -31,13 +113,17 @@
         </select>
         <p ng-show="TrueFalseForm.difficulty.$invalid && (!TrueFalseForm.difficulty.$pristine || submitted == true)" class="help-block">Difficulty level is required.</p>
       </div>
+
     </div>
-    <div class = "col-xs-12 question-footer mar-top-10">
+  </div>
+
+    <!-- <div class = "col-xs-12 question-footer mar-top-10">
       <div class = "col-xs-5 pull-right">
         <button class = "btn btn-danger col-xs-3" style = "margin-top: 5px;" ng-click = "hide_update()" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top"> Cancel</button>
         <button type = "submit" class = "btn btn-success col-xs-6" style = "margin-top: 5px;" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"> Save Question </button>
       </div>
-    </div>
+    </div> -->
+
   </form>  
 
 </div>  

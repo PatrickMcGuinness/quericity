@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
   
-  attr_accessible :seq,:description,:question_type,:difficulty_level,:reference_url,:section_id
+  attr_accessible :seq,:description,:question_type,:difficulty_level,:reference_url,:section_id,:default_score
   
   validates :description, :section_id, :question_type,:presence => true
   
@@ -141,6 +141,7 @@ class Question < ActiveRecord::Base
       :difficulty_level => difficulty_level,
       :reference_url => reference_url,
       :section_id => section_id,
+      :default_score => default_score,
       :question_options => self.question_options.order("seq ASC").as_json()
     }
   end

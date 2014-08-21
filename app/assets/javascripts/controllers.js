@@ -1422,7 +1422,74 @@ quizlib.controller("ManageMyCtrl",['$scope','QuizBank','Repository','User','Ques
 
 quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','QuestionOption',function($scope, Question,GlobalScope,QuestionOption){
   
+  is_true_false = true
+  is_mcq = true
+  is_open_ended = true
+  is_fill_in_the_blank = true
+
   $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
+  $scope.clone_question = function(quiz_id,section_id,question)
+  {
+
+
+    Question.save(quiz_id, section_id,
+      {description: question.description,section_id: question.section_id,
+      question_type: question.question_type,difficulty_level: question.difficulty_level,default_score: question.default_score,question_options: question.question_options}).$promise.then(function(data){
+        $scope.questions.push(data)
+            
+      })
+    
+  }
+    $scope.mcq_options = ["", "","",""]
+
+    $scope.change_current_question = function(selected_type,question){
+    if(selected_type == "True False"){
+      is_true_false = false
+      is_mcq = true
+      is_open_ended = true
+      is_fill_in_the_blank = true
+    }
+    else if(selected_type == "Multiple Choice"){
+      is_true_false = true
+      is_mcq = false
+      is_open_ended = true
+      is_fill_in_the_blank = true
+    }
+     else if(selected_type == "Open Ended"){
+      is_true_false = true
+      is_mcq = true
+      is_open_ended = false
+      is_fill_in_the_blank = true
+    }
+
+    else if(selected_type == "Fill in blank"){
+     is_true_false = true
+      is_mcq =true
+      is_open_ended = true
+      is_fill_in_the_blank = false
+    }
+  }
+
+ 
+    $scope.change_question = function(selected_type,question){
+    console.log(selected_type)
+    console.log(question)
+    if(selected_type == "True False"){
+      question.question_type = 1
+    }
+    else if(selected_type == "Multiple Choice"){
+      question.question_type = 2
+    }
+     else if(selected_type == "Open Ended"){
+      question.question_type = 3
+    }
+
+    else if(selected_type == "Fill in blank"){
+      question.question_type = 4
+    }
+  }
+
+
   
   $scope.$on("question_id_Changed",function(event,question_id){
     $scope.question_id = question_id;
@@ -1436,16 +1503,17 @@ quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','Quest
   $scope.$on('my-created',function(ev,val){
     $scope.questions.splice(val.to, 0,{name:'#'+($scope.questions.length+1)+': '+val.name});
   })
-
+  console.log($scope)
 }])
 
 quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Question','GlobalScope',function($scope,$rootScope,QuestionOption,Question,GlobalScope){
-  
-  $scope.show_details = false
+  $scope.extra_details = false
+  $scope.show_details = true
+  $scope.show_details_view = true
   $scope.options_alphabets = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N"]
   $scope.show_details_edit = false
   $scope.submitted = false
-
+  $scope.full_editor = false
 
 
 
@@ -1453,6 +1521,8 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
     $scope.show_details = true
     $scope.show_details_view = true
   }
+
+ 
   $scope.show_edit = function(){
     $scope.show_details_view = false;
     $scope.show_details = true
@@ -1466,23 +1536,11 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
   }
   $scope.hide_update = function(){$scope.show_details_view = true}
 
-
-
-  $scope.change_question = function(selected_type,question){
-    if(selected_type = "True False"){
-      question.question_type = 1
-    }
-    if(selected_type = "Multiple Choice"){
-      question.question_type = 2
-    }
-    if(selected_type = "Fill in blank"){
-      question.question_type = 3
-    }
-    if(selected_type = "Open Ended"){
-      question.question_type = 4
-    }
+  $scope.add_question_option = function(question){
+    question.question_options.push({question_id: question.id, is_correct :false, answer: null})
+    console.log(question)
+    console.log("aaaaaaaaaaaaa")
   }
-  
   $scope.edit_question = function(section_id,question_id,question,isValid){
     $scope.submitted = true
     if(isValid){
