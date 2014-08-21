@@ -1018,7 +1018,6 @@ quizlib.directive('hideUperBarOnchange', function () {
   return {
     restrict: 'A',
     link: function (scope, element, attr) {
-      console.log("jjjjjjjjjjjjjjjjjjjjjjjjjccccccccccccccccccccc")
       element.bind('click', function () {
         element.parent().parent().find('.cke_top').hide()
         $(".cke_contents ").css("height","110px")
@@ -1031,7 +1030,6 @@ quizlib.directive('hideUperBarOnEdit', function () {
   return {
     restrict: 'A',
     link: function (scope, element, attr) {
-      console.log("jjjjjjjjjjjjjjjjjjjjjjjjjccccccccccccccccccccc")
       element.bind('click', function () {
         element.parents().eq(5).find('.cke_top').hide()
         $(".cke_contents ").css("height","110px")
@@ -1039,6 +1037,7 @@ quizlib.directive('hideUperBarOnEdit', function () {
     }
   }
 });
+
 
 quizlib.directive('hideEdtior', function () {
   return {
@@ -1060,7 +1059,7 @@ quizlib.directive('hideUperBar', function () {
     link: function (scope, element, attr) {
       element.bind('click', function () {
         element.parents('.edit-question-box').find('.cke_top').hide()
-        $(".cke_contents ").css("height","110px")
+        element.parents('.edit-question-box').find(".cke_contents").css("height","110px")
       })
     }
   }
@@ -1073,12 +1072,97 @@ quizlib.directive('showUpperBarCk', function () {
     link: function (scope, element, attr) {
       element.bind('click', function () {
         console.log(element.parent())
-         element.parent().parent().siblings().find('.cke_top').show()
-        $(".cke_contents ").css("height","110px")
+        element.parents('.edit-question-box').find('.cke_top').show()
+        element.parents('.edit-question-box').find(".cke_contents ").css("height","110px")
       })
     }
   }
 });
+
+quizlib.directive('hideUperBarOnEditBlank', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      element.bind('click', function () {
+        element.parents().eq(5).find('.cke_top').hide()
+        element.parents().eq(5).find(".cke_contents ").eq(0).css("height","110px")
+        element.parents().eq(5).find(".cke_contents ").eq(1).css("height","55px")
+      })
+    }
+  }
+});
+
+quizlib.directive('hideUperBarBlank', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      element.bind('click', function () {
+        element.parents('.edit-question-box').find('.cke_top').hide()
+        element.parents('.edit-question-box').find(".cke_contents ").eq(0).css("height","110px")
+        element.parents('.edit-question-box').find(".cke_contents ").eq(1).css("height","55px")
+      })
+    }
+  }
+});
+
+
+quizlib.directive('showUpperBarCkBlank', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      element.bind('click', function () {
+        console.log(element.parent())
+        element.parents('.edit-question-box').find('.cke_top').show()
+        element.parents('.edit-question-box').find(".cke_contents ").eq(0).css("height","110px")
+        element.parents('.edit-question-box').find(".cke_contents ").eq(1).css("height","55px")
+      })
+    }
+  }
+});
+
+quizlib.directive('hideUperBarOnEditMcq', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      element.bind('click', function () {
+        element.parents().eq(5).find('.cke_top').hide()
+        element.parents().eq(5).find(".cke_contents").css("height","50px")
+        element.parents().eq(5).find(".cke_contents").eq(0).css("height","110px")
+      })
+    }
+  }
+});
+
+quizlib.directive('hideUperBarMcq', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      element.bind('click', function () {
+        element.parents('.edit-question-box').find('.cke_top').hide()
+        element.parents('.edit-question-box').find(".cke_contents ").css("height","50px")
+        element.parents('.edit-question-box').find(".cke_contents ").eq(0).css("height","110px")
+      })
+    }
+  }
+});
+
+
+quizlib.directive('showUpperBarCkMcq', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      element.bind('click', function () {
+        console.log(element.parent())
+        element.parents('.edit-question-box').find('.cke_top').show()
+        element.parents('.edit-question-box').find(".cke_contents ").eq(0).css("height","110px")
+        element.parents('.edit-question-box').find(".cke_contents ").eq(1).css("height","50px")
+      })
+    }
+  }
+});
+
+
+
 quizlib.directive('customPopover', function ($compile) {
   return {
     restrict: 'A',

@@ -2,10 +2,10 @@
    <div class = "col-xs-2 pull-right" style="margin-right:-26px;">
       <div class = "pull-right">
         <a ng-if = "question.question_type != 4" ng-show = "is_quiz_view" ng-click= "show_edit()" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">  
-          <img src = "/assets/edit_sm_icon.png" change-edit-on-hover-new hide-uper-bar-on-edit >
+          <img src = "/assets/edit_sm_icon.png" change-edit-on-hover-new hide-uper-bar-on-edit-mcq >
         </a>
         <a ng-if = "question.question_type == 4" ng-show = "is_quiz_view" ng-click= "show_edit();show_blank_edit(question)" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
-          <img src = "/assets/edit_sm_icon.png" change-edit-on-hover-new hide-uper-bar-on-edit >
+          <img src = "/assets/edit_sm_icon.png" change-edit-on-hover-new hide-uper-bar-on-edit-mcq >
         </a>
         <a ng-show = "is_quiz_view" ng-click = "delete_question(section.id,question.id,$index)" data-toggle = "tooltip" title = "Delete Question" tooltip-placement = "top">  
           <img src = "/assets/delete_sm_icon.png" change-delete-on-hover-new>
