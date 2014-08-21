@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140711054933) do
+ActiveRecord::Schema.define(:version => 20140818064847) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -180,9 +180,10 @@ ActiveRecord::Schema.define(:version => 20140711054933) do
     t.integer  "difficulty_level"
     t.text     "reference_url"
     t.integer  "section_id"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.datetime "deleted_at"
+    t.integer  "default_score",    :default => 10
   end
 
   add_index "questions", ["id"], :name => "index_questions_on_id"

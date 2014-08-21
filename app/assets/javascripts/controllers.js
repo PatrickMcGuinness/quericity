@@ -1546,7 +1546,7 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
     if(isValid){
       Question.update($scope.quiz_bank_id,section_id,question_id,question)
       $scope.show_details_view = true
-      $rootScope.$broadcast("question_changed")
+      //$rootScope.$broadcast("question_changed")
     }  
   }
   $scope.edit_blank = function(statement,section_id,question_id,question,isValid){
@@ -1557,7 +1557,7 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
       question.description = temp[0] + "_________" + array[1]
       Question.update($scope.quiz_bank_id,section_id,question_id,question)
       $scope.show_details_view = true
-      $rootScope.$broadcast("question_changed")
+      //$rootScope.$broadcast("question_changed")
     }
   }
   $scope.edit_mcq = function(section_id,question_id,question,question_options){
@@ -1567,14 +1567,14 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
     })
     Question.update($scope.quiz_bank_id,section_id,question_id,question)
     $scope.show_details_view = true
-    $rootScope.$broadcast("question_changed")
+    //$rootScope.$broadcast("question_changed")
   }
   
   $scope.delete_question = function(section_id,question_id,idx){
     Question.delete($scope.quiz_bank_id,section_id,question_id)
     $scope.questions.splice(idx, 1);
     $scope.show_details = false
-    $rootScope.$broadcast("question_changed")
+    //$rootScope.$broadcast("question_changed")
   }
   
   $scope.select_option = function(option){
@@ -1863,13 +1863,13 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
       })
     })
 
-    $scope.$on("question_changed",function(event){
-      Section.all($scope.quiz_bank_id).$promise.then(function(){
-        $scope.quiz_sections = data
-        $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
-        $scope.$broadcast("last_section_changed",$scope.last_section)
-      })
-    })
+    // $scope.$on("question_changed",function(event){
+    //   Section.all($scope.quiz_bank_id).$promise.then(function(){
+    //     $scope.quiz_sections = data
+    //     $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
+    //     $scope.$broadcast("last_section_changed",$scope.last_section)
+    //   })
+    // })
     
     QuestionTopic.all($scope.quiz_bank_id).$promise.then(function(data){
       angular.forEach(data.result,function(value,key){
@@ -1965,13 +1965,13 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
     })
   })
   
-  $scope.$on("question_changed",function(event){
-    Section.all($scope.quiz_bank_id).$promise.then(function(data){
-      $scope.quiz_sections = data
-      $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
-      $scope.$broadcast("last_section_changed",$scope.last_section)
-    })
-  })
+  // $scope.$on("question_changed",function(event){
+  //   Section.all($scope.quiz_bank_id).$promise.then(function(data){
+  //     $scope.quiz_sections = data
+  //     $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
+  //     $scope.$broadcast("last_section_changed",$scope.last_section)
+  //   })
+  // })
 
   $scope.$on("last_section_changed",function(event,section){
     $scope.last_section = section;
@@ -2089,13 +2089,13 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
     })
   })
   
-  $scope.$on("question_changed",function(event){
-    Section.all($scope.quiz_bank_id).$promise.then(function(data){
-      $scope.quiz_sections = data
-      $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
-      $scope.$broadcast("last_section_changed",$scope.last_section)
-    })
-  })
+  // $scope.$on("question_changed",function(event){
+  //   Section.all($scope.quiz_bank_id).$promise.then(function(data){
+  //     $scope.quiz_sections = data
+  //     $scope.last_section = $scope.quiz_sections[$scope.quiz_sections.length - 1]
+  //     $scope.$broadcast("last_section_changed",$scope.last_section)
+  //   })
+  // })
 
   $scope.$on("last_section_changed",function(event,section){
     $scope.last_section = section;
