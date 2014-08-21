@@ -35,7 +35,7 @@
     </div>
 
     <div class = "col-xs-12 ">
-      <div class = "form-group" ng-class="{ 'has-error' : (McqForm.description.$invalid) && submitted == true}">
+      <div ng-class="{ 'has-error' : (McqForm.description.$invalid) && submitted == true}">
         <textarea name="description" rows="2" class = "form-control" ng-model = "question.description" data-ck-editor required>
         </textarea>
         <p ng-show="McqForm.description.$invalid && submitted == true" class="help-block">Question is required.</p>
@@ -51,8 +51,8 @@
           <tr ng-repeat = "input in mcq_options track by $index">
             <td style="border-top: none;padding-bottom:0px;">
               <div  style= "margin-bottom: 0px; float:left; margin-top: 6px;" ng-init = "radio = $index" >
-                <img ng-if = "radio != correct_input" src="/assets/mcqtick.png" ng-click = "add_correct_option(radio)"/>
-                <img ng-if = "radio == correct_input" src="/assets/correct_tick.png" ng-click = "add_correct_option(radio)"/>
+                <img ng-if = "radio != correct_input" src="/assets/mcqcross.png" ng-click = "add_correct_option(radio)"/>
+                <img ng-if = "radio == correct_input" src="/assets/mcqtick.png" ng-click = "add_correct_option(radio)"/>
                 <!-- <input type="radio" name="correct" ng-model = "radio" value = "{{$index}}" ng-click = "add_correct_option(radio)"> -->
               </div>
               <div class = "col-xs-11" style= "margin-bottom: 0px;width:96%;" ng-class="{ 'has-error' : (McqForm.input{{$index}}.$invalid) && submitted == true}" style = "margin-bottom: 0px;">

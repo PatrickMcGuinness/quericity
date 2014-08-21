@@ -56,7 +56,7 @@
         <span>
           {{options_alphabets[$index]}}:
         </span>
-        <span mathjax-bind = "question.question_options[0].answer" style= "display: inline-block;">
+        <span mathjax-bind = "question_option.answer" style= "display: inline-block;">
           {{question_option.answer}}
         <span>    
       </span>
@@ -72,24 +72,22 @@
   
 
 
-    <div class="extra-details-class" ng-show = "is_quiz_view && extra_details">
-      <div class = "col-xs-10">
-        <span class = "col-xs-3">
-           Difficulty level:  
-        </span> 
-     <div class = "col-xs-2" style= "margin-left: -75px;">
+    <div class="extra-details-class" ng-show = "extra_details">
+      <span class = "col-xs-4 row">
+        <span>
+          Difficulty level:
+        </span>
         <span ng-if = "question.difficulty_level == 1">Easy</span>
         <span ng-if = "question.difficulty_level == 2">Medium</span>
-        <span ng-if = "question.difficulty_level == 3">Hard</span>
-      </div> 
-        <span class = "col-xs-4">
-           Default Score:  
-        </span> 
-        <div class = "col-xs-2" style= "margin-left: -140px;">
-        <span>{{question.default_score}}</span>
-      </div> 
+        <span ng-if = "question.difficulty_level == 3">Hard</span>    
+      </span> 
+      <span class = "col-xs-4">
+        <span>
+          Default Score:
+        </span>
+        <span>{{question.default_score}}</span>    
+      </span>  
     </div>
-  </div>
   
   </div>
 

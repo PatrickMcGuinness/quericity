@@ -143,13 +143,13 @@
           <div ng-include src="'/assets/partials/questions/all_questions.html'"></div>
         </div>
         <div>
-          <div ng-if = "question_section == section" ng-Show = "show_true_false" ng-include src="'/assets/partials/questions/true_false_create.html'">
+          <div ng-if = "question_section == section" ng-Show = "show_true_false" ng-include src="'/assets/partials/questions/true_false_create.html'" hide-uper-bar-create>
           </div>  
           <div ng-if = "question_section == section" ng-Show = "show_mcq" ng-include src="'/assets/partials/questions/mcq_create.html'">
           </div>
-          <div ng-if = "question_section == section" ng-Show = "show_blank" ng-include src="'/assets/partials/questions/fill_in_the_blank_create.html'">
+          <div ng-if = "question_section == section" ng-Show = "show_blank" ng-include src="'/assets/partials/questions/fill_in_the_blank_create.html'" hide-uper-bar-create>
           </div>
-          <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'">
+          <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'" hide-uper-bar-create>
           </div>    
       </div>
     </div>
@@ -175,7 +175,7 @@
       <span class = "glyphicon glyphicon-plus"></span>Add Section
       </a>
       <div ng-controller = "sectionCtrl" class = "pull-left">
-        <a ng-click = "addNewQuestion('Multiple Choice',last_section)" class="btn btn-warning">
+        <a ng-click = "addNewQuestion('Multiple Choice',last_section)" class="btn btn-warning" >
           <span class = "glyphicon glyphicon-plus"></span>
           Add Question
         </a>

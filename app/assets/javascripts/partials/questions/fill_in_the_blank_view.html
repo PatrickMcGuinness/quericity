@@ -57,21 +57,20 @@
 
 
     <div class="extra-details-class" ng-show = "extra_details">
-      <div class = "col-xs-10">
-        <span class = "col-xs-3">
-           Difficulty level:  
-        </span> 
-     <div class = "col-xs-2" style= "margin-left: -75px;">
+      <span class = "col-xs-4 row">
+        <span>
+          Difficulty level:
+        </span>
         <span ng-if = "question.difficulty_level == 1">Easy</span>
         <span ng-if = "question.difficulty_level == 2">Medium</span>
-        <span ng-if = "question.difficulty_level == 3">Hard</span>
-      </div> 
-        <span class = "col-xs-4">
-           Default Score:  
-        </span> 
-        <div class = "col-xs-2" style= "margin-left: -140px;">
-        <span>{{question.default_score}}</span>
-      </div> 
+        <span ng-if = "question.difficulty_level == 3">Hard</span>    
+      </span> 
+      <span class = "col-xs-4">
+        <span>
+          Default Score:
+        </span>
+        <span>{{question.default_score}}</span>    
+      </span>  
     </div>
   </div>
   </div>
