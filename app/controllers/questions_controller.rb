@@ -20,6 +20,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    puts "#################################",params
     render json: @section.questions.find(params[:id]).update_question(params)
   end
 

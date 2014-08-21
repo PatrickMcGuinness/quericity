@@ -1,23 +1,26 @@
 <ul data-quiz-bank-id = {{quiz_bank_id}} id = {{section.id}} class = "simple_with_animation questions-list">
-  <li ng-if = "questions.length == 0" class = "col-xs-12 no-record">No questions in sections</li>
-  <li ng-if = "questions.length > 0" id = {{section.id}}  ng-repeat = "question in questions" class = "col-xs-12 question-item" ng-controller = "viewQuestionCtrl">
-    <div class = "col-xs-1" style = "margin-bottom:10px;">
-      <img ng-if = "question.question_type == 1" src = "/assets/true_false.png" data-toggle = "tooltip" title = "True False Question" tooltip-placement = "top">
-      <img ng-if = "question.question_type == 4" src = "/assets/fill_in_the_blanks.png" data-toggle = "tooltip" title = "Fill in the blank question" tooltip-placement = "top">
-      <img ng-if = "question.question_type == 2" src = "/assets/multiple_choice.png" data-toggle = "tooltip" title = "Multiple Choice Question" tooltip-placement = "top">
-      <img ng-if = "question.question_type == 3" src = "/assets/short_ans.png" data-toggle = "tooltip" title = "Open Ended Question" tooltip-placement = "top">  
+  <li ng-if = "questions.length == 0" class = "col-xs-12 no-record" style= "border-bottom:0px;">No questions in sections</li>
+  <li ng-if = "questions.length > 0" id = {{section.id}}  ng-repeat = "question in questions" class = "col-xs-12 question-item" ng-controller = "viewQuestionCtrl"  style= "border-top:0px;padding-bottom: 10px;background: white;">
+    
+    <div class = "col-xs-1" style = "margin-bottom:10px; ">
+      <img ng-if = "question.question_type == 1" ng-hide = "is_quiz_view" src = "/assets/true_false.png" data-toggle = "tooltip" title = "True False Question" tooltip-placement = "top" >
+      <img ng-if = "question.question_type == 4" ng-hide = "is_quiz_view" src = "/assets/fill_in_the_blanks.png" data-toggle = "tooltip" title = "Fill in the blank question" tooltip-placement = "top">
+      <img ng-if = "question.question_type == 2" ng-hide = "is_quiz_view" src = "/assets/multiple_choice.png" data-toggle = "tooltip" title = "Multiple Choice Question" tooltip-placement = "top">
+      <img ng-if = "question.question_type == 3" ng-hide = "is_quiz_view" src = "/assets/short_ans.png" data-toggle = "tooltip" title = "Open Ended Question" tooltip-placement = "top">  
     </div>
+    
     <!--<div class = "col-xs-9" ng-bind-html="question.description | unsafe"></div> -->
-    <div  class = "col-xs-9" mathjax-bind = "question.description">{{question.description}}</div>
+    <div  ng-hide = "is_quiz_view" class = "col-xs-9" mathjax-bind = "question.description">{{question.description}}</div>
+    
     <div class = "col-xs-2">
       <div class = "pull-right">
-        <a ng-hide = "show_details" ng-click = "show_options(section.id,question.id,question.question_type)" data-toggle = "tooltip" title = "See Details" tooltip-placement = "top">
+        <a ng-hide = "show_details" ng-hide = "is_quiz_view" ng-click = "show_options(section.id,question.id,question.question_type)" data-toggle = "tooltip" title = "See Details" tooltip-placement = "top">
           <img src = "/assets/start.png" change-start-on-hover>
         </a>
-        <a ng-show = "show_details" ng-click = "show_details = false" data-toggle = "tooltip" title = "Hide Details" tooltip-placement = "top">  
+        <a ng-show = "show_details" ng-hide = "is_quiz_view" ng-click = "show_details = false" data-toggle = "tooltip" title = "Hide Details" tooltip-placement = "top">  
           <img src = "/assets/start_down.png" change-start-down-on-hover>
         </a>
-        <a ng-if = "question.question_type != 4" ng-hide = "is_quiz_view" ng-click= "show_edit()" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
+        <a ng-if = "question.question_type != 4" ng-hide = "is_quiz_view" ng-click= "show_edit()" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">  
           <img src = "/assets/edit.png" change-edit-on-hover>
         </a>
         <a ng-if = "question.question_type == 4" ng-hide = "is_quiz_view" ng-click= "show_edit();show_blank_edit(question)" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
@@ -26,6 +29,8 @@
         <a ng-hide = "is_quiz_view" ng-click = "delete_question(section.id,question.id,$index)" data-toggle = "tooltip" title = "Delete Question" tooltip-placement = "top">  
           <img src = "/assets/delete.png" change-delete-on-hover>
         </a>
+        
+
       </div>       
     </div>
     
@@ -48,5 +53,5 @@
       </div>
     </div>
     
-  </li>
+  </q>
 </ul>
