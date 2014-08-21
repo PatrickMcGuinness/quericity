@@ -56,19 +56,19 @@
         <span>
           {{options_alphabets[$index]}}:
         </span>
-        <span>
+        <span mathjax-bind = "question.question_options[0].answer" style= "display: inline-block;">
           {{question_option.answer}}
         <span>    
       </span>
     </div>
-      <div style="margin-left: 13px;">  
-    <a ng-show = "!extra_details" ng-click = "extra_details = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
-         <u> Show extra details </u>
-    </a>
-    <a ng-show = "extra_details"  ng-click = "extra_details = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
-         <u> Hide extra details </u>
-    </a>
-  <div>
+    <div style="margin-left: 13px;">  
+      <a ng-show = "!extra_details" ng-click = "extra_details = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+           <u> Show extra details </u>
+      </a>
+      <a ng-show = "extra_details"  ng-click = "extra_details = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+           <u> Hide extra details </u>
+      </a>
+    <div>
   
 
 
@@ -94,5 +94,3 @@
   </div>
 
 </div>
-
-  
