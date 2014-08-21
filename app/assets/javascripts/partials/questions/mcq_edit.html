@@ -28,10 +28,10 @@
       <br>
 
       <div class="editor_links" style="margin-top: 9px;">
-        <a ng-show = "is_quiz_view && !full_editor " ng-click = "full_editor = true" data-toggle = "tooltip" title = "show full editor" tooltip-placement = "top" style = "float:right;margin-right:16px;" show-upper-bar-ck>  
+        <a ng-show = "is_quiz_view && !full_editor " ng-click = "full_editor = true" data-toggle = "tooltip" title = "show full editor" tooltip-placement = "top" style = "float:right;margin-right:16px;" show-upper-bar-ck-mcq>  
           <u> Full Editor </u>
         </a>
-        <a ng-show = "is_quiz_view && full_editor" ng-click = "full_editor = false" data-toggle = "tooltip" title = "hide full editor" tooltip-placement = "top" style = "float:right;margin-right: 16px;" hide-uper-bar>  
+        <a ng-show = "is_quiz_view && full_editor" ng-click = "full_editor = false" data-toggle = "tooltip" title = "hide full editor" tooltip-placement = "top" style = "float:right;margin-right: 16px;" hide-uper-bar-mcq>  
            <u> Text Only </u>
         </a>
       </div>
@@ -43,19 +43,19 @@
   </div>
   
 
-  <div class = "col-xs-12 mar-top-10">
+  <div class = "col-xs-12">
     <table class = "table ">
       <tbody>
         <tr ng-repeat = "option in question.question_options">
-          <td style="border-top: none;">
+          <td style="border-top: none;padding-bottom:0px;">
             <div style= "margin-top:6px; float:left" ng-init = "check_for_true(option)">
-            <img ng-if = "option != selected_option" src="/assets/mcqtick.png" ng-click = "select_option(option)"/>
-            <img ng-if = "option == selected_option" src="/assets/correct_tick.png" ng-click = "select_option(option)"/>
+            <img ng-if = "option != selected_option" src="/assets/mcqcross.png" ng-click = "select_option(option)"/>
+            <img ng-if = "option == selected_option" src="/assets/mcqtick.png" ng-click = "select_option(option)"/>
              <!-- <input class = "radio-button" ng-click = "select_option(option)" type= "radio" name = "correct", flavour = "{{option.is_correct}}" mark-as-check value = ng-model = "option.is_correct" value = "$index"> --> 
               <!-- <input ng-click = "select_option(option)" type="radio" name="correct" mark-as-check> -->
             </div>
             <div class = "col-xs-11" style= "width:96%">
-              <input type = "text", class = "form-control" ng-model = "option.answer" edit-add-option = "add_question_option(question)" disable-enter>
+              <input type = "text", class = "form-control" ng-model = "option.answer" edit-add-option = "add_question_option(question)" data-ck-editor disable-enter>
             </div>
             <div style = "margin-top:6px">
               <a><span class = "glyphicon glyphicon-trash" style = "color:red" remove-option ng-click = "remove_question_option(question,$index)"></span></a>
