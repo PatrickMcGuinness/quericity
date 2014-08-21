@@ -1141,6 +1141,11 @@ quizlib.directive('hideUperBarMcq', function () {
         element.parents('.edit-question-box').find('.cke_top').hide()
         element.parents('.edit-question-box').find(".cke_contents ").css("height","50px")
         element.parents('.edit-question-box').find(".cke_contents ").eq(0).css("height","110px")
+
+        element.parents('.new-question-box').find('.cke_top').hide()
+        element.parents('.new-question-box').find(".cke_contents ").css("height","50px")
+        element.parents('.new-question-box').find(".cke_contents ").eq(0).css("height","110px")
+
       })
     }
   }
@@ -1156,6 +1161,10 @@ quizlib.directive('showUpperBarCkMcq', function () {
         element.parents('.edit-question-box').find('.cke_top').show()
         element.parents('.edit-question-box').find(".cke_contents ").eq(0).css("height","110px")
         element.parents('.edit-question-box').find(".cke_contents ").eq(1).css("height","50px")
+
+        element.parents('.new-question-box').find('.cke_top').show()
+        element.parents('.new-question-box').find(".cke_contents ").eq(0).css("height","110px")
+        element.parents('.new-question-box').find(".cke_contents ").eq(1).css("height","50px")
       })
     }
   }
