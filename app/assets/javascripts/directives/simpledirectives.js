@@ -1123,14 +1123,17 @@ quizlib.directive('showUpperBarCkBlank', function () {
   }
 });
 
-quizlib.directive('hideUperBarCreate', function () {
+quizlib.directive('hideUperBarCreate', function ($timeout) {
   return {
     restrict: 'A',
     link: function (scope, element, attr) {
-      console.log("sadfsadfasdf")
-      $('.new-question-box').find('.cke_top').hide()
-        //$('.new-question-box').find(".cke_contents ").css("height","110px")
-      $('.new-question-box').find(".cke_contents").css("height","55px")
+      
+      var hidebar = function() {
+        element.parents(".new-question-box").find('.cke_top').hide()
+        element.parents(".new-question-box").find(".cke_contents").css("height","50px")
+        element.parents(".new-question-box").find(".cke_contents").eq(0).css("height","110px")
+      } 
+      $timeout(hidebar, 50);
     }
   }
 });
