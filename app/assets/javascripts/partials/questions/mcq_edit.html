@@ -55,17 +55,23 @@
               <!-- <input ng-click = "select_option(option)" type="radio" name="correct" mark-as-check> -->
             </div>
             <div class = "col-xs-11" style= "width:96%">
-              <input type = "text", class = "form-control" ng-model = "option.answer" edit-add-option = "add_question_option(question)" data-ck-editor disable-enter>
+              <input type = "text", class = "form-control" ng-model = "option.answer"  data-ck-editor disable-enter>
             </div>
             <div style = "margin-top:6px">
               <a><span class = "glyphicon glyphicon-trash" style = "color:red" remove-option ng-click = "remove_question_option(question,$index)"></span></a>
             </div>  
           </td>
+
         </tr>
       </tbody>
     </table>
+
+     <!-- <button class= "add-option-button" data-toggle = "tooltip" title = "Add Option" tooltip-placement = "top"  style="background:none;border:none;">  
+            <img src = "/assets/plus.png" edit-add-option = "add_question_option(question)">
+      </button >
+ -->
       <div>  
-      <a ng-show = "!extra_details" ng-click = "extra_details = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+      <a ng-show = "!extra_details" ng-click = "extra_details = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top" >  
            <u> Show extra details </u>
       </a>
       <a ng-show = "extra_details"  ng-click = "extra_details = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  

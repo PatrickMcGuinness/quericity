@@ -9,7 +9,7 @@
       <a class = "col-xs-2 btn question-option-tab pull-left" ng-click = "change_question('Fill in blank')">Fill in Blank </a>
       <a class = "col-xs-2 btn question-option-tab pull-left" ng-click =  "change_question('Open Ended')">Open Ended</a>
 
-        <div class="icon-links pull-right" style="margin-right: 17px;"> 
+        <div class="icon-links pull-right""> 
         
         <button type="submit" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top" style="background:none;border:none;">  
             <img src = "/assets/floppy.png" change-delete-on-hover-new>
@@ -23,11 +23,11 @@
 
       <div class="editor_links" style="margin-top: 9px;">
 
-        <a ng-show = "!full_editor " ng-click = "full_editor = true" data-toggle = "tooltip" title = "show full editor" tooltip-placement = "top" style = "float:right;margin-right:16px;" show-upper-bar-ck  >  
+        <a ng-show = "!full_editor " ng-click = "full_editor = true" data-toggle = "tooltip" title = "show full editor" tooltip-placement = "top" style = "float:right;" show-upper-bar-ck  >  
           <u> Full Editor </u>
         </a>
 
-        <a ng-show = "full_editor" ng-click = "full_editor = false" data-toggle = "tooltip" title = "hide full editor" tooltip-placement = "top" style = "float:right;margin-right: 16px;" hide-uper-bar  >  
+        <a ng-show = "full_editor" ng-click = "full_editor = false" data-toggle = "tooltip" title = "hide full editor" tooltip-placement = "top" style = "float:right;" hide-uper-bar  >  
            <u> Text Only </u>
         </a>
       </div>
