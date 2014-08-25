@@ -1650,7 +1650,7 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
           $scope.submitted = false
           CKEDITOR.instances['true_false_question_statement'].setData("")
           $scope.hideQuestion()
-          $rootScope.$broadcast("question_created")
+          //$rootScope.$broadcast("question_created")
         })
         
        }
@@ -1670,7 +1670,7 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
           CKEDITOR.instances['open_ended_question_statement'].setData("")
           CKEDITOR.instances['answer'].setData("")
           $scope.hideQuestion()
-          $rootScope.$broadcast("question_created")
+          //$rootScope.$broadcast("question_created")
       })
     }    
   }
@@ -1691,7 +1691,7 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
           $scope.submitted = false
           CKEDITOR.instances['blank_statement'].setData("Put [blank] in question statement where you want the blank")
           $scope.hideQuestion()
-          $rootScope.$broadcast("question_created") 
+          //$rootScope.$broadcast("question_created") 
         }) 
     } 
   }
@@ -1749,7 +1749,7 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
       $scope.input_3 = null
       CKEDITOR.instances['description'].setData("")
       $scope.hideQuestion()
-      $rootScope.$broadcast("question_created")
+      //$rootScope.$broadcast("question_created")
   }
 
 }])

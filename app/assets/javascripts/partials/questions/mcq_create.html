@@ -11,7 +11,7 @@
 
 
      
-      <div class="icon-links pull-right" "> 
+      <div class="icon-links pull-right" style="margin-right: 17px;"> 
         <button type = "submit" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"style="background:none;border:none;">  
             <img src = "/assets/floppy.png" change-delete-on-hover-new> </img>
         </button >
@@ -24,10 +24,10 @@
       <br>
 
       <div class="editor_links" style="margin-top: 9px;">
-        <a ng-show = "!full_editor" ng-click = "full_editor = true" data-toggle = "tooltip" title = "show full editor" tooltip-placement = "top" style = "float:right;" show-upper-bar-ck-mcq>  
+        <a ng-show = "!full_editor" ng-click = "full_editor = true" data-toggle = "tooltip" title = "show full editor" tooltip-placement = "top" style = "float:right;margin-right:16px;" show-upper-bar-ck-mcq>  
           <u> Full Editor </u>
         </a>
-        <a ng-show = "full_editor" ng-click = "full_editor = false" data-toggle = "tooltip" title = "hide full editor" tooltip-placement = "top" style = "float:right;" hide-uper-bar-mcq>  
+        <a ng-show = "full_editor" ng-click = "full_editor = false" data-toggle = "tooltip" title = "hide full editor" tooltip-placement = "top" style = "float:right;margin-right: 16px;" hide-uper-bar-mcq>  
            <u> Text Only </u>
         </a>
       </div>
@@ -38,6 +38,7 @@
       <div ng-class="{ 'has-error' : (McqForm.description.$invalid) && submitted == true}">
         <textarea name="description" rows="2" class = "form-control" ng-model = "question.description" data-ck-editor required>
         </textarea>
+        <span hide-uper-bar-create><span>
         <p ng-show="McqForm.description.$invalid && submitted == true" class="help-block">Question is required.</p>
       </div>  
     </div>

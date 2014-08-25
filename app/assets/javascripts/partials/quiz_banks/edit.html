@@ -142,14 +142,14 @@
         <div class = "section-questions" ng-controller = "viewQuestionsCtrl" >
           <div ng-include src="'/assets/partials/questions/all_questions.html'"></div>
         </div>
-        <div>
-          <div ng-if = "question_section == section" ng-Show = "show_true_false" ng-include src="'/assets/partials/questions/true_false_create.html'" hide-uper-bar-create>
-          </div>  
+        <div class = "all-create-questions">
           <div ng-if = "question_section == section" ng-Show = "show_mcq" ng-include src="'/assets/partials/questions/mcq_create.html'">
           </div>
-          <div ng-if = "question_section == section" ng-Show = "show_blank" ng-include src="'/assets/partials/questions/fill_in_the_blank_create.html'" hide-uper-bar-create>
+          <div ng-if = "question_section == section" ng-Show = "show_true_false" ng-include src="'/assets/partials/questions/true_false_create.html'">
+          </div>  
+          <div ng-if = "question_section == section" ng-Show = "show_blank" ng-include src="'/assets/partials/questions/fill_in_the_blank_create.html'">
           </div>
-          <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'" hide-uper-bar-create>
+          <div ng-if = "question_section == section" ng-Show = "show_open_ended" ng-include src="'/assets/partials/questions/open_ended_create.html'">
           </div>    
       </div>
     </div>

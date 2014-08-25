@@ -1132,8 +1132,20 @@ quizlib.directive('showUpperBarCkBlank', function () {
     }
   }
 });
-
-
+quizlib.directive('hideUperBarCreate', function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      
+      var hidebar = function() {
+        element.parents(".new-question-box").find('.cke_top').hide()
+        element.parents(".new-question-box").find(".cke_contents").css("height","50px")
+        element.parents(".new-question-box").find(".cke_contents").eq(0).css("height","110px")
+      } 
+      $timeout(hidebar, 50);
+    }
+  }
+});
 
 
 quizlib.directive('hideUperBarOnEditMcq', function () {
