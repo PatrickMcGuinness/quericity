@@ -1472,8 +1472,6 @@ quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','Quest
 
  
     $scope.change_question = function(selected_type,question){
-    console.log(selected_type)
-    console.log(question)
     if(selected_type == "True False"){
       question.question_type = 1
     }
@@ -1795,7 +1793,6 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
     $rootScope.selected_type = question_type
     console.log($scope.selected_type)
     if(question_type == "True False"){
-      console.log("in the true false")
       $rootScope.show_true_false = true
       $rootScope.show_mcq = false
       $rootScope.show_blank = false

@@ -3,14 +3,14 @@
     <span>Update Question</span>
   </div> -->
    <div class = "change_question_type_link">
-      <a class = "col-xs-2 btn question-option-tab  pull-left" 
-      ng-click = "change_question('True False',question)" hide-uper-bar-on-change> True False</a>
-      <a class = "col-xs-2 btn question-option-tab active pull-left" 
-      ng-click = "change_question('Multiple Choice',question)" hide-uper-bar-on-change> Multiple Choice</a>
       <a class = "col-xs-2 btn question-option-tab pull-left" 
-      ng-click = "change_question('Fill in blank',question)" hide-uper-bar-on-change>Fill in Blank </a>
+      ng-click = "change_question('True False',question)" hide-uper-bar-on-change-tf> True False</a>
+      <a class = "col-xs-2 btn question-option-tab active pull-left mcq-tab" 
+      ng-click = "change_question('Multiple Choice',question)" hide-uper-bar-on-change-mcq> Multiple Choice</a>
       <a class = "col-xs-2 btn question-option-tab pull-left" 
-      ng-click =  "change_question('Open Ended',question)" hide-uper-bar-on-change>Open Ended</a>
+      ng-click = "change_question('Fill in blank',question)" hide-uper-bar-on-change-blank>Fill in Blank </a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" 
+      ng-click =  "change_question('Open Ended',question)" hide-uper-bar-on-change-open>Open Ended</a>
 
       <div class="icon-links pull-right" style="margin-right: 17px;"> 
         <button ng-click = "edit_mcq(section.id,question.id,question,question.question_options)"  data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"style="background:none;border:none;">  
@@ -66,10 +66,10 @@
       </tbody>
     </table>
 
-     <!-- <button class= "add-option-button" data-toggle = "tooltip" title = "Add Option" tooltip-placement = "top"  style="background:none;border:none;">  
+     <button class= "add-option-button" data-toggle = "tooltip" title = "Add Option" tooltip-placement = "top"  style="background:none;border:none;margin-left: 37px;position: absolute;margin-top:-20px;">  
             <img src = "/assets/plus.png" edit-add-option = "add_question_option(question)">
       </button >
- -->
+
       <div>  
       <a ng-show = "!extra_details" ng-click = "extra_details = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top" >  
            <u> Show extra details </u>

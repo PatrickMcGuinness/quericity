@@ -1,4 +1,4 @@
-<div class = "col-xs-12 edit-question-box" style= "margin-top:-8px;">
+<div class = "col-xs-12 edit-question-box"  style= "margin-top:-8px;">
   <!-- <div class = "heading">
     <span>Update Question</span>
   </div> -->
@@ -7,14 +7,14 @@
   <form name="TrueFalseForm" ng-submit="edit_question(section.id,question.id,question,TrueFalseForm.$valid)" novalidate>
 
     <div class = "change_question_type_link">
-      <a class = "col-xs-2 btn question-option-tab active pull-left" 
-      ng-click = "change_question('True False',question)" hide-uper-bar-on-edit> True False</a>
+      <a class = "col-xs-2 btn question-option-tab active true-false-tab pull-left" 
+      ng-click = "change_question('True False',question)" hide-uper-bar-on-change-tf> True False</a>
       <a class = "col-xs-2 btn question-option-tab pull-left" 
-      ng-click = "change_question('Multiple Choice',question)" hide-uper-bar-on-edit> Multiple Choice</a>
+      ng-click = "change_question('Multiple Choice',question)" hide-uper-bar-on-change-mcq> Multiple Choice</a>
       <a class = "col-xs-2 btn question-option-tab pull-left" 
-      ng-click = "change_question('Fill in blank',question)" hide-uper-bar-on-edit>Fill in Blank </a>
+      ng-click = "change_question('Fill in blank',question)" hide-uper-bar-on-change-blank>Fill in Blank </a>
       <a class = "col-xs-2 btn question-option-tab pull-left" 
-      ng-click =  "change_question('Open Ended',question)" hide-uper-bar-on-edit>Open Ended</a>
+      ng-click =  "change_question('Open Ended',question)" hide-uper-bar-on-change-open>Open Ended</a>
       <div class="icon-links pull-right" style="margin-right: 17px;"> 
         
         <button type="submit" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top" style="background:none;border:none;">  
@@ -46,7 +46,7 @@
     
     <div class = "col-xs-12 " ng-hide="full_editor">
       <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.question_statement.$invalid) && (!TrueFalseForm.question_statement.$pristine || submitted == true)}">
-        <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor hide-edtior required>
+        <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor  required>
         </textarea>
         <p ng-show="TrueFalseForm.question_statement.$invalid && (!TrueFalseForm.question_statement.$pristine || submitted == true)" class="help-block">Question is required.</p>
       </div>  
@@ -55,7 +55,7 @@
 
    <div class = "col-xs-12 " ng-show="full_editor">
       <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.question_statement.$invalid) && (!TrueFalseForm.question_statement.$pristine || submitted == true)}">
-        <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor hide-edtior required>
+        <textarea name="question_statement" id="question_statement" rows="3" class = "form-control" placeholder = "Enter Question" ng-model = "question.description" data-ck-editor required>
         </textarea>
         <p ng-show="TrueFalseForm.question_statement.$invalid && (!TrueFalseForm.question_statement.$pristine || submitted == true)" class="help-block">Question is required.</p>
       </div>  

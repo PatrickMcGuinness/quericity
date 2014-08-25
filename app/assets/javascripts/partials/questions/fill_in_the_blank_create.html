@@ -4,10 +4,10 @@
   </div>
   <form name="BlankForm" ng-submit="create_blank(BlankForm.$valid)" novalidate>
     <div class = "col-xs-12 mar-top-10">
-      <a class = "col-xs-2 btn question-option-tab pull-left" style="margin-left: 0px;"ng-click = "change_question('True False')"> True False</a>
-      <a class = "col-xs-2 btn question-option-tab pull-left" ng-click = "change_question('Multiple Choice')"> Multiple Choice</a>
-      <a class = "col-xs-2 btn question-option-tab pull-left active" ng-click = "change_question('Fill in blank')">Fill in Blank </a>
-      <a class = "col-xs-2 btn question-option-tab pull-left" ng-click =  "change_question('Open Ended')">Open Ended</a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" style="margin-left: 0px;"ng-click = "change_question('True False')" hide-uper-bar-on-change-tf> True False</a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" ng-click = "change_question('Multiple Choice')" hide-uper-bar-on-change-mcq> Multiple Choice</a>
+      <a class = "col-xs-2 btn question-option-tab pull-left blank-tab active" ng-click = "change_question('Fill in blank')" hide-uper-bar-on-change-blank>Fill in Blank </a>
+      <a class = "col-xs-2 btn question-option-tab pull-left" ng-click =  "change_question('Open Ended')" hide-uper-bar-on-change-open>Open Ended</a>
 
       <div class="icon-links pull-right" "> 
         <button type = "submit" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top"style="background:none;border:none;">  

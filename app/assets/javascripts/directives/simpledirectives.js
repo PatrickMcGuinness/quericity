@@ -480,9 +480,9 @@ quizlib.directive("editAddOption",['$compile',function($compile){
         var el = angular.element(html);
         compiled = $compile(el);
         compiled(scope)
-        console.log(element.parent().parent())
-        element.parent().parent().find('.cke_top:last').hide()
-      
+
+        
+
       })
     }
   };
@@ -1015,26 +1015,89 @@ quizlib.directive('showcreaterepo', function () {
 });
 
 
-quizlib.directive('hideUperBarOnChange', function ($timeout) {
+
+
+quizlib.directive('hideUperBarOnChangeTf', function ($timeout) {
   return {
     restrict: 'A',
     link: function (scope, element, attr) {
-      element.bind('click', function () {
-         angular.element(document).ready(function(){
-          console.log("clicked")
-          console.log("timed out")
-          console.log(element.parents('.edit-question-box').find('.cke_top'))
-          element.parents().eq(2).find('.cke_top').hide()
-          console.log("bbbbbbbbbbbbbb")
-          $(".cke_contents ").css("height","110px")
-        })
+         element.bind('click', function () {
+          var hidebar = function() {
+            $('.true-false-tab').parents('.edit-question-box').find('.cke_top').hide()
+            console.log("bbbbbbbbbbbbbb")
+            $('.true-false-tab').parents('.edit-question-box').find(".cke_contents ").css("height","110px")
+
+            $('.true-false-tab').parents('.new-question-box').find('.cke_top').hide()
+            console.log("bbbbbbbbbbbbbb")
+            $('.true-false-tab').parents('.new-question-box').find(".cke_contents ").css("height","110px")
+          }
+        $timeout(hidebar, 50); 
       })
     }
   }
 });
 
+quizlib.directive('hideUperBarOnChangeMcq', function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+         element.bind('click', function () {
+          var hidebar = function() {
+            $('.mcq-tab').parents('.edit-question-box').find('.cke_top').hide()
+            $('.mcq-tab').parents('.edit-question-box').find(".cke_contents ").css("height","50px")
+            $('.mcq-tab').parents('.edit-question-box').find(".cke_contents ").eq(0).css("height","110px")
+         
+            $('.mcq-tab').parents('.new-question-box').find('.cke_top').hide()
+            $('.mcq-tab').parents('.new-question-box').find(".cke_contents ").css("height","50px")
+            $('.mcq-tab').parents('.new-question-box').find(".cke_contents ").eq(0).css("height","110px")
 
+           }
+        $timeout(hidebar, 50); 
+      })
+    }
+  }
+});
 
+quizlib.directive('hideUperBarOnChangeBlank', function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+         element.bind('click', function () {
+          var hidebar = function() {
+            $('.blank-tab').parents('.edit-question-box').find('.cke_top').hide()
+            $('.blank-tab').parents('.edit-question-box').find(".cke_contents ").eq(0).css("height","110px")
+            $('.blank-tab').parents('.edit-question-box').find(".cke_contents ").eq(1).css("height","55px")
+            console.log('blank')
+            $('.blank-tab').parents('.new-question-box').find('.cke_top').hide()
+            $('.blank-tab').parents('.new-question-box').find(".cke_contents ").eq(0).css("height","110px")
+            $('.blank-tab').parents('.new-question-box').find(".cke_contents ").eq(1).css("height","55px")
+          }
+          console.log("bbbbbbbbbbbbbb")
+        $timeout(hidebar, 50); 
+      })
+    }
+  }
+});
+quizlib.directive('hideUperBarOnChangeOpen', function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+         element.bind('click', function () {
+          var hidebar = function() {
+            console.log('open')
+            console.log('qqqqqqqqqqqqqqqqq')
+            $('.open-tab').parents('.edit-question-box').find('.cke_top').hide()
+            $('.open-tab').parents('.edit-question-box').find(".cke_contents ").css("height","110px")
+
+            $('.open-tab').parents('.new-question-box').find('.cke_top').hide()
+            $('.true-false-tab').parents('.new-question-box').find('.open-tab').parents('.new-question-box').find('.cke_contents').css("height","110px")
+
+          }
+        $timeout(hidebar, 50); 
+      })
+    }
+  }
+});
 
 quizlib.directive('hideUperBarOnEdit', function () {
   return {
@@ -1047,21 +1110,6 @@ quizlib.directive('hideUperBarOnEdit', function () {
     }
   }
 });
-
-
-quizlib.directive('hideEdtior', function () {
-  return {
-    restrict: 'A',
-    link: function (scope, element, attr) {
-      element.bind('click', function () {
-        console.log("aaaaaaaaaaaaaaaaaaqweqwe")
-        element.hide()
-        element.css("height","110px")
-      })
-    }
-  }
-});
-
 
 quizlib.directive('hideUperBar', function () {
   return {
