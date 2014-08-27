@@ -467,7 +467,7 @@ quizlib.directive("addOption",['$compile',function($compile){
     }
   };
 }])
-quizlib.directive("editAddOption",['$compile',function($compile){
+quizlib.directive("editAddOption",function($timeout){
   return {
     restrict: 'A',
     link: function(scope,element,attrs){
@@ -475,18 +475,19 @@ quizlib.directive("editAddOption",['$compile',function($compile){
         scope.$apply(function (){
           scope.$eval(attrs.editAddOption);
         });
-        input_number = element.parents('tbody').children('tr').length + 1;
-        var html = "<tr><td><div class = 'form-group new-class mar-top-10' ng-model = 'mcq_options["+input_number+"]' required add-option><input name = 'input"+input_number+"' type = 'text' class = 'form-control'></div></td><td><div class = 'form-group mar-top-10'><input type='radio' name='correct' ng-model = 'radio' value = '"+input_number+"' ng-click = 'add_correct_option("+input_number+")' ng-init = 'radio = "+input_number+"'></div></td><td><span class = 'glyphicon glyphicon-remove mar-top-20' style = 'color:red;' remove-option ng-click = 'remove_mcq_input("+input_number+")'></span></td></tr>";        
-        var el = angular.element(html);
-        compiled = $compile(el);
-        compiled(scope)
-
         
-
+      var hidebar = function() {
+        element.parents('.edit-question-box').find('.cke_top:last').hide()
+        element.parents('.edit-question-box').find(".cke_contents").css("height","50px")
+        element.parents('.new-question-box').find('.cke_top:last').hide()
+        element.parents('.new-question-box').find(".cke_contents").css("height","50px")
+      } 
+      $timeout(hidebar, 50);  
+        
       })
     }
   };
-}])
+})
 
 quizlib.directive("showBargraph",function(){
   return {

@@ -1514,6 +1514,12 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
   $scope.full_editor = false
 
 
+  $scope.remove_question_option = function(question,index){
+    if(question.question_options.length > 2){
+      question.question_options.splice(index,1)
+    }
+  }
+
 
   $scope.show_options = function(section_id,question_id,question_type){
     $scope.show_details = true
@@ -1536,9 +1542,8 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
 
   $scope.add_question_option = function(question){
     question.question_options.push({question_id: question.id, is_correct :false, answer: null})
-    console.log(question)
-    console.log("aaaaaaaaaaaaa")
   }
+
   $scope.edit_question = function(section_id,question_id,question,isValid){
     $scope.submitted = true
     if(isValid){
@@ -1550,6 +1555,8 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
   $scope.edit_blank = function(statement,section_id,question_id,question,isValid){
     $scope.submitted = true
     if(isValid){
+      console.log("statement")
+      console.log(statement)
       var temp  = statement.split("[")
       var array = temp[1].split("]")
       question.description = temp[0] + "_________" + array[1]

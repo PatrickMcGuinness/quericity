@@ -10,7 +10,7 @@
       ng-click =  "change_question('Open Ended',question)" hide-uper-bar-on-change-open>Open Ended</a>
     
       <div class="icon-links pull-right" style="margin-right: 17px;"> 
-         <form name="BlankForm" ng-submit="edit_blank(statement,section.id,question.id,question,BlankForm.$valid)" novalidate>
+         <form name="BlankForm" ng-submit="edit_blank(question.description,section.id,question.id,question,BlankForm.$valid)" novalidate>
 
         <button type="submit" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top" style="background:none;border:none;">  
             <img src = "/assets/floppy.png">
@@ -44,7 +44,6 @@
         
         <textarea name="question_description" id="question_description" rows="3" class = "form-control" ng-model = "question.description" data-ck-editor required>
         </textarea>
-        
         <p ng-show="BlankForm.question_description.$invalid && (!BlankForm.question_description.$pristine || submitted == true)" class="help-block">Satement is required.</p>
       </div>  
     
