@@ -1,6 +1,6 @@
 <ul data-quiz-bank-id = {{quiz_bank_id}} id = {{section.id}} class = "simple_with_animation questions-list">
   <li ng-if = "questions.length == 0" class = "col-xs-12 no-record" style= "border-bottom:0px;">No questions in sections</li>
-  <li ng-if = "questions.length > 0" id = {{section.id}}  ng-repeat = "question in questions" class = "col-xs-12 question-item" ng-controller = "viewQuestionCtrl"  style= "border-top:0px;padding-bottom: 10px;background: white;">
+  <li ng-if = "questions.length > 0" id = {{section.id}}  ng-repeat = "question in questions" class = "col-xs-12 question-item" ng-controller = "viewQuestionCtrl"  style= "border-top:0px;margin-top: 1px;padding-bottom: 10px;background: white;">
     
     <!-- <div class = "col-xs-1" style = "margin-bottom:10px; ">
       <img ng-if = "question.question_type == 1" ng-hide = "is_quiz_view" src = "/assets/true_false.png" data-toggle = "tooltip" title = "True False Question" tooltip-placement = "top" >

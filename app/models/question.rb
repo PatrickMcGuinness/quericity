@@ -89,7 +89,7 @@ class Question < ActiveRecord::Base
   end
 
   def update_question(params)
-    if self.is_mcq?
+    if params[:question_type] == Question::QuestionType::MCQ
       self.question_options.destroy_all
       params[:question_options].each do |question_option|
         QuestionOption.create(answer: question_option[:answer],

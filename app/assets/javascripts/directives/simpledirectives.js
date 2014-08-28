@@ -1065,15 +1065,17 @@ quizlib.directive('hideUperBarOnChangeBlank', function ($timeout) {
     link: function (scope, element, attr) {
          element.bind('click', function () {
           var hidebar = function() {
+            console.log($('.blank-tab').parents('.edit-question-box'))
+            console.log($('.blank-tab').parents('.edit-question-box').find(".cke_contents "))
             $('.blank-tab').parents('.edit-question-box').find('.cke_top').hide()
-            $('.blank-tab').parents('.edit-question-box').find(".cke_contents ").eq(0).css("height","110px")
-            $('.blank-tab').parents('.edit-question-box').find(".cke_contents ").eq(1).css("height","55px")
+            $('.blank-tab').parents('.edit-question-box').find(".cke_contents ").css("height","80px")
+            // $('.blank-tab').parents('.edit-question-box').find(".cke_contents ").eq(1).css("height","55px")
             console.log('blank')
             $('.blank-tab').parents('.new-question-box').find('.cke_top').hide()
             $('.blank-tab').parents('.new-question-box').find(".cke_contents ").eq(0).css("height","110px")
             $('.blank-tab').parents('.new-question-box').find(".cke_contents ").eq(1).css("height","55px")
           }
-          console.log("bbbbbbbbbbbbbb")
+          console.log("bbbbbbbbbaaaaaaaaaaaaabbbbb")
         $timeout(hidebar, 50); 
       })
     }
@@ -1086,12 +1088,11 @@ quizlib.directive('hideUperBarOnChangeOpen', function ($timeout) {
          element.bind('click', function () {
           var hidebar = function() {
             console.log('open')
-            console.log('qqqqqqqqqqqqqqqqq')
             $('.open-tab').parents('.edit-question-box').find('.cke_top').hide()
             $('.open-tab').parents('.edit-question-box').find(".cke_contents ").css("height","110px")
 
             $('.open-tab').parents('.new-question-box').find('.cke_top').hide()
-            $('.true-false-tab').parents('.new-question-box').find('.open-tab').parents('.new-question-box').find('.cke_contents').css("height","110px")
+            $('.open-tab').parents('.new-question-box').find(".cke_contents ").css("height","110px")
 
           }
         $timeout(hidebar, 50); 
