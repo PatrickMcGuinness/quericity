@@ -156,8 +156,10 @@ student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','
     $scope.served_quiz.student_sharing = Sharing.student_sharing(data.id)
     $scope.served_quiz.questions_to_attempt = ServedQuiz.questions_to_attempt(data.id)
     var obj = new Date($scope.served_quiz.close_date)
+
     $scope.served_quiz.close_date = obj.getDate() +"/" + (obj.getMonth()+1) +"/"+obj.getFullYear()
-    var obj = new Date($scope.served_quiz.end_time)
+    // var obj = new Date($scope.served_quiz.end_time)
+
     if(obj.getMinutes() < 10){
       $scope.served_quiz.end_time = obj.getHours() + ":" + "0" + obj.getMinutes()
     }

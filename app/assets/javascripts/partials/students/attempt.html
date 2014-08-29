@@ -10,11 +10,18 @@
 </div>
 <div class="container">
 	<div class="row">
-    <div class = "col-xs-3 col-xs-offset-5">
-      <h2> {{served_quiz.cloned_quiz_bank.title}}</h2>
+    <div class = "col-xs-3 col-xs-offset-5" style= "margin-left:37%;">
+      
+      <div class= "owner-name-quiz" style= "text-align: center;">
+      <h2 > {{served_quiz.cloned_quiz_bank.title}}</h2>
+      </div>
+      
+      <div class= "owner-name-quiz" style= "text-align: center;">
       &nbsp;&nbsp;{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}
-      <div ng-if = "served_quiz.infinite_duration == 0 && served_quiz.student_sharing.status_in_string != 'COMPLETED'">
-        <div class = "col-xs-5 col-xs-offset-2">{{timer.minutes}}&nbsp;Minutes:{{timer.counter}}Seconds</div>
+      </div>
+      
+      <div ng-if = "served_quiz.infinite_duration == 0 && served_quiz.student_sharing.status_in_string != 'COMPLETED'" style="text-align: center;">
+        <div class = "col-xs-5 col-xs-offset-2" style= "margin-left: 14%;">{{timer.minutes}}&nbsp;Minutes:{{timer.counter}}Seconds</div>
       </div>
 	</div>
   <div class = "row" ng-if = "served_quiz.student_sharing.status_in_string == 'INVITED'">
