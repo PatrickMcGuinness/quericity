@@ -73,11 +73,11 @@ QuizLib::Application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  :address              => "smtp.sendgrid.net",
-  :port                 =>  587,
-  :user_name            => "c2sbrett",
-  :password             => "c2ssmtp@ut",
-  :authentication       => 'plain',
-  :enable_starttls_auto => true  
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => 'apps.clustox@gmail.com',
+    :password             => 'herokuapp',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true  
   }
 end
