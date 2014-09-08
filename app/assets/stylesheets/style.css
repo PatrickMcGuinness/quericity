@@ -460,3 +460,27 @@ ul li{
 }
 
 
+@media print {
+    .row_bottom,.text-area-div,.buttons-div{
+        visibility: hidden;
+    }
+    .print-button,.progress-bar-preview
+    {
+    	visibility: hidden;
+    }
+    .col-xs-offset-5{
+    	margin-top: -20px;
+    }
+    .text-area-div{
+    	margin-top: -20px;
+    }
+    #header, #footer { 
+    visibility: hidden !important;
+    display: none !important;
+ 	}
+ 
+ 	.strip{
+ 		border: none;
+ 	}
+
+}

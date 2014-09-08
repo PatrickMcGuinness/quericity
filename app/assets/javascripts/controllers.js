@@ -1,4 +1,4 @@
-quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
+   quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
   $scope.$route = $route
   $scope.$watch('titleFilter', function() {
     if($scope.titleFilter != undefined){
@@ -340,11 +340,18 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   $scope.show_timer = false
   $scope.submit = false
   $scope.show_answer = false
+  $scope.show_previous = false
+  $scope.quiz_start_pressed = false
+  $scope.show_next = true
+  $scope.final_answer = false
   $scope.questions_done = 0
   $scope.question_done = 0
+  $scope.total_questions = 0
+  $scope.questions = []
   $scope.show_answers = []
   $scope.to_be_graded = []
   $scope.shown_questions = []
+  $scope.all_questions_to_save= []
   $scope.option = {all_questions: 1, unlimited: 1}
   
   $scope.stopQuiz = function(){
@@ -384,11 +391,13 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   })
 
   $scope.startQuiz = function(){
+    $scope.quiz_start_pressed = true
     $scope.show_options = false
     $scope.show_answer = false
     $scope.submit = true
     $scope.show_answers = []
-    
+    $scope.total_questions = $scope.questions.length
+
     if($scope.option.all_questions == 1){
       $scope.show_questions = $scope.questions 
     }
@@ -412,28 +421,51 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
     }
   }
 
-  $scope.previous_questions = function(){
-    $scope.show_questions = []
-    var new_number = parseInt($scope.question_done) - parseInt($scope.option.question_number)
+
+
+
+    $scope.previous_questions = function(){
+    $scope.final_answer = false
+    for(var i = 0; i < $scope.option.question_number;i++)
+    {
+      $scope.all_questions_to_save.pop()
+    }
+    // angular.forEach($scope.option.question_number,function(answered_question,key){
+    //   $scope.all_questions_to_save.pop()
+    // })
+    $scope.show_next= true
     console.log($scope.question_done)
-    console.log(new_number)
-    for(var j = 0; j <  $scope.option.question_number; j++){
-      $scope.show_questions.push($scope.questions[new_number])
-      $scope.question_done = $scope.question_done - 1
-      new_number = new_number + 1
+    console.log($scope.option.question_number*2)
+    if ($scope.question_done == $scope.option.question_number*2)
+    {
+      $scope.show_previous= false
+    }
+    
+    $scope.show_questions = []
+    var new_number =$scope.question_done
+    $scope.question_done = parseInt($scope.question_done) - parseInt($scope.option.question_number)
+    for(var j = $scope.question_done; j <  new_number; j++){
+      $scope.show_questions.push($scope.questions[j-$scope.option.question_number])
     }
   }
+
   $scope.next_questions = function(){
+     angular.forEach($scope.show_questions,function(answered_question,key){
+      $scope.all_questions_to_save.push(answered_question)
+    })
 
     $scope.show_questions = []
-    
-    // if($scope.question_done == $scope.questions.length){
-    //   $scope.show_answer= true 
-    //   $scope.submit = false
-    // }
+    $scope.show_previous = true
+    console.log($scope.question_done)
+    console.log($scope.questions.length)
+    console.log(parseInt($scope.option.question_number))
+    if ($scope.question_done >= $scope.questions.length-$scope.option.question_number)
+    {
+      $scope.show_next = false
+      $scope.final_answer = true
+    }
     
     var new_number = parseInt($scope.option.question_number) + parseInt($scope.question_done)
-    
     if(new_number < $scope.questions.length){
       for(var i = $scope.question_done; i < new_number;i++){
          if($scope.questions[i] != undefined){
@@ -451,6 +483,7 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
         
       }
     }
+    $scope.question_done = new_number
   }
   $scope.submitQuestion = function(shown_questions){
     
@@ -531,13 +564,20 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   }
   
   $scope.submitQuiz = function(answered_questions){
-    $scope.answered_questions = answered_questions
+    console.log(answered_questions)
+
+    angular.forEach(answered_questions,function(answered_question,key){
+      $scope.all_questions_to_save.push(answered_question)
+    })
+
+    console.log($scope.all_questions_to_save)
+    $scope.answered_questions = $scope.all_questions_to_save
     $scope.show_options = false
     $scope.show_timer = false
     $scope.submit = false
     $scope.show_answer = true
     
-    angular.forEach($scope.answered_questions,function(question,key){
+    angular.forEach($scope.all_questions_to_save,function(question,key){
       if(question.question_type == 1){
         question.question_answer = question.question_options[0].is_correct
         if(question.question_options[0].is_correct == true && question.answer == 'true'){
@@ -571,14 +611,22 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
 
         })
       }
+
       if(question.question_type == 4){
         question.question_answer = question.question_options[0].answer
-        if(question.question_options[0].answer == question.answer){
+
+        correct_answer = question.question_options[0].answer
+        console.log(correct_answer)
+        console.log(question.answer)
+
+        console.log(correct_answer.toString() == question.answer.toString())
+        // if(correct_answer == question.answer){
           question.correct = 'Correct'
-        }else{
-          question.correct = 'Incorrect'
-        }
+        // }else{
+        //   question.correct = 'Incorrect'
+        // }
       }
+
       if(question.question_type == 3){
         question.question_answer = question.question_options[0].answer
         question.correct =  "Will be graded later"
@@ -1715,8 +1763,11 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
   $scope.add_mcq_input = function(){
     $scope.mcq_options.push('')
   }
-  $scope.add_question_option = function(question){
-    question.question_options.push({question_id: question.id, is_correct :false, answer: null})
+  $scope.add_new_question_option = function(question,mcq_options){
+    console.log("I am in new")
+    console.log(question)
+    // console.log(question.question_options)
+    mcq_options.push({question_id: question.id, is_correct :false, answer: null})
   }
 
   $scope.add_correct_option = function(radio){

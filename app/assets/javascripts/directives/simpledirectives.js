@@ -115,6 +115,17 @@ quizlib.directive("checkActive",function($route){
   };
 })
 
+// quizlib.directive("pushQuestionDone",function(){
+//     console.log("aaaaaa")
+//     return{
+//     link: function(scope,element,attrs){
+//       element.on('click', function() {
+//         console.log(attrs.pushQuestionDone)
+//       });
+//     }
+//   };
+// })
+
 quizlib.directive("markAsCheck",function(){
   return{
     link: function(scope,element,attrs){
@@ -489,6 +500,17 @@ quizlib.directive("editAddOption",function($timeout){
   };
 })
 
+quizlib.directive("printThePage",function(){
+return {
+    restrict: "A",
+    link: function(scope,element,attrs){
+      element.bind("click",function(){
+        console.log("printing")
+        window.print()
+      })
+    }
+  };
+});
 quizlib.directive("showBargraph",function(){
   return {
     restrict: "C",
@@ -1247,6 +1269,17 @@ quizlib.directive('showUpperBarCkMcq', function () {
     }
   }
 });
+
+
+quizlib.directive('showProgressBar', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      
+    }
+  }
+});
+
 
 
 
