@@ -352,7 +352,10 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   $scope.to_be_graded = []
   $scope.shown_questions = []
   $scope.all_questions_to_save= []
+  $scope.questions_answered = []
+  $scope.options_alphabets = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N"]
   $scope.option = {all_questions: 1, unlimited: 1}
+  $scope.show_summary = true
   
   $scope.stopQuiz = function(){
     $scope.show_options = true
@@ -429,6 +432,7 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
     for(var i = 0; i < $scope.option.question_number;i++)
     {
       $scope.all_questions_to_save.pop()
+      $scope.questions_answered.pop()
     }
     // angular.forEach($scope.option.question_number,function(answered_question,key){
     //   $scope.all_questions_to_save.pop()
@@ -450,9 +454,21 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   }
 
   $scope.next_questions = function(){
-     angular.forEach($scope.show_questions,function(answered_question,key){
+    angular.forEach($scope.show_questions,function(answered_question,key){
       $scope.all_questions_to_save.push(answered_question)
     })
+
+
+    angular.forEach($scope.show_questions,function(answered_question,key){
+      if (answered_question.answer != undefined)
+      {
+        $scope.questions_answered.push(answered_question)
+      } 
+    })
+    // console.log("--------------------")
+    // console.log($scope.all_questions_to_save)
+    // console.log($scope.show_questions)
+    // console.log("--------------------")
 
     $scope.show_questions = []
     $scope.show_previous = true
@@ -564,6 +580,12 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   }
   
   $scope.submitQuiz = function(answered_questions){
+    $scope.quiz_start_pressed = false
+    $scope.final_answer = false
+    $scope.show_next = true
+    $scope.show_previous = false
+    $scope.questions_answered = []
+
     console.log(answered_questions)
 
     angular.forEach(answered_questions,function(answered_question,key){

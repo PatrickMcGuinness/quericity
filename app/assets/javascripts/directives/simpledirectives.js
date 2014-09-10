@@ -1280,8 +1280,26 @@ quizlib.directive('showProgressBar', function () {
   }
 });
 
+quizlib.directive('summaryView', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      console.log("summay clickedd")
+      show_summary = true
+    }
+  }
+});
 
-
+quizlib.directive('detailView', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      console.log("summay clickedd")
+      show_summary = false
+      
+    }
+  }
+});
 
 quizlib.directive('customPopover', function ($compile) {
   return {
