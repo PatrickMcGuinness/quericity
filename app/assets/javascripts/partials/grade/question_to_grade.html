@@ -12,28 +12,19 @@
     <h2>Questions to Grade</h2>
     <div ng-repeat = "answer in answers_to_grade" ng-if = "answers_to_grade.length > 0">
       <div class = "col-xs-12 well well-sm">
-        <div class = "col-xs-7">
+        <div class = "col-xs-9">
     	    <span class="heading_strip">Question No {{$index + 1}}</span>
         </div>
-        <div class = "col-xs-3" ng-if = "answer.served_quiz.basic_scoring == false">
+        
+        <div class = "col-xs-3">
           <span class = "col-xs-3">Score: </span>
           <span>
-            <input type = "text" ng-model = "answer.student_score" class = "col-xs-6"> /{{answer.cloned_question.score}}
+            <input type = "text" ng-model = "answer.student_score" class = "col-xs-6" style ="width: 26%;margin-right:3px;">  / {{answer.cloned_question.score}}
+            <button class="btn btn-warning" ng-click = "grade_answer(answer)">Mark</button>
           </span>  
         </div>
-        <div class = "col-xs-3" ng-if = "answer.served_quiz.basic_scoring == true">
-          &nbsp;
-        </div>
-        <div class = "col-xs-2">  
-          <span class="pull-right">
-            <a ng-click = "wrong(answer)"><img src="/assets/cross.png" style = "width: 20px; height:20px;"/></a>
-          </span>  
-          <span class="pull-right">
-            <a ng-click = "correct(answer)">
-              <img src="/assets/tick.png" style = "width: 20px; height:20px; "/>
-            </a>
-          </span>
-        </div>  
+        
+        
       </div>
       <h4>Question Statement</h4>
       <p mathjax-bind = "answer.cloned_question.description"></p>

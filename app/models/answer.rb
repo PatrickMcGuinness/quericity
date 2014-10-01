@@ -33,7 +33,9 @@ class Answer < ActiveRecord::Base
   end
 
   def self.student_answers_in_served_quiz(served_quiz,student)
-    Answer.where("served_quiz_id = ? and student_id = ?",served_quiz.id,student.id)
+    a = Answer.where("served_quiz_id = ? and student_id = ?",served_quiz.id,student.id)
+    puts "answer:",a.inspect
+    a
   end
 
   def self.student_correct_answers(served_quiz,student)

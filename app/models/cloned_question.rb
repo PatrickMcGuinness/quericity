@@ -1,6 +1,6 @@
 class ClonedQuestion < ActiveRecord::Base
   attr_accessible :seq, :description, :question_type,:difficulty_level,
-                  :reference_url,:cloned_section_id, :cloned_quiz_bank_id, :score
+                  :reference_url,:cloned_section_id, :cloned_quiz_bank_id, :default_score
 
   has_many :cloned_question_options
   has_many :answers
@@ -56,8 +56,9 @@ class ClonedQuestion < ActiveRecord::Base
 
   def self.create_the_clone(cloned_quiz_bank,question_id, question_score)
     question = Question.find(question_id)
+    puts "question : "*10,question
     cloned_question = ClonedQuestion.create(seq: question.seq, description: question.description, question_type: question.question_type,difficulty_level: question.difficulty_level,
-                  cloned_quiz_bank_id: cloned_quiz_bank.id, score: question_score)
+                  cloned_quiz_bank_id: cloned_quiz_bank.id, default_score: question_score)
     ClonedQuestionOption.create_the_clone(question,cloned_question)
     cloned_question
   end
@@ -68,7 +69,7 @@ class ClonedQuestion < ActiveRecord::Base
       cloned_question = ClonedQuestion.create(seq: question.seq, 
                           description: question.description, question_type: question.question_type,
                           difficulty_level: question.difficulty_level,
-                          cloned_quiz_bank_id: cloned_quiz_bank.id, score: 1)
+                          cloned_quiz_bank_id: cloned_quiz_bank.id, default_score: 10)
       ClonedQuestionOption.create_the_clone(question,cloned_question)
     end  
   end
@@ -87,7 +88,7 @@ class ClonedQuestion < ActiveRecord::Base
       :cloned_section_id => cloned_section_id,
       :cloned_quiz_bank_id => cloned_quiz_bank_id,
       :cloned_question_options => cloned_question_options.as_json(),
-      :score => score
+      :score => default_score
     }
     
   end

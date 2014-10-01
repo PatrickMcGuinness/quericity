@@ -186,18 +186,68 @@ quizlib.directive("sectionRight",function(){
   };
 });
 
+quizlib.directive("hideSectionOnCkeck",function(){
+  return {
+    restrict: "ABC",
+    link: function(scope,element,attrs){
+      element.bind("click",function(){
+        console.log("i am in")
+         var remember = document.getElementById('checkbox_for_password');
+        console.log(remember.checked)
+        if (remember.checked == true){
+          console.log("i am in true")
+          $('.password_filed_when_protected').removeClass("hide")
+          $('.password_filed_when_protected').addClass("show")
+           
+        } 
+        else {
+           console.log("i am in flase")
+           console.log($('.password_filed_when_protected'))
+           $('.password_filed_when_protected').removeClass("show")
+          $('.password_filed_when_protected').addClass("hide")
+        }
+        // element.addClass("hide")
+        // element.siblings().removeClass("hide")
+        // element.parents(".title-div").children(".questions-list-div").removeClass("hide")
+        // $(".list-questions").children("p").css("line-height","20px")
+        // var children = element.parents(".title-div").find(".list-questions").children()
+        // $.each(children,function(key,value){
+        //   $(value).html((key + 1) + ") "+$(value).html())
+        // })
+      })
+      
+    }
+  };
+});
+
+
 quizlib.directive("thisIsTestDirective",function(){
   return {
     restrict: "A",
     link: function(scope,element,attrs){
       element.bind("click",function(){
-        console.log("aaaaaaaaaaaaaaaaa")
+
         console.log(attrs)
-        console.log("wwwwwwwwwwwwwwwww")
       })  
     }
   };
 })
+
+quizlib.directive("checkIt",function(){
+  return {
+    restrict: "A",
+    link: function(scope,element,attrs){
+        console.log(element)
+        $('.checkbox-for-all-questions').children().click()
+        $('.checkbox-for-unlimited-duration').children().click()
+        // $('.checkbox-for-all-questions').children().prop('checked', true);
+        // element.click()
+        // element.prop('checked', true);
+        console.log("check it")
+    }
+  };
+})
+
 
 quizlib.directive("sectionDown",function(){
   return {
@@ -225,6 +275,21 @@ quizlib.directive("selectQuestions",function(){
       element.bind("click",function(){
         $(".question-checkbox").prop('checked', true);
       })
+    }
+  };
+});
+
+quizlib.directive("testingDirective",function(){
+  return {
+    restrict: 'A',
+    link: function(scope,element,attrs){
+      console.log("innnnnnnn")
+      console.log($(".checkbox-for-date-slot input"))
+      $(".checkbox-for-date-slot input").click();
+      $(".checkbox-date-slot").prop('checked', true);
+      $(".checkbox-for-date-slot input").prop('checked', true);
+      $(".checkbox-for-all-questions input").click();
+      $(".checkbox-for-unlimited-duration input").click();
     }
   };
 });
@@ -1097,7 +1162,6 @@ quizlib.directive('hideUperBarOnChangeBlank', function ($timeout) {
             $('.blank-tab').parents('.new-question-box').find(".cke_contents ").eq(0).css("height","110px")
             $('.blank-tab').parents('.new-question-box').find(".cke_contents ").eq(1).css("height","55px")
           }
-          console.log("bbbbbbbbbaaaaaaaaaaaaabbbbb")
         $timeout(hidebar, 50); 
       })
     }

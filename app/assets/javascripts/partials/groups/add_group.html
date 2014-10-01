@@ -38,12 +38,32 @@
               <p ng-show="GroupForm.title.$invalid && (!GroupForm.title.$pristine || submitted == true)" class="help-block">Title is required.</p>
             </div>  
           </div>
-          <div class="col-xs-12">
-            <input type="text" ng-model="student" typeahead="student as student.first_name for student in system_students | filter:{first_name:$viewValue} | limitTo:8" class="form-control input-sm type-search popover-field" enter = "AddStudent(student)" placeholder="Search by name" typeahead-on-select = "AddStudent(student)" tourtip = "Search Students and Select" tourtip-step = "1" data-toggle = "tooltip" title = "Search Students to add to group" tooltip-placement = "top" popover="Search students by first name and add them to group"  popover-trigger="mouseenter">
+          <div class="col-xs-12 radio_contorl" style="margin-top:0px;margin-bottom: 10px;margin-left: -12px;" >
+            <div class= "col-xs-2">
+              <input type="checkbox" id="checkbox_for_password" ng-model = "checked" name="checkbox" ng-click = "make_protected()" data-toggle = "tooltip" title = "Protect Group" tooltip-placement = "top"/ tourtip = "You can sort the students by first name" tourtip-step = "2" popover="Protect Group"  popover-trigger="mouseenter" class = "popover-field" >&nbsp;&nbsp;Protected
+            </div>
+            <div style= "margin-left:-15px;">
+              <input type="checkbox"  ng-model = "group.searchable" name="checkbox"  data-toggle = "tooltip" title = "Enable to make the group searchable for students" tooltip-placement = "top"/ tourtip = "Student can search the group" tourtip-step = "7" popover="Studet can search this group"  popover-trigger="mouseenter" class = "popover-field" >&nbsp;&nbsp;searchable
+            </div>
           </div>
-          <div class="col-xs-12 radio_contorl">
+
+
+          <div class = "form-group col-xs-12 password_filed_when_protected" >       
+            <div ng-show ="show_error" style = "color:red"> Password Cant be blank for protected Groups</div>    
+              <input type="text"  placeholder="Enter Password" ng-show ="is_protected" class="add_password form-control popover-field" ng-model = "group.code" name = "password"  tourtip = "Add code"  data-toggle = "tooltip" title = "Add password here" tooltip-placement = "top" popover="Add password to group"  popover-trigger="mouseenter"/>
+             
+          </div> 
+
+
+          <div class="col-xs-12 ">
+            <input type="text" ng-model="student" typeahead="student as student.first_name for student in system_students | filter:{first_name:$viewValue} | limitTo:8" class="form-control input-sm type-search popover-field" enter = "AddStudent(student)" placeholder="Search Student by name" typeahead-on-select = "AddStudent(student)" tourtip = "Search Students and Select" tourtip-step = "1" data-toggle = "tooltip" title = "Search Students to add to group" tooltip-placement = "top" popover="Search students by first name and add them to group"  popover-trigger="mouseenter">
+          </div>
+          <div class="col-xs-12 radio_contorl"  >
             <input type="checkbox" name="checkbox" ng-click="predicate = 'first_name'; reverse=!reverse" data-toggle = "tooltip" title = "Sort Students by first name" tooltip-placement = "top"/ tourtip = "You can sort the students by first name" tourtip-step = "2" popover="Sort student by first name"  popover-trigger="mouseenter" class = "popover-field">&nbsp;&nbsp;Sort by name
           </div>
+          
+         
+
           <div class = "col-xs-12" ng-class="{ 'has-error' : selected_students.length == 0}">
             <p ng-show="selected_students.length == 0" class="help-block">Select atleast one student.</p>
           </div>

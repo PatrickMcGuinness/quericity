@@ -1,12 +1,21 @@
-<div class = "mar-top-10 col-xs-12 strip" ng-repeat = "question in served_quiz.questions_to_show" ng-if = "served_quiz.student_sharing.status_in_string != 'COMPLETED'">
+<div class= "progress-bar-preview col-xs-12">
+    <small ng-show ="quiz_start_pressed" ><em>Progress</em></small>
+    <progressbar ng-show ="quiz_start_pressed"  animate="false" value=(all_questions_to_save.length*100+100)/served_quiz.questions_to_attempt.length type=""><b>{{all_questions_to_save.length}}/{{served_quiz.questions_to_attempt.length}}</b></progressbar>
+</div>   
+
+
+<div class = "mar-top-10 col-xs-12 strip" ng-repeat = "question in questions_to_show_on_page" ng-if = "served_quiz.student_sharing.status_in_string != 'COMPLETED'">
+  <span style= "float:left;">Q:</span>
   <span mathjax-bind = "question.description"></span>
+
   <div class = "pull-left" ng-if = "question.question_type == 1">
     <input type="radio" name="true_false{{$index}}" value = "true" ng-model = "question.answer">&nbsp;True
     &nbsp;&nbsp;<input type="radio" name="true_false{{$index}}" value = "false" ng-model = "question.answer">&nbsp;False
   </div>
   <div class = "pull-left" ng-if = "question.question_type == 2">
-    <div ng-repeat = "question_option in question.cloned_question_options">
-      <input type="radio" name="answer{{question_option.id}}{{$index}}" value = "{{question_option.id}}" ng-model = "question.answer">&nbsp;{{question_option.answer}}
+    <div ng-repeat = "question_option in question.cloned_question_options" style = "display: flex;"">
+      <input type="radio"  name="answer{{question_option.id}}{{$index}}" value = "{{question_option.id}}" ng-model = "question.answer">&nbsp;<span mathjax-bind = "question_option.answer">
+      {{question_option.answer}} </span>
     </div>
   </div>
   <div class = "pull-left col-xs-12" ng-if = "question.question_type == 3">
@@ -16,11 +25,25 @@
     <input ng-model = "question.answer" class =  "form-control" placeholder = "Enter blank">
   </div>
 </div>
-<div class = "row" ng-if = "served_quiz.student_sharing.status_in_string != 'COMPLETED'">
-  <div class = "col-xs-2 col-xs-offset-5 mar-top-20">
-    <a class = "btn btn-success btn-lg pull-left" ng-click = "submit(served_quiz.questions_to_attempt)">Submit Answers</a>
-  </div>
+<div class="col-xs-12  strip buttons-div"  ng-if = "served_quiz.student_sharing.status_in_string != 'COMPLETED'" ng-show = "ans_submit">
+    
+    <button  ng-show= "final_answer"  class = "btn btn-warning" ng-click = "submit(questions_to_show_on_page)">            
+      <span class = "glyphicon glyphicon-thumbs-up"></span>
+      <span>Submit</span>
+    </button>
+
+    <button  class = "btn btn-success" ng-if = "served_quiz.student_sharing.status_in_string != 'COMPLETED'" ng-show = "show_next" ng-click = "next_questions(questions_to_show_on_page)" >
+      <span>Next</span>
+
+      <span class = "glyphicon glyphicon-chevron-right"></span>
+    </button>
+    <button  ng-show = "show_previous" class = "btn btn-success" ng-click = "previous_questions()"  style= "float: left;">
+      <span class = "glyphicon glyphicon-chevron-left" ></span>
+      <span>Previous</span>
+    </button>
+
 </div>
+
 <div class = "row" ng-if = "served_quiz.student_sharing.status_in_string == 'COMPLETED' && served_quiz.answer != 3">
   <div class = "col-xs-12">
     <h3>Answers</h3>
@@ -28,16 +51,17 @@
   <div class = "col-xs-12 strip">
     <table class = "table table-striped">
       <thead>
-        <th class = "col-xs-5">Your Answer</th>
         <th class = "col-xs-5">Correct Answer</th>
+        <th class = "col-xs-5">Your Answer</th>
         <th class = "col-xs-2">Result</th>
       </thead>
       <tbody>
         <tr ng-repeat = "answer in served_quiz.answers">
         <!--<span class = "col-xs-10" mathjax-bind = "answer_to_grade.question_answer"></span> -->
-        <td>{{answer.student_answer}}</td>
-        <td ng-if = "answer.cloned_question.question_type !=3">{{answer.answer}}</td>
-        <td ng-if = "answer.cloned_question.question_type == 3" mathjax-bind = "answer.answer">
+        <td ng-if = "answer.cloned_question.question_type ==1">{{answer.answer}}</td>
+        <td ng-if = "answer.cloned_question.question_type !=1" mathjax-bind = "answer.answer">
+        <td ng-if = "answer.cloned_question.question_type !=2">{{answer.student_answer}}</td>
+        <td ng-if = "answer.cloned_question.question_type ==2"  mathjax-bind = "answer.student_answer">
         <td ng-if = "answer.cloned_question.question_type != 3">{{answer.student_score}}</td>
         <td ng-if = "answer.cloned_question.question_type == 3">Teacher will grade</td>
         </tr>

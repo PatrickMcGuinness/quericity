@@ -4,6 +4,7 @@ class ClonedQuestionsController < ApplicationController
   respond_to :json
 
   def create
+  	puts "cloned_question: "*10,cloned_question.inspect
     render json: ClonedQuestion.create(params[:cloned_question]) 
   end
 

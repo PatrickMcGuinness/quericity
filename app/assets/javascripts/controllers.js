@@ -62,6 +62,7 @@ quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',function($scope
     
   $scope.uploadFile = function(){
       var file = $scope.myFile;
+     
       var uploadUrl = "/users/"+ $scope.user.id + "/upload_image";
       $scope.loading = true
       fileUpload.uploadFileToUrl(file, uploadUrl);
@@ -241,6 +242,14 @@ quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQ
 
 quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz','Answer',function($scope,$routeParams,ServedQuiz,Answer){
   $scope.answers_to_grade = ServedQuiz.questions_to_grade($routeParams.id)
+  $scope.grade_answer = function(answer){
+    answer.graded_by_teacher = answer.student_score
+    answer.is_correct = true
+    Answer.update(answer.id,answer).$promise.then(function(){
+      index = $scope.answers_to_grade.indexOf(answer)
+      $scope.answers_to_grade.splice(index,1)
+    })
+  }
   $scope.correct = function(answer){
     answer.graded_by_teacher = 1
     answer.is_correct = true
@@ -257,6 +266,7 @@ quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz','A
       $scope.answers_to_grade.splice(index,1)
     })
   }
+
 }]);
 
 quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing','QuizStatus','TimeDisplay','Message',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing,QuizStatus,TimeDisplay,Message){
@@ -334,6 +344,10 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
 
+  $scope.correct_answers = 0
+  $scope.wrong_answers = 0
+  $scope.no_answers = 0
+  $scope.graded_later = 0
   $scope.quiz_bank_id = $routeParams.id
   $scope.show_options = true
   $scope.show_questions = []
@@ -580,6 +594,10 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   }
   
   $scope.submitQuiz = function(answered_questions){
+    $scope.correct_answers = 0
+    $scope.wrong_answers = 0
+    $scope.no_answers = 0
+    $scope.graded_later = 0
     $scope.quiz_start_pressed = false
     $scope.final_answer = false
     $scope.show_next = true
@@ -602,7 +620,12 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
     angular.forEach($scope.all_questions_to_save,function(question,key){
       if(question.question_type == 1){
         question.question_answer = question.question_options[0].is_correct
-        if(question.question_options[0].is_correct == true && question.answer == 'true'){
+
+        if (question.answer == undefined)
+        {
+          question.correct = 'no_answer'
+        }
+        else if(question.question_options[0].is_correct == true && question.answer == 'true'){
           question.correct = 'Correct'
         }
         else if(question.question_options[0].is_correct == false && question.answer == 'false'){
@@ -610,9 +633,11 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
         }
         else{
           question.correct = 'Incorrect'
+
         }
       }
       if(question.question_type == 2){
+
         angular.forEach(question.question_options,function(value,key){
           if(question.answer == value.id){
             if(value.is_correct == true){
@@ -628,32 +653,55 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
             question.question_answer = value.answer
           }
           if(question.answer == undefined){
-            question.correct = "Incorrect"
+            console.log("i am in undefined")
+            question.correct = "no_answer"
+            question.question_answer = value.answer
           }
 
         })
       }
 
       if(question.question_type == 4){
+         console.log("Question 4")
+        console.log(question.question_options[0].answer)
         question.question_answer = question.question_options[0].answer
 
         correct_answer = question.question_options[0].answer
         console.log(correct_answer)
         console.log(question.answer)
+        var answer_withought_tags = question.question_answer.replace("<p>", "").replace("</p>","");
 
-        console.log(correct_answer.toString() == question.answer.toString())
-        // if(correct_answer == question.answer){
+        if(question.answer == undefined)
+        {
+          question.correct = 'no_answer'
+        }
+        else if(answer_withought_tags.trim() == question.answer){
           question.correct = 'Correct'
-        // }else{
-        //   question.correct = 'Incorrect'
-        // }
+         }else{
+           question.correct = 'Incorrect'
+        }
       }
 
       if(question.question_type == 3){
+        console.log("Question 3")
+        console.log(question.question_options[0].answer)
         question.question_answer = question.question_options[0].answer
         question.correct =  "Will be graded later"
       }
-    })
+
+      if (question.correct == 'Correct'){
+        $scope.correct_answers = $scope.correct_answers + 1
+      }
+      if (question.correct == 'Incorrect'){
+        $scope.wrong_answers = $scope.wrong_answers + 1
+      }
+      if (question.correct == 'no_answer'){
+        $scope.no_answers = $scope.no_answers + 1
+      }
+      $scope.graded_later = $scope.all_questions_to_save.length - $scope.no_answers - $scope.wrong_answers -$scope.correct_answers 
+      })
+
+
     //$scope.show_questions = []
   }
 }]);
@@ -669,6 +717,8 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   //$scope.show_question_list = true
   $scope.selected_questions = []
   //$scope.show_options = true
+  $scope.show_advanced_options = false
+  $scope.customize_questions= false
   $scope.group_students = []
   $scope.students_to_left = []
   $scope.students_to_right = []
@@ -741,6 +791,9 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
     }
   }
 
+  $scope.remove_current_student = function(student){
+    $scope.group_students.pop(student)
+  }
   $scope.move_to_right = function(){
     angular.forEach($scope.students_to_right,function(value,key){
       var check = 0
@@ -798,7 +851,7 @@ quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','Cloned
   $scope.serveTheQuiz = function(){
     $scope.served_quiz.quiz_bank_id = $scope.selects.selected_quiz.id
     $scope.served_quiz.selected_questions = $scope.selected_questions
-    $scope.served_quiz.selected_students = $scope.selected_students
+    $scope.served_quiz.selected_students = $scope.group_students
     ServedQuiz.save($scope.served_quiz).$promise.then(function(data){
       Message.push_message({type: "success",msg: "You have successfully served quiz",controller: "ServeQuizCtrl"})
       $location.path("/served_quizzes")
@@ -869,9 +922,12 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
   $scope.system_students = User.system_students()
   $scope.submitted = false
   $scope.valid = false
-  $scope.group = {title: null}
+  $scope.group = {title: null,code:  "",is_protected: false,searchable: false}
   $scope.user = User.get_current_user()
   $scope.currentStep = 1000
+  $scope.is_protected = false
+  $scope.searchable = true
+  $scope.show_error = false
   
   User.get_current_user().$promise.then(function(data){
     $scope.user = data
@@ -885,7 +941,24 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
     }
   });
 
-  
+  $scope.make_protected = function(){
+    if($scope.is_protected == false)
+    {
+      $scope.is_protected = true
+    }
+    else{
+      $scope.is_protected = false
+    }
+  }
+  // $scope.searchable = function(){
+  //   if($scope.searchable == false)
+  //   {
+  //     $scope.searchable = true
+  //   }
+  //   else{
+  //     $scope.searchable = false
+  //   }
+  // }
   $scope.change_display = function(){
     if($scope.start_tour == true){
       $scope.start_tour = false
@@ -914,6 +987,11 @@ quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','Student
   }
   $scope.saveGroup = function(isValid){
     $scope.submitted = true
+    $scope.group.is_protected = $scope.is_protected
+    if ($scope.is_protected == true && $scope.group.code == undefined)
+    {
+      $scope.show_error = true
+    }
     if(isValid && $scope.valid){
       Group.save($scope.group).$promise.then(function(data){
         angular.forEach($scope.selected_students,function(value,key){
@@ -1021,7 +1099,7 @@ quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User',
     }
   }
 }]);
-quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section','FavouriteQuiz','Message', function($scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section,FavouriteQuiz,Message) {
+quizlib.controller('ShowQuizBankCtrl', ['$window','$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section','FavouriteQuiz','Message', function($window,$scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section,FavouriteQuiz,Message) {
   $scope.my_assessments = Repository.all()
   $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
   $scope.quiz_bank_id = $routeParams.id
@@ -1056,9 +1134,12 @@ quizlib.controller('ShowQuizBankCtrl', ['$scope','$routeParams','QuizBank','Repo
   }
 
   $scope.deleteQuiz = function(){
+    console.log("atlast i am in the controller")
+    var deleteUser = $window.confirm('Are you absolutely sure you want to delete?'); 
+    if (deleteUser){
     QuizBank.delete($scope.quiz_bank_id)
-  }
-  
+    }
+  } 
 }]);
 
 quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scope,Repository,QuizBank){
@@ -1627,9 +1708,17 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
     if(isValid){
       console.log("statement")
       console.log(statement)
-      var temp  = statement.split("[")
-      var array = temp[1].split("]")
-      question.description = temp[0] + "_________" + array[1]
+      if (statement.indexOf("[") > -1 ){
+      
+        var temp  = statement.split("[")
+        var array = temp[1].split("]")
+        question.description = temp[0] + "_________" + array[1]
+      }
+      else
+      {
+        question.description = statement
+      }
+
       Question.update($scope.quiz_bank_id,section_id,question_id,question)
       $scope.show_details_view = true
       //$rootScope.$broadcast("question_changed")

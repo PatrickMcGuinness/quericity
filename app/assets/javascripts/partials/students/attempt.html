@@ -53,13 +53,13 @@
     </div>
   </div>
   <div class = "row" ng-if = "served_quiz.student_sharing.status_in_string != 'INVITED'">
-    <div ng-if = "served_quiz.show_all_questions == 1 && served_quiz.infinite_duration == 1" ng-include src="'/assets/partials/students/all_questions_answers_after_quiz.html'" ng-controller = "AllQuestionsAnswerAfterQuizCtrl">
+    <div ng-if = "served_quiz.show_all_questions == 1 && served_quiz.infinite_duration == 1" ng-include src="'/assets/partials/students/all_questions_answers_after_quiz.html'" ng-controller = "AllQuestionsTimeLimit">
     </div>
     <div ng-if = "served_quiz.show_all_questions == 1 && served_quiz.infinite_duration == 0" ng-include src="'/assets/partials/students/all_questions_with_time_limit.html'" ng-controller = "AllQuestionsTimeLimit">
     </div>
     <div ng-if = "served_quiz.show_all_questions == 0 && served_quiz.infinite_duration == 1" ng-include src="'/assets/partials/students/number_of_questions_unlimited_time.html'" ng-controller = "NumberOfQuestionsNOTimeLimit">
     </div>
-    <div ng-if = "served_quiz.show_all_questions == 0 && served_quiz.infinite_duration == 0" ng-include src="'/assets/partials/students/number_of_questions_with_time_limit.html'" ng-controller = "NumberOfQuestionsTimeLimit">
+    <div ng-if = "served_quiz.show_all_questions == 0 && served_quiz.infinite_duration == 0" ng-include src="'/assets/partials/students/number_of_questions_with_time_limit.html'" ng-controller = "NumberOfQuestionsNOTimeLimit">
     </div>
   </div> 
 </div>

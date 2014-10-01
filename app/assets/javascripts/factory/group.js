@@ -28,6 +28,7 @@ quizlib.factory('Group', ['$resource', function($resource) {
   Group.prototype.students = function(GroupId){
     return this.service.students({id: GroupId,students: "students"})
   }
+ 
   
   return new Group;
 }]);

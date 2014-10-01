@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140818064847) do
+ActiveRecord::Schema.define(:version => 20140930055740) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(:version => 20140818064847) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.integer  "cloned_quiz_bank_id"
-    t.integer  "score"
+    t.integer  "default_score"
   end
 
   add_index "cloned_questions", ["cloned_quiz_bank_id"], :name => "index_cloned_questions_on_cloned_quiz_bank_id"
@@ -133,8 +133,11 @@ ActiveRecord::Schema.define(:version => 20140818064847) do
   create_table "groups", :force => true do |t|
     t.string   "title"
     t.integer  "owner_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.boolean  "searcable"
+    t.boolean  "is_protected"
+    t.string   "code"
   end
 
   add_index "groups", ["id"], :name => "index_groups_on_id"

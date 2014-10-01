@@ -74,6 +74,9 @@ QuizLib::Application.routes.draw do
     member do
       get 'get_student_groups'
       get 'students'
+      get 'all_groups_of_student'
+      get 'all_groups'
+      get 'enrol_in_the_group'
     end
   end
   resources :users do

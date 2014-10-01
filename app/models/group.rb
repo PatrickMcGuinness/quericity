@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  attr_accessible :title, :owner_id
+  attr_accessible :title, :owner_id ,:is_protected ,:code,:searcable
 
   belongs_to :owner, :class_name=>'User', :foreign_key=>'owner_id'
   validates :owner_id, presence: true
@@ -76,6 +76,9 @@ class Group < ActiveRecord::Base
       :owner => owner.as_json(),
       :created_at => created_at,
       :updated_at => updated_at,
+      :is_protected => is_protected,
+      :searcable => searcable,
+      :code => code,
       :students => students.as_json()
     }
     

@@ -178,7 +178,7 @@ class ServedQuiz < ActiveRecord::Base
 
   def self.clone_question_list(params,cloned_quiz_bank)
     params[:selected_questions].each do |selected_question|
-      ClonedQuestion.create_the_clone(cloned_quiz_bank,selected_question[:id], selected_question[:score])
+      ClonedQuestion.create_the_clone(cloned_quiz_bank,selected_question[:id], selected_question[:default_score])
     end
   end
 
@@ -288,6 +288,7 @@ class ServedQuiz < ActiveRecord::Base
     attempted_questions_id = self.cloned_quiz_bank.cloned_questions.joins(:answers).where("answers.student_id = ?",student.id).pluck(:id)
     questions = self.cloned_quiz_bank.cloned_questions if attempted_questions_id.blank?
     questions = self.cloned_quiz_bank.cloned_questions.where("id NOT IN (?)",attempted_questions_id) unless attempted_questions_id.blank?
+    puts "questions:",questions.inspect
     questions
   end
   def as_json(opts = nil)

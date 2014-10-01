@@ -1,4 +1,4 @@
-quizlib.factory('StudentGroup', ['$resource', function($resource) {
+student_quizlib.factory('StudentGroup', ['$resource', function($resource) {
   function StudentGroup() {
     this.service = $resource('/student_groups/:id', {id: '@id'},
                 {update:{method:"PUT",isArray:false}
