@@ -67,16 +67,16 @@ QuizLib::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-  config.action_mailer.asset_host = "http://quiz-lib.herokuapp.com"
-  config.action_mailer.default_url_options = { :host => 'quiz-lib.herokuapp.com' }
+  config.action_mailer.asset_host = "http://quericity2.herokuapp.com"
+  config.action_mailer.default_url_options = { :host => 'quericity2.herokuapp.com' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :user_name            => 'apps.clustox@gmail.com',
-    :password             => 'herokuapp',
+    :user_name            => 'support@quericity.com',
+    :password             => 'red1blue2',
     :authentication       => 'plain',
     :enable_starttls_auto => true  
   }
