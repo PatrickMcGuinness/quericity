@@ -34,7 +34,7 @@ group :assets do
 end
 
 group :development do
-  gem 'debugger'
+  # gem 'debugger'
   gem "rails_best_practices"
 end
 
