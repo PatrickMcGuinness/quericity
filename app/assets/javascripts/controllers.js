@@ -1,4 +1,4 @@
-   quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
+quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
   $scope.$route = $route
   $scope.$watch('titleFilter', function() {
     if($scope.titleFilter != undefined){
@@ -1655,7 +1655,7 @@ quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','Quest
   console.log($scope)
 }])
 
-quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Question','GlobalScope',function($scope,$rootScope,QuestionOption,Question,GlobalScope){
+quizlib.controller("viewQuestionCtrl",['$window','$scope','$rootScope','QuestionOption','Question','GlobalScope',function($window,$scope,$rootScope,QuestionOption,Question,GlobalScope){
   $scope.extra_details = false
   $scope.show_details = true
   $scope.show_details_view = true
@@ -1735,9 +1735,15 @@ quizlib.controller("viewQuestionCtrl",['$scope','$rootScope','QuestionOption','Q
   }
   
   $scope.delete_question = function(section_id,question_id,idx){
-    Question.delete($scope.quiz_bank_id,section_id,question_id)
+      var deleteUser = $window.confirm('Are you sure you want to delete this question?'); 
+    if (deleteUser){
+    // QuizBank.delete($scope.quiz_bank_id)
+     Question.delete($scope.quiz_bank_id,section_id,question_id)
     $scope.questions.splice(idx, 1);
     $scope.show_details = false
+    }
+
+   
     //$rootScope.$broadcast("question_changed")
   }
   
