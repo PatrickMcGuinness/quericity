@@ -6,9 +6,6 @@
       </span>
       <span class="sub_nav_link"><a ng-href="#/quizlist">Back</a></span>
 	</div>
-    <span class= "attempt-heading text-center">
-    <h2 style="font-size:20px; "> {{served_quiz.cloned_quiz_bank.title}}</h2>
-	</span>
   </div>
 </div>
 <div class="container">
@@ -17,7 +14,10 @@
       
       
       <div ng-if = "served_quiz.infinite_duration == 0 && served_quiz.student_sharing.status_in_string != 'COMPLETED'" style="text-align: center;">
-        <div class = "alert alert-success" style= "margin-left: 14%;">{{timer.minutes}}&nbsp;Minutes:{{timer.counter}}Seconds</div>
+		  <h4>{{served_quiz.cloned_quiz_bank.title}}</h4>
+        <div class = "alert alert-success" role = "alert">
+			<p>Time left:{{timer.minutes}}&nbsp;minutes:{{timer.counter}}seconds</p>
+		</div>
       </div>
 	</div>
 
@@ -31,11 +31,11 @@
 
 	  <!-- List group -->
 	  <ul class="list-group">
-	    <li class="list-group-item"><strong>No of Questions:</strong> {{served_quiz.cloned_quiz_bank.cloned_questions.length}}</li>
-	    <li class="list-group-item" ng-if = "served_quiz.infinite_duration == 1" ><strong>Time Limit:</strong> Unlimited Time</li>
-	    <li class="list-group-item" ng-if = "served_quiz.infinite_duration == 0"><strong>Time Limit:</strong> {{served_quiz.duration}} mins.</li>
+	    <li class="list-group-item"><strong>Number of Questions:</strong> {{served_quiz.cloned_quiz_bank.cloned_questions.length}}</li>
+	    <li class="list-group-item" ng-if = "served_quiz.infinite_duration == 1" ><strong>Time limit:</strong> Unlimited time</li>
+	    <li class="list-group-item" ng-if = "served_quiz.infinite_duration == 0"><strong>Time limit:</strong> {{served_quiz.duration}} mins.</li>
 	    <li class="list-group-item"><strong>Teacher serving quiz:</strong> &nbsp;&nbsp;{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}</li>
-	    <li class="list-group-item"><strong>You may take the Quiz anytime Before:</strong> {{served_quiz.close_date}}  {{served_quiz.end_time}}</li>
+	    <li class="list-group-item"><strong>You may take the quiz anytime before:</strong> {{served_quiz.close_date}}  {{served_quiz.end_time}}</li>
 		<li class="list-group-item"><strong>Instructions:</strong> {{served_quiz.instructions}}</li>
 	  </ul>
 	</div>
