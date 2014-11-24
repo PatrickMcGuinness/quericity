@@ -1,1 +1,382 @@
-<div class="row_bottom">	<div class="container">    <div class="sub_nav">      <span class="sub_nav_icon">        <span class = "glyphicon glyphicon-arrow-left"></span>      </span>      <span class="sub_nav_link"><a href="#/quiz_banks/{{quiz_bank.id}}/show">Back</a></span>    </div>    <div class="sub_nav"  ng-hide = "show_options">        <span class="sub_nav_icon">        <span class = "glyphicon glyphicon-stop"></span>      </span>      <span class="sub_nav_link"><a ng-click="stopQuiz()">Stop Quiz/Show Options</a></span>    </div>		</div></div><div class="container">	<div class="row">    <div class="col-xs-12">      <div class = "col-xs-12">        <h2 class = "col-xs-offset-5">{{quiz_bank.title}}</h2>        <!-- <h2 class = "col-xs-offset-5">Time taken: 1 min 2 sec</h4> -->        <div ng-show = "show_timer">          <div class = "col-xs-5 col-xs-offset-5">{{minutes}}&nbsp;Minutes:{{counter}}Seconds</div>          <!--<timer class = "col-xs-offset-5" end-time="get_duration()">{{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.          </timer> -->        </div>      </div>      <div class="col-xs-12 strip form_section" ng-show = "show_options">        <div class="col-xs-4">          <div class="col-xs-12">              <input type="radio" name="all_questions" value = "1" ng-model = "option.all_questions">&nbsp;&nbsp;All question on one page          </div>				</div>        <div class="col-xs-8">          <span class="col-xs-4">            <input type="radio" name="all_questions" value = "0" ng-model = "option.all_questions">&nbsp;&nbsp;Questions per page:          </span>          <span class="col-xs-6">            <span class = "col-xs-7">              <input type="text" class="label_field form-control" ng-model = "option.question_number" style = "height:35px;"/>            </span>            <span>              /{{questions.length}}            </span>            <!--<span class = "col-xs-4">                <span>/{{questions.length}}</span>            </span> -->            </span>        </div>        <!--        <div class="col-xs-4">          <div class="col-xs-6">              Show Answers:          </div>          <div class="col-xs-6">                        <select class="form-control"  ng-model = "option.answer">              <option value = " ">Show Answers</option>              <option value = "1">After Question</option>              <option value = "2">After Quiz</option>              <option value = "3">Don't Show</option>            </select>          </div>        </div>        -->        <div class = "col-xs-12">          <div class="col-xs-2 mar-top-20">            <input type="radio" name="unlimited" value = "0" ng-model = "option.unlimited">&nbsp;Duration:          </div>                              <div class="col-xs-2 mar-top-20">            <span>              <input type="text" class="label_field form-control" ng-model = "option.duration"/>            </span>          </div>          <div class="col-xs-2 mar-top-20">            <select class="form-control" ng-model = "option.duration_type">              <option value = "">Select</option>              <option value = "1">Minutes</option>            </select>          </div>          <div class = "col-xs-1 mar-top-20"> or          </div>          <div class = "col-xs-2 mar-top-20">            <input type="radio" name="unlimited" value = "1" ng-model = "option.unlimited">&nbsp;Unlimited          </div>          <div class = "col-xs-1 mar-top-20 pull-right" show-progress-bar>            <button class = "btn btn-success" ng-click = "startQuiz()">              <span class = "glyphicon glyphicon-play"></span>              Start Quiz            </button>          </div>        </div>  							</div>    </div>           <div class="col-xs-12 form_section">        <span><b>Instructions</b></span>        <p>        {{quiz_bank.instructions}}        </p>        <div class= "progress-bar-preview">          <small ng-show ="quiz_start_pressed" ng-if = "option.all_questions == 0"><em>Progress</em></small>            <progressbar ng-show ="quiz_start_pressed" ng-if = "option.all_questions == 0" animate="false" value=question_done*100/questions.length type=""><b>{{questions_answered.length}}/ {{questions.length}}</b></progressbar>            <a  ng-show ="quiz_start_pressed" ng-if = "option.all_questions == 1" class= "print-button" print-the-page style="float:right;">Print</a>        </div>         </div>               <!-- <progressbar value=question_done max =8 ><span style="color:black; white-space:nowrap;">{{question_done}} / {{total_questions}}</span></progressbar> -->    <div class="col-xs-12" ng-hide = "show_answer">      <div class="col-xs-12 strip" ng-repeat = "question in show_questions">        <div class="col-xs-12 ">          <span class = "pull-left">{{$index + 1}})</span>          <!--<span class = "col-xs-11" ng-bind-html="question.description | unsafe"></span> -->          <span class = "col-xs-11" mathjax-bind = "question.description"></span>        </div>        <div class = "col-xs-12 mar-top-20">          <span>            <strong>&nbsp;&nbsp;Answer:</strong>          </span>          </div>        <div class = "col-xs-12 mar-top-20 mar-left-10">          <div ng-if = "question.question_type == 1">            <input type="radio" name="true_false{{question.id}}" value = true ng-model = "question.answer">&nbsp;True            &nbsp;&nbsp;<input type="radio" name="true_false{{question.id}}" value = false ng-model = "question.answer">&nbsp;False          </div>          <div ng-if = "question.question_type == 2">            <div ng-repeat = "question_option in question.question_options">              <input type="radio" name="answer{{question.id}}" value = "{{question_option.id}}" ng-model = "question.answer" style= "float: left;"><span mathjax-bind = "question_option.answer" >&nbsp;{{question_option.answer}}{{show_questions}}</span>            </div>          </div>          <div ng-if = "question.question_type == 3">            <textarea ng-model = "question.answer" class =  "form-control text-area-div"  rows = 3 placeholder = "Enter The Answer"></textarea>          </div>          <div ng-if = "question.question_type == 4">            <textarea ng-model = "question.answer" class =  "form-control text-area-div"  rows = 3 placeholder = "Enter the Answer"></textarea>           </div>        </div>      </div>      <div class="col-xs-12 strip buttons-div" ng-show = "submit">        <!-- <span class = "col-xs-3 col-xs-offset-4"> -->          <button  ng-if = "option.all_questions == 1"  class = "btn btn-warning" ng-click = "submitQuiz(show_questions)">                        <span class = "glyphicon glyphicon-thumbs-up"></span>            <span>Submit</span>          </button>          <button  ng-show= "final_answer" ng-if = "option.all_questions == 0" class = "btn btn-warning" ng-click = "submitQuiz(show_questions)">                        <span class = "glyphicon glyphicon-thumbs-up"></span>            <span>Submit</span>          </button>          <button ng-if = "option.all_questions == 0" class = "btn btn-success" ng-show = "show_next" ng-click = "next_questions()" push-question-done = {{show_questions}}>            <span>Next</span>            <span class = "glyphicon glyphicon-chevron-right"></span>          </button>          <button ng-if = "option.all_questions == 0" ng-show = "show_previous" class = "btn btn-success" ng-click = "previous_questions()"  style= "float: left;">            <span class = "glyphicon glyphicon-chevron-left" ></span>            <span>Previous</span>          </button>        <!-- </span> -->      </div>    </div>    <div class = "col-xs-12" ng-show = "show_answer">      <h2 class = "col-xs-12" style = "text-align:center">        Answers      </h2>      <div class = "col-xs-12 strip">        <a ng-show="show_summary" ng-click="show_summary = false">Detail View</a>        <a ng-hide= "show_summary" ng-click="show_summary = true">Summary</a>        <table class = "table table-striped" ng-show="show_summary" >          <thead>            <!-- <th class = "col-xs-5">              Question            </th> -->            <th class = "col-xs-5">              Correct Answer            </th>            <th class = "col-xs-5">              Your Answer            </th>            <th class = "col-xs-2">              Result            </th>          </thead>          <tbody>            <tr ng-repeat = "question in answered_questions">              <td ng-if = "question.question_type == 3">                <span mathjax-bind = "question.question_answer"></span>              </td>              <td ng-if = "question.question_type ==2 || question.question_type ==4 ">                <span mathjax-bind = "question.question_answer">                  {{question.question_answer}}                <span>              </td>              <td ng-if = "question.question_type ==1">                  {{question.question_answer}}              </td>              <td ng-if = "question.question_type ==2">                   <span mathjax-bind = "question.answer">                  {{question.answer}}                <span>              </td>              <td ng-if = "question.question_type !=2">                  {{question.answer}}              </td>                            <td ng-if = "question.correct == 'Correct'">                <img src="/assets/mcqtick.png" />              </td>              <td = ng-if = "question.correct == 'Incorrect'">                <img src="/assets/mcqcross.png" />              </td>                            <td = ng-if = "question.correct == 'no_answer'">                No Answer              </td>              <td ng-if = "question.correct != 'Correct' && question.correct != 'Incorrect' && question.correct != 'no_answer'">                {{question.correct}}              </td>            </tr>          </tbody>        </table>        <table class = "table table-striped" ng-hide="show_summary" style= "margin-top: 10px;">            <tr ng-repeat = "question in answered_questions">              <td >                 <div class = "col-xs-10" style="display: -webkit-inline-box;margin-bottom: -15px;">                  <span>Q:{{$index + 1}}<span>                  <span mathjax-bind = "question.description" style="margin-left:10px;"></span>                </div>                <span style= "float: right;" ng-if = "question.correct == 'Correct'">                    <img src="/assets/mcqtick.png" />                </span>                                  <span style= "float: right;" ng-if = "question.correct == 'Incorrect'">                    <img src="/assets/mcqcross.png" />                </span>                 <span style= "float: right;" ng-if = "question.correct == 'no_answer'">                    No Answer                </span>                 <span class = "col-xs-10" ng-if = "question.question_type == 2" ng-repeat = "options in question.question_options" style="margin-left:33px;">                {{options_alphabets[$index]}}:                <span mathjax-bind = "options.answer" style="display: -webkit-inline-box;"></span>                </span>                <span class = "col-xs-10" ng-if = "question.question_type == 3" style="margin-left:33px;color:rgb(38, 167, 69);">                <span> This will be graded later</span>                </span>                <span class = "col-xs-10" ng-if = "question.question_type != 3" style="margin-left:33px;margin-top: 12px;">                  <span ng-if="question.question_type == 1">                    <span ><b>Correct answer:</b>{{question.question_options[0].answer}}</span>                  </span>                                    <span ng-if="question.question_type != 1">                    <b>Correct answer:</b><span mathjax-bind = "question.question_options[0].answer" style= "display: inline-block;margin-left: 10px;">{{question.question_options[0].answer}}</span>                  </span>                </span>                <span class = "col-xs-10" ng-if = "question.question_type != 3&& question.question_type != 1" style="margin-left:53px;margin-top: 12px;margin-top: -6px;">                <span ng-if="question.question_type == 4 ">                  <b>Your answer:</b><span style="margin-left: 10px;">{{question.answer}}</span>                </span>                <span ng-if="question.question_type == 2">                  <b>Your answer:</b><span mathjax-bind = "question.answer" style= "display: inline-block;margin-left: 10px;">{{question.answer}}</span>                </span>                              </td>              <!-- <span>{{question.question_options}}</span>              <span>Correct answer:{{question.question_options[0].answer}}</span>              <span>Your answer:{{question.answer}}</span> -->              </td>              <!-- <td ng-if = "question.question_type == 3">                <span mathjax-bind = "question.question_answer"></span>              </td> -->              <!-- <td ng-if = "question.question_type ==2 || question.question_type ==4 ">                <span mathjax-bind = "question.question_answer">                  {{question.question_answer}}                <span>              </td> --><!--               <td ng-if = "question.question_type ==1">                  {{question.question_answer}}              </td> --><!--               <td ng-if = "question.question_type ==2">                   <span mathjax-bind = "question.answer">                  {{question.answer}}                <span>              </td> --><!--               <td ng-if = "question.question_type !=2">                  {{question.answer}}              </td> -->              <!--               <td ng-if = "question.correct == 'Correct'">                <img src="/assets/mcqtick.png" />              </td>              <td = ng-if = "question.correct == 'Incorrect'">                <img src="/assets/mcqcross.png" />              </td>              <td ng-if = "question.correct != 'Correct' && question.correct != 'Incorrect'">                {{question.correct}}              </td> -->            </tr>                <tr>                  <td>                    <div class= "col-xs-2"><b>Correct:</b>      {{correct_answers}}</div>                    <div class= "col-xs-2"><b>Wrong:</b>      {{wrong_answers}}</div>                    <div class= "col-xs-2"><b>No Answer:</b>      {{no_answers}}</div>                    <div class= "col-xs-2"><b>Graded Later: </b>      {{graded_later}}</div>                    <span class= "col-xs-10"><b>Score:</b>      {{correct_answers*10}}</span>                  </td>                </tr>          </tbody>        </table>      </div>          <div class = "strip col-xs-12">        <div class = "col-xs-3 col-xs-offset-4">          <a class = "btn btn-success" ng-click="stopQuiz()">            <span class = "glyphicon glyphicon-arrow-left"></span>            Return          </a>        </div>        </div>    </div>    	</div></div>
+<div class="row_bottom">
+	<div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon">
+        <span class = "glyphicon glyphicon-arrow-left"></span>
+      </span>
+      <span class="sub_nav_link"><a href="#/quiz_banks/{{quiz_bank.id}}/show">Back</a></span>
+    </div>
+    <div class="sub_nav"  ng-hide = "show_options">  
+      <span class="sub_nav_icon">
+        <span class = "glyphicon glyphicon-stop"></span>
+      </span>
+      <span class="sub_nav_link"><a ng-click="stopQuiz()">Stop Quiz/Show Options</a></span>
+    </div>	
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+    <div class="col-xs-12">
+      <div class = "col-xs-12">
+        <h2 class = "col-xs-offset-5">{{quiz_bank.title}}</h2>
+        <!-- <h2 class = "col-xs-offset-5">Time taken: 1 min 2 sec</h4> -->
+        <div ng-show = "show_timer">
+          <div class = "col-xs-5 col-xs-offset-5">{{minutes}}&nbsp;Minutes,&nbsp;{{counter}}&nbsp;Seconds</div>
+          <!--<timer class = "col-xs-offset-5" end-time="get_duration()">{{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.
+          </timer> -->
+        </div>
+      </div>
+      <div class="col-xs-12 strip form_section" ng-show = "show_options">
+        <div class="col-xs-4">
+          <div class="col-xs-12">
+              <input type="radio" name="all_questions" value = "1" ng-model = "option.all_questions">&nbsp;&nbsp;All question on one page
+          </div>
+				</div>
+        <div class="col-xs-8">
+          <span class="col-xs-4">
+            <input type="radio" name="all_questions" value = "0" ng-model = "option.all_questions">&nbsp;&nbsp;Questions per page:
+          </span>
+          <span class="col-xs-6">
+            <span class = "col-xs-7">
+              <input type="text" class="label_field form-control" ng-model = "option.question_number" style = "height:35px;"/>
+            </span>
+            <span>
+              /{{questions.length}}
+            </span>
+            <!--<span class = "col-xs-4">  
+              <span>/{{questions.length}}</span>
+            </span> -->  
+          </span>
+        </div>
+        <!--
+        <div class="col-xs-4">
+          <div class="col-xs-6">
+              Show Answers:
+          </div>
+          <div class="col-xs-6">
+            
+            <select class="form-control"  ng-model = "option.answer">
+              <option value = " ">Show Answers</option>
+              <option value = "1">After Question</option>
+              <option value = "2">After Quiz</option>
+              <option value = "3">Don't Show</option>
+            </select>
+
+          </div>
+        </div>
+        -->
+        <div class = "col-xs-12">
+          <div class="col-xs-2 mar-top-20">
+            <input type="radio" name="unlimited" value = "0" ng-model = "option.unlimited">&nbsp;Duration:
+          </div>
+                    
+          <div class="col-xs-2 mar-top-20">
+            <span>
+              <input type="text" class="label_field form-control" ng-model = "option.duration"/>
+            </span>
+          </div>
+          <div class="col-xs-2 mar-top-20">
+            <select class="form-control" ng-model = "option.duration_type">
+              <option value = "">Select</option>
+              <option value = "1">Minutes</option>
+            </select>
+          </div>
+          <div class = "col-xs-1 mar-top-20"> or
+          </div>
+          <div class = "col-xs-2 mar-top-20">
+            <input type="radio" name="unlimited" value = "1" ng-model = "option.unlimited">&nbsp;Unlimited
+          </div>
+          <div class = "col-xs-1 mar-top-20 pull-right" show-progress-bar>
+            <button class = "btn btn-success" ng-click = "startQuiz()">
+              <span class = "glyphicon glyphicon-play"></span>
+              Start Quiz
+            </button>
+          </div>
+        </div>  
+				
+			</div>
+    </div>       
+    <div class="col-xs-12 form_section">
+        <span><b>Instructions</b></span>
+        <p>
+        {{quiz_bank.instructions}}
+        </p>
+        <div class= "progress-bar-preview">
+          <small ng-show ="quiz_start_pressed" ng-if = "option.all_questions == 0"><em>Progress</em></small>
+            <progressbar ng-show ="quiz_start_pressed" ng-if = "option.all_questions == 0" animate="false" value=question_done*100/questions.length type=""><b>{{questions_answered.length}}/ {{questions.length}}</b></progressbar>
+            <a  ng-show ="quiz_start_pressed" ng-if = "option.all_questions == 1" class= "print-button" print-the-page style="float:right;">Print</a>
+        </div>   
+      </div>
+
+   
+      
+      <!-- <progressbar value=question_done max =8 ><span style="color:black; white-space:nowrap;">{{question_done}} / {{total_questions}}</span></progressbar> -->
+
+    <div class="col-xs-12" ng-hide = "show_answer">
+      <div class="col-xs-12 strip" ng-repeat = "question in show_questions">
+        <div class="col-xs-12 ">
+          <span class = "pull-left">{{$index + 1}})</span>
+          <!--<span class = "col-xs-11" ng-bind-html="question.description | unsafe"></span> -->
+          <span class = "col-xs-11" mathjax-bind = "question.description"></span>
+        </div>
+        <div class = "col-xs-12 mar-top-20">
+          <span>
+            <strong>&nbsp;&nbsp;Answer:</strong>
+          </span>  
+        </div>
+        <div class = "col-xs-12 mar-top-20 mar-left-10">
+          <div ng-if = "question.question_type == 1">
+            <input type="radio" name="true_false{{question.id}}" value = true ng-model = "question.answer">&nbsp;True
+            &nbsp;&nbsp;<input type="radio" name="true_false{{question.id}}" value = false ng-model = "question.answer">&nbsp;False
+          </div>
+          <div ng-if = "question.question_type == 2">
+            <div ng-repeat = "question_option in question.question_options">
+              <input type="radio" name="answer{{question.id}}" value = "{{question_option.id}}" ng-model = "question.answer" style= "float: left;"><span mathjax-bind = "question_option.answer" >&nbsp;{{question_option.answer}}{{show_questions}}</span>
+            </div>
+          </div>
+          <div ng-if = "question.question_type == 3">
+            <textarea ng-model = "question.answer" class =  "form-control text-area-div"  rows = 3 placeholder = "Enter The Answer"></textarea>
+          </div>
+          <div ng-if = "question.question_type == 4">
+            <textarea ng-model = "question.answer" class =  "form-control text-area-div"  rows = 3 placeholder = "Enter the Answer"></textarea> 
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 strip buttons-div" ng-show = "submit">
+        <!-- <span class = "col-xs-3 col-xs-offset-4"> -->
+          <button  ng-if = "option.all_questions == 1"  class = "btn btn-warning" ng-click = "submitQuiz(show_questions)">            
+            <span class = "glyphicon glyphicon-thumbs-up"></span>
+            <span>Submit</span>
+          </button>
+
+          <button  ng-show= "final_answer" ng-if = "option.all_questions == 0" class = "btn btn-warning" ng-click = "submitQuiz(show_questions)">            
+            <span class = "glyphicon glyphicon-thumbs-up"></span>
+            <span>Submit</span>
+          </button>
+
+          <button ng-if = "option.all_questions == 0" class = "btn btn-success" ng-show = "show_next" ng-click = "next_questions()" push-question-done = {{show_questions}}>
+            <span>Next</span>
+            <span class = "glyphicon glyphicon-chevron-right"></span>
+          </button>
+          <button ng-if = "option.all_questions == 0" ng-show = "show_previous" class = "btn btn-success" ng-click = "previous_questions()"  style= "float: left;">
+            <span class = "glyphicon glyphicon-chevron-left" ></span>
+            <span>Previous</span>
+          </button>
+
+        <!-- </span> -->
+      </div>
+
+    </div>
+    <div class = "col-xs-12" ng-show = "show_answer">
+      <h2 class = "col-xs-12" style = "text-align:center">
+        Answers
+      </h2>
+      <div class = "col-xs-12 strip">
+        <a ng-show="show_summary" ng-click="show_summary = false">Detail View</a>
+        <a ng-hide= "show_summary" ng-click="show_summary = true">Summary</a>
+        <table class = "table table-striped" ng-show="show_summary" >
+          <thead>
+            <!-- <th class = "col-xs-5">
+              Question
+            </th> -->
+
+            <th class = "col-xs-5">
+              Correct Answer
+            </th>
+
+            <th class = "col-xs-5">
+              Your Answer
+            </th>
+            <th class = "col-xs-2">
+              Result
+            </th>
+          </thead>
+          <tbody>
+
+            <tr ng-repeat = "question in answered_questions">
+
+              <td ng-if = "question.question_type == 3">
+                <span mathjax-bind = "question.question_answer"></span>
+              </td>
+
+              <td ng-if = "question.question_type ==2 || question.question_type ==4 ">
+                <span mathjax-bind = "question.question_answer">
+                  {{question.question_answer}}
+                <span>
+              </td>
+
+              <td ng-if = "question.question_type ==1">
+                  {{question.question_answer}}
+              </td>
+
+
+              <td ng-if = "question.question_type ==2">
+                   <span mathjax-bind = "question.answer">
+                  {{question.answer}}
+                <span>
+              </td>
+
+
+              <td ng-if = "question.question_type !=2">
+                  {{question.answer}}
+              </td>
+
+              
+              <td ng-if = "question.correct == 'Correct'">
+                <img src="/assets/mcqtick.png" />
+              </td>
+              <td = ng-if = "question.correct == 'Incorrect'">
+                <img src="/assets/mcqcross.png" />
+              </td>
+              
+              <td = ng-if = "question.correct == 'no_answer'">
+                No Answer
+              </td>
+
+              <td ng-if = "question.correct != 'Correct' && question.correct != 'Incorrect' && question.correct != 'no_answer'">
+                {{question.correct}}
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+
+
+        <table class = "table table-striped" ng-hide="show_summary" style= "margin-top: 10px;">
+            <tr ng-repeat = "question in answered_questions">
+              <td > 
+                <div class = "col-xs-10" style="display: -webkit-inline-box;margin-bottom: -15px;">
+                  <span>Q:{{$index + 1}}<span>
+                  <span mathjax-bind = "question.description" style="margin-left:10px;"></span>
+
+                </div>
+
+                <span style= "float: right;" ng-if = "question.correct == 'Correct'">
+                    <img src="/assets/mcqtick.png" />
+                </span>
+                  
+                <span style= "float: right;" ng-if = "question.correct == 'Incorrect'">
+                    <img src="/assets/mcqcross.png" />
+                </span> 
+
+                <span style= "float: right;" ng-if = "question.correct == 'no_answer'">
+                    No Answer
+                </span> 
+
+                <span class = "col-xs-10" ng-if = "question.question_type == 2" ng-repeat = "options in question.question_options" style="margin-left:33px;">
+                {{options_alphabets[$index]}}:
+                <span mathjax-bind = "options.answer" style="display: -webkit-inline-box;"></span>
+                </span>
+                <span class = "col-xs-10" ng-if = "question.question_type == 3" style="margin-left:33px;color:rgb(38, 167, 69);">
+                <span> This will be graded later</span>
+                </span>
+
+
+                <span class = "col-xs-10" ng-if = "question.question_type != 3" style="margin-left:33px;margin-top: 12px;">
+
+                  <span ng-if="question.question_type == 1">
+                    <span ><b>Correct answer:</b>{{question.question_options[0].answer}}</span>
+                  </span>
+                  
+                  <span ng-if="question.question_type != 1">
+                    <b>Correct answer:</b><span mathjax-bind = "question.question_options[0].answer" style= "display: inline-block;margin-left: 10px;">{{question.question_options[0].answer}}</span>
+                  </span>
+
+                </span>
+                <span class = "col-xs-10" ng-if = "question.question_type != 3&& question.question_type != 1" style="margin-left:53px;margin-top: 12px;margin-top: -6px;">
+                <span ng-if="question.question_type == 4 ">
+                  <b>Your answer:</b><span style="margin-left: 10px;">{{question.answer}}</span>
+                </span>
+
+                <span ng-if="question.question_type == 2">
+                  <b>Your answer:</b><span mathjax-bind = "question.answer" style= "display: inline-block;margin-left: 10px;">{{question.answer}}</span>
+                </span>
+
+                
+
+
+              </td>
+
+              <!-- <span>{{question.question_options}}</span>
+              <span>Correct answer:{{question.question_options[0].answer}}</span>
+              <span>Your answer:{{question.answer}}</span> -->
+              </td>
+
+              <!-- <td ng-if = "question.question_type == 3">
+                <span mathjax-bind = "question.question_answer"></span>
+              </td>
+ -->
+              <!-- <td ng-if = "question.question_type ==2 || question.question_type ==4 ">
+                <span mathjax-bind = "question.question_answer">
+                  {{question.question_answer}}
+                <span>
+              </td> -->
+
+<!--               <td ng-if = "question.question_type ==1">
+                  {{question.question_answer}}
+              </td>
+ -->
+
+<!--               <td ng-if = "question.question_type ==2">
+                   <span mathjax-bind = "question.answer">
+                  {{question.answer}}
+                <span>
+              </td>
+ -->
+
+<!--               <td ng-if = "question.question_type !=2">
+                  {{question.answer}}
+              </td>
+ -->
+              
+<!--               <td ng-if = "question.correct == 'Correct'">
+                <img src="/assets/mcqtick.png" />
+              </td>
+              <td = ng-if = "question.correct == 'Incorrect'">
+                <img src="/assets/mcqcross.png" />
+              </td>
+              <td ng-if = "question.correct != 'Correct' && question.correct != 'Incorrect'">
+                {{question.correct}}
+              </td>
+ -->            </tr>
+                <tr>
+                  <td>
+                    <div class= "col-xs-2"><b>Correct:</b>      {{correct_answers}}</div>
+                    <div class= "col-xs-2"><b>Wrong:</b>      {{wrong_answers}}</div>
+                    <div class= "col-xs-2"><b>No Answer:</b>      {{no_answers}}</div>
+                    <div class= "col-xs-2"><b>Graded Later: </b>      {{graded_later}}</div>
+                    <span class= "col-xs-10"><b>Score:</b>      {{correct_answers*10}}</span>
+                  </td>
+                </tr>
+
+          </tbody>
+        </table>
+
+
+
+
+      </div>
+    
+
+      <div class = "strip col-xs-12">
+        <div class = "col-xs-3 col-xs-offset-4">
+          <a class = "btn btn-success" ng-click="stopQuiz()">
+            <span class = "glyphicon glyphicon-arrow-left"></span>
+            Return
+          </a>
+        </div>  
+      </div>
+    </div>
+
+
+ 
+
+
+   
+
+
+
+	</div>
+</div>

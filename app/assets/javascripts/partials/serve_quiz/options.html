@@ -44,7 +44,7 @@
             <div class="col-xs-9 form_section">
               <div class = "form-group mar-bot-0" ng-class="{ 'has-error' : (OptionForm.instructions.$invalid) && (!OptionForm.instructions.$pristine || option_submitted == true)}">
                 <span>
-                  <textarea type="text" placeholder="Quiz Instructions" class="label_field form-control" ng-model = "served_quiz.instructions" name = "instructions" required tourtip-step = "10" tourtip = "Add the instructions for the quiz">
+                  <textarea type="text" placeholder="Quiz Instructions" class="label_field form-control" ng-model = "served_quiz.instructions" name = "instructions" tourtip-step = "10" tourtip = "Add the instructions for the quiz">
                   </textarea>
                 </span>
                 <p ng-show="OptionForm.instructions.$invalid && (!OptionForm.instructions.$pristine || option_submitted == true)" class="help-block">Required!</p>
