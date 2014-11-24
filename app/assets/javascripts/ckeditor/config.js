@@ -7,7 +7,7 @@ CKEDITOR.editorConfig = function(config) {
   /* Filebrowser routes */
     // The location of an external file browser, that should be launched when "Browse Server" button is pressed.
     config.filebrowserBrowseUrl = "/ckeditor/attachment_files";
-
+    config.contentsCss = 'custom.css';
     // The location of an external file browser, that should be launched when "Browse Server" button is pressed in the Flash dialog.
     config.filebrowserFlashBrowseUrl = "/ckeditor/attachment_files";
 
@@ -25,7 +25,9 @@ CKEDITOR.editorConfig = function(config) {
 
     // The location of a script that handles file uploads.
     config.filebrowserUploadUrl = "/ckeditor/attachment_files";
-
+    config.enterMode = CKEDITOR.ENTER_BR;
+  
+ 
     // Rails CSRF token
     config.filebrowserParams = function(){
         var csrf_token = $('meta[name=csrf-token]').attr('content'),
