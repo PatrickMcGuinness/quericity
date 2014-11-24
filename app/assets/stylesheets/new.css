@@ -18,6 +18,12 @@
 	box-shadow: 0 6px 12px rgba(0,0,0,0.175);
 	background-clip: padding-box;
 }
+.minutes_span{
+	margin-left: -21px;
+}
+.minutes-div{
+	margin-left: -18px;
+}
 
 .btn-red{
 	background-color: #D94A38 !important;
