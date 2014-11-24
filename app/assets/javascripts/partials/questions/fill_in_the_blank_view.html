@@ -32,8 +32,8 @@
         Question:
       </strong>
     </span> -->
-    <!--<span class = "col-xs-10" ng-bind-html="question.description | unsafe"></span> -->
-    <span class = "col-xs-10" >{{question.description}}</span>
+    <span class = "col-xs-10" ng-bind-html="question.description | unsafe"></span> 
+    
     
   </div>
   <div class = "col-xs-12 mar-top-10">
@@ -41,7 +41,7 @@
       <span>
         <strong>Answer:</strong>
       </span>
-      <span  style= "display: inline-block;">
+      <span mathjax-bind = "question.question_options[0].answer" style= "display: inline-block;">
         {{question.question_options[0].answer}}
       </span>
     </div>
