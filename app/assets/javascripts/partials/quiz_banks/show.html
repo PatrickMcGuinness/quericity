@@ -42,46 +42,52 @@
 	</div>
 </div>
 <div class="col-xs-12">
-	<div class="row">
+	<div class="row" style="background-color: white;">
 		<div ng-include src="'/assets/partials/manage_quiz_banks/navigation.html'">
     </div>
 		<div class="col-xs-9 right_section_view_page" update-resolution>
       <alert class = "mar-top-10" type='success' close="remove_alert()" ng-if = "alert != undefined">{{alert.msg}}</alert>
-      <div class="col-xs-12 row_space">
-        <span class="heading">{{quiz_bank.title}}</span>&nbsp;&nbsp;&nbsp;by {{quiz_bank.user.first_name}} {{quiz_bank.user.last_name}} 
-        <!--<img style="float:right;" src="/assets/info_icon.png" data-toggle = "tooltip" title = "description" tooltip = {{quiz_bank.description}} tooltip-placement = "left"/> -->
-      </div>
-    	<div class="col-xs-12 row_space">
+      <div class="grey-div">
+        <div class="col-xs-12 row_space">
+          <span class="heading">{{quiz_bank.title}}</span>&nbsp;&nbsp;&nbsp;by {{quiz_bank.user.first_name}} {{quiz_bank.user.last_name}} 
+          <!--<img style="float:right;" src="/assets/info_icon.png" data-toggle = "tooltip" title = "description" tooltip = {{quiz_bank.description}} tooltip-placement = "left"/> -->
+        </div>
+    <!-- 	<div class="col-xs-12 row_space">
         <span ng-repeat = "topic in quiz_bank.topics">
           <span class = "glyphicon glyphicon-tag" style="color: red;"></span>
           <span>&nbsp;&nbsp;{{topic.title}}</span>
         </span>
           
-			</div>
-      <div class="col-xs-12 row_space">
-				<b>Created on:</b> {{created_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <b>Last Edited:</b> {{updated_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span ng-if = "quiz_bank.public == false && quiz_bank.shared == false ">
-          <b>Sharing Status:</b> Private &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-        <span ng-if = "quiz_bank.public == false && quiz_bank.shared == true ">
-          <b>Sharing Status:</b> Shared&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-        <span ng-if = "quiz_bank.public == true">
-          <b>Sharing Status:</b> Public&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-        <b>Subject:</b> {{quiz_bank.subject}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <b>Grade:</b> {{quiz_bank.grade}}
-      </div>
-      <div class = "col-xs-12 row_space">
-        <label>Description</label>
-        <p ng-if = "quiz_bank.description != undefined">{{quiz_bank.description}}<p>
-        <p ng-if = "quiz_bank.description == undefined">This quiz bank has no description</p>
-      </div>
-      <div class = "col-xs-12 row_space">
-        <label>Instructions</label>
-        <p ng-if = "quiz_bank.instructions != undefined">{{quiz_bank.instructions}}</p>
-        <p ng-if = "quiz_bank.instructions == undefined">This quiz bank has no instructions</p>
+			</div> -->
+        <div class="col-xs-12 row_space">
+  				<!-- <b>Created on:</b> {{created_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <br>
+          <b>Last Edited:</b> {{updated_at}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <br> -->
+          <span ng-if = "quiz_bank.public == false && quiz_bank.shared == false ">
+            <b>Sharing Status:</b> Private &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          <span ng-if = "quiz_bank.public == false && quiz_bank.shared == true ">
+            <b>Sharing Status:</b> Shared&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          <span ng-if = "quiz_bank.public == true">
+            <b>Sharing Status:</b> Public&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </span>
+          <b>Subject:</b> {{quiz_bank.subject}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class = "col-xs-12 row_space">
+            <b>Grade:</b> {{quiz_bank.grade}}
+          </div>
+        </div>
+        <div class = "col-xs-12 row_space">
+          <label>Description</label>
+          <span ng-if = "quiz_bank.description != undefined">{{quiz_bank.description}}</span>
+          <span ng-if = "quiz_bank.description == undefined">This quiz bank has no description</span>
+        </div>
+        <div class = "col-xs-12 row_space">
+          <label>Instructions</label>
+          <span ng-if = "quiz_bank.instructions != undefined">{{quiz_bank.instructions}}</span>
+          <span ng-if = "quiz_bank.instructions == undefined">This quiz bank has no instructions</span>
+        </div>
       </div>
       <div class="col-xs-12 row_space">
         <ul style = "list-style:none;">

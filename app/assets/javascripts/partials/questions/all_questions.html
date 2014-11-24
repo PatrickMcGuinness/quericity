@@ -34,7 +34,7 @@
       </div>       
     </div> -->
     
-    <div ng-show = "show_details" class = "row">
+    <div ng-show = "show_details" class = "row" style="font-size:16px;">
       <div  ng-show = "show_details_view" ng-if = "question.question_type == 1" ng-include src="'/assets/partials/questions/true_false_view.html'">
       </div>
       <div  ng-hide = "show_details_view" ng-if = "question.question_type == 1" ng-include src="'/assets/partials/questions/true_false_edit.html'">
