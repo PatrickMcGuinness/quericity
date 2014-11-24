@@ -166,7 +166,7 @@ class ServedQuiz < ActiveRecord::Base
     params[:served_quiz][:cloned_quiz_bank_id] = cloned_quiz_bank.id
     served_quiz = user.served_quizzes.create(params[:served_quiz])
     Sharing.share_with_student_list(served_quiz, params[:selected_students])
-    served_quiz.delay.send_emails
+    served_quiz.send_emails
     served_quiz
   end
 
