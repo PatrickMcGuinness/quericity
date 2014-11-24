@@ -28,17 +28,19 @@
 	  <!-- Default panel contents -->
 	  <div class="panel-heading"><strong>Quiz Information</strong></div>
 
-
+	  
 	  <!-- List group -->
-	  <ul class="list-group">
-	    <li class="list-group-item"><strong>Number of Questions:</strong> {{served_quiz.cloned_quiz_bank.cloned_questions.length}}</li>
-	    <li class="list-group-item" ng-if = "served_quiz.infinite_duration == 1" ><strong>Time limit:</strong> Unlimited time</li>
-	    <li class="list-group-item" ng-if = "served_quiz.infinite_duration == 0"><strong>Time limit:</strong> {{served_quiz.duration}} mins.</li>
-	    <li class="list-group-item"><strong>Teacher serving quiz:</strong> &nbsp;&nbsp;{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}</li>
-	    <li class="list-group-item"><strong>You may take the quiz anytime before:</strong> {{served_quiz.close_date}}  {{served_quiz.end_time}}</li>
-		<li class="list-group-item"><strong>Instructions:</strong> {{served_quiz.instructions}}</li>
+	  
+	  <ul class="panel-body list-unstyled">
+	    <li><p><strong>Number of Questions:</strong> {{served_quiz.cloned_quiz_bank.cloned_questions.length}}</p></li>
+	    <li ng-if = "served_quiz.infinite_duration == 1" ><p><strong>Time limit:</strong> Unlimited time</p></li>
+	    <li ng-if = "served_quiz.infinite_duration == 0"><p><strong>Time limit:</strong> {{served_quiz.duration}} mins.</p></li>
+	    <li><p><strong>Teacher serving quiz:</strong> &nbsp;&nbsp;{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}</p></li>
+	    <li><p><strong>You may take the quiz anytime before:</strong> {{served_quiz.close_date}}  {{served_quiz.end_time}}</p></li>
+		<li><p><strong>Instructions:</strong> {{served_quiz.instructions}}</p></li>
 	  </ul>
-	</div>
+  </div>
+	
 
     
    
