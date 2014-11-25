@@ -601,6 +601,17 @@ textarea.edit-form{
 	margin-left: 5px;
 
 }
+.right-list textarea{
+	border: none;
+	height: 32px;
+}
+.right-list input{
+	border: none;
+}
+	
+.tags{
+	border: none !important;
+}
 #Title-input input{
 	font-size:18px;
 	width:92%;
