@@ -1,3 +1,10 @@
+// we have three controllers at line AllQuestionsTimeLimit , line# 540 and line # 784, go throught the each 
+// controller to see in detail of merging it.
+// In berief yes they can be merged to one. duplicate code can be removed.
+// But remmber we can merge these but we cant merge it to preview controller. 
+// That Preview controller is for teacher side not for students. That one is seperate.
+
+
 student_quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',function($scope,User,fileUpload){
   $scope.user = User.get_current_user()
   $scope.submitted = false
@@ -179,6 +186,7 @@ student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','
 }]);
 
 student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer','Attempt',function($scope,$timeout,ServedQuiz,Sharing,Answer,Attempt){
+  // timer section for time limt
   $scope.time_running = true
   
   $scope.onTimeout = function(){  
@@ -206,6 +214,8 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
   $scope.$on('$destroy', function(){
     $timeout.cancel(mytimeout);
   });
+  /////////
+  /// for redirecting to some other page during quiz
   $scope.$on('$locationChangeStart', function( event ) {
     if($scope.served_quiz.student_sharing.status_in_string != "COMPLETED"){
       var answer = confirm("Leaving this page will mark quiz as completed. Are you sure you want to leave this page?")
@@ -220,8 +230,9 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
       }
     }  
   });
+  ///////////////////
 
-  
+  //result analyser till end
   $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
 
   $scope.submit = function(cloned_questions){
@@ -387,6 +398,7 @@ student_quizlib.controller('EnrolGroupCtrl',['$scope','Group','StudentGroup','Us
 
 student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQuiz','Sharing','Answer','Attempt',function($scope,ServedQuiz,Sharing,Answer,Attempt){
   
+  //timer section (duplicate with upper can be merged carefully).
  $scope.time_running = true
   
  
@@ -397,6 +409,7 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
   $scope.$on('$destroy', function(){
     $timeout.cancel(mytimeout);
   });
+  // location change section. (duplicate)
   $scope.$on('$locationChangeStart', function( event ) {
     if($scope.served_quiz.student_sharing.status_in_string != "COMPLETED"){
       var answer = confirm("Leaving this page will mark quiz as completed. Are you sure you want to leave this page?")
@@ -412,7 +425,7 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
     }  
   });
 
-  
+  // result section (duplicate)
   $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
 
   $scope.submit = function(cloned_questions){
@@ -536,6 +549,7 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
 }]);
 
 student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz','Sharing','Answer','Attempt',function($scope,ServedQuiz,Sharing,Answer,Attempt){
+ //// the number of question one time required on page and to move to and fro in them
   $scope.final_answer = false
   $scope.show_next = true
   $scope.show_previous = false
@@ -545,9 +559,7 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
   $scope.ans_submit = 
   $scope.quiz_start_pressed = true
 
-  // questiin to attemt have the total questions
-  // questions_t0_show is the question to show on the page
-  // 
+
   ServedQuiz.get($scope.served_quiz_id).$promise.then(function(data){
     $scope.served_quiz = data
     $scope.served_quiz.questions_to_show = []
@@ -572,17 +584,7 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
     $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
   })
 
-  //  console.log("total questions")
-  // // check the number 0f questions served
-  // console.log("questions serverd")
-  // console.log($scope.question_done_temp)
-  // // check the questions done and the remaning questions
-  // console.log("questions done")
-  // console.log($scope.served_quiz.questions_per_page)
-  // first get the total number of questions and check it
-  
-  // submit will just submit he questions that are in question done
-  // next and previous will just itterate through the questions
+ 
 
 
   
@@ -651,7 +653,7 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
   }
 
 
-
+ // reulst analyzer again. this is almost duplicate but first 7 lines are different and required
   $scope.submit = function(questions_to_show_on_page){
     $scope.quiz_start_pressed = false
     /* loop through all the submitted answers*/
@@ -780,6 +782,7 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
 }]);
 
 student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer','Attempt',function($scope,$timeout,ServedQuiz,Sharing,Answer,Attempt){
+  // this is for both number of question and timeout. This is the combination of both can be merged!
   $scope.time_running = true
   $scope.quiz_start_pressed = true
   ServedQuiz.get($scope.served_quiz_id).$promise.then(function(data){
@@ -849,7 +852,7 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
     }  
   });
 
-  
+  // result analyser. similar to first and second controller.
   
   $scope.submit = function(cloned_questions){
     /* loop through all the submitted answers*/
