@@ -40,14 +40,29 @@
             </div>  
           </div>
         </div>
-       
+        <div class = "row mar-top-5">
+          <div class = "col-xs-4" id = "quiz-info-display">
+            <b> Created on: </b> <span style="margin-left: 11px;">{{created_at}} </span>
+          </div>
+          <div class = "col-xs-4" id = "quiz-info-display">
+            <b>Last Edited on: </b> {{updated_at}}
+          </div>
+          <div class = "col-xs-4" id = "quiz-info-display">
+            <b>Author: </b> {{quiz_bank.user.last_name}}
+          </div>
+          <div class = "col-xs-4" id = "quiz-info-display">
+            <b ng-if = "(quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == false">Sharing: <a ng-href = "#quiz_banks/{{quiz_bank.id}}/share">Private</a></b>
+            <b ng-if = "(quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == true">Sharing: <a ng-href = "#quiz_banks/{{quiz_bank.id}}/share"> Shared </a></b>
+            <b ng-if = "quiz_bank.public == true">Sharing: <a ng-href = "#quiz_banks/{{quiz_bank.id}}/share"> Public </a></b>   
+          </div>
+        </div>
    
-        <div class = "row mar-top-20">
+        <div class = "row mar-top-10">
           <div class = "col-xs-2"  id = "subject-div">
             <div class = "row">
               <div class = "col-xs-12">
                 <div class = "form-group" id = "subject-input"  ng-class="{ 'has-error' : QuizForm.subject.$invalid && (!QuizForm.subject.$pristine || submitted == true)}">
-                  <label>Subject:</label>
+                  <b>Subject:</b>
                   <input style="margin-left: 32px" type = "text"  ng-model = "quiz_bank.subject" class = "form-control input-sm" placeholder = "Subject" name = "subject" required popover="Edit Subject"  popover-trigger="mouseenter" >
                   <p ng-show="QuizForm.subject.$invalid && (!QuizForm.subject.$pristine || submitted == true)" class="help-block">Required!</p>
                 </div>    
@@ -74,7 +89,7 @@
             </div>
           </div>   
         </div>              
-        <div class = "row mar-top-10">  
+        <div class = "row mar-top-4">  
           <div class = "col-xs-12">
             <div class = "form-group">
               <label>Description:</label>
@@ -83,7 +98,7 @@
             </div>
           </div>
         </div>   
-        <div class = "row mar-top-10">      
+        <div class = "row mar-top-4">      
           <div class = "col-xs-12">
             <div class = "form-group">
               <label>Instructions:</label>
@@ -92,22 +107,7 @@
             </div>  
           </div>
         </div>
-         <div class = "row margin-top-10">
-          <div class = "col-xs-4" id = "quiz-info-display">
-            <b> Created on: </b> <span style="margin-left: 11px;">{{created_at}} </span>
-          </div>
-          <div class = "col-xs-4" id = "quiz-info-display">
-            <b>Last Edited on: </b> {{updated_at}}
-          </div>
-          <div class = "col-xs-4" id = "quiz-info-display">
-            <b>Author: </b> {{quiz_bank.user.last_name}}
-          </div>
-          <div class = "col-xs-4" id = "quiz-info-display">
-            <b ng-if = "(quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == false">Sharing: <a ng-href = "#quiz_banks/{{quiz_bank.id}}/share">Private</a></b>
-            <b ng-if = "(quiz_bank.public == false || quiz_bank.public == undefined) && quiz_bank.shared == true">Sharing: <a ng-href = "#quiz_banks/{{quiz_bank.id}}/share"> Shared </a></b>
-            <b ng-if = "quiz_bank.public == true">Sharing: <a ng-href = "#quiz_banks/{{quiz_bank.id}}/share"> Public </a></b>   
-          </div>
-        </div>
+        
       </form>          
       <div class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter" ng-controller = "sectionCtrl">
         <div id = {{section.id}} class = "col-xs-12 mar-top-10 section-well">
@@ -129,7 +129,7 @@
             </span>  
           </div>
           <div class = "col-xs-4 pull-right">
-            <a ng-Click = "deleteSection(section.id,$index)" data-toggle = "tooltip" title = "Delete the Section" tooltip-placement = "top">
+            <a ng-Click = "deleteSection(section.id,$index)" data-toggle = "tooltip" title = "Delete Section" tooltip-placement = "top">
               <span class = "glyphicon glyphicon-trash pull-right mar-left-5" style = "color: white;" ></span>
             </a>
             <a ng-Click = "show_title = false" data-toggle = "tooltip" title = "Edit Section Title" tooltip-placement = "top">
