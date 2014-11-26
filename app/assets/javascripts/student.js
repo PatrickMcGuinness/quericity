@@ -13,7 +13,7 @@ student_quizlib.config(['$routeProvider',function($routeProvider) {
       when('/dashboard/quiz/:id',
       {templateUrl: 'assets/partials/students/quiz_detail.html',controller: 'QuizDetailCtrl',activetab: 'dashboard'}).
       when('/settings',
-      {templateUrl: 'assets/partials/students/settings.html',controller: 'SettingsCtrl',activetab: 'settings'}).
+      {templateUrl: 'assets/partials/settings/settings.html',controller: 'SettingsCtrl',activetab: 'settings'}).
        when('/enrol_group',
       {templateUrl: 'assets/partials/students/enrol_group.html',controller: 'EnrolGroupCtrl',activetab: 'groups'}).
       otherwise({redirectTo: '/quizlist'})
