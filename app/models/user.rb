@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,:omniauthable, :omniauth_providers => [:facebook]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :role, :invited_by, :provider, :uid,:time_zone, :show_tour, :show_tooltip
-  attr_accessible :first_name, :last_name,:profile_pic, :role, :encrypted_password,:reset_password_token, :reset_password_sent_at, :remember_created_at,
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :role, :school, :invited_by, :provider, :uid,:time_zone, :show_tour, :show_tooltip
+  attr_accessible :first_name, :last_name,:profile_pic, :role, :school, :encrypted_password,:reset_password_token, :reset_password_sent_at, :remember_created_at,
   :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip,:confirmation_token,
   :confirmed_at, :confirmation_sent_at, :unconfirmed_email, :terms_accepted
   
@@ -214,6 +214,7 @@ class User < ActiveRecord::Base
       :id  => id,
       :email => email, 
       :role => role, 
+      :school => school,
       :invited_by => invited_by, 
       :provider => provider, 
       :uid => uid,
