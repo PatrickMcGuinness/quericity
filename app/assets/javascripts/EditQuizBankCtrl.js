@@ -53,12 +53,13 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
     $scope.submitted =true
     if(isValid){
       $scope.quiz_bank.status = 1
+      console.log($scope.quiz_bank)
       QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
         QuestionTopic.destroy_all($scope.quiz_bank_id).$promise.then(function(){
           angular.forEach($scope.tags, function(value, key){
             QuestionTopic.save($scope.quiz_bank_id,{title: value.text})
           })
-          Message.push_message({type: "success",msg: "You have successfully updated quiz bank",controller: "ShowQuizBankCtrl"})
+          Message.push_message({type: "success",msg: "You have successfully updated "+$scope.quiz_bank.title,controller: "ShowQuizBankCtrl"})
           $location.path("/quiz_banks/"+$scope.quiz_bank_id+"/show")
         })
       })

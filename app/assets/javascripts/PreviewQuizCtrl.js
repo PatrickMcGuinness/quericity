@@ -112,6 +112,9 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
     // angular.forEach($scope.option.question_number,function(answered_question,key){
     //   $scope.all_questions_to_save.pop()
     // })
+
+
+
     $scope.show_next= true
     console.log($scope.question_done)
     console.log($scope.option.question_number*2)

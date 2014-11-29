@@ -736,6 +736,7 @@ quizlib.controller('ShowQuizBankCtrl', ['$window','$scope','$routeParams','QuizB
   $scope.quiz_bank_id = $routeParams.id
   $scope.tags = []
   $scope.starred_quiz_banks = []
+  $scope.assesment_have_values = false
   $scope.is_quiz_view = true
   $scope.current_user = User.get_current_user()
   
@@ -781,6 +782,11 @@ quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scop
     $scope.my_assessments.splice(index,1)  
   }
 
+  $scope.my_assessments = Repository.all()
+
+  Repository.default_repo().$promise.then(function(data){
+    $scope.main_repo_quizzes = QuizBank.repo_quiz_banks(data.result.id)
+  })
   $scope.handleDrop = function(quizId,repoId) {
     QuizBank.get(quizId).$promise.then(function(data){
       quiz_bank = data
@@ -811,6 +817,7 @@ quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scop
       return true;}
     else{return false;}
   }
+  $scope.assesment_have_values = $scope.my_assessments
   $scope.no_shared_cookie = function(){
     if($.cookie("shared_assessments") == undefined){return true;}
     else{return false;}
