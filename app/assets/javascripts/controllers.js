@@ -781,6 +781,11 @@ quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scop
     $scope.my_assessments.splice(index,1)  
   }
 
+  $scope.my_assessments = Repository.all()
+
+  Repository.default_repo().$promise.then(function(data){
+    $scope.main_repo_quizzes = QuizBank.repo_quiz_banks(data.result.id)
+  })
   $scope.handleDrop = function(quizId,repoId) {
     QuizBank.get(quizId).$promise.then(function(data){
       quiz_bank = data
