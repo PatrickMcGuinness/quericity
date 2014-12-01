@@ -45,6 +45,11 @@
               %ng-view
                 %li
                   %span.sub_nav_icon
+                    %img{src:"/assets/serve_quiz.png"}
+                  %span.menu-link  
+                    %a{href:"#/take_quiz"}Take Quiz
+                %li
+                  %span.sub_nav_icon
                     %img{src: "/assets/manage_menu_icon.png"}
                   %span.menu-link  
                     %a{href:"#/dashboard"}Dashboard
@@ -57,7 +62,8 @@
                   %span.sub_nav_icon
                     %img{src:"/assets/serve_quiz.png"}
                   %span.menu-link  
-                    %a{href:"#/enrol_group"}Classes        
+                    %a{href:"#/enrol_group"}Classes    
+				    
           %ul.nav.navbar-nav.navbar-right.my-header-nav{style: "margin-right: 10px;"}
             .dropdown.name
               %a{id:"dLabel",role:"button",href:"#",data:{toggle:"dropdown",target:"#"}}
