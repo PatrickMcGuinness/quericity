@@ -60,3 +60,4 @@ gem 'kaminari'
 gem 'carrierwave'
 gem "rmagick"
 gem 'flot-rails', :git => "https://github.com/Kjarrigan/flot-rails.git"
+gem 'momentjs-rails'

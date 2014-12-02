@@ -31,6 +31,21 @@ student_quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',functio
 
 }]);
 
+student_quizlib.controller('TakeQuizCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,QuizStatus){
+    ServedQuiz.student_pending_quizzes().$promise.then(function(data){
+     
+      $scope.served_quizzes = data
+
+	   angular.forEach(data,function(quiz){
+		   quiz.close_date = moment(quiz.close_date).format("MMM Do  h:mm a");
+			
+		});
+    
+    })
+
+
+}]);
+
 student_quizlib.controller('DashBoardCtrl', ['$scope','ServedQuiz','Sharing','User',function($scope,ServedQuiz,Sharing,User){
     User.get_current_user().$promise.then(function(data){
       $scope.student_id = data.id
@@ -187,6 +202,8 @@ student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','
 
 student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer','Attempt',function($scope,$timeout,ServedQuiz,Sharing,Answer,Attempt){
   // timer section for time limt
+	
+
   $scope.time_running = true
   
   $scope.onTimeout = function(){  
@@ -237,7 +254,8 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
 
   $scope.submit = function(cloned_questions){
     /* loop through all the submitted answers*/
-    console.log(cloned_questions)
+	
+    
     angular.forEach(cloned_questions,function(question,key){
       /* Grade only questions with given answers */
         
@@ -251,6 +269,7 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
             var answer = "false"
           }
           if(question.answer == answer){
+			  
             var is_correct = true
             var student_score = question.score 
           }
@@ -279,6 +298,7 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
           var count = 0
           angular.forEach(question.cloned_question_options,function(value,key){
             if(value.id == question.answer){
+
               count = count + 1
               if(value.is_correct == true){
                 var is_correct = true
@@ -397,7 +417,7 @@ student_quizlib.controller('EnrolGroupCtrl',['$scope','Group','StudentGroup','Us
 }]);  
 
 student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQuiz','Sharing','Answer','Attempt',function($scope,ServedQuiz,Sharing,Answer,Attempt){
-  
+ 
   //timer section (duplicate with upper can be merged carefully).
  $scope.time_running = true
   
