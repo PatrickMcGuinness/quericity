@@ -200,10 +200,10 @@ student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','
 
 }]);
 
-student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer','Attempt',function($scope,$timeout,ServedQuiz,Sharing,Answer,Attempt){
+student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Grade','Answer','Attempt',function($scope,$timeout,ServedQuiz,Sharing, Grade,Answer,Attempt){
   // timer section for time limt
 	
-
+	
   $scope.time_running = true
   
   $scope.onTimeout = function(){  
@@ -254,79 +254,39 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
 
   $scope.submit = function(cloned_questions){
     /* loop through all the submitted answers*/
-	
+	  
+	  /*check the remaining questions */
+      var check_status = function(){
+        if($scope.served_quiz.questions_to_attempt.length == 0){
+          $scope.served_quiz.student_sharing.status = 2
+          $scope.served_quiz.student_sharing.status_in_string = "COMPLETED"
+          Sharing.update($scope.served_quiz.id, $scope.served_quiz.student_sharing.id,$scope.served_quiz.student_sharing)
+        }
+      }
     
     angular.forEach(cloned_questions,function(question,key){
       /* Grade only questions with given answers */
         
-        /* If question is fill in the blank*/
-        
+        /* If question is true or false*/
+
         if(question.question_type == 1){
-          if(question.cloned_question_options[0].is_correct == true){
-            var answer = "true"
-          }
-          else{
-            var answer = "false"
-          }
-          if(question.answer == answer){
-			  
-            var is_correct = true
-            var student_score = question.score 
-          }
-          else{
-            
-            var is_correct = false
-            var student_score = 0
-          }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: answer, 
-            is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, 
-            graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-              check_status()
-            })
+			
+			Grade.trf(question,$scope.served_quiz.id,function(questionsToAttempt){
+				$scope.served_quiz.questions_to_attempt = questionsToAttempt
+				check_status()
+			});
+			
+
         }
 
         /* If question is mcq*/
         
         if(question.question_type == 2){
-          var correct_answer = null
-          angular.forEach(question.cloned_question_options,function(value,key){
-            if(value.is_correct == true){
-              correct_answer = value.answer
-            }
-          })
-          var count = 0
-          angular.forEach(question.cloned_question_options,function(value,key){
-            if(value.id == question.answer){
-
-              count = count + 1
-              if(value.is_correct == true){
-                var is_correct = true
-                var student_score = question.score
-              }
-              else{
-                var is_correct = false
-                var student_score = 0
-              }
-              var student_answer = value.answer
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
-                answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id,
-                graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-                  $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-                  check_status()
-                })
-            }
-            
-          })  
-          if(count == 0)
-            {var student_answer = ""
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
-                answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id,
-                graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-                  $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-                  check_status()
-                })
-            }
+			
+			Grade.mcq(question,$scope.served_quiz.id,function(questionsToAttempt){
+				$scope.served_quiz.questions_to_attempt = questionsToAttempt
+				check_status()
+			});
 
         }
 
@@ -344,32 +304,18 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
         /*If question is fill in the blank*/
 
         if(question.question_type == 4){
-         
-          if(question.answer == question.cloned_question_options[0].answer.replace("<p>", "").replace("</p>","")){
-            var is_correct = true
-            var student_score = question.score
-          }
-          else{
-            var is_correct = false
-            var student_score = 0
-          }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
-            answer: question.cloned_question_options[0].answer, is_correct: is_correct,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-              check_status()
-            })
+			
+			Grade.fib(question,$scope.served_quiz.id,function(questionsToAttempt){
+				$scope.served_quiz.questions_to_attempt = questionsToAttempt
+				check_status()
+			});
+			
+	
         }
     })
     
     /*check the remaining questions*/
-    var check_status = function(){
-      if($scope.served_quiz.questions_to_attempt.length == 0){
-        $scope.served_quiz.student_sharing.status = 2
-        $scope.served_quiz.student_sharing.status_in_string = "COMPLETED"
-        Sharing.update($scope.served_quiz.id, $scope.served_quiz.student_sharing.id,$scope.served_quiz.student_sharing)
-      }
-    }
+
     $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
   }
 }]);
@@ -454,72 +400,22 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
     angular.forEach(cloned_questions,function(question,key){
       /* Grade only questions with given answers */
         
-        /* If question is fill in the blank*/
+        /* If question is true or false*/
         
         if(question.question_type == 1){
-          if(question.cloned_question_options[0].is_correct == true){
-            var answer = "true"
-          }
-          else{
-            var answer = "false"
-          }
-          if(question.answer == answer){
-            var is_correct = true
-            var student_score = question.score 
-          }
-          else{
-            
-            var is_correct = false
-            var student_score = 0
-          }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, answer: answer, 
-            is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, 
-            graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-              check_status()
-            })
+			Grade.trf(question,$scope.served_quiz.id,function(questionsToAttempt){
+				$scope.served_quiz.questions_to_attempt = questionsToAttempt
+				check_status()
+			});
         }
 
         /* If question is mcq*/
         
         if(question.question_type == 2){
-          var correct_answer = null
-          angular.forEach(question.cloned_question_options,function(value,key){
-            if(value.is_correct == true){
-              correct_answer = value.answer
-            }
-          })
-          var count = 0
-          angular.forEach(question.cloned_question_options,function(value,key){
-            if(value.id == question.answer){
-              count = count + 1
-              if(value.is_correct == true){
-                var is_correct = true
-                var student_score = question.score
-              }
-              else{
-                var is_correct = false
-                var student_score = 0
-              }
-              var student_answer = value.answer
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
-                answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id,
-                graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-                  $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-                  check_status()
-                })
-            }
-            
-          })  
-          if(count == 0)
-            {var student_answer = ""
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
-                answer: correct_answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id,
-                graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-                  $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-                  check_status()
-                })
-            }
+			Grade.mcq(question,$scope.served_quiz.id,function(questionsToAttempt){
+				$scope.served_quiz.questions_to_attempt = questionsToAttempt
+				check_status()
+			});
                    
         }
 
@@ -538,20 +434,10 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
 
         if(question.question_type == 4){
          
-          if(question.answer == question.cloned_question_options[0].answer.replace("<p>", "").replace("</p>","")){
-            var is_correct = true
-            var student_score = question.score
-          }
-          else{
-            var is_correct = false
-            var student_score = 0
-          }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
-            answer: question.cloned_question_options[0].answer, is_correct: is_correct,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-              check_status()
-            })
+			Grade.fib(question,$scope.served_quiz.id,function(questionsToAttempt){
+				$scope.served_quiz.questions_to_attempt = questionsToAttempt
+				check_status()
+			});
         }
     })
     
@@ -568,7 +454,7 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
 
 }]);
 
-student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz','Sharing','Answer','Attempt',function($scope,ServedQuiz,Sharing,Answer,Attempt){
+student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz','Sharing','Answer','Grade','Attempt',function($scope,ServedQuiz,Sharing,Answer,Grade,Attempt){
  //// the number of question one time required on page and to move to and fro in them
   $scope.final_answer = false
   $scope.show_next = true
@@ -689,74 +575,29 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
     
     angular.forEach($scope.all_questions_to_save,function(question,key){
       /* Grade only questions with given answers */
-        /* If question is fill in the blank*/
-        console.log("i am in submit")
+		
+        /* If question is True or false*/
+        
         console.log(question.question_type)
         if(question.question_type == 1){
-           console.log("i am in Q1")
-          if(question.cloned_question_options[0].is_correct == true){
-            var answer = "true"
-          }
-          else{
-            var answer = "false"
-          }
-          if(question.answer == answer){
-            var is_correct = true
-            var student_score = question.score
-          }
-          else{
-            var is_correct = false
-            var student_score = 0
-          }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
-            answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id, 
-            graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-            })
+            Grade.trf(question,$scope.served_quiz.id,function(questionsToAttempt){
+                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
+				
+            });
         }
 
         /* If question is mcq*/
         if(question.question_type == 2){
-          var correct_answer = null
-          angular.forEach(question.cloned_question_options,function(value,key){
-            if(value.is_correct == true){
-              console.log("i am in correct")
-              correct_answer = value.answer
-            }
-          })
-          var is_correct = false
-          var student_score = 0
-          var count = 0
-          angular.forEach(question.cloned_question_options,function(value,key){
-            if(value.id == question.answer){
-                count = count +1
-              if(value.is_correct == true){
-                var is_correct = true
-                console.log("i am in options")
-                var student_score = question.score
-              }
-              var student_answer = value.answer
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
-                answer: correct_answer, is_correct: is_correct,
-                served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-                  $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-                })
-            } 
-          })
-          if (count ==0)
-          {var student_answer = ""
-            Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
-                answer: correct_answer, is_correct: is_correct,
-                served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-                  $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-                })
-          }      
+            Grade.mcq(question,$scope.served_quiz.id,function(questionsToAttempt){
+                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
+				
+            });
          
 
         }
         /*if questios in open ended*/
         if(question.question_type == 3){
-          console.log("i am in Q3")
+          
           Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
             answer: question.cloned_question_options[0].answer, is_correct: false,
             served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: 0}).$promise.then(function(data){
@@ -767,29 +608,11 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
         /*If question is fill in the blank*/
 
         if(question.question_type == 4){
-          console.log("i am in Q444")
-          if (question.answer == null){
-            var is_correct = false
-            var student_score = 0
-          }
-          else
-          {
-            console.log(question.answer.toLowerCase() )
-            console.log(question.cloned_question_options[0].answer.toLowerCase().replace("<p>", "").replace("</p>","").trim())
-            if(question.answer.toLowerCase() == question.cloned_question_options[0].answer.toLowerCase().replace("<p>", "").replace("</p>","").trim()){
-              var is_correct = true
-              var student_score = question.score
-            }
-            else{
-              var is_correct = false
-              var student_score = 0
-            }  
-          }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
-            answer: question.cloned_question_options[0].answer, is_correct: is_correct,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-            })
+          
+            Grade.fib(question,$scope.served_quiz.id,function(questionsToAttempt){
+                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
+				
+            });
         }    
     })
     
@@ -801,7 +624,7 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
 
 }]);
 
-student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer','Attempt',function($scope,$timeout,ServedQuiz,Sharing,Answer,Attempt){
+student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer','Grade','Attempt',function($scope,$timeout,ServedQuiz,Sharing,Answer,Grade,Attempt){
   // this is for both number of question and timeout. This is the combination of both can be merged!
   $scope.time_running = true
   $scope.quiz_start_pressed = true
@@ -880,57 +703,22 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
     angular.forEach(cloned_questions,function(question,key){
       /* Grade only questions with given answers */
       if(question.answer != null){
-        /* If question is fill in the blank*/
+        /* If question is true or false*/
         if(question.question_type == 1){
-          if(question.cloned_question_options[0].is_correct == true){
-            var answer = "true"
-          }
-          else{
-            var answer = "false"
-          }
-          if(question.answer == answer){
-            var is_correct = true
-            var student_score = question.score
-          }
-          else{
-            var is_correct = false
-            var student_score = 0
-          }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
-            answer: answer, is_correct: is_correct,served_quiz_id: $scope.served_quiz.id,
-             graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-                $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-                check_more_questions()
-             })
+            Grade.trf(question,$scope.served_quiz.id,function(questionsToAttempt){
+                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
+				    check_more_questions()
+				
+            });
         }
 
         /* If question is mcq*/
         if(question.question_type == 2){
-          var correct_answer = null
-          angular.forEach(question.cloned_question_options,function(value,key){
-            if(value.is_correct == true){
-              correct_answer = value.answer
-            }
-          })
-          angular.forEach(question.cloned_question_options,function(value,key){
-            if(value.id == question.answer){
-              if(value.is_correct == true){
-                var is_correct = true
-                var student_score = question.score
-              }
-              else{
-                var is_correct = false
-                var student_score = 0
-              }
-              var student_answer = value.answer
-              Answer.save({cloned_question_id: question.id, student_answer: student_answer, 
-                answer: correct_answer, is_correct: is_correct,served_quiz_id: 
-                $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-                  $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-                  check_more_questions()
-                })
-            }
-          })         
+            Grade.mcq(question,$scope.served_quiz.id,function(questionsToAttempt){
+                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
+				    check_more_questions()
+				
+            });        
         }
         /*if questios in open ended*/
         if(question.question_type == 3){
@@ -945,20 +733,11 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
         /*If question is fill in the blank*/
 
         if(question.question_type == 4){
-          if(question.answer.toLowerCase() == question.cloned_question_options[0].answer.toLowerCase()){
-            var is_correct = true
-            var student_score = question.score
-          }
-          else{
-            var is_correct = false
-            var student_score = 0
-          }
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
-            answer: question.cloned_question_options[0].answer, is_correct: is_correct,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: student_score}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-              check_more_questions()
-            })
+            Grade.fib(question,$scope.served_quiz.id,function(questionsToAttempt){
+                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
+				    check_more_questions()
+				
+            });
         }
         //index = $scope.served_quiz.questions_to_show.indexOf(question)
         //$scope.served_quiz.questions_to_show.splice(index,1)  
