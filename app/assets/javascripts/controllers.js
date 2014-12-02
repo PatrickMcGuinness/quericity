@@ -1297,7 +1297,7 @@ quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','Quest
 quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalScope','QuestionOption',function($scope,$rootScope,Question, GlobalScope,QuestionOption){
   
   $scope.submitted = false
-  
+  $scope.rubrick = ""
   $scope.$on('quiz_bank_id_Changed', function(event, quiz_bank_id) {
     $scope.quiz_bank_id = quiz_bank_id;
   });
@@ -1331,11 +1331,12 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
     CKEDITOR.instances['answer'].setData("")
   }
   $scope.create_true_false = function(isValid){
+    console.log("this is true/false")
     $scope.submitted = true
     if(isValid && $scope.selected_true_false_option != undefined){
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.true_false_question_statement,section_id: $scope.section_id,
-        question_type: 1,difficulty_level: $scope.selected_difficulty, question_options: [{is_correct:$scope.selected_true_false_option}]}).$promise.then(function(data){
+        question_type: 1,difficulty_level: $scope.selected_difficulty, rubrick: $scope.rubrick,question_options: [{is_correct:$scope.selected_true_false_option}]}).$promise.then(function(data){
           $scope.question_id  = data.id
           GlobalScope.set_question_id($scope.question_id)
           $scope.true_false_question_statement = null

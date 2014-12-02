@@ -29,10 +29,10 @@
 <div class = "col-xs-12"> 
   <div class = "row">
     <div ng-include src="'/assets/partials/quiz_banks/left_section.html'"></div>             
-    <div class = "col-xs-9 right-list mar-top-20" update-resolution>
+    <div class = "col-xs-9 right-list  mar-top-20" update-resolution>
       <form name="QuizForm" ng-submit="saveQuiz(QuizForm.$valid)" novalidate>
         <div class = "row">
-          <div class = "col-xs-12">
+          <div class = "col-xs-12 edit-list">
             <div class = "form-group" id = "Title-input" ng-class="{ 'has-error' : (QuizForm.title.$invalid) && (!QuizForm.title.$pristine || submitted == true)}">
               <label style = "margin-top: 6px;">Title:</label>
               <input style= "float: right;width: 88%;margin-right: 40px;" type = "text"  ng-model = "quiz_bank.title"  class = "form-control input-sm"  placeholder = "Enter Title" name = "title" required popover="Edit the title"  popover-trigger="mouseenter">
@@ -59,7 +59,7 @@
           </div>
         </div>
    
-        <div class = "row mar-top-10">
+        <div class = "row mar-top-10 edit-list">
           <div class = "col-xs-4"  id = "subject-div">
         <!--   <div class = "row">
               <div class = "col-xs-12">   -->
@@ -72,7 +72,7 @@
             </div>  -->
           </div>
 
-          <div class = "col-xs-2"  id = "subject-div">
+          <div class = "col-xs-2 edit-list"  id = "subject-div">
           <!--  <div class = "row">
               <div class = "col-xs-12"> -->
                 <div class = "form-group" id = "subject-input"  ng-class="{ 'has-error' : QuizForm.grade.$invalid && (!QuizForm.grade.$pristine || submitted == true)}">
@@ -83,7 +83,7 @@
          <!--     </div>
             </div>  -->
           </div> 
-          <div class = "col-xs-8" id = "tags-input-box">
+          <div class = "col-xs-8 edit-list" id = "tags-input-box">
             <div class = "row">
               <label>Tags:</label>
               <tags-input ng-model="tags" style="border: none; float: top; margin-top: 0px;" class="input-tags">
@@ -92,7 +92,7 @@
             </div>
           </div>   
         </div>              
-        <div class = "row mar-top-4">  
+        <div class = "row mar-top-4 edit-list">  
           <div class = "col-xs-12">
             <div class = "form-group">
               <label>Description:</label>
@@ -103,7 +103,7 @@
           </div>
         </div>   
         <div class = "row mar-top-4">      
-          <div class = "col-xs-12">
+          <div class = "col-xs-12 edit-list">
             <div class = "form-group">
               <label>Instructions:</label>
               <textarea style="width: 85%;height:0%;" ng-model = "quiz_bank.instructions" class = "form-control edit-form"  rows = 2 placeholder = "Instructions" popover="Add instructions for the quiz bank"  popover-trigger="mouseenter">

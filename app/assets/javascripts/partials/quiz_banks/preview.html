@@ -118,7 +118,10 @@
           <span class = "pull-left">{{all_questions_to_save.length + 1}})</span>
           <!--<span class = "col-xs-11" ng-bind-html="question.description | unsafe"></span> -->
           <span class = "col-xs-11" mathjax-bind = "question.description"></span>
+
+          <img  ng-if ="question.rubrick" width='30' src = "/assets/hint.png" custom-popover popover-html="<span>{{question.rubrick}}</span>" popover-placement="top" class = "popover-maker">
         </div>
+
         <div class = "col-xs-12 mar-top-20">
           <span>
             <strong>&nbsp;&nbsp;Answer:</strong>
@@ -145,6 +148,10 @@
           <div ng-if = "question.question_type == 4">
             <textarea ng-model = "question.answer" class =  "form-control text-area-div"  rows = 3 placeholder = "Enter the Answer"></textarea> 
           </div>
+          <div class="col-xs-11">
+            <span>{{question.rubrick}}</span>
+          </div>
+
         </div>
       </div>
       <div class="col-xs-12 strip buttons-div" ng-show = "submit">

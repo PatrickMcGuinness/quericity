@@ -607,11 +607,11 @@ textarea.edit-form{
 	margin-left: 5px;
 
 }
-.right-list textarea{
+.edit-list textarea{
 	border: none;
-	height: 32px;
+	
 }
-.right-list input{
+.edit-list input{
 	border: none;
 }
 	
