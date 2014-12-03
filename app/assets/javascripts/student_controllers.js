@@ -266,55 +266,15 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
     
     angular.forEach(cloned_questions,function(question,key){
       /* Grade only questions with given answers */
-        
-        /* If question is true or false*/
-
-        if(question.question_type == 1){
-			
-			Grade.trf(question,$scope.served_quiz.id,function(questionsToAttempt){
-				$scope.served_quiz.questions_to_attempt = questionsToAttempt
-				check_status()
-			});
-			
-
-        }
-
-        /* If question is mcq*/
-        
-        if(question.question_type == 2){
-			
-			Grade.mcq(question,$scope.served_quiz.id,function(questionsToAttempt){
-				$scope.served_quiz.questions_to_attempt = questionsToAttempt
-				check_status()
-			});
-
-        }
-
-        /*if questios in open ended*/
-        
-        if(question.question_type == 3){
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
-            answer: question.cloned_question_options[0].answer, is_correct: false,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: 0}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-              check_status()
-            })
-        }
-
-        /*If question is fill in the blank*/
-
-        if(question.question_type == 4){
-			
-			Grade.fib(question,$scope.served_quiz.id,function(questionsToAttempt){
-				$scope.served_quiz.questions_to_attempt = questionsToAttempt
-				check_status()
-			});
-			
+ 
+		Answer.grade(question,$scope.served_quiz.id,function(questionsToAttempt){
+			$scope.served_quiz.questions_to_attempt = questionsToAttempt
+			check_status()
+		});
 	
-        }
     })
     
-    /*check the remaining questions*/
+    
 
     $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
   }
@@ -400,45 +360,11 @@ student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQ
     angular.forEach(cloned_questions,function(question,key){
       /* Grade only questions with given answers */
         
-        /* If question is true or false*/
         
-        if(question.question_type == 1){
-			Grade.trf(question,$scope.served_quiz.id,function(questionsToAttempt){
-				$scope.served_quiz.questions_to_attempt = questionsToAttempt
-				check_status()
-			});
-        }
-
-        /* If question is mcq*/
-        
-        if(question.question_type == 2){
-			Grade.mcq(question,$scope.served_quiz.id,function(questionsToAttempt){
-				$scope.served_quiz.questions_to_attempt = questionsToAttempt
-				check_status()
-			});
-                   
-        }
-
-        /*if questios in open ended*/
-        
-        if(question.question_type == 3){
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
-            answer: question.cloned_question_options[0].answer, is_correct: false,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: 0}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-              check_status()
-            })
-        }
-
-        /*If question is fill in the blank*/
-
-        if(question.question_type == 4){
-         
-			Grade.fib(question,$scope.served_quiz.id,function(questionsToAttempt){
-				$scope.served_quiz.questions_to_attempt = questionsToAttempt
-				check_status()
-			});
-        }
+		Answer.grade(question,$scope.served_quiz.id,function(questionsToAttempt){
+			$scope.served_quiz.questions_to_attempt = questionsToAttempt
+			check_status()
+		});
     })
     
     /*check the remaining questions*/
@@ -576,44 +502,10 @@ student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz
     angular.forEach($scope.all_questions_to_save,function(question,key){
       /* Grade only questions with given answers */
 		
-        /* If question is True or false*/
-        
-        console.log(question.question_type)
-        if(question.question_type == 1){
-            Grade.trf(question,$scope.served_quiz.id,function(questionsToAttempt){
-                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
-				
-            });
-        }
-
-        /* If question is mcq*/
-        if(question.question_type == 2){
-            Grade.mcq(question,$scope.served_quiz.id,function(questionsToAttempt){
-                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
-				
-            });
-         
-
-        }
-        /*if questios in open ended*/
-        if(question.question_type == 3){
-          
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
-            answer: question.cloned_question_options[0].answer, is_correct: false,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: 0}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-            })
-        }
-
-        /*If question is fill in the blank*/
-
-        if(question.question_type == 4){
-          
-            Grade.fib(question,$scope.served_quiz.id,function(questionsToAttempt){
-                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
-				
-            });
-        }    
+		Answer.grade(question,$scope.served_quiz.id,function(questionsToAttempt){
+			$scope.served_quiz.questions_to_attempt = questionsToAttempt
+			
+		});
     })
     
     $scope.served_quiz.student_sharing.status = 2
@@ -703,44 +595,10 @@ student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','S
     angular.forEach(cloned_questions,function(question,key){
       /* Grade only questions with given answers */
       if(question.answer != null){
-        /* If question is true or false*/
-        if(question.question_type == 1){
-            Grade.trf(question,$scope.served_quiz.id,function(questionsToAttempt){
-                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
-				    check_more_questions()
-				
-            });
-        }
-
-        /* If question is mcq*/
-        if(question.question_type == 2){
-            Grade.mcq(question,$scope.served_quiz.id,function(questionsToAttempt){
-                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
-				    check_more_questions()
-				
-            });        
-        }
-        /*if questios in open ended*/
-        if(question.question_type == 3){
-          Answer.save({cloned_question_id: question.id, student_answer: question.answer, 
-            answer: question.cloned_question_options[0].answer, is_correct: false,
-            served_quiz_id: $scope.served_quiz.id, graded_by_teacher: 0, student_score: 0}).$promise.then(function(data){
-              $scope.served_quiz.questions_to_attempt = data.questions_to_attempt
-              check_more_questions()
-            })
-        }
-
-        /*If question is fill in the blank*/
-
-        if(question.question_type == 4){
-            Grade.fib(question,$scope.served_quiz.id,function(questionsToAttempt){
-                    $scope.served_quiz.questions_to_attempt = questionsToAttempt
-				    check_more_questions()
-				
-            });
-        }
-        //index = $scope.served_quiz.questions_to_show.indexOf(question)
-        //$scope.served_quiz.questions_to_show.splice(index,1)  
+  		Answer.grade(question,$scope.served_quiz.id,function(questionsToAttempt){
+  			$scope.served_quiz.questions_to_attempt = questionsToAttempt
+  			check_more_questions()
+  		}); 
       }  
     })
    
