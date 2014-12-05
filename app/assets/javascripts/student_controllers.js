@@ -250,7 +250,7 @@ student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','Served
   ///////////////////
 
   //result analyser till end
-  $scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
+  //$scope.served_quiz.answers = Answer.student_answers_in_served_quiz($scope.served_quiz.id)
 
   $scope.submit = function(cloned_questions){
     /* loop through all the submitted answers*/
