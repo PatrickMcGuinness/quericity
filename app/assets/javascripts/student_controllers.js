@@ -175,6 +175,8 @@ student_quizlib.controller('AnswersCtrl', ['$scope','ServedQuiz','Sharing','$rou
 
 student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','$routeParams',function($scope,ServedQuiz,Sharing,$routeParams){
   $scope.served_quiz_id = $routeParams.id
+	
+	
   ServedQuiz.get($routeParams.id).$promise.then(function(data){
     $scope.served_quiz = data
     $scope.served_quiz.student_sharing = Sharing.student_sharing(data.id)
@@ -191,6 +193,7 @@ student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','
       $scope.served_quiz.end_time = obj.getHours() + ":" + obj.getMinutes()
     }
   })
+  
   $scope.timer = { counter: 0, minutes: 0 }
   $scope.changeStatus = function(){
     $scope.served_quiz.student_sharing.status = 4
@@ -203,7 +206,7 @@ student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','
 student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Grade','Answer','Attempt',function($scope,$timeout,ServedQuiz,Sharing, Grade,Answer,Attempt){
   // timer section for time limt
 	
-	
+  
   $scope.time_running = true
   
   $scope.onTimeout = function(){  
