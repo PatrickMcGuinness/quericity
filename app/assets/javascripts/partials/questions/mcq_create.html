@@ -85,6 +85,17 @@
         <p ng-show="McqForm.difficulty.$invalid && submitted == true" class="help-block">Difficulty level is required.</p>
       </div>
     </div>
+
+    <div class = "col-xs-12 ">
+      <div class = "form-group" ng-class="{ 'has-error' : (McqForm.explanation.$invalid) && submitted == true}">
+        <textarea name="explanation" id="explanation" rows="2" class = "form-control" placeholder = "Enter Explanation (optional)" ng-model = "explanation">
+        </textarea>
+        <p ng-show="McqForm.explanation.$invalid && submitted == true" class="help-block">Question is required.</p>
+      </div>  
+    </div>
+
+
+
     <div class = "col-xs-12 question-footer">
       <div class = "col-xs-5 pull-right">
         <!-- <button class = "btn btn-danger col-xs-3" ng-click = "hideQuestion();removeData();" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">Cancel</button>

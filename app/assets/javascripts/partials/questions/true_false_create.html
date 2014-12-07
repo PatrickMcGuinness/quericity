@@ -68,13 +68,13 @@
         <p ng-show="TrueFalseForm.difficulty.$invalid && submitted == true" class="help-block">Difficulty level is required.</p>
       </div>
     </div>
-     <div class="col-xs-12"  style="margin-top: 10px;">
-      <span class="col-xs-1" style="padding: 0px">
-          <strong> Rubric:</strong>  
-        </span> 
-        <span class="col-xs-11" style="margin-left:-21px;">
-          <textarea type="text" ng-model="rubrick" class="form-control  ng-scope " placeholder="Add Rubric" name="rubrick" required="" popover="Add rubrick" popover-trigger="mouseenter">
-        </span> 
+    
+    <div class = "col-xs-12 ">
+      <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.explanation.$invalid) && submitted == true}">
+        <textarea name="explanation" id="explanation" rows="2" class = "form-control" placeholder = "Enter Explanation (optional)" ng-model = "explanation">
+        </textarea>
+        <p ng-show="TrueFalseForm.explanation.$invalid && submitted == true" class="help-block"></p>
+      </div>  
     </div>
 
     <div class = "col-xs-12 question-footer">

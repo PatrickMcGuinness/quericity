@@ -31,8 +31,41 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   $scope.options_alphabets = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N"]
   $scope.option = {all_questions: 1, unlimited: 1}
   $scope.show_summary = true
-  
+  $scope.numbering = 0
+  $scope.array_of_indexes = []
+  $scope.index_of_questions = []
+
+  $scope.question_numbering_of_radio = function(index){
+    console.log(index)
+    ind =  $scope.array_of_indexes.indexOf(index)
+
+    if (ind == -1 )
+    { 
+      $scope.array_of_indexes.push(index)
+      $scope.numbering = $scope.numbering+ 1
+    }
+  }
+
+  $scope.question_numbering_of_input = function(index,question){
+    console.log(index)
+    console.log(question.answer)
+    ind =  $scope.array_of_indexes.indexOf(index)
+
+    if (ind == -1 && question.answer && question.answer.length > 0)
+    { console.log("1")
+      $scope.array_of_indexes.push(index)
+      $scope.numbering = $scope.numbering+ 1
+    }
+    else if (question.answer.length == 0 ){
+      console.log("2")
+      $scope.array_of_indexes.pop(index)
+      $scope.numbering = $scope.numbering - 1
+    }
+  }
+
+
   $scope.stopQuiz = function(){
+    $scope.show_numbering = false
     $scope.show_options = true
     $scope.show_timer = false
     $scope.show_questions = []
@@ -43,6 +76,18 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
     $scope.submit = false
     $scope.counter = 0
     $scope.minutes = 0
+    $scope.questions_answered = []
+    $scope.all_questions_to_save = []
+    $scope.questions = []
+    $scope.array_of_indexes = []
+    $scope.final_answer = false
+    $scope.show_next = true
+    $scope.show_previous = false
+    $scope.numbering = 0
+    $scope.quiz_bank = QuizBank.get($scope.quiz_bank_id).$promise.then(function(data){
+      $scope.quiz_bank = data
+      $scope.questions = data.questions
+    })
   }
 
   $scope.counter = 0;
@@ -69,6 +114,7 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   })
 
   $scope.startQuiz = function(){
+    $scope.show_numbering = true
     $scope.quiz_start_pressed = true
     $scope.show_options = false
     $scope.show_answer = false
@@ -260,6 +306,7 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
   $scope.submitQuiz = function(answered_questions){
     $scope.correct_answers = 0
     $scope.wrong_answers = 0
+    $scope.show_numbering = false
     $scope.no_answers = 0
     $scope.graded_later = 0
     $scope.quiz_start_pressed = false
@@ -363,10 +410,17 @@ quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizB
         $scope.no_answers = $scope.no_answers + 1
       }
       $scope.graded_later = $scope.all_questions_to_save.length - $scope.no_answers - $scope.wrong_answers -$scope.correct_answers 
+      question = []
       })
-
-
-    //$scope.show_questions = []
+    
+    $scope.all_questions_to_save = []
+    $scope.questions = []
+    $scope.array_of_indexes = []
+    $scope.numbering = 0
+    $scope.quiz_bank = QuizBank.get($scope.quiz_bank_id).$promise.then(function(data){
+      $scope.quiz_bank = data
+      $scope.questions = data.questions
+    })
   }
 }]);
 

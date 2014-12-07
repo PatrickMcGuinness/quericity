@@ -5,7 +5,6 @@ class QuestionsController < ApplicationController
   respond_to :json
 
   def create
-    puts "%"*100,params
     render json: Question.create_the_question(@section,params)
   end
   
@@ -21,7 +20,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    params[:question][:rubrick] =  params[:rubrick]
+    params[:question][:rubrick] =  params[:explanation]
     render json: @section.questions.find(params[:id]).update_question(params)
   end
 

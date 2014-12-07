@@ -48,8 +48,9 @@
                   <label>Subject:</label>
                   <input type = "text"  ng-model = "quiz_bank.subject" class = "form-control input-sm" placeholder = "Subject" name = "subject" required popover="Edit Subject"  popover-trigger="mouseenter" >
                   <p ng-show="QuizForm.subject.$invalid && (!QuizForm.subject.$pristine || submitted == true)" class="help-block">Required!</p>
-                </div>    
-              </div>
+                </div> 
+                <input type="checkbox" id="checkbox_for_rubrick" ng-model = "quiz_bank.rubricks" name="check_rubrick" data-toggle = "tooltip" title = "Include Rubrick" tooltip-placement = "top" class = "popover-field" >&nbsp;&nbsp;<b>Rubricks</b>   
+             </div>
             </div>  
           </div>
           <div class = "col-xs-2"  id = "subject-div">
@@ -78,6 +79,7 @@
               <label>Description:</label>
               <textarea ng-model = "quiz_bank.description" class =  "form-control edit-form"  rows = 2 placeholder = "Description" popover="Add small description of the quiz bank"  popover-trigger="mouseenter">
               </textarea>
+
             </div>
           </div>
         </div>   

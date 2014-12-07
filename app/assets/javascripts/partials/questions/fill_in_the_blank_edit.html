@@ -69,35 +69,33 @@
     </div>
 
     <div class = "row mar-top-10" ng-show="extra_details">
-      <span class = "col-xs-4">
+      <span class = "col-xs-2">
         <strong> Default Score:</strong>  
       </span> 
-      <div class = "col-xs-8" style= "margin-left: -181px;margin-right: 100px;margin-bottom: 10px;">
+      <div class = "col-xs-10" style= "margin-bottom: 10px;">
         <input type="text" ng-model="question.default_score" class="form-control input-sm ng-scope ng-pristine ng-valid ng-valid-required" placeholder="score" name="score" required="" popover="Edit Score" popover-trigger="mouseenter" style="width:20%;">
       </div> 
 
-      <div class ="col-xs-6 pull-left" >
         <div class = "form-group" ng-class="{ 'has-error' : (BlankForm.difficulty.$invalid) && (!BlankForm.difficulty.$pristine || submitted == true)}">
-          <div class= "col-xs-6" style = "margin-left: -15px;">
+          <div class= "col-xs-2" >
             <label>Difficulty Level:</label>
           </div>
-        <div class= "col-xs-5" style= "margin-left: -81px;">
-          <select class="form-control" ng-model="question.difficulty_level" name = "difficulty">
-            <option value = "1">Easy</option>
-            <option value = "2">Medium</option>
-            <option value = "3">Hard</option>
-          </select>
-        </div>
+          <div class= "col-xs-5" >
+            <select class="form-control" ng-model="question.difficulty_level" name = "difficulty">
+              <option value = "1">Easy</option>
+              <option value = "2">Medium</option>
+              <option value = "3">Hard</option>
+            </select>
+          </div>
           <p ng-show="BlankForm.difficulty.$invalid && (!BlankForm.difficulty.$pristine || submitted == true)" class="help-block">Difficulty level is required.</p>
         </div>
-      </div>
       <br>
       <div class="col-xs-12"  style="margin-top: 10px;">
     <span class="col-xs-2" style="padding: 0px">
-          <strong> Rubric:</strong>  
+          <strong> Explanation:</strong>  
         </span> 
-        <span class="col-xs-10" style="margin-left:-21px;">
-        <textarea type="text" ng-model="question.rubrick" class="form-control  ng-scope " placeholder="Add Rubric" name="rubric" required="" popover="Add rubric" popover-trigger="mouseenter">
+        <span class="col-xs-10" style="margin-left:-10px;">
+        <textarea type="text" ng-model="question.explanation" class="form-control  ng-scope " placeholder="Add Explanation" name="Explanation" required="" popover="Add Explanation" popover-trigger="mouseenter">
       </span> 
   </div>
     </div>

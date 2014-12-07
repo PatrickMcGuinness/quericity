@@ -26,6 +26,10 @@
           <!--<timer class = "col-xs-offset-5" end-time="get_duration()">{{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.
           </timer> -->
         </div>
+        <div class = "col-xs-5 col-xs-offset-5" style="margin-left: 44%;" ng-show="show_numbering"> 
+          <b>{{numbering}}</b> of <b>{{questions.length}}</b> answered
+        </div>
+        
       </div>
       <div class="col-xs-12 strip form_section" ng-show = "show_options">
         <div class="col-xs-4">
@@ -101,11 +105,7 @@
         <p>
         {{quiz_bank.instructions}}
         </p>
-        <div class= "progress-bar-preview">
-          <small ng-show ="quiz_start_pressed" ng-if = "option.all_questions == 0"><em>Progress</em></small>
-            <progressbar ng-show ="quiz_start_pressed" ng-if = "option.all_questions == 0" animate="false" value=question_done*100/questions.length type=""><b>{{questions_answered.length}}/ {{questions.length}}</b></progressbar>
-            <a  ng-show ="quiz_start_pressed" ng-if = "option.all_questions == 1" class= "print-button" print-the-page style="float:right;">Print</a>
-        </div>   
+         
       </div>
 
    
@@ -113,13 +113,15 @@
       <!-- <progressbar value=question_done max =8 ><span style="color:black; white-space:nowrap;">{{question_done}} / {{total_questions}}</span></progressbar> -->
 
     <div class="col-xs-12" ng-hide = "show_answer">
-      <div class="col-xs-12 strip" ng-repeat = "question in show_questions">
-        <div class="col-xs-12 ">
-          <span class = "pull-left">{{all_questions_to_save.length + 1}})</span>
+    
+      <div class="col-xs-12 strip" ng-repeat = "question in show_questions" ng-init="rowIndex = $index">
+        <div class="col-xs-12 " >
+          <span class = "pull-left" ng-if="option.all_questions == 0">{{question.question_number}}{{$index  + all_questions_to_save.length + 1}}.</span>
+          <span class = "pull-left" ng-if="option.all_questions == 1">{{question.question_number}}{{$index + 1}}.</span>
+          
           <!--<span class = "col-xs-11" ng-bind-html="question.description | unsafe"></span> -->
           <span class = "col-xs-11" mathjax-bind = "question.description"></span>
 
-          <img  ng-if ="question.rubrick" width='30' src = "/assets/hint.png" custom-popover popover-html="<span>{{question.rubrick}}</span>" popover-placement="top" class = "popover-maker">
         </div>
 
         <div class = "col-xs-12 mar-top-20">
@@ -128,29 +130,58 @@
           </span>  
         </div>
         <div class = "col-xs-12 mar-top-20 mar-left-10">
-          <div ng-if = "question.question_type == 1">
-            <input type="radio" name="true_false{{question.id}}" value = true ng-model = "question.answer">&nbsp;True
-            &nbsp;&nbsp;<input type="radio" name="true_false{{question.id}}" value = false ng-model = "question.answer">&nbsp;False
+        	
+          <div ng-if = "question.question_type == 1 && option.all_questions == 1">
+            <input type="radio" name="2_false{{question.id}}" value = true ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex)">&nbsp;True
+            &nbsp;&nbsp;<input type="radio" name="true_false{{question.id}}" value = false ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex)">&nbsp;False
           </div>
-          <div ng-if = "question.question_type == 2">
+
+          <div ng-if = "question.question_type == 1 && option.all_questions == 0">
+            <input type="radio" name="2_false{{question.id}}" value = true ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex + all_questions_to_save.length + 1)">&nbsp;True
+            &nbsp;&nbsp;<input type="radio" name="true_false{{question.id}}" value = false ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex + all_questions_to_save.length + 1)">&nbsp;False
+          </div>
+
+          <div ng-if = "question.question_type == 2 && option.all_questions == 1">
             <div ng-repeat = "question_option in question.question_options">
 
 
-              <input type="radio" name="answer{{question.id}}" value = "{{question_option.id}}" ng-model = "question.answer" style= "float: left;margin-right: 7px;">
+              <input type="radio" name="answer{{question.id}}" value = "{{question_option.id}}" ng-click= "question_numbering_of_radio(rowIndex)" ng-model = "question" style= "float: left;margin-right: 7px;">
               <span style="float: left;margin-right: 10px;">{{options_alphabets[$index]}}:</span>
               <span mathjax-bind = "question_option.answer" >&nbsp;
               {{question_option.answer}}{{show_questions}}</span>
             </div>
           </div>
-          <div ng-if = "question.question_type == 3">
-            <textarea ng-model = "question.answer" class =  "form-control text-area-div"  rows = 3 placeholder = "Enter The Answer"></textarea>
+
+          <div ng-if = "question.question_type == 2 && option.all_questions == 0">
+            <div ng-repeat = "question_option in question.question_options">
+
+
+              <input type="radio" name="answer{{question.id}}" value = "{{question_option.id}}" ng-click= "question_numbering_of_radio(rowIndex + all_questions_to_save.length + 1)" ng-model = "question" style= "float: left;margin-right: 7px;">
+              <span style="float: left;margin-right: 10px;">{{options_alphabets[$index]}}:</span>
+              <span mathjax-bind = "question_option.answer" >&nbsp;
+              {{question_option.answer}}{{show_questions}}</span>
+            </div>
           </div>
-          <div ng-if = "question.question_type == 4">
-            <textarea ng-model = "question.answer" class =  "form-control text-area-div"  rows = 3 placeholder = "Enter the Answer"></textarea> 
+
+
+
+          <div ng-if = "question.question_type == 3 && option.all_questions == 1">
+            <textarea ng-model = "question.answer" class =  "form-control text-area-div"  ng-blur= "question_numbering_of_input(rowIndex ,question)" rows = 3 placeholder = "Enter The Answer"></textarea>
           </div>
-          <div class="col-xs-11">
-            <span>{{question.rubrick}}</span>
+
+          <div ng-if = "question.question_type == 3 && option.all_questions == 0">
+            <textarea ng-model = "question.answer" class =  "form-control text-area-div"  ng-blur= "question_numbering_of_input(rowIndex + all_questions_to_save.length + 1 ,question)" rows = 3 placeholder = "Enter The Answer"></textarea>
           </div>
+
+          <div ng-if = "question.question_type == 4 && option.all_questions == 1">
+            <textarea ng-model = "question.answer" class =  "form-control text-area-div"  ng-blur= "question_numbering_of_input(rowIndex , question)" rows = 3 placeholder = "Enter the Answer"></textarea> 
+          </div>
+          
+          <div ng-if = "question.question_type == 4 && option.all_questions == 0">
+            <textarea ng-model = "question.answer" class =  "form-control text-area-div"  ng-blur= "question_numbering_of_input(rowIndex + all_questions_to_save.length + 1, question)" rows = 3 placeholder = "Enter the Answer"></textarea> 
+          </div>
+
+
 
         </div>
       </div>
@@ -205,7 +236,7 @@
           </thead>
           <tbody>
 
-            <tr ng-repeat = "question in answered_questions">
+            <tr ng-repeat = "question in answered_questions" >
 
               <td ng-if = "question.question_type == 3">
                 <span mathjax-bind = "question.question_answer"></span>
@@ -305,8 +336,12 @@
                   <b>Your answer:</b><span mathjax-bind = "question.answer" style= "display: inline-block;margin-left: 10px;">{{question.answer}}</span>
                 </span>
 
-                
-
+                <span class = "col-xs-12" ng-if="question.explanation" style="padding:0px;">
+                  <span style="margin-left: 5px;">
+                    <b>Explanation:</b>
+                  </span>
+                  <span>{{question.explanation}}</span>    
+                </span> 
 
               </td>
 
