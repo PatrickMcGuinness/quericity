@@ -78,9 +78,9 @@
                 See Answers
               </a>
 
-              <span ng-if = "served_quiz.status == 'Serving Completed' || served_quiz.status == 'Not Served Yet'" style = "border: 1px solid">
-                Quiz Not Available
-              </span>
+			  <a ng-if = "served_quiz.status == 'Serving Completed' || served_quiz.status == 'Not Served Yet'" class="btn btn-danger" disabled="disabled" style = "float:none;">
+			    Not Available
+			   </a>
             </td>
           </tr>
         </tbody>
