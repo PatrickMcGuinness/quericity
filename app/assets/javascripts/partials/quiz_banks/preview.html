@@ -141,11 +141,12 @@
             &nbsp;&nbsp;<input type="radio" name="true_false{{question.id}}" value = false ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex + all_questions_to_save.length + 1)">&nbsp;False
           </div>
 
+
           <div ng-if = "question.question_type == 2 && option.all_questions == 1">
             <div ng-repeat = "question_option in question.question_options">
 
 
-              <input type="radio" name="answer{{question.id}}" value = "{{question_option.id}}" ng-click= "question_numbering_of_radio(rowIndex)" ng-model = "question" style= "float: left;margin-right: 7px;">
+              <input type="radio" name="answer{{rowIndex}}" value = "{{question_option.id}}" ng-click= "question_numbering_of_radio(rowIndex)" ng-model = "question" style= "float: left;margin-right: 7px;">
               <span style="float: left;margin-right: 10px;">{{options_alphabets[$index]}}:</span>
               <span mathjax-bind = "question_option.answer" >&nbsp;
               {{question_option.answer}}{{show_questions}}</span>
@@ -156,7 +157,7 @@
             <div ng-repeat = "question_option in question.question_options">
 
 
-              <input type="radio" name="answer{{question.id}}" value = "{{question_option.id}}" ng-click= "question_numbering_of_radio(rowIndex + all_questions_to_save.length + 1)" ng-model = "question" style= "float: left;margin-right: 7px;">
+              <input type="radio" name="answer{{rowIndex}}" value = "{{question_option.id}}" ng-click= "question_numbering_of_radio(rowIndex + all_questions_to_save.length + 1)" ng-model = "question" style= "float: left;margin-right: 7px;">
               <span style="float: left;margin-right: 10px;">{{options_alphabets[$index]}}:</span>
               <span mathjax-bind = "question_option.answer" >&nbsp;
               {{question_option.answer}}{{show_questions}}</span>
