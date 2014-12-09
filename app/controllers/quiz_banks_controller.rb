@@ -10,7 +10,9 @@ class QuizBanksController < ApplicationController
 
   def show
     #render json: current_user.quiz_banks.find(params[:id])
-    render json: QuizBank.find(params[:id])
+    p =QuizBank.find(params[:id])
+    puts p.inspect
+    render json: p
   end
 
   def edit
