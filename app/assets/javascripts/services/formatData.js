@@ -13,6 +13,9 @@ student_quizlib.service('FormatData', function ($rootScope,Sharing,QuizStatus){
           value.close_date = self.date(value.student_sharing.local_close_date)
           value.updated_at = self.date(value.updated_at)
           value.status = QuizStatus.get_status(local_date,close_date,value.close_status)
+		  if(value.student_sharing.status_in_string == 'INVITED' &&  value.status== 'Serving Completed'){
+			  value.student_sharing.status_in_string = 'EXPIRED';
+		  }
 		  		  
 
         })
