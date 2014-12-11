@@ -111,6 +111,15 @@ quizlib.directive("checkActive",function($route){
       if($route.current.activetab == "analyze"){
         $(".analyze-link").addClass("active")
       }
+      if($route.current.activetab == "dashboard"){
+        $(".dashboard-link").addClass("active")
+      }
+      if($route.current.activetab == "quiz"){
+        $(".takequiz-link").addClass("active")
+      }
+      if($route.current.activetab == "groups"){
+        $(".classes-link").addClass("active")
+      }
     }
   };
 })

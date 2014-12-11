@@ -43,35 +43,26 @@
           -if current_user.is_student?
             %ul.nav.navbar-nav.navbar-left.menu
               %ng-view
-              %li
+              %li{"ng-controller" => "MenuCtrl"}
                 %span.sub_nav_icon
                   %img{src:"/assets/serve_quiz.png"}
                 %span.menu-link  
-                  %a{href:"#/dashboard"}Dashboard
-				  
+                  %a.dashboard-link.header-link{href:"#/dashboard"} Dashboard
                 %li
                   %span.sub_nav_icon
                     %img{src:"/assets/serve_quiz.png"}
                   %span.menu-link  
-                    %a{href:"#/take_quiz"}Take Quiz
-					
-                %li
-                  %span.sub_nav_icon
-                    %img{src:"/assets/serve_quiz.png"}
-                  %span.menu-link  
-                    %a{href:"#/finish_quiz"}Finish Quiz
-					
+                    %a.takequiz-link.header-link{href:"#/take_quiz"} Take Quiz
                 %li
                   %span.sub_nav_icon
                     %img{src: "/assets/manage_menu_icon.png"}
                   %span.menu-link  
-                    %a{href:"#/reports"}Reports
- 
+                    %a.reports-link.header-link{href:"#/reports"}Reports
                 %li
                   %span.sub_nav_icon
                     %img{src:"/assets/serve_quiz.png"}
                   %span.menu-link  
-                    %a{href:"#/enrol_group"}Classes    
+                    %a.classes-link.header-link{href:"#/enrol_group"} Groups    
 				    
           %ul.nav.navbar-nav.navbar-right.my-header-nav{style: "margin-right: 10px;"}
             .dropdown.name
