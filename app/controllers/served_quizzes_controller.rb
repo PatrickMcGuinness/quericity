@@ -2,7 +2,7 @@ class ServedQuizzesController < ApplicationController
   
   before_filter :authenticate_user!
   before_filter :set_served_quiz, except: [:index,:create,:first_served_quiz,
-                :student_served_quizzes,:student_pending_quizzes,:student_quiz_report,
+                :student_served_quizzes,:student_pending_quizzes,:student_mixed_quizzes,:student_quiz_report,
                 :student_attempted_quizzes,:student_started_quizzes,:show,:questions_to_attempt]
   
   respond_to :json
@@ -73,6 +73,10 @@ class ServedQuizzesController < ApplicationController
 
   def student_pending_quizzes
     render json: current_user.student_pending_quizzes
+  end
+
+  def student_mixed_quizzes
+    render json: current_user.student_mixed_quizzes
   end
 
   def student_started_quizzes

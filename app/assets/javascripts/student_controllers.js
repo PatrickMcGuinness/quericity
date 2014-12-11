@@ -32,7 +32,8 @@ student_quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',functio
 }]);
 
 student_quizlib.controller('TakeQuizCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','FormatData','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,FormatData,QuizStatus){
-    ServedQuiz.student_pending_quizzes().$promise.then(function(data){
+    ServedQuiz.student_mixed_quizzes().$promise.then(function(data){
+	
      
     	$scope.served_quizzes = data
 		
@@ -150,6 +151,16 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing','Tim
       $scope.subject_title = false
     }
   }
+  
+  $scope.toggle_status = function(){
+    if($scope.status == false){
+      $scope.status = true
+    }
+    else{
+      $scope.status = false
+    }
+  }
+  
   $scope.show_pending_quizzes = function(){
     $scope.served_quizzes = $scope.pending_quizzes
   }
