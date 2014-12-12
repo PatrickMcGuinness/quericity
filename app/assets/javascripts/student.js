@@ -8,8 +8,8 @@ student_quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/students/attempt.html',controller: 'QuizAttemptCtrl',activetab: 'quiz'}).
       when('/quiz/:id/answers', 
       {templateUrl: 'assets/partials/students/answers.html',controller: 'AnswersCtrl',activetab: 'quiz'}).
-      when('/reports', 
-      {templateUrl: 'assets/partials/students/reports.html',controller: 'DashBoardCtrl',activetab: 'dashboard'}).
+      when('/analytics', 
+      {templateUrl: 'assets/partials/students/reports.html',controller: 'DashBoardCtrl',activetab: 'reports'}).
       when('/reports/quiz/:id',
       {templateUrl: 'assets/partials/students/quiz_detail.html',controller: 'QuizDetailCtrl',activetab: 'reports'}).
       when('/settings',
