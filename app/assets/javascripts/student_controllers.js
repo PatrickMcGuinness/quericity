@@ -31,20 +31,33 @@ student_quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',functio
 
 }]);
 
-student_quizlib.controller('TakeQuizCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,QuizStatus){
-    ServedQuiz.student_pending_quizzes().$promise.then(function(data){
+student_quizlib.controller('TakeQuizCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','FormatData','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,FormatData,QuizStatus){
+    ServedQuiz.student_mixed_quizzes().$promise.then(function(data){
+	
      
-      $scope.served_quizzes = data
+    	$scope.served_quizzes = data
+		
+		FormatData.statusFormat(data)
+ 	 
 
-	   angular.forEach(data,function(quiz){
-		   quiz.close_date = moment(quiz.close_date).format("MMM Do  h:mm a");
-			
-		});
-    
+   
     })
 
+}]);
+
+student_quizlib.controller('FinishQuizCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','FormatData','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,FormatData,QuizStatus){
+    ServedQuiz.student_started_quizzes().$promise.then(function(data){
+     
+    	$scope.served_quizzes = data
+		
+		FormatData.statusFormat(data)
+ 	 
+
+   
+    })
 
 }]);
+
 
 student_quizlib.controller('DashBoardCtrl', ['$scope','ServedQuiz','Sharing','User',function($scope,ServedQuiz,Sharing,User){
     User.get_current_user().$promise.then(function(data){
@@ -87,27 +100,31 @@ student_quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParam
 
 }]);
 
-student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,QuizStatus){
+student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','FormatData','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,FormatData,QuizStatus){
   
   ServedQuiz.student_served_quizzes().$promise.then(function(data){
-    $scope.all_quizzes = data
-    $scope.served_quizzes = data
-    date_formatting($scope.served_quizzes)
+      $scope.all_quizzes = data
+      $scope.served_quizzes = data
+    
+	  FormatData.statusFormat($scope.served_quizzes)
   })
 
   ServedQuiz.student_pending_quizzes().$promise.then(function(data){
-    $scope.pending_quizzes = data
-    date_formatting($scope.pending_quizzes)
+      $scope.pending_quizzes = data
+    
+	  FormatData.statusFormat($scope.pending_quizzes)
   })
 
   ServedQuiz.student_attempted_quizzes().$promise.then(function(data){
-    $scope.attempted_quizzes = data
-    date_formatting($scope.attempted_quizzes)
+      $scope.attempted_quizzes = data
+   
+	  FormatData.statusFormat($scope.attempted_quizzes)
   })
 
   ServedQuiz.student_started_quizzes().$promise.then(function(data){
-    $scope.started_quizzes = data
-    date_formatting($scope.started_quizzes)
+      $scope.started_quizzes = data
+    
+	  FormatData.statusFormat($scope.started_quizzes)
   })
 
   $scope.toggle_title = function(){
@@ -134,6 +151,16 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing','Tim
       $scope.subject_title = false
     }
   }
+  
+  $scope.toggle_status = function(){
+    if($scope.status == false){
+      $scope.status = true
+    }
+    else{
+      $scope.status = false
+    }
+  }
+  
   $scope.show_pending_quizzes = function(){
     $scope.served_quizzes = $scope.pending_quizzes
   }
@@ -147,19 +174,7 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing','Tim
     $scope.served_quizzes = $scope.started_quizzes
   }
 
-  var date_formatting = function(quizzes){
-    angular.forEach(quizzes,function(value,key){
-      Sharing.student_sharing(value.id).$promise.then(function(data){
-        value.student_sharing = data
-        var obj1 = new Date(value.student_sharing.local_date)
-        var obj2 = new Date(value.student_sharing.local_close_date)
-        value.close_date = TimeDisplay.get_date(value.student_sharing.local_close_date)
-        value.updated_at = TimeDisplay.get_date(value.updated_at)
-        value.status = QuizStatus.get_status(obj1,obj2,value.close_status)
 
-      })
-    })
-  }
 }]);
 
 student_quizlib.controller('AnswersCtrl', ['$scope','ServedQuiz','Sharing','$routeParams','Answer',function($scope,ServedQuiz,Sharing,$routeParams,Answer){

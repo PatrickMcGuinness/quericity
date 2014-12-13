@@ -1,4 +1,100 @@
-<div class = "container">
-  <div ng-include src="'/assets/partials/students/student_graphs.html'"></div>
-	<div ng-include src="'/assets/partials/students/dashboard_student_details.html'"></div>
-</div>	
+
+<div class="container">
+	<div class="row">
+    <div class="col-xs-12 tag_quiz_btns">
+			<span class="tag_quiz"><a ng-click = "show_all_quizzes()" class = "active btn col-xs-2 pull-left responsive-button" show-active-tag style= "width: 200px;">All Quizzes</a></span>
+			<span class="tag_quiz"><a ng-click = "show_pending_quizzes()" class = "btn col-xs-2 pull-left responsive-button" show-active-tag style= "width: 200px;" >Invited Quizzes</a></span>
+      <span class="tag_quiz"><a ng-click = "show_started_quizzes()" class = "btn col-xs-2 pull-left responsive-button" show-active-tag style= "width: 200px;" >Partial Quizzes</a></span>
+      <span class="tag_quiz"><a ng-click = "show_attempted_quizzes()" class = "btn col-xs-2 pull-left responsive-button" show-active-tag add-custom-class style= "width: 240px;">Completed Quizzes</a></span>
+    </div>
+  </div>
+  <div class = "row">    
+    <div ng-hide = "served_quizzes.length > 0" class = "col-xs-12">
+      <span class = "col-xs-12" style = "border: 1px solid">
+        No quizzes to show
+      </span>  
+    </div>
+    <div ng-show = "served_quizzes.length > 0">
+      <table class="table table-striped tag_btns">
+        <thead>
+          <th class="col-xs-2 manage_section">
+            Quiz Title
+            <a ng-click="predicate = 'cloned_quiz_bank.title'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_title()" ng-if = "title == true || title == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_title()" ng-if = "title == false"/>
+            </a>
+          </th>
+          <th class="col-xs-2 manage_section">
+              Teacher Name
+            <a ng-click="predicate = 'owner.first_name'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_teacher_name()" ng-if = "teacher_name == true || teacher_name == undefined"/>
+               <img src="/assets/heading_arrow_up.png" ng-click = "toggle_teacher_name()" ng-if = "teacher_name == false"/>
+            </a>
+          </th>
+          <th class="col-xs-2 manage_section">
+              Subject
+            <a ng-click="predicate = 'cloned_quiz_bank.subject'; reverse=!reverse">
+              <img src="/assets/heading_arrow_down.png" ng-click = "toggle_subject()" ng-if = "subject_title == true || subject_title == undefined"/>
+              <img src="/assets/heading_arrow_up.png" ng-click = "toggle_subject()" ng-if = "subject_title == false"/>
+            </a>
+          </th>
+          <th class="col-xs-4 manage_section">
+              Status
+              <a ng-click="predicate = 'student_sharing.status_in_string'; reverse=!reverse">
+                <img src="/assets/heading_arrow_down.png" ng-click = "toggle_status()" ng-if = "status == true || status == undefined"/>
+                <img src="/assets/heading_arrow_up.png" ng-click = "toggle_status()" ng-if = "status == false"/>
+              </a>
+          </th>
+          <th class = "col-xs-2 manage_section">
+            Action
+          </th>
+        </thead>
+        <tbody class="text-center">
+          <tr ng-repeat = "served_quiz in served_quizzes | orderBy:predicate:reverse">
+            <td>{{served_quiz.cloned_quiz_bank.title}}</td>
+            <td>{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}</td>
+            <td>{{served_quiz.cloned_quiz_bank.subject}}</td>
+            <td ng-if = "served_quiz.student_sharing.status_in_string == 'INVITED' && served_quiz.status != 'Serving Completed'">
+              <span style="color:#00a404; font-weight:bold;">Invited:</span>&nbsp;
+              <span>Quiz expiring on {{served_quiz.close_date}}</span>
+            </td>
+			<td ng-if = "served_quiz.student_sharing.status_in_string == 'EXPIRED'">
+				<span style="color:#CCCC00; font-weight:bold;">Expired:</span>&nbsp;
+				<span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 0">Quiz expired on {{served_quiz.close_date}}</span>
+				<span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 1">Quiz expired on {{served_quiz.updated_at}}</span>
+			</td>
+				
+				
+            <td ng-if = "served_quiz.student_sharing.status_in_string == 'PARTIAL'">
+              <span style="color:#c64b00; font-weight:bold;">Partial:</span>&nbsp;
+              <span ng-if = "served_quiz.status != 'Serving Completed'">Quiz expiring on {{served_quiz.close_date}}</span>
+              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 0">Quiz expired on {{served_quiz.close_date}}</span>
+              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 1">Quiz expired on {{served_quiz.updated_at}}</span>
+            </td>
+            <td ng-if = "served_quiz.student_sharing.status_in_string == 'COMPLETED'">
+              <span style="color:#0069a7; font-weight:bold;">Complete:</span>&nbsp;
+              <span ng-if = "served_quiz.status != 'Serving Completed'">Quiz expiring on {{served_quiz.close_date}}</span>
+              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 0">Quiz expired on {{served_quiz.close_date}}</span>
+              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 1">Quiz expired on {{served_quiz.updated_at}}</span>
+            </td>
+            <td>
+              <a ng-if = "served_quiz.status == 'In Process' && served_quiz.student_sharing.status_in_string != 'COMPLETED'" data-toggle = "tooltip" title = "Proceed to Quiz" tooltip-placement = "top" ng-href = "#/quiz/{{served_quiz.id}}/attempt" class = "btn btn-success" style = "float:none;">
+                <!--<img src="/assets/attempt.png"/> -->
+                Attempt Quiz
+              </a>
+              <a ng-if = "served_quiz.status == 'In Process' && served_quiz.student_sharing.status_in_string == 'COMPLETED'" data-toggle = "tooltip" title = "Proceed to Quiz" tooltip-placement = "top" ng-href = "#/quiz/{{served_quiz.id}}/answers" class = "btn btn-primary" style = "float:none;">
+                <!-- <img src="/assets/attempt.png"/> -->
+                See Answers
+              </a>
+			  <span ng-if = "served_quiz.status == 'Serving Completed' || served_quiz.status == 'Not Served Yet'">
+				   Not Applicable
+			   </span>
+			 
+			   		
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>  
+	</div>
+</div>
