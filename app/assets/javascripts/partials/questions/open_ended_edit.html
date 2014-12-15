@@ -82,7 +82,18 @@
         <p ng-show="OpenEndedForm.difficulty.$invalid && (!OpenEndedForm.difficulty.$pristine || submitted == true)" class="help-block">Difficulty level is required.</p>
     </div>
     <br>
-      <div class="col-xs-12" style="margin-top: 10px;" ng-if = "quiz_bank.have_explanations">
+
+    <div class="col-xs-12" style="margin-top: 10px;" ng-if = "quiz_bank.have_rubrics">
+      <span class="col-xs-2" style="padding: 0px">
+            <strong> Rubric:</strong>  
+          </span> 
+          <span class="col-xs-10" style="margin-left:-10px;">
+          <textarea type="text" ng-model="question.rubrick" class="form-control  ng-scope " placeholder="Add Rubric" name="Rubric"  popover="Add Rubrick" popover-trigger="mouseenter">
+      </span>
+
+    </div>
+
+    <div class="col-xs-12" style="margin-top: 10px;" ng-if = "quiz_bank.have_explanations">
       <span class="col-xs-2" style="padding: 0px">
             <strong> Explanation:</strong>  
           </span> 
@@ -91,14 +102,7 @@
       </span>
     </div>
     
-    <div class="col-xs-12" style="margin-top: 10px;">
-      <span class="col-xs-2" style="padding: 0px">
-            <strong> Rubrick:</strong>  
-          </span> 
-          <span class="col-xs-10" style="margin-left:-21px;">
-          <textarea type="text" ng-model="question.explanation" class="form-control  ng-scope " placeholder="Add Explanation" name="Explanation" required="" popover="Add Explanation" popover-trigger="mouseenter">
-      </span>
-    </div>
+    
 
     
  

@@ -21,6 +21,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
 
   QuizBank.get($scope.quiz_bank_id).$promise.then(function(data){
     $scope.quiz_sections = data.sections
+    $scope.sections.count = $scope.quiz_sections.length - 1
     $scope.last_section = data.sections[data.sections.length - 1]
     $scope.quiz_bank = data
     var obj = new Date(data.created_at)
@@ -77,7 +78,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   $scope.advanced_quiz_edit = function(){
      $scope.quiz_bank.have_sections = true   
     $scope.quiz_bank.have_explanations = true
-    $scope.quiz_bank.have_rubricks = true
+    $scope.quiz_bank.have_rubrics  = true
     $scope.quiz_bank.have_difficulty_levels = true
     $scope.quiz_bank.have_custom_scoring = true
     $scope.is_advanced_quiz = false
