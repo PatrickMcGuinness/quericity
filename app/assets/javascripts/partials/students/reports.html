@@ -1,4 +1,37 @@
 <div class = "container">
-  <div ng-include src="'/assets/partials/students/student_graphs.html'"></div>
-	<div ng-include src="'/assets/partials/students/dashboard_student_details.html'"></div>
+	<div class="row">
+		<div class = "col-xs-3 col-xs-offset-4" style= "padding-top:10px;">
+		    <h4 class="text-center">Completed Quiz List</h4>
+	    </div>
+	</div>
+		
+	<div class="panel panel-default">
+    	   <table class="table table-hover">
+   		   <thead>
+   		           <tr>
+   		             <th>Quiz Title</th>
+   		             <th>Teacher Name</th>
+   		             <th>Subject</th>
+   		             <th>Status</th>
+   					 <th>Action</th>
+   		           </tr>
+   		         </thead>
+       	   <tr ng-repeat = "served_quiz in served_quizzes|orderBy: 'served_quiz.close_date'">
+			   
+   			  <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED'">{{served_quiz.cloned_quiz_bank.title}}</td>
+   			   <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED'">{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}</td>
+   			   <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED'">{{served_quiz.cloned_quiz_bank.subject}}</td>
+   			   <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED'">Quiz completed on {{served_quiz.local_date}}</td>
+	           <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED'">
+	             <a ng-href = "#/dashboard/quiz/{{quiz.served_quiz.id}}?student_id={{student_detail.student.id}}"><img src = "/assets/detail_icon.png" style = "height: 20px;"></a>
+	           </td>
+
+				
+      
+   		   </tr>
+     	 </table>
+  
+		
+	
+    </div>
 </div>	

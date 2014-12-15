@@ -58,6 +58,20 @@ student_quizlib.controller('FinishQuizCtrl', ['$scope','ServedQuiz','Sharing','T
 
 }]);
 
+student_quizlib.controller('ReportsCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','FormatData','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,FormatData,QuizStatus){
+    ServedQuiz.student_attempted_quizzes().$promise.then(function(data){
+     
+    	$scope.served_quizzes = data
+		
+		FormatData.statusFormat(data)
+ 	 
+
+   
+    })
+
+}]);
+
+
 
 student_quizlib.controller('DashBoardCtrl', ['$scope','ServedQuiz','Sharing','User',function($scope,ServedQuiz,Sharing,User){
     User.get_current_user().$promise.then(function(data){
