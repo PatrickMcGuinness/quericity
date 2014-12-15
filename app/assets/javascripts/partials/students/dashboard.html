@@ -73,9 +73,8 @@
             </td>
             <td ng-if = "served_quiz.student_sharing.status_in_string == 'COMPLETED'">
               <span style="color:#0069a7; font-weight:bold;">Complete:</span>&nbsp;
-              <span ng-if = "served_quiz.status != 'Serving Completed'">Quiz expiring on {{served_quiz.close_date}}</span>
-              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 0">Quiz expired on {{served_quiz.close_date}}</span>
-              <span ng-if = "served_quiz.status == 'Serving Completed' && served_quiz.close_status == 1">Quiz expired on {{served_quiz.updated_at}}</span>
+              <span ng-if = "served_quiz.status != 'Serving Completed'">Quiz completed on {{served_quiz.local_date}}</span>
+
             </td>
             <td>
               <a ng-if = "served_quiz.status == 'In Process' && served_quiz.student_sharing.status_in_string != 'COMPLETED'" data-toggle = "tooltip" title = "Proceed to Quiz" tooltip-placement = "top" ng-href = "#/quiz/{{served_quiz.id}}/attempt" class = "btn btn-success" style = "float:none;">
