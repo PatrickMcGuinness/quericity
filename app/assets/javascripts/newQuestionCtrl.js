@@ -1,7 +1,6 @@
 quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalScope','QuestionOption',function($scope,$rootScope,Question, GlobalScope,QuestionOption){
   
   $scope.submitted = false
-  $scope.explanation = ""
   $scope.$on('quiz_bank_id_Changed', function(event, quiz_bank_id) {
     $scope.quiz_bank_id = quiz_bank_id;
   });
@@ -21,6 +20,7 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
 
   $scope.removeData = function(){
     $scope.selected_difficulty = null
+    $scope.explanation = null
     $scope.selected_true_false_option = null
     $scope.blank = null
     $scope.input_1 = null
@@ -39,7 +39,7 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
 
   $scope.create_true_false = function(isValid){
     console.log("this is true/false")
-    console.log($scope.explanation)
+    console.log($scope.a786)
     $scope.submitted = true
     if(isValid && $scope.selected_true_false_option != undefined){
       Question.save($scope.quiz_bank_id, $scope.section_id,

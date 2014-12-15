@@ -43,18 +43,16 @@
     </div>
   
   <div style="margin-left: 13px;">  
-    <a ng-show = "!extra_details" ng-click = "extra_details = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+    <a ng-show = "!extra_details_question && quiz_bank.have_difficulty_levels || quiz_bank.have_explanations && !extra_details_question || quiz_bank.have_custom_scoring && !extra_details_question " ng-click = "extra_details_question = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
          <u> Show extra details </u>
     </a>
-    <a ng-show = "extra_details"  ng-click = "extra_details = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+    <a ng-show = "extra_details_question"  ng-click = "extra_details_question = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
          <u> Hide extra details </u>
     </a>
   <div>
-  
 
-
-    <div class="extra-details-class" ng-show = "extra_details">
-      <span class = "col-xs-4 row">
+      <div class="extra-details-class" ng-show = "extra_details_question" >
+      <span class = "col-xs-4 row" ng-if="quiz_bank.have_difficulty_levels">
         <span>
           Difficulty level:
         </span>
@@ -62,13 +60,13 @@
         <span ng-if = "question.difficulty_level == 2">Medium</span>
         <span ng-if = "question.difficulty_level == 3">Hard</span>    
       </span> 
-      <span class = "col-xs-4">
+      <span class = "col-xs-4" ng-if="quiz_bank.have_custom_scoring">
         <span>
           Default Score:
         </span>
         <span>{{question.default_score}}</span>    
       </span>  
-      <span class = "col-xs-12" ng-if="question.explanation" style="margin-top:10px;padding:0px;">
+      <span class = "col-xs-12" ng-if="question.explanation && quiz_bank.have_explanations" style="margin-top:10px;padding:0px;">
         <span>
           <b>Explanation:</b>
         </span>

@@ -142,9 +142,8 @@ class Question < ActiveRecord::Base
       :reference_url => reference_url,
       :section_id => section_id,
       :default_score => default_score,
-      :rubrick => rubrick,
+      :rubric => rubrick,
       :explanation => explanation,
-      :rubrick => rubrick,
       :question_options => self.question_options.order("seq ASC").as_json(),
 
     }

@@ -51,24 +51,24 @@
       </div>
 
        <div class = "extra_details_div mar-top-10">  
-      <a ng-show = "!extra_details" ng-click = "extra_details = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+      <a ng-show = "!extra_details_question && quiz_bank.have_difficulty_levels || quiz_bank.have_explanations && !extra_details_question || quiz_bank.have_custom_scoring && !extra_details_question " ng-click = "extra_details_question = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
            <u> Adnavced Options </u>
       </a>
-      <a ng-show = "extra_details"  ng-click = "extra_details = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+      <a ng-show = "extra_details_question"  ng-click = "extra_details_question = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
            <u>Close Adnavced Options </u>
       </a>
     </div>
 
     </div>
 
-    <div class = "col-xs-12 row mar-top-10" ng-show="extra_details" >
-      <span class = "col-xs-2">
+    <div class = "col-xs-12 row mar-top-10" ng-show="extra_details_question" >
+      <span class = "col-xs-2" ng-if = "quiz_bank.have_custom_scoring">
           <strong> Default Score:</strong>  
         </span> 
-        <div class = "col-xs-10" style= "margin-bottom: 10px;">
+        <div class = "col-xs-10" style= "margin-bottom: 10px;" ng-if = "quiz_bank.have_custom_scoring">
         <input type="text" ng-model="question.default_score" class="form-control input-sm ng-scope ng-pristine ng-valid ng-valid-required" placeholder="score" name="score" required="" popover="Edit Score" popover-trigger="mouseenter" style="width:20%;">
       </div> 
-      <div class = "form-group" ng-class="{ 'has-error' : (OpenEndedForm.difficulty.$invalid) && (!OpenEndedForm.difficulty.$pristine || submitted == true)}">
+      <div  ng-if = "quiz_bank.have_difficulty_levels" class = "form-group" ng-class="{ 'has-error' : (OpenEndedForm.difficulty.$invalid) && (!OpenEndedForm.difficulty.$pristine || submitted == true)}">
         <div class= "col-xs-2">
             <label>Difficulty Level:</label>
           </div>
@@ -82,7 +82,7 @@
         <p ng-show="OpenEndedForm.difficulty.$invalid && (!OpenEndedForm.difficulty.$pristine || submitted == true)" class="help-block">Difficulty level is required.</p>
     </div>
     <br>
-      <div class="col-xs-12" style="margin-top: 10px;">
+      <div class="col-xs-12" style="margin-top: 10px;" ng-if = "quiz_bank.have_explanations">
       <span class="col-xs-2" style="padding: 0px">
             <strong> Explanation:</strong>  
           </span> 

@@ -1,0 +1,13 @@
+[1mdiff --git a/app/assets/javascripts/partials/questions/true_false_edit.html b/app/assets/javascripts/partials/questions/true_false_edit.html[m
+[1mindex b8d7c73..dfdc024 100644[m
+[1m--- a/app/assets/javascripts/partials/questions/true_false_edit.html[m
+[1m+++ b/app/assets/javascripts/partials/questions/true_false_edit.html[m
+[36m@@ -84,7 +84,7 @@[m
+         <a ng-show = "extra_details"  ng-click = "extra_details = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  [m
+              <u> Close Advanced Options</u>[m
+         </a>[m
+[31m-      <div>[m
+[32m+[m[32m      </div>[m
+ [m
+ [m
+     </div>[m

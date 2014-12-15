@@ -5,7 +5,7 @@ class QuizBank < ActiveRecord::Base
   #extend FriendlyId
   #friendly_id :title, use: :slugged
   
-  attr_accessible :description, :title, :repository_id, :subject, :instructions,:public,:status, :grade ,:rubricks
+  attr_accessible :description, :title, :repository_id, :subject, :instructions,:public,:status, :grade ,:have_rubrics,:have_sections ,:have_custom_scoring,:have_explanations,:have_advanced_question_types,:have_difficulty_levels
   
   #validates :title,:repository_id,:subject,:presence => true 
 
@@ -152,7 +152,12 @@ class QuizBank < ActiveRecord::Base
       :sections => sections.order("created_at ASC").as_json(),
       :shares => shares.as_json(),
       :shared => is_shared?.as_json(),
-      :questions => self.questions.order("created_at ASC").as_json()
+      :questions => self.questions.order("created_at ASC").as_json(),
+      :have_rubrics =>have_rubrics, 
+      :have_sections => have_sections,
+      :have_custom_scoring =>have_custom_scoring, 
+      :have_explanations => have_explanations,
+      :have_difficulty_levels => have_difficulty_levels  
     }
   end
 

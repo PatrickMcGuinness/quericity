@@ -1299,6 +1299,8 @@ quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',fun
   
   $scope.show_title = true
   $scope.deleteSection = function(id,idx){
+    console.log("dleting section")
+    $scope.sections.count = $scope.sections.count  - 1
     $scope.quiz_sections.splice(idx, 1);
     Section.delete($scope.quiz_bank_id,id);
   }
@@ -1451,6 +1453,7 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
   }  
 
   $scope.addSection = function(isValid){
+    $scope.sections.count = $scope.sections.count  + 1
     $scope.section_submitted = true
     if(isValid){
       section = Section.save($scope.quiz_bank_id,{title: $scope.newSection.title})
@@ -1480,7 +1483,10 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
-  
+  $scope.advanced_quiz = false
+  $scope.sections = {}
+  $scope.sections.count = 0
+  // $scope.quiz_bank.have_sections = true
   $scope.question_types = ["True False","Multiple Choice","Fill in blank","Open Ended"]
   $scope.submitted = false
   $scope.section_submitted = false
@@ -1488,6 +1494,11 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   $scope.quiz_bank = {}
   $scope.last_section = null
   $scope.tags = [];
+
+
+  $scope.advanced_quiz_type = function(){
+
+  }
 
   $scope.loadtags = function(query) {
     return Topic.search(query).$promise
@@ -1520,6 +1531,7 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
       }) 
   });
 
+
   $scope.$on("question_created",function(event){
     Section.all($scope.quiz_bank_id).$promise.then(function(data){
       $scope.quiz_sections = data
@@ -1539,11 +1551,34 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   $scope.$on("last_section_changed",function(event,section){
     $scope.last_section = section;
   })
-  
+
+  $scope.simple_quiz = function(){
+     $scope.quiz_bank.have_sections = false
+    $scope.quiz_bank.have_explanations = false
+    $scope.quiz_bank.have_rubricks = false
+    $scope.quiz_bank.have_difficulty_levels = false
+    $scope.quiz_bank.have_custom_scoring = false
+    $scope.is_advanced_quiz = false
+  }
+ 
+$scope.advanced_quiz = function(){
+   $scope.quiz_bank.have_sections = true   
+  $scope.quiz_bank.have_explanations = true
+  $scope.quiz_bank.have_rubricks = true
+  $scope.quiz_bank.have_difficulty_levels = true
+  $scope.quiz_bank.have_custom_scoring = true
+  $scope.is_advanced_quiz = true
+}
   $scope.saveQuiz = function(isValid){
     $scope.submitted =true
     if(isValid){
       $scope.quiz_bank.status = 1
+      // $scope.quiz_bank.have_sections  = $scope.sec
+      // $scope.quiz_bank.have_explanations = $scope.explanation
+      // $scope.quiz_bank.have_rubricks = $scope.rubric
+      // $scope.quiz_bank.have_difficulty_levels = $scope.difficulty
+      // $scope.quiz_bank.have_custom_scoring = $scope.scoring
+      console.log($scope.quiz_bank)
       QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
         angular.forEach($scope.tags, function(value, key){
           QuestionTopic.save($scope.quiz_bank_id,{title: value.text})
@@ -1555,6 +1590,7 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   }
 
   $scope.addSection = function(isValid){
+    $scope.sections.count  = $scope.sections.count  + 1
     $scope.section_submitted = true
     if(isValid){
       section = Section.save($scope.quiz_bank_id,{title: $scope.newSection.title})

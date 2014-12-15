@@ -49,7 +49,6 @@
                   <input type = "text"  ng-model = "quiz_bank.subject" class = "form-control input-sm" placeholder = "Subject" name = "subject" required popover="Edit Subject"  popover-trigger="mouseenter" >
                   <p ng-show="QuizForm.subject.$invalid && (!QuizForm.subject.$pristine || submitted == true)" class="help-block">Required!</p>
                 </div> 
-                <input type="checkbox" id="checkbox_for_rubrick" ng-model = "quiz_bank.rubricks" name="check_rubrick" data-toggle = "tooltip" title = "Include Rubrick" tooltip-placement = "top" class = "popover-field" >&nbsp;&nbsp;<b>Rubricks</b>   
              </div>
             </div>  
           </div>
@@ -91,7 +90,27 @@
               </textarea>
             </div>  
           </div>
+        </div>  
+        
+      <div class="mar-let-15">
+        <input ng-click = "simple_quiz()" ng-if = "sections.count <= 0"  type="radio" name="asd" ng-model = "quiz_bank.type" name = "quiz_bank_type" ng-checked="true" >
+        <input ng-click = "simple_quiz()" ng-if = "sections.count > 0" ng-disabled="true" type="radio" name="asd" ng-model = "quiz_bank.type" name = "quiz_bank_type" ng-checked="true" ><b ng-if = "sections.count <= 0" style="text-decoration:none;">Simple Quiz</b> <b ng-if = "sections.count > 0" style="color: lightgrey;">Simple Quiz</b>   
+        <input style="margin-left: 10px;" ng-click = "advanced_quiz()" type="radio" name="cas" ng-model = "quiz_bank.type" name = "quiz_bank_type" value="advanced_quiz" > <span ng-show = "!is_advanced_quiz "> <b >Advanced Options</b> </span> <a ng-show = "is_advanced_quiz && !extra_details" ng-click = "extra_details = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+             <u> Advanced Options</u>
+        </a>  
+        <a ng-show = " is_advanced_quiz && extra_details"  ng-click = "extra_details = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+             <u> Close Advanced Options</u>
+        </a>
+      </div>
+     
+        <div style="margin-left: 10px;" ng-show = "extra_details && is_advanced_quiz ">
+          <input style="margin-left: 15px;" type="checkbox" ng-if = "sections.count <= 0"ng-model = "quiz_bank.have_sections" ng-init= "quiz_bank.have_sections=false" name="check_section" data-toggle = "tooltip" title = "Include Sections" tooltip-placement = "top" class = "popover-field" ><b ng-if = "sections.count <= 0" style="text-decoration:none;">Sections</b> <b ng-if = "sections.count > 0" style="color: lightgrey;">Sections</b>     
+          <input style="margin-left: 15px;" type="checkbox" ng-model = "quiz_bank.have_custom_scoring" ng-init= "quiz_bank.have_custom_scoring=false" name="check_custom_scoring" data-toggle = "tooltip" title = "Include Custom Scoring" tooltip-placement = "top" class = "popover-field" ><b>Custom Scoring</b>   
+          <input style="margin-left: 15px;" type="checkbox" ng-model = "quiz_bank.have_explanations" ng-init= "quiz_bank.have_explanations=false" name="check_explanation" data-toggle = "tooltip" title = "Include Explanations" tooltip-placement = "top" class = "popover-field" ><b>Explanations</b>   
+          <input style="margin-left: 15px;" type="checkbox" ng-model = "quiz_bank.have_rubricks" ng-init= "quiz_bank.have_rubricks=false" name="check_rubric" data-toggle = "tooltip" title = "Include Rubrick" tooltip-placement = "top" class = "popover-field" ><b>Rubrics</b>   
+          <input style="margin-left: 15px;" type="checkbox" ng-model = "quiz_bank.have_difficulty_levels" ng-init= "quiz_bank.have_difficulty_levels=false" name="check_difficulty_levels" data-toggle = "tooltip" title = "Include Difficulty Levels" tooltip-placement = "top" class = "popover-field" ><b>Difficulty Level</b>   
         </div>
+ 
       </form>      
       <div class = "mar-top-10" ng-repeat = "section in quiz_sections | filter: titleFilter" ng-controller = "sectionCtrl">
         <div id = {{section.id}} class = "col-xs-12 mar-top-10 section-well">
@@ -112,7 +131,7 @@
               </a>
             </span>  
           </div>
-          <div class = "col-xs-4 pull-right">
+          <div class = "col-xs-4 pull-right" ng-if= "quiz_bank.have_sections">
             <a ng-Click = "deleteSection(section.id,$index)" data-toggle = "tooltip" title = "Delete the Section" tooltip-placement = "top">
               <span class = "glyphicon glyphicon-trash pull-right mar-left-5" style = "color: white;" ></span>
             </a>
@@ -157,7 +176,7 @@
         </div>
       </div>
       <div class="mar-top-20 pull-left">
-        <a ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top" scroll-to-new-section class = "btn btn-primary">
+        <a ng-if= "quiz_bank.have_sections" ng-click = "show_section()" data-toggle = "tooltip" title = "Add new Section" tooltip-placement = "top" scroll-to-new-section class = "btn btn-primary">
           <span class = "glyphicon glyphicon-plus"></span>Add Section
         </a>
         <div ng-controller = "sectionCtrl" class = "pull-left">
