@@ -78,10 +78,10 @@
 
 
       <div class = "col-xs-12" ng-show ="quiz_bank.have_rubricks">
-        <div class = "form-group" ng-class="{ 'has-error' : (OpenEndedForm.rubrick.$invalid) && submitted == true}">
-          <textarea name="rubrick" id="rubrick" rows="2" class = "form-control" placeholder = "Enter Rubric (optional)" ng-model = "rubrick">
+        <div class = "form-group" ng-class="{ 'has-error' : (OpenEndedForm.rubric.$invalid) && submitted == true}">
+          <textarea name="rubric" id="rubric" rows="2" class = "form-control" placeholder = "Enter Rubric (optional)" ng-model = "rubric">
           </textarea>
-          <p ng-show="OpenEndedForm.rubrick.$invalid && submitted == true" class="help-block">Question is required.</p>
+          <p ng-show="OpenEndedForm.rubric.$invalid && submitted == true" class="help-block">Question is required.</p>
         </div>  
       </div>
 

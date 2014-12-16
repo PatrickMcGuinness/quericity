@@ -69,7 +69,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   $scope.simple_quiz_edit = function(){
      $scope.quiz_bank.have_sections = false
     $scope.quiz_bank.have_explanations = false
-    $scope.quiz_bank.have_rubricks = false
+    $scope.quiz_bank.have_rubrics = false
     $scope.quiz_bank.have_difficulty_levels = false
     $scope.quiz_bank.have_custom_scoring = false
     $scope.is_advanced_quiz = true

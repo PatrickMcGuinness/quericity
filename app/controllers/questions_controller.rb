@@ -20,7 +20,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    params[:question][:rubric] =  params[:explanation]
+    params[:question][:rubric] =  params[:rubric]
     render json: @section.questions.find(params[:id]).update_question(params)
   end
 

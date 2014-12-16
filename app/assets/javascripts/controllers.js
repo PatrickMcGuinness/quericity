@@ -1484,6 +1484,7 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   $.removeCookie("main_repo")
   $scope.advanced_quiz = false
   $scope.sections = {}
+  $scope.quiz_bank.have_rubrics = false 
   $scope.sections.count = 0
   // $scope.quiz_bank.have_sections = true
   $scope.question_types = ["True False","Multiple Choice","Fill in blank","Open Ended"]
@@ -1552,9 +1553,9 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
   })
 
   $scope.simple_quiz = function(){
-     $scope.quiz_bank.have_sections = false
+    $scope.quiz_bank.have_sections = false
     $scope.quiz_bank.have_explanations = false
-    $scope.quiz_bank.have_rubricks = false
+    $scope.quiz_bank.have_rubrics= false
     $scope.quiz_bank.have_difficulty_levels = false
     $scope.quiz_bank.have_custom_scoring = false
     $scope.is_advanced_quiz = false
@@ -1563,13 +1564,16 @@ quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repositor
 $scope.advanced_quiz = function(){
    $scope.quiz_bank.have_sections = true   
   $scope.quiz_bank.have_explanations = true
-  $scope.quiz_bank.have_rubricks = true
+  $scope.quiz_bank.have_rubricks= true
   $scope.quiz_bank.have_difficulty_levels = true
   $scope.quiz_bank.have_custom_scoring = true
   $scope.is_advanced_quiz = true
 }
   $scope.saveQuiz = function(isValid){
     $scope.submitted =true
+    if ($scope.quiz_bank.have_rubricks){
+      $scope.quiz_bank.have_rubrics = true
+    }
     if(isValid){
       $scope.quiz_bank.status = 1
       
