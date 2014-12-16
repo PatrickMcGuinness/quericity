@@ -39,7 +39,7 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
 
   $scope.create_true_false = function(isValid){
     console.log("this is true/false")
-    console.log($scope.a786)
+    console.log($scope.explanation)
     $scope.submitted = true
     if(isValid && $scope.selected_true_false_option != undefined){
       Question.save($scope.quiz_bank_id, $scope.section_id,
@@ -63,7 +63,7 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
     if(isValid){
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.open_ended_statement,section_id: $scope.section_id,
-        question_type: 3,difficulty_level: $scope.selected_difficulty, explanation: $scope.explanation, rubrick: $scope.rubrick,question_options: [{answer:$scope.open_ended_answer}]}).$promise.then(function(data){
+        question_type: 3,difficulty_level: $scope.selected_difficulty, explanation: $scope.explanation, rubric: $scope.rubrick,question_options: [{answer:$scope.open_ended_answer}]}).$promise.then(function(data){
           $scope.question_id  = data.id
           GlobalScope.set_question_id($scope.question_id)
           $scope.open_ended_statement = null

@@ -1429,7 +1429,6 @@ quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','Qui
     $scope.submitted = true
     if(isValid){
       $scope.quiz_bank.status = 1
-      // $scope.quiz_bank.rubricks = true
       QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
         QuestionTopic.destroy_all($scope.quiz_bank_id).$promise.then(function(){
           angular.forEach($scope.tags, function(value, key){
@@ -1573,11 +1572,7 @@ $scope.advanced_quiz = function(){
     $scope.submitted =true
     if(isValid){
       $scope.quiz_bank.status = 1
-      // $scope.quiz_bank.have_sections  = $scope.sec
-      // $scope.quiz_bank.have_explanations = $scope.explanation
-      // $scope.quiz_bank.have_rubricks = $scope.rubric
-      // $scope.quiz_bank.have_difficulty_levels = $scope.difficulty
-      // $scope.quiz_bank.have_custom_scoring = $scope.scoring
+      
       console.log($scope.quiz_bank)
       QuizBank.update($scope.quiz_bank_id, $scope.quiz_bank).$promise.then(function(data){
         angular.forEach($scope.tags, function(value, key){
