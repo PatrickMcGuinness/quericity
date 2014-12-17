@@ -55,7 +55,7 @@
     </div>
 
     <div>  
-        <a  ng-show = "!extra_details_question && quiz_bank.have_difficulty_levels || quiz_bank.have_explanations && !extra_details_question || quiz_bank.have_rubricks && !extra_details_question" ng-click = "extra_details_question = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+        <a  ng-show = "!extra_details_question && quiz_bank.have_difficulty_levels || quiz_bank.have_explanations && !extra_details_question || quiz_bank.have_rubrics && !extra_details_question" ng-click = "extra_details_question = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
              <u> Advanced Options</u>
         </a>
         <a ng-show = "extra_details_question && quiz_bank.have_difficulty_levels || quiz_bank.have_explanations && extra_details_question || quiz_bank.have_explanations && extra_details_question"  ng-click = "extra_details_question = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
@@ -77,7 +77,7 @@
       </div>
 
 
-      <div class = "col-xs-12" ng-show ="quiz_bank.have_rubricks">
+      <div class = "col-xs-12" ng-show ="quiz_bank.have_rubrics">
         <div class = "form-group" ng-class="{ 'has-error' : (OpenEndedForm.rubric.$invalid) && submitted == true}">
           <textarea name="rubric" id="rubric" rows="2" class = "form-control" placeholder = "Enter Rubric (optional)" ng-model = "rubric">
           </textarea>
