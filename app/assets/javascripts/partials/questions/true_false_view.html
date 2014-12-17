@@ -4,16 +4,16 @@
     
       <div class = "pull-right">
         <a ng-if = "question.question_type != 4" class="edit_question_div" ng-click= "show_edit()" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top" hide-uper-bar  >  
-          <img src = "/assets/edit_sm_icon.png" change-edit-on-hover-new hide-uper-bar-on-edit>
+          <img src = "/assets/edit_sm_icon.png" width=17 change-edit-on-hover-new hide-uper-bar-on-edit>
         </a>
         <a ng-if = "question.question_type == 4" class="edit_question_div" ng-click= "show_edit();show_blank_edit(question)" data-toggle = "tooltip" title = "Edit Question" tooltip-placement = "top">
-          <img src = "/assets/edit_sm_icon.png" change-edit-on-hover-new hide-uper-bar hide-uper-bar-on-edit>
+          <img src = "/assets/edit_sm_icon.png" width=17 change-edit-on-hover-new hide-uper-bar hide-uper-bar-on-edit>
         </a>
         <a ng-click = "delete_question(section.id,question.id,$index)" data-toggle = "tooltip" title = "Delete Question" tooltip-placement = "top">  
-          <img src = "/assets/delete_sm_icon.png" change-delete-on-hover-new>
+          <img src = "/assets/delete_sm_icon.png" width=14 change-delete-on-hover-new>
         </a>
         <a  ng-click = "make_clone" data-toggle = "tooltip" title = "make copy of question" tooltip-placement = "top">  
-          <img src = "/assets/clone_icon.png" ng-click="clone_question(quiz_bank_id,section.id,question)">
+          <img src = "/assets/clone_icon.png" width=16 ng-click="clone_question(quiz_bank_id,section.id,question)">
         </a>
 
       </div>       

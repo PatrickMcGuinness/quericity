@@ -13,16 +13,17 @@
          <form name="BlankForm" ng-submit="edit_blank(question.description,section.id,question.id,question,BlankForm.$valid)" novalidate>
 
         <button type="submit" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top" style="background:none;border:none;">  
-            <img src = "/assets/floppy.png">
+            <img width=18 src = "/assets/floppy.png" >
         </button >
  
         <a  ng-click = "make_clone" data-toggle = "tooltip" title = "Cancel Editing"  tooltip-placement = "top">
-            <img src = "/assets/back.png" ng-click = "hide_update()">
+            <img width=18 src = "/assets/back.png" ng-click = "hide_update()">
         </a>
         <a ng-click = "delete_question(section.id,question.id,$index)" data-toggle = "tooltip" title = "Delete Question" tooltip-placement = "top">  
-            <img src = "/assets/delete_sm_icon.png">
+            <img width=14 src = "/assets/delete_sm_icon.png">
         </a>
-        <a  ng-click = "make_clone" data-toggle = "tooltip" title = "make copy of question" tooltip-placement = "top">  <img src = "/assets/clone_icon.png" ng-click="clone_question(quiz_bank_id,section.id,question)">
+        <a  ng-click = "make_clone" data-toggle = "tooltip" title = "make copy of question" tooltip-placement = "top">  
+        <img width=16 src = "/assets/clone_icon.png" ng-click="clone_question(quiz_bank_id,section.id,question)">
         </a>
       </div>
       <br>
