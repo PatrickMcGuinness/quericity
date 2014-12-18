@@ -1297,6 +1297,11 @@ quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','Quest
 
 quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',function($scope,$rootScope,Section,Question){
   
+
+  $scope.init = function(index,section) {
+    $scope.rowIndexs = index;
+    $scope.sectionIndex = section;
+}
   $scope.show_title = true
   $scope.deleteSection = function(id,idx){
     console.log("dleting section")

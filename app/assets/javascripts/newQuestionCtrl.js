@@ -78,10 +78,31 @@ quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalSc
     }    
   }
   $scope.create_blank = function(isValid){
+    console.log("asdasd")
     $scope.submitted = true
-    var temp = $scope.blank_statement.split("[")
-    var array = temp[1].split("]")
-    $scope.blank_statement = temp[0] + "________" + array[1]
+    if ($scope.blank_statement.indexOf("[") > -1 ){
+      
+        var temp  = $scope.blank_statement.split("[")
+        var array = temp[1].split("]")
+        $scope.blank_statement = temp[0] + "_________" + array[1]
+      }
+      else if($scope.blank_statement.indexOf("_") > -1 )
+      {
+        $scope.blank_statement = $scope.blank_statement
+      }
+      else
+      {
+        
+        var temp  = $scope.blank_statement.split("[")
+        var array = temp[1].split("]")
+        $scope.blank_statement = temp[0] + "_________" + array[1]
+      }
+
+
+    // var temp = $scope.blank_statement.split("[")
+    // var array = temp[1].split("]")
+
+    // $scope.blank_statement = temp[0] + "________" + array[1]
     if(isValid){
       Question.save($scope.quiz_bank_id, $scope.section_id,
         {description: $scope.blank_statement,section_id: $scope.section_id,

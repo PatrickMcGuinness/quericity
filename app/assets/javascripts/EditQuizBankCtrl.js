@@ -21,6 +21,7 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
 
   QuizBank.get($scope.quiz_bank_id).$promise.then(function(data){
     $scope.quiz_sections = data.sections
+    console.log("i am in")
     $scope.sections.count = $scope.quiz_sections.length - 1
     $scope.last_section = data.sections[data.sections.length - 1]
     $scope.quiz_bank = data
