@@ -1,6 +1,6 @@
 student_quizlib.factory('ServedQuiz', ['$resource', function($resource,$http) {
   function ServedQuiz() {
-    this.service = $resource('/served_quizzes/:id/:student_served_quizzes:student_pending_quizzes:student_attempted_quizzes:student_started_quizzes:questions_to_attempt:student_quiz_report', {id: '@id'},
+    this.service = $resource('/served_quizzes/:id/:student_served_quizzes:student_pending_quizzes:student_mixed_quizzes:student_attempted_quizzes:student_started_quizzes:questions_to_attempt:student_quiz_report', {id: '@id'},
                   {update:{method:"PUT",isArray:false},
                    query:{method:"GET",transformResponse: [function(data,headersGetter){
                     return {result: JSON.parse(data)}
@@ -8,6 +8,7 @@ student_quizlib.factory('ServedQuiz', ['$resource', function($resource,$http) {
                    student_served_quizzes: {method: "GET", isArray: true},
                    student_attempted_quizzes: {method: "GET", isArray: true},
                    student_pending_quizzes: {method: "GET",isArray: true},
+				   student_mixed_quizzes: {method: "GET",isArray: true},
                    student_started_quizzes: {method: "GET",isArray: true},
                    questions_to_attempt: {method: "GET", isArray: true},
                    student_quiz_report: {method: "GET",isArray:false}
@@ -36,6 +37,9 @@ student_quizlib.factory('ServedQuiz', ['$resource', function($resource,$http) {
   }
   ServedQuiz.prototype.student_pending_quizzes = function(StudentId){
     return this.service.student_pending_quizzes({id: StudentId,student_pending_quizzes: "student_pending_quizzes"})
+  }
+  ServedQuiz.prototype.student_mixed_quizzes = function(StudentId){
+    return this.service.student_mixed_quizzes({id: StudentId,student_mixed_quizzes: "student_mixed_quizzes"})
   }
   ServedQuiz.prototype.student_attempted_quizzes = function(StudentId){
     return this.service.student_attempted_quizzes({id: StudentId,student_attempted_quizzes: "student_attempted_quizzes"})

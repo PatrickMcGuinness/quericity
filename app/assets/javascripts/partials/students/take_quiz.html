@@ -1,0 +1,38 @@
+<div class="container">
+	<div class="row">
+	
+ 	   <table class="table table-hover">
+		   <thead>
+		           <tr>
+		             <th>Quiz Title</th>
+		             <th>Teacher Name</th>
+		             <th>Subject</th>
+		             <th>Status</th>
+					 <th>Action</th>
+		           </tr>
+		         </thead>
+    	   <tr ng-repeat = "served_quiz in served_quizzes|orderBy: 'served_quiz.close_date'">
+			   
+			  <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED' && served_quiz.status != 'Serving Completed'">{{served_quiz.cloned_quiz_bank.title}}</td>
+			   <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED' && served_quiz.status != 'Serving Completed'">{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}</td>
+			   <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED' && served_quiz.status != 'Serving Completed'">{{served_quiz.cloned_quiz_bank.subject}}</td>
+			   <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED' && served_quiz.status != 'Serving Completed'">Quiz expiring on  {{served_quiz.close_date}}</td>
+               <td ng-if = "served_quiz.student_sharing.status_in_string != 'PARTIAL' && served_quiz.status != 'Serving Completed'">
+                 <a  data-toggle = "tooltip" title = "Proceed to Quiz" tooltip-placement = "top" ng-href = "#/quiz/{{served_quiz.id}}/attempt" class = "btn btn-success" style = "float:none;">
+                   Take Quiz
+                 </a>
+				</td>
+				
+                <td ng-if = "served_quiz.student_sharing.status_in_string == 'PARTIAL' && served_quiz.status != 'Serving Completed'">
+                  <a  data-toggle = "tooltip" title = "Finisg to Quiz" tooltip-placement = "top" ng-href = "#/quiz/{{served_quiz.id}}/attempt" class = "btn btn-warning" style = "float:none;">
+                    Finish Quiz
+                  </a>
+ 				</td>
+				
+      
+		   </tr>
+  	 </table>
+  
+
+	</div>
+</div>

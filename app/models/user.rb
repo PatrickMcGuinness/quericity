@@ -106,6 +106,11 @@ class User < ActiveRecord::Base
     ServedQuiz.joins(:sharings).where("sharings.id IN (?)",sharing_ids)
   end
 
+  def student_mixed_quizzes
+    sharing_ids = self.sharings.where("status = ? OR status = ?",Sharing::Status::STARTED , Sharing::Status::PENDING)
+    ServedQuiz.joins(:sharings).where("sharings.id IN (?)",sharing_ids)
+  end
+
   def student_started_quizzes
     sharing_ids = self.sharings.where("status = ?",Sharing::Status::STARTED)
     ServedQuiz.joins(:sharings).where("sharings.id IN (?)",sharing_ids)

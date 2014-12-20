@@ -15,6 +15,30 @@ student_quizlib.directive('fileModel', ['$parse', function ($parse) {
 }]);
 
 
+student_quizlib.directive("checkActive",function($route){
+  return{
+    link: function(scope,element,attrs){
+      $(".header-link").removeClass("active")
+      if($route.current.activetab == "manage"){
+        $(".manage-link").addClass("active")
+      }
+      
+      if($route.current.activetab == "dashboard"){
+        $(".dashboard-link").addClass("active")
+      }
+      if($route.current.activetab == "quiz"){
+        $(".takequiz-link").addClass("active")
+      }
+      if($route.current.activetab == "groups"){
+        $(".classes-link").addClass("active")
+      }
+      if($route.current.activetab == "reports"){
+        $(".reports-link").addClass("active")
+      }
+    }
+  };
+})
+
 student_quizlib.directive("showActiveTag",function(){
   return {
     restrict: 'A',
