@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141128081116) do
+ActiveRecord::Schema.define(:version => 20141216210814) do
 
   create_table "answers", :force => true do |t|
     t.integer  "student_id"
@@ -187,6 +187,8 @@ ActiveRecord::Schema.define(:version => 20141128081116) do
     t.datetime "updated_at",                       :null => false
     t.datetime "deleted_at"
     t.integer  "default_score",    :default => 10
+    t.string   "rubric"
+    t.string   "explanation"
   end
 
   add_index "questions", ["id"], :name => "index_questions_on_id"
@@ -196,15 +198,21 @@ ActiveRecord::Schema.define(:version => 20141128081116) do
     t.string   "title"
     t.text     "description"
     t.integer  "repository_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.string   "subject"
     t.datetime "deleted_at"
     t.text     "instructions"
     t.string   "slug"
     t.integer  "public"
-    t.integer  "status",        :default => 0
+    t.integer  "status",                       :default => 0
     t.integer  "grade"
+    t.boolean  "have_rubrics"
+    t.boolean  "have_sections"
+    t.boolean  "have_custom_scoring"
+    t.boolean  "have_explanations"
+    t.boolean  "have_advanced_question_types"
+    t.boolean  "have_difficulty_levels"
   end
 
   add_index "quiz_banks", ["id"], :name => "index_quiz_banks_on_id"

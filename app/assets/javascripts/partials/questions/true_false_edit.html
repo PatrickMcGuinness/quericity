@@ -3,7 +3,6 @@
     <span>Update Question</span>
   </div> -->
   
-  
   <form name="TrueFalseForm" ng-submit="edit_question(section.id,question.id,question,TrueFalseForm.$valid)" novalidate>
 
     <div class = "change_question_type_link">
@@ -18,15 +17,17 @@
       <div class="icon-links pull-right" style="margin-right: 17px;"> 
         
         <button type="submit" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top" style="background:none;border:none;">  
-            <img src = "/assets/floppy.png" change-delete-on-hover-new>
+            <img width=18 src = "/assets/floppy.png" change-delete-on-hover-nit
+            ew>
         </button >
         <a  ng-click = "make_clone" data-toggle = "tooltip" title = "Cancel Editing" tooltip-placement = "top">
-            <img src = "/assets/back.png" ng-click = "hide_update()">
+            <img width=18 src = "/assets/back.png" ng-click = "hide_update()">
         </a>
         <a ng-click = "delete_question(section.id,question.id,$index)" data-toggle = "tooltip" title = "Delete Question" tooltip-placement = "top">  
-            <img src = "/assets/delete_sm_icon.png" change-delete-on-hover-new>
+            <img width=14 src = "/assets/delete_sm_icon.png" change-delete-on-hover-new>
         </a>
-        <a  ng-click = "make_clone" data-toggle = "tooltip" title = "make copy of question" tooltip-placement = "top">  <img src = "/assets/clone_icon.png" ng-click="clone_question(quiz_bank_id,section.id,question)">
+        <a  ng-click = "make_clone" data-toggle = "tooltip" title = "make copy of question" tooltip-placement = "top"> 
+         <img width=16 src = "/assets/clone_icon.png" ng-click="clone_question(quiz_bank_id,section.id,question)">
         </a>
       </div>
       <br>
@@ -78,31 +79,31 @@
       
     
       <div>  
-        <a ng-show = "!extra_details" ng-click = "extra_details = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+        <a ng-show = "!extra_details_question && quiz_bank.have_difficulty_levels || quiz_bank.have_explanations && !extra_details_question || quiz_bank.have_custom_scoring && !extra_details_question " ng-click = "extra_details_question = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
              <u> Advanced Options</u>
         </a>
-        <a ng-show = "extra_details"  ng-click = "extra_details = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+        <a ng-show = "extra_details_question"  ng-click = "extra_details_question = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
              <u> Close Advanced Options</u>
         </a>
-      <div>
+      </div>
 
 
     </div>
  
   
 
-    <div class = "col-xs-12 row mar-top-10" ng-show="extra_details" >
-      <span class = "col-xs-2">
+    <div class = "col-xs-12 row mar-top-10" ng-show="extra_details_question"  >
+      <span class = "col-xs-2" ng-if = "quiz_bank.have_custom_scoring">
           <strong> Default Score:</strong>  
         </span> 
-        <div class = "col-xs-10" style= "margin-bottom: 10px;">
+        <div class = "col-xs-10" style= "margin-bottom: 10px;" ng-if = "quiz_bank.have_custom_scoring">
         <input type="text" ng-model="question.default_score" class="form-control input-sm ng-scope ng-pristine ng-valid ng-valid-required" placeholder="score" name="score" required="" popover="Edit Score" popover-trigger="mouseenter" style="width:20%;">
       </div> 
       <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.difficulty.$invalid) && (!TrueFalseForm.difficulty.$pristine || submitted == true)}">
-        <div class= "col-xs-2">
+        <div class= "col-xs-2"  ng-if = "quiz_bank.have_difficulty_levels" >
             <label>Difficulty Level:</label>
           </div>
-        <div class= "col-xs-5" >
+        <div class= "col-xs-5" ng-if = "quiz_bank.have_difficulty_levels" >
           <select class="form-control" ng-model="question.difficulty_level" name = "difficulty">
             <option value = "1">Easy</option>
             <option value = "2">Medium</option>
@@ -112,12 +113,12 @@
         <p ng-show="TrueFalseForm.difficulty.$invalid && (!TrueFalseForm.difficulty.$pristine || submitted == true)" class="help-block">Difficulty level is required.</p>
     </div>
     <br>
-    <div class="col-xs-12" style="margin-top: 10px;">
+    <div class="col-xs-12" style="margin-top: 10px;" ng-if = "quiz_bank.have_explanations">
     <span class="col-xs-2" style="padding: 0px">
           <strong> Explanation:</strong>  
         </span> 
         <span class="col-xs-10" style="margin-left: -10px;">
-        <textarea type="text" ng-model="question.explanation" class="form-control  ng-scope " placeholder="Add Explanation" name="explanation" required="" popover="Add Explanation" popover-trigger="mouseenter">
+        <textarea type="text" ng-model="question.explanation" class="form-control  ng-scope " placeholder="Add Explanation" name="explanation"  popover="Add Explanation" popover-trigger="mouseenter">
       </span> 
   </div>  
     

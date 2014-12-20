@@ -20,7 +20,9 @@ class QuizBanksController < ApplicationController
   end
 
   def update
-    render json: QuizBank.find(params[:id]).update_attributes(params[:quiz_bank])
+    puts "1"*100
+    # params[:quiz_bank][:custom_scoring] = "true"
+    render json: QuizBank.find(params[:id]).update_attributes(params[:quiz_bank].except(:sections))
   end
 
   def destroy

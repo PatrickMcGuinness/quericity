@@ -12,10 +12,10 @@
         <div class="icon-links pull-right"> 
         
         <button type="submit" data-toggle = "tooltip" title = "Save Question" tooltip-placement = "top" style="background:none;border:none;">  
-            <img src = "/assets/floppy.png" change-delete-on-hover-new>
+            <img width=17 src = "/assets/floppy.png" change-delete-on-hover-new>
         </button >
         <a  ng-click = "hideQuestion();removeData();" data-toggle = "tooltip" title = "Cancel Editing" tooltip-placement = "top">
-            <img src = "/assets/back.png" ng-click = "hide_update()">
+            <img width=16 src = "/assets/back.png" ng-click = "hide_update()">
         </a>
         
       </div>
@@ -49,6 +49,8 @@
         <p ng-show="TrueFalseForm.true_false_question_statement.$invalid && submitted == true" class="help-block">Question is required.</p>
       </div>  
     </div>
+
+
     <div class = "col-xs-12 mar-top-10">
       <label>Answer:</label>
       <div class = "form-group" ng-class="{ 'has-error' : (selected_true_false_option == undefined)}">
@@ -57,31 +59,42 @@
         <p ng-show="selected_true_false_option == undefined && submitted == true" class="help-block">Select at least one option.</p>
       </div>  
     </div>
-    <div class = "col-xs-12 mar-top-10">
-      <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.difficulty.$invalid) && submitted == true}">
-        <label>Difficulty Level: </label>
-        <select class="form-control" ng-model="selected_difficulty" name = "difficulty" ng-init = "selected_difficulty = 2">
-          <option value = "1">Easy</option>
-          <option value = "2">Medium</option>
-          <option value = "3">Hard</option>
-        </select>
-        <p ng-show="TrueFalseForm.difficulty.$invalid && submitted == true" class="help-block">Difficulty level is required.</p>
-      </div>
-    </div>
     
-    <div class = "col-xs-12 ">
-      <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.explanation.$invalid) && submitted == true}">
-        <textarea name="explanation" id="explanation" rows="2" class = "form-control" placeholder = "Enter Explanation (optional)" ng-model = "explanation">
-        </textarea>
-        <p ng-show="TrueFalseForm.explanation.$invalid && submitted == true" class="help-block"></p>
-      </div>  
-    </div>
+    <div>  
+        <a ng-show = "!extra_details_question && quiz_bank.have_difficulty_levels || quiz_bank.have_explanations && !extra_details_question "  ng-click = "extra_details_question = true" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+             <u> Advanced Options</u>
+        </a>
+        <a ng-show = "extra_details_question && quiz_bank.have_difficulty_levels || quiz_bank.have_explanations && extra_details_question"   ng-click = "extra_details_question = false" data-toggle = "tooltip" title = "show more details" tooltip-placement = "top">  
+             <u> Close Advanced Options</u>
+        </a>
+      </div>
 
-    <div class = "col-xs-12 question-footer">
-     <!--  <div class = "col-xs-5 pull-right">
-        <button class = "btn btn-danger col-xs-3" ng-click = "hideQuestion();removeData();" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">Cancel</button>
-        <button type = "submit" class = "btn btn-success col-xs-6" data-toggle = "tooltip" title = "Create new Question" tooltip-placement = "top"> Save Question </button>
-      </div>   -->
-    </div>
+    <div ng-show = "extra_details_question">
+      <div class = "col-xs-12 mar-top-10" ng-show = "quiz_bank.have_difficulty_levels">
+        <div class = "form-group" ng-class="{ 'has-error' : (TrueFalseForm.difficulty.$invalid) && submitted == true}">
+          <label>Difficulty Level: </label>
+          <select class="form-control" ng-model="selected_difficulty" name = "difficulty" ng-init = "selected_difficulty = 2">
+            <option value = "1">Easy</option>
+            <option value = "2">Medium</option>
+            <option value = "3">Hard</option>
+          </select>
+          <p ng-show="TrueFalseForm.difficulty.$invalid && submitted == true" class="help-block">Difficulty level is required.</p>
+        </div>
+      </div>
+ 
+      <div class = "col-xs-12 " ng-show = "quiz_bank.have_explanations">
+        <div class = "form-group" >
+          <textarea ng-model="explanation"  name="explanation" rows="2" class = "form-control" placeholder = "Enter Explanation (optional)">
+          </textarea>
+        </div>  
+      </div>
+
+      <div class = "col-xs-12 question-footer">
+       <!--  <div class = "col-xs-5 pull-right">
+          <button class = "btn btn-danger col-xs-3" ng-click = "hideQuestion();removeData();" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">Cancel</button>
+          <button type = "submit" class = "btn btn-success col-xs-6" data-toggle = "tooltip" title = "Create new Question" tooltip-placement = "top"> Save Question </button>
+        </div>   -->
+      </div>  
+      </div>
   </form>  
 </div>  

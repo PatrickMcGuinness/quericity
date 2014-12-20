@@ -8,10 +8,10 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
   $scope.tags_edit = false
   $scope.description_edit = false
   $scope.instructions_edit = false
-
   $scope.quiz_bank_id = $routeParams.id
   $scope.question_types = ["True False","Multiple Choice","Fill in blank","Open Ended"]
-
+  $scope.sections = {}
+  $scope.sections.count = 0
   $scope.submitted = false
   $scope.section_submitted = false
   $scope.ckEditors = [];
@@ -21,6 +21,8 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
 
   QuizBank.get($scope.quiz_bank_id).$promise.then(function(data){
     $scope.quiz_sections = data.sections
+    console.log("i am in")
+    $scope.sections.count = $scope.quiz_sections.length - 1
     $scope.last_section = data.sections[data.sections.length - 1]
     $scope.quiz_bank = data
     var obj = new Date(data.created_at)
@@ -65,8 +67,25 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
       })
     }
   }
-  
+  $scope.simple_quiz_edit = function(){
+     $scope.quiz_bank.have_sections = false
+    $scope.quiz_bank.have_explanations = false
+    $scope.quiz_bank.have_rubrics = false
+    $scope.quiz_bank.have_difficulty_levels = false
+    $scope.quiz_bank.have_custom_scoring = false
+    $scope.is_advanced_quiz = true
+  }
+   
+  $scope.advanced_quiz_edit = function(){
+     $scope.quiz_bank.have_sections = true   
+    $scope.quiz_bank.have_explanations = true
+    $scope.quiz_bank.have_rubrics  = true
+    $scope.quiz_bank.have_difficulty_levels = true
+    $scope.quiz_bank.have_custom_scoring = true
+    $scope.is_advanced_quiz = false
+  }
   $scope.addSection = function(isValid){
+    $scope.sections.count = $scope.sections.count  + 1
     $scope.section_submitted = true
     if(isValid){
       section = Section.save($scope.quiz_bank_id,{title: $scope.newSection.title})
