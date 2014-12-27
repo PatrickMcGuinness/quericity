@@ -262,10 +262,10 @@ student_quizlib.directive("showBargraph",function(){
     restrict: "C",
     link: function(scope,element,attrs){
       element.bind("click",function(){
+		$(".show-bargraph").addClass("disabled")
         $(".bar-graph").removeClass("hide")
         $(".line-graph").addClass("hide")
-        $(element[0]).addClass("hide")
-        $(".show-linegraph").removeClass("hide")
+        $(".show-linegraph").removeClass("disabled")
       })
     }
   };
@@ -275,10 +275,10 @@ student_quizlib.directive("showLinegraph",function(){
     restrict: "C",
     link: function(scope,element,attrs){
       element.bind("click",function(){
+		$(".show-linegraph").addClass("disabled")
         $(".bar-graph").addClass("hide")
         $(".line-graph").removeClass("hide")
-        $(element[0]).addClass("hide")
-        $(".show-bargraph").removeClass("hide")
+        $(".show-bargraph").removeClass("disabled")
         
       })
     }
