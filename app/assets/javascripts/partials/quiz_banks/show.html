@@ -89,12 +89,14 @@
           <span ng-if = "quiz_bank.instructions == undefined">This quiz bank has no instructions</span>
         </div>
       </div>
+     
       <div class="col-xs-12 row_space">
         <ul style = "list-style:none;">
-          <li class = "row" ng-repeat = "section in quiz_bank.sections">
+          <li class = "row" ng-repeat = "section in quiz_bank.sections"  ng-init= "sectionIndex = $index">
             <div class = "section-well"><strong>{{section.title}}</strong></div>
+            
             <input type="hidden" ng-model="section_id" ng-init="section_id= section.id" value="{{section.id}}">
-            <div class = "section-questions" ng-controller = "viewQuestionsCtrl">
+            <div class = "section-questions" ng-controller = "viewQuestionsCtrl" >
               <div ng-include src="'/assets/partials/questions/all_questions.html'"></div>
             </div>
           </li>

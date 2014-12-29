@@ -1,8 +1,11 @@
 quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','Message','$rootScope',function($scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,Message,$rootScope){
+
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
   $.removeCookie("starred_assessments")
   $.removeCookie("main_repo")
+  $scope.numbering = []
+  $scope.total_length = 0
   $scope.subject_edit = false
   $scope.grade_edit = false
   $scope.tags_edit = false
@@ -21,7 +24,11 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
 
   QuizBank.get($scope.quiz_bank_id).$promise.then(function(data){
     $scope.quiz_sections = data.sections
-    console.log("i am in")
+     angular.forEach(data.sections,function(value,key){
+      $scope.total_length = $scope.total_length + value.questions.length
+      $scope.numbering.push($scope.total_length - value.questions.length)
+    })
+    console.log($scope.numbering)
     $scope.sections.count = $scope.quiz_sections.length - 1
     $scope.last_section = data.sections[data.sections.length - 1]
     $scope.quiz_bank = data
@@ -67,6 +74,13 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
       })
     }
   }
+    $scope.deleteQuiz = function(){
+    // var deleteUser = $window.confirm('Are you absolutely sure you want to delete?'); 
+    // if (deleteUser){
+    QuizBank.delete($scope.quiz_bank_id)
+    // }
+  } 
+
   $scope.simple_quiz_edit = function(){
      $scope.quiz_bank.have_sections = false
     $scope.quiz_bank.have_explanations = false
