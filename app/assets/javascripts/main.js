@@ -1,4 +1,4 @@
-var quizlib = angular.module('quizlib', ['ngResource', 'ngRoute','ui.bootstrap','angular-tour','ngQuickDate','ngTagsInput']);
+var quizlib = angular.module('quizlib', ['ngResource', 'ngRoute','ui.bootstrap','angular-tour','ngQuickDate','ngTagsInput','ngDragDrop','ui.sortable']);
  
 quizlib.config(['$routeProvider',function($routeProvider) {
     $routeProvider.

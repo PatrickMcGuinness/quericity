@@ -1,98 +1,206 @@
-// quizlib.directive("sortAndDrop",function(){
-//   return{
-//     link: function(scope,element,attrs){
+quizlib.directive("sortAndDrop",function(){
+  return{
+    link: function(scope,element,attrs){
       
-//       var adjustment
+      var adjustment
       
-//       $(".simple_with_animation").sortable({
-//         group: 'simple_with_animation',
-//         pullPlaceholder: false,
-//         // animation on drop
-//         onDrop: function  (item, targetContainer, _super) {
-//           var clonedItem = $('<li/>').css({height: 0})
+      $(".simple_with_animation").sortable({
+        group: 'simple_with_animation',
+        pullPlaceholder: false,
+        // animation on drop
+        onDrop: function  (item, targetContainer, _super) {
+           item.removeClass("hide")
+          var clonedItem = $('<li/>').css({height: 0})
           
-//           item.before(clonedItem)
-//           clonedItem.animate({'height': item.height()})
+          item.before(clonedItem)
+          clonedItem.animate({'height': item.height()})
           
-//           item.animate(clonedItem.position(), function  () {
-//             clonedItem.detach()
-//             _super(item)
-//           })
-//         },
+          item.animate(clonedItem.position(), function  () {
+            clonedItem.detach()
+            _super(item)
+          })
+        },
 
-//         // set item relative to cursor position
-//         onDragStart: function ($item, container, _super) {
-//           console.log("drag start")
-//           var offset = $item.offset(),
-//           pointer = container.rootGroup.pointer
+        // set item relative to cursor position
+        onDragStart: function ($item, container, _super) {
+          console.log("drag start")
+          var offset = $item.offset(),
+          pointer = container.rootGroup.pointer
 
-//           adjustment = {
-//             left: pointer.left - offset.left,
-//             top: pointer.top - offset.top
-//           }
+          adjustment = {
+            left: pointer.left - offset.left,
+            top: pointer.top - offset.top
+          }
 
-//           _super($item, container)
-//         },
-//         onDrag: function ($item, position) {
-//           console.log("drag")
-//           $item.css({
-//             left: position.left - adjustment.left,
-//             top: position.top - adjustment.top
-//           })
-//         }
-//       })
-//     }
-//   };
-// })
+          _super($item, container)
+        },
+        onDrag: function ($item, position) {
+          console.log("drag")
+          $item.addClass("hide")
+          
+        }
+      })
+    }
+  };
+})
 
-// quizlib.directive("sortable",function(){
-//   return{
-//     link: function(scope,element,attrs){
-//       element.sortable({
-//         update: function(){
-//           $.ajax({
-//             url: "/quiz_banks/change_question_positions",
-//             method: "POST",
-//             data: $(this).sortable("serialize"),                  
-//           })
-//         }
-//       })
+quizlib.directive("sortable",function(){
+  return{
+    link: function(scope,element,attrs){
+      element.sortable({
+        update: function(){
+          $.ajax({
+            url: "/quiz_banks/change_question_positions",
+            method: "POST",
+            data: $(this).sortable("serialize"),                  
+          })
+        }
+      })
       
-//     }
-//   };
-// })
-// quizlib.directive("questionDraggable",function(){
-//   return{
-//     link: function(scope,element,attrs){
-//        element.draggable({
-//         containment : "#container",
-//         helper : 'clone',
-//         revert: 'invalid'
-//       });
-//     }
-//   };
-// })
+    }
+  };
+})
+quizlib.directive("questionDraggable",function(){
+  return{
+    link: function(scope,element,attrs){
+       element.draggable({
+        containment : "#container",
+        helper : 'clone',
+        revert: 'invalid'
+      });
+    }
+  };
+})
 
-// quizlib.directive("questionDroppable",function(){
-//   return{
-//     link: function(scope,element,attrs){
-//       element.droppable({
-//         hoverClass : 'ui-state-highlight',
-//         drop : function(ev, ui) {
-//           console.log("drop")
-//           $(ui.draggable).clone().appendTo($(".questions-list"));
-//           console.log($(ui.draggable))
-//           $(ui.draggable).remove();
-//           $(".question-item").draggable({
-//             containment : "#container",
-//             helper : 'clone',
-//             revert : 'invalid'
-//           });
-//         }
-//       });
-//     }
-//   };
-// })
+quizlib.directive("questionDroppable",function(){
+  return{
+    link: function(scope,element,attrs){
+      element.droppable({
+        hoverClass : 'ui-state-highlight',
+        drop : function(ev, ui) {
+          console.log("drop")
+          $(ui.draggable).clone().appendTo($(".questions-list"));
+          console.log($(ui.draggable))
+          $(ui.draggable).remove();
+          $(".question-item").draggable({
+            containment : "#container",
+            helper : 'clone',
+            revert : 'invalid'
+          });
+        }
+      });
+    }
+  };
+})
+
+
+quizlib.directive('dndList', function() {
+ 
+    return function(scope, element, attrs) {
+ 
+        // variables used for dnd
+        var toUpdate;
+        var startIndex = -1;
+ 
+        // watch the model, so we always know what element
+        // is at a specific position
+        scope.$watch(attrs.dndList, function(value) {
+            toUpdate = value;
+        },true);
+ 
+        // use jquery to make the element sortable (dnd). This is called
+        // when the element is rendered
+        $(element[0]).sortable({
+            items:'li',
+            start:function (event, ui) {
+                // on start we define where the item is dragged from
+                startIndex = ($(ui.item).index());
+            },
+            stop:function (event, ui) {
+                // on stop we determine the new index of the
+                // item and store it there
+                var newIndex = ($(ui.item).index());
+                var toMove = toUpdate[startIndex];
+                toUpdate.splice(startIndex,1);
+                toUpdate.splice(newIndex,0,toMove);
+ 
+                // we move items in the array, if we want
+                // to trigger an update in angular use $apply()
+                // since we're outside angulars lifecycle
+                scope.$apply(scope.model);
+            },
+            axis:'y'
+        })
+    }
+});
+
+
+quizlib.directive('dndBetweenList', function($parse) {
+    console.log("aaaaaaaaaaaaaa")
+    return function(scope, element, attrs) {
+ 
+        // contains the args for this component
+        var args = attrs.dndBetweenList.split(',');
+        // contains the args for the target
+        var targetArgs = $('#'+args[1]).attr('dnd-between-list').split(',');
+ 
+        // variables used for dnd
+        var toUpdate;
+        var target;
+        var startIndex = -1;
+        var toTarget = true;
+ 
+        // watch the model, so we always know what element
+        // is at a specific position
+        scope.$watch(args[0], function(value) {
+            toUpdate = value;
+        },true);
+ 
+        // also watch for changes in the target list
+        scope.$watch(targetArgs[0], function(value) {
+            target = value;
+        },true);
+ 
+        // use jquery to make the element sortable (dnd). This is called
+        // when the element is rendered
+        $(element[0]).sortable({
+            items:'li',
+            start:function (event, ui) {
+                // on start we define where the item is dragged from
+                startIndex = ($(ui.item).index());
+                toTarget = false;
+            },
+            stop:function (event, ui) {
+                var newParent = ui.item[0].parentNode.id;
+ 
+                // on stop we determine the new index of the
+                // item and store it there
+                var newIndex = ($(ui.item).index());
+                var toMove = toUpdate[startIndex];
+ 
+                // we need to remove him from the configured model
+                toUpdate.splice(startIndex,1);
+ 
+                if (newParent == args[1]) {
+                    // and add it to the linked list
+                    target.splice(newIndex,0,toMove);
+                }  else {
+                    toUpdate.splice(newIndex,0,toMove);
+                }
+ 
+                // we move items in the array, if we want
+                // to trigger an update in angular use $apply()
+                // since we're outside angulars lifecycle
+                scope.$apply(targetArgs[0]);
+                scope.$apply(args[0]);
+            },
+            connectWith:'#'+args[1]
+        })
+    }
+});
+
+
+
 
 
 quizlib.directive("checkActive",function($route){

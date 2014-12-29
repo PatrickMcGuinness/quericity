@@ -50,7 +50,6 @@ angular.module('ui.sortable', [])
           }
 
           if (ngModel) {
-
             // When we add or remove elements, we need the sortable to 'refresh'
             // so it can find the new/removed elements.
             scope.$watch(attrs.ngModel+'.length', function() {

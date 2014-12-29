@@ -34,5 +34,7 @@
 //=require jquery.flot
 //=require jquery.flot.symbol
 //=require jquery.flot.axislabels
+//=require angular-sortable-view
+//=require ng-sortable
 
 
