@@ -87,11 +87,12 @@ student_quizlib.controller('ReportsCtrl', ['$scope','ServedQuiz','Sharing','User
 	
 	 
 }]);
+
 student_quizlib.controller('StudentLineGraphCtrl',['$scope','User',function($scope,User){
 	
   $scope.$watch('student_id', function() {
     if($scope.student_id != undefined){
-      User.dashboard_line_graph_data($scope.studentId).$promise.then(function(data){
+      User.dashboard_line_graph_data($scope.student_id).$promise.then(function(data){
         $scope.averages = data.quizzes
         $scope.$broadcast("Student_Line_Graph_Ready")
       })
