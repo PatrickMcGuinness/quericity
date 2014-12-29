@@ -60,6 +60,7 @@ QuizLib::Application.routes.draw do
       get "student_served_quizzes"
       get "student_started_quizzes"
       get "student_pending_quizzes"
+      get "student_mixed_quizzes"
       get "student_attempted_quizzes"
       get "first_served_quiz"
     end

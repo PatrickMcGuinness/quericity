@@ -28,7 +28,6 @@ class ClonedQuizBank < ActiveRecord::Base
       :title => title, 
       :subject => subject,
       :instructions => instructions,
-      :cloned_questions => cloned_questions.as_json()   
     }
     
   end
