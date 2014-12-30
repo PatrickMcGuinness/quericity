@@ -113,13 +113,16 @@ student_quizlib.controller('StudentBarGraphCtrl', ['$scope','User',function($sco
   }) 
 }]);
 
-student_quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParams','TimeDisplay',function($scope,ServedQuiz,$routeParams,TimeDisplay){
+student_quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParams','TimeDisplay','FormatData',function($scope,ServedQuiz,$routeParams,TimeDisplay,FormatData){
   $scope.student_id = $routeParams.student_id
   ServedQuiz.student_quiz_report($routeParams.id,$routeParams.student_id).$promise.then(function(data){
+	  //console.log(data)
     $scope.student_quiz_report = data
-    $scope.student_quiz_report.served_at = TimeDisplay.get_date(data.served_quiz.created_at)
-    $scope.student_quiz_report.start_time = TimeDisplay.get_date(data.served_quiz.date)
-    $scope.student_quiz_report.end_time = TimeDisplay.get_date(data.served_quiz.close_date)
+    $scope.student_quiz_report.served_at = FormatData.date(data.served_quiz.created_at)
+    $scope.student_quiz_report.start_time = FormatData.date(data.served_quiz.date)
+    $scope.student_quiz_report.end_time = FormatData.date(data.served_quiz.close_date)
+	  FormatData.cleanUp(data)
+	  
   }) 
 
 }]);
