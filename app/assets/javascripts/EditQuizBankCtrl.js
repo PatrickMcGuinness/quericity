@@ -1,4 +1,4 @@
-quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','Message','$rootScope',function($scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,Message,$rootScope){
+quizlib.controller("EditQuizBankCtrl",['$window','$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','Message','$rootScope',function($window,$scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,Message,$rootScope){
 
   $.removeCookie("my_assessments")
   $.removeCookie("shared_assessments")
@@ -75,10 +75,10 @@ quizlib.controller("EditQuizBankCtrl",['$scope','$location','$routeParams','Quiz
     }
   }
     $scope.deleteQuiz = function(){
-    // var deleteUser = $window.confirm('Are you absolutely sure you want to delete?'); 
-    // if (deleteUser){
+    var deleteUser = $window.confirm('Are you absolutely sure you want to delete?'); 
+    if (deleteUser){
     QuizBank.delete($scope.quiz_bank_id)
-    // }
+    }
   } 
 
   $scope.simple_quiz_edit = function(){
