@@ -33,11 +33,12 @@
       </strong>
     </span> -->
     <!--<span class = "col-xs-10" ng-bind-html="question.description | unsafe"></span> -->
-    <span style="float:left;">{{$index + 1}}.</span>
+    <span style="float:left;" >{{numbering[sectionIndex] + $index + 1}}.</span>
     <span class = "col-xs-10" style= "width: 98%" mathjax-bind = "question.description">{{question.description}}</span>
     
   </div>
-  <div class = "col-xs-12" style= "margin-top:-3px;">
+
+  <div ui-sortable ng-model="question.question_options"  class = "col-xs-12" style= "margin-top:-3px;">
     <div class = "col-xs-12 option-row" ng-repeat = "question_option in question.question_options">
       <span class = "col-xs-12">
         <span ng-if = "question_option.is_correct == 'true'">

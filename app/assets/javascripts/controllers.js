@@ -731,6 +731,8 @@ quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User',
   }
 }]);
 quizlib.controller('ShowQuizBankCtrl', ['$window','$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section','FavouriteQuiz','Message', function($window,$scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section,FavouriteQuiz,Message) {
+  $scope.numbering = []
+  $scope.total_length = 0
   $scope.my_assessments = Repository.all()
   $scope.shared_quiz_banks = QuizBank.shared_quiz_banks()
   $scope.quiz_bank_id = $routeParams.id
@@ -744,6 +746,11 @@ quizlib.controller('ShowQuizBankCtrl', ['$window','$scope','$routeParams','QuizB
     var obj = new Date(data.created_at)
     var obj2 = new Date(data.updated_at)
     $scope.quiz_bank = data
+    angular.forEach(data.sections,function(value,key){
+      $scope.total_length = $scope.total_length + value.questions.length
+      $scope.numbering.push($scope.total_length - value.questions.length)
+    })
+    console.log($scope.numbering)
     $scope.created_at = obj.getDate() +"-" + obj.getMonth() +"-"+obj.getFullYear()
     $scope.updated_at = obj2.getDate() +"-" + obj2.getMonth() +"-"+obj2.getFullYear()   
 
@@ -1211,12 +1218,24 @@ quizlib.controller("ManageMyCtrl",['$scope','QuizBank','Repository','User','Ques
 
 quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','QuestionOption',function($scope, Question,GlobalScope,QuestionOption){
   
+
   is_true_false = true
   is_mcq = true
   is_open_ended = true
   is_fill_in_the_blank = true
+  $scope.all_questions_count = 0
+  $scope.questions = []
+  Question.all($scope.quiz_bank_id,$scope.section_id).$promise.then(function(data){
+        $scope.questions = data
+  })
 
-  $scope.questions = Question.all($scope.quiz_bank_id,$scope.section_id)
+
+  // angular.forEach($scope.sections,function(value,key){
+  //     angular.forEach(value.questions,function(value,key){
+  //     console.log("valueeeeeeee",value)
+  //     $scope.questions.push(value)
+  //   })
+  // })
   $scope.clone_question = function(quiz_id,section_id,question)
   {
 
@@ -1297,11 +1316,6 @@ quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','Quest
 
 quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',function($scope,$rootScope,Section,Question){
   
-
-  $scope.init = function(index,section) {
-    $scope.rowIndexs = index;
-    $scope.sectionIndex = section;
-}
   $scope.show_title = true
   $scope.deleteSection = function(id,idx){
     console.log("dleting section")
