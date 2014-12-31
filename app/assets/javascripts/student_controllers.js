@@ -59,13 +59,37 @@ student_quizlib.controller('FinishQuizCtrl', ['$scope','ServedQuiz','Sharing','T
 }]);
 
 
-student_quizlib.controller('DashBoardCtrl', ['$scope','ServedQuiz','Sharing','User',function($scope,ServedQuiz,Sharing,User){
-    User.get_current_user().$promise.then(function(data){
+
+
+
+student_quizlib.controller('ReportsCtrl', ['$scope','ServedQuiz','Sharing','User','FormatData',function($scope,ServedQuiz,Sharing,User,FormatData){
+    
+	    this.tab = 1;
+    
+	    this.selectTab = function (setTab){
+	    	this.tab = setTab;
+	    };
+	    this.isSelected = function(checkTab) {
+	    	return this.tab === checkTab;
+	    };
+		
+	User.get_current_user().$promise.then(function(data){
       $scope.student_id = data.id
-      $scope.student_detail = User.dashboard_details(data.id)
-    }) 
+      
+		ServedQuiz.student_attempted_quizzes().$promise.then(function(data){
+     
+	    	$scope.served_quizzes = data
+		
+			FormatData.statusFormat(data)
+ 	    
+	    })
+    })
+	
+	 
 }]);
+
 student_quizlib.controller('StudentLineGraphCtrl',['$scope','User',function($scope,User){
+	
   $scope.$watch('student_id', function() {
     if($scope.student_id != undefined){
       User.dashboard_line_graph_data($scope.student_id).$promise.then(function(data){
@@ -89,13 +113,16 @@ student_quizlib.controller('StudentBarGraphCtrl', ['$scope','User',function($sco
   }) 
 }]);
 
-student_quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParams','TimeDisplay',function($scope,ServedQuiz,$routeParams,TimeDisplay){
+student_quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParams','TimeDisplay','FormatData',function($scope,ServedQuiz,$routeParams,TimeDisplay,FormatData){
   $scope.student_id = $routeParams.student_id
   ServedQuiz.student_quiz_report($routeParams.id,$routeParams.student_id).$promise.then(function(data){
+	  //console.log(data)
     $scope.student_quiz_report = data
-    $scope.student_quiz_report.served_at = TimeDisplay.get_date(data.served_quiz.created_at)
-    $scope.student_quiz_report.start_time = TimeDisplay.get_date(data.served_quiz.date)
-    $scope.student_quiz_report.end_time = TimeDisplay.get_date(data.served_quiz.close_date)
+    $scope.student_quiz_report.served_at = FormatData.date(data.served_quiz.created_at)
+    $scope.student_quiz_report.start_time = FormatData.date(data.served_quiz.date)
+    $scope.student_quiz_report.end_time = FormatData.date(data.served_quiz.close_date)
+	  FormatData.cleanUp(data)
+	  
   }) 
 
 }]);

@@ -1,43 +1,45 @@
-<div class  = "container">
-  <div class = "col-xs-12">
-    <div class = "col-xs-3 col-xs-offset-5">
-      <h3>{{student_quiz_report.served_quiz.cloned_quiz_bank.title | uppercase}}</h3>
-    </div>
-    <div class = "col-xs-12 mar-top-10">
-      <span><strong>Served At:</strong>{{student_quiz_report.served_at}}</span>&nbsp;&nbsp;<span><strong>Start Time:</strong>{{student_quiz_report.start_time}}</span>&nbsp;&nbsp;<span><strong>End Time:</strong>{{student_quiz_report.end_time}}</span>&nbsp;&nbsp;
-      <span><strong>Questions:</strong>{{student_quiz_report.served_quiz.cloned_quiz_bank.cloned_questions.length}}</span>&nbsp;&nbsp;<span><strong>Attempted:</strong>{{student_quiz_report.answers.length}}</span>&nbsp;&nbsp;<span><strong>Correct:</strong>{{student_quiz_report.correct_answers.length}}</span>&nbsp;&nbsp;<span><strong>Wrong:</strong>{{student_quiz_report.wrong_answers.length}}</span>
-    </div>
-    <div ng-repeat = "answer in student_quiz_report.answers">
-      <div class = "questions-in-report col-xs-12 mar-top-20">
-        <div ng-if = "answer.cloned_question.question_type == 1">
-          <span class = "glyphicon glyphicon-ok" style = "color:blue;"></span>&nbsp;&nbsp;<strong>Question Statement</strong>
-        </div>
-        <div ng-if = "answer.cloned_question.question_type == 4">  
-          <span  class = "glyphicon glyphicon-stop" style = "color:blue;"></span>&nbsp;&nbsp;<strong>Question Statement</strong>
-        </div>
-        <div ng-if = "answer.cloned_question.question_type == 2">  
-          <span  class = "glyphicon glyphicon-play" style = "color:blue;"></span>&nbsp;&nbsp;<strong>Question Statement</strong>
-        </div>
-        <div ng-if = "answer.cloned_question.question_type == 3">  
-          <span  class = "glyphicon glyphicon-edit" style = "color:blue;"></span>&nbsp;&nbsp;<strong>Question Statement</strong>
-        </div>    
-        <div class = "col-xs-11" mathjax-bind = "answer.cloned_question.description">{{answer.cloned_question.description}}
-        </div>
-      </div>
-      <div class = "col-xs-12 answers-in-report">
-        &nbsp;<strong>Student Answer</strong>
-        <div>
-          &nbsp;{{answer.student_answer}}
-        </div>
-        &nbsp;<strong>Correct Answer</strong>
-        <div ng-if = "">
-          &nbsp;{{answer.answer}}
-        </div>
-        &nbsp;<strong>Score</strong>
-        <div>
-          &nbsp; {{answer.student_score}}
-        </div>
-      </div>  
-    </div>
-  </div>  
+<div class="row_bottom">
+  <div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon">
+        <span class = "glyphicon glyphicon-arrow-left"></span>
+      </span>
+      <span class="sub_nav_link"><a ng-href="#/reports">Back</a></span>
+	</div>
+  </div>
+</div>
+
+<div class = "container">
+	<div class="row">
+    	<div class = "col-xs-4 col-xs-offset-5">
+      	  <h4>{{student_quiz_report.served_quiz.cloned_quiz_bank.title}}</h4>
+    	</div>
+	
+	</div>
+	<div class="row">
+	    <div class = "col-xs-12 mar-top-10">
+	      <span><strong>Served At: </strong>{{student_quiz_report.served_at}}</span>&nbsp;&nbsp;<span><strong>Start Time: </strong>{{student_quiz_report.start_time}}</span>&nbsp;&nbsp;<span><strong>End Time: </strong>{{student_quiz_report.end_time}}</span>&nbsp;&nbsp;
+	      <span><strong>Questions: </strong>{{student_quiz_report.served_quiz.cloned_quiz_bank.cloned_questions.length}}</span>&nbsp;&nbsp;<span><strong>Attempted: </strong>{{student_quiz_report.answers.length}}</span>&nbsp;&nbsp;<span><strong>Correct: </strong>{{student_quiz_report.correct_answers.length}}</span>&nbsp;&nbsp;<span><strong>Wrong:</strong>{{student_quiz_report.wrong_answers.length}}</span>
+	    </div>
+	</div>
+
+
+	<div class="row">
+		<div ng-repeat = "answer in student_quiz_report.answers">
+		  	<div class="panel panel-default mar-top-20">
+		  	  <!-- Default panel contents -->
+		  	  <div class="panel-heading"><strong>Question: </strong>{{answer.cloned_question.description}}</div>
+    	
+		  
+		  	  <!-- List group -->
+		  
+		  	  <ul class="list-group">
+		  	    <li class="list-group-item"><p><strong>Student Answer:</strong> {{answer.student_answer}}</p></li>
+				<li class="list-group-item"><p><strong>Correct Answer:</strong> {{answer.answer}}</p></li>
+				<li class="list-group-item"><p><strong>Score:</strong> {{answer.student_score}}</p></li>
+				  	    
+		  	  </ul>
+		    </div>
+  		</div>
+	</div>
 </div>

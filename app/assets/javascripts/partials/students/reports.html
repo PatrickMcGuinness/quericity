@@ -1,4 +1,103 @@
 <div class = "container">
-  <div ng-include src="'/assets/partials/students/student_graphs.html'"></div>
-	<div ng-include src="'/assets/partials/students/dashboard_student_details.html'"></div>
+	
+
+	<!--<div ng-include src="'/assets/partials/students/student_graphs.html'"></div>-->
+		
+		<div class="bs-example bs-example-tabs" role="tabpanel">
+
+		    <ul ng-init="tab = 1" id="myTab" class="nav nav-tabs" role="tablist">
+		        <li ng-class="{active:tab===1}" role="presentation">
+		            <a id="home-tab" aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" href ng-click="tab = 1">
+
+		                Completed Quizzes
+
+		            </a>
+		        </li>
+		        <li ng-class="{active:tab===2}" role="presentation">
+		            <a id="profile-tab" aria-controls="profile" data-toggle="tab" role="tab" href ng-click="tab = 2" aria-expanded="false">
+
+		                Graphs
+
+		            </a>
+		        </li>
+
+		    </ul>
+		    <div id="myTabContent" class="tab-content">
+		        <div ng-class ="{active:tab===1}" id="home" class="tab-pane fade in" aria-labelledby="home-tab" role="tabpanel">
+		            <p>
+
+		
+				   	<div class="panel panel-default">
+				       	   <table class="table table-hover">
+				      		   <thead>
+				      		           <tr>
+				      		             <th>Quiz Title</th>
+				      		             <th>Teacher Name</th>
+				      		             <th>Subject</th>
+				      		             <th>Status</th>
+				      					 <th>Action</th>
+				      		           </tr>
+				      		         </thead>
+				          	   <tr ng-repeat = "served_quiz in served_quizzes|orderBy: 'served_quiz.close_date'">
+			   
+				      			  <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED'">{{served_quiz.cloned_quiz_bank.title}}</td>
+				      			   <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED'">{{served_quiz.owner.first_name}} {{served_quiz.owner.last_name}}</td>
+				      			   <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED'">{{served_quiz.cloned_quiz_bank.subject}}</td>
+				      			   <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED'">Quiz completed on {{served_quiz.local_date}}</td>
+				   	           <td ng-if = "served_quiz.student_sharing.status_in_string != 'EXPIRED'">
+				   	             <a ng-href = "#/reports/quiz/{{served_quiz.id}}?student_id={{student_id}}"><img src = "/assets/detail_icon.png" style = "height: 20px;"></a>
+				   	           </td>
+
+				
+      
+				      		   </tr>
+				        	 </table>
+  
+		
+	
+				       </div>
+
+		            </p>
+		        </div>
+		        <div ng-class ="{active:tab===2}" id="profile" class="tab-pane fade in" aria-labelledby="profile-tab" role="tabpanel">
+		        
+
+					   <div class = "col-xs-6">
+					     <button class = "btn btn-warning form-control show-bargraph mar-top-10">Show Bar Graph</button>
+					   </div>
+					   
+					   <div class = "col-xs-6">
+					    <button class = "btn btn-warning form-control show-linegraph mar-top-10 disabled">Show Line Graph </button>
+					   </div>
+
+					   <div class = "col-xs-12 mar-top-10 bar-graph hide" ng-controller = "StudentBarGraphCtrl">
+					       <div style = "text-align: center"><h3>Performance in each Quiz</h3>
+					       </div>
+					       <div class = "info" style = "text-align:center">
+					         <div>x-axis: Number of Quizzes</div>
+					         <div>y-axis: Score</div>
+					       </div>
+					       <student-bargraph myscores = "scores">
+					         <svg class="chart"></svg>
+					       </student-bargraph>     
+					   </div>
+
+					   <div class = "col-xs-12 mar-top-10 line-graph" ng-controller = "StudentLineGraphCtrl">
+					       <div style = "text-align: center"><h3>Performance over Time</h3>
+					       </div>
+					       <div class = "info" style = "text-align:center">
+					         <div>x-axis: Number of Quizzes</div>
+					         <div>y-axis: Percentage</div>
+					       </div>  
+					       <student-linegraph>
+					         <svg class = "line-chart"></svg>
+					       </student-linegraph>  
+					   </div>
+
+		           
+		        </div>
+
+		    </div>
+		</div>
+
 </div>	

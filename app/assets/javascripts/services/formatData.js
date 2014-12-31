@@ -30,6 +30,31 @@ student_quizlib.service('FormatData', function ($rootScope,Sharing,QuizStatus){
 		
       })
     }
+	this.cleanUp = function(quiz){
+		var self = this;
+		angular.forEach(quiz.answers,function(answer){
+			
+			var reg = /<p>(.*?)<\/p>/
+			
+			var description = reg.exec(answer.cloned_question.description)
+			var answerMatch = reg.exec(answer.student_answer)
+			var correctAnswer = reg.exec(answer.answer)
+			
+			if(description)
+				answer.cloned_question.description = description[1];
+			
+			if(answerMatch)
+				answer.student_answer = answerMatch[1]
+							
+			if(correctAnswer)
+				answer.answer = correctAnswer[1]
+			
+			
+			
+		})
+		
+		
+	}
 
 	
 	
