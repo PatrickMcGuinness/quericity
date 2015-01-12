@@ -73,25 +73,16 @@
 					   <div class = "col-xs-12 mar-top-10 bar-graph hide" ng-controller = "StudentBarGraphCtrl">
 					       <div style = "text-align: center"><h3>Performance in each Quiz</h3>
 					       </div>
-					       <div class = "info" style = "text-align:center">
-					         <div>x-axis: Number of Quizzes</div>
-					         <div>y-axis: Score</div>
-					       </div>
-					       <student-bargraph myscores = "scores">
-					         <svg class="chart"></svg>
-					       </student-bargraph>     
+					     
+  <student-bargraph ng-model='data'>
+</student-bargraph>    
 					   </div>
 
 					   <div class = "col-xs-12 mar-top-10 line-graph" ng-controller = "StudentLineGraphCtrl">
 					       <div style = "text-align: center"><h3>Performance over Time</h3>
-					       </div>
-					       <div class = "info" style = "text-align:center">
-					         <div>x-axis: Number of Quizzes</div>
-					         <div>y-axis: Percentage</div>
-					       </div>  
-					       <student-linegraph>
-					         <svg class = "line-chart"></svg>
-					       </student-linegraph>  
+ 
+				  <student-linegraph ng-model='data'>
+				</student-linegraph> 
 					   </div>
 
 		           

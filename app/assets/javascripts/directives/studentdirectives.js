@@ -111,7 +111,7 @@ student_quizlib.directive("mathjaxBind", function() {
     }]
   };
 });
-student_quizlib.directive("studentLinegraph",function(){
+student_quizlib.directive("studentLinegraph",['FormatData',function(FormatData){
   return {
     restrict: "E",
     replace: false,
@@ -120,58 +120,62 @@ student_quizlib.directive("studentLinegraph",function(){
       scope.$on("Student_Line_Graph_Ready",function(){
         //var data = [65,55,22,34,67,88,90,78,65,44];
         var data = scope.averages
-        var margin = {top: 20, right: 20, bottom: 30, left: 50},
-        width = 800 - margin.left - margin.right,
-        height = 330 - margin.top - margin.bottom;
-      
 
-        var x = d3.scale.linear()
-        .range([0,width])
-        .domain([0,data.length])
-        
-        var y = d3.scale.linear()
-        .range([height, 0])
-        .domain([0, d3.max(data)])
+  
+	    graphData = FormatData.makePLotData(data)
+	    var dataset = [
+	                { label: "Performance Over Time", data: graphData, points: { symbol: "triangle"} }
+	  			  ]
 
-        var graph = d3.select(".line-chart")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	  	var options = {
+	  	            series: {
+	  	                lines: {
+	  	                    show: true
+	  	                },
+	  	                points: {
+	  	                    radius: 3,
+	  	                    fill: true,
+	  	                    show: true
+	  	                }
+	  	            },
+	  	            xaxis: {
+	                
+	  	                tickLength: 0,
+	  	                axisLabel: "quizzes in chronological order",
+	  	                axisLabelUseCanvas: true,
+	  	                axisLabelFontSizePixels: 12,
+	  	                axisLabelFontFamily: 'Verdana, Arial',
+	  	                axisLabelPadding: 20
+	  	            },
+	  	            yaxis: {
+	  	                axisLabel: "Percentage Marks",
+	  	                axisLabelUseCanvas: true,
+	  	                axisLabelFontSizePixels: 12,
+	  	                axisLabelFontFamily: 'Verdana, Arial',
+	  	                axisLabelPadding: 1
+	               
+	  	            },
+	  	            legend: {
+	  	                noColumns: 0,
+	  	                labelBoxBorderColor: "#000000",
+	  	                position: "nw"
+	  	            },
+	  	            grid: {
+	  	                hoverable: true,
+	  	                borderWidth: 2,
+	  	                borderColor: "#633200",
+	  	                backgroundColor: { colors: ["#ffffff", "#EDF5FF"] }
+	  	            },
+	  	            colors: ["#FF0000", "#0022FF"]
+	  	        };
 
-        var line = d3.svg.line()
-        .x(function(d,i) { 
-          
-          return x(i); 
-        })
-        .y(function(d) { 
-          
-          return y(d); 
-        })
-
-        var xAxis = d3.svg.axis().scale(x).tickSize(-height).tickSubdivide(true).ticks(data.length).tickFormat(d3.format(',f'));
-        // Add the x-axis.
-
-        graph.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-   
-        // create left yAxis
-        var yAxis = d3.svg.axis().scale(y).ticks(4).orient("left");
-        
-        graph.append("g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(-25,0)")
-        .call(yAxis);
-        
-        graph.append("path").attr("d", line(data));
+	  			$.plot(element, dataset,options);
         
       })
     }
   };
-});
-student_quizlib.directive("studentBargraph",function(){
+}]);
+student_quizlib.directive("studentBargraph",[ 'FormatData',function(FormatData){
   return {
     restrict: "E",
     replace: false,
@@ -181,81 +185,71 @@ student_quizlib.directive("studentBargraph",function(){
         //var data = [4, 8, 15, 16, 23, 42,30,23,20,10];
         var data = []
         var average_data = [4,5]
+		
 
         angular.forEach(scope.scores,function(value,key){
           data.push({score: value, max_score: scope.maxscores[key]})
         })
+		  
+	  
+	  yAxisData = FormatData.makePLotData(scope.scores)
+	  xAxisData = FormatData.makePLotData(scope.names)
+    
 
-        var margin = {top: 30, right: 30, bottom: 30, left: 40},
-        width = 800 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
-        
-        var y = d3.scale.linear()
-        .range([height,0])
-        .domain([0, d3.max(scope.scores)])
+	  var dataset = [
+		    { label: "Performance in each quiz", data: yAxisData, color: "#5482FF" }
+	  ];
+          			
+	 
+	  var options = {
+	 	 series: {
+	 	     bars: {
+	 	         show: true
+	 	     }
+	 	 },
+	 	 bars: {
+	 	     align: "center",
+	 	     barWidth: 0.5
+	 	 },
+	 	 xaxis: {
+	 	     axisLabel: "Quizzes",
+	 	     axisLabelUseCanvas: true,
+	 	     axisLabelFontSizePixels: 12,
+	 	     axisLabelFontFamily: 'Verdana, Arial',
+	 	     axisLabelPadding: 10,
+	 	     ticks: xAxisData
+	 	 },
+	 	 yaxis: {
+	 	     axisLabel: "Score",
+	 	     axisLabelUseCanvas: true,
+	 	     axisLabelFontSizePixels: 12,
+	 	     axisLabelFontFamily: 'Verdana, Arial',
+	 	     axisLabelPadding: 3,
+			 tickDecimals: 0,
+			 min: 0
+				  		   
+	 	   
+	 	 },
+	 	 legend: {
+	 	     noColumns: 0,
+	 	     labelBoxBorderColor: "#000000",
+	 	     position: "nw"
+	 	 },
+	 	 grid: {
+	 	     hoverable: true,
+	 	     borderWidth: 2,
+	 	     backgroundColor: { colors: ["#ffffff", "#EDF5FF"] }
+	 	 }
+	 }; 	
 
-        var x = d3.scale.ordinal()
-        .domain(scope.names)
-        .rangeRoundBands([0, width], .1);
+	   
+	$.plot(element, dataset,options);   
 
-        var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .html(function(d) {
-          return "<div><strong>Total Marks:</strong> <span style='color:red'>" + d.max_score + "</span></div>"
-                  + "<div><strong>Marks Obtained:</strong> <span style = 'color:green'>"+ d.score +"</span></div>";
-        });
-
-        var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom");
-
-        var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left");
-      
-        var chart = d3.select(".chart")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        chart.call(tip);
-  
-        var barWidth= width/data.length    
-  
-        var bar = chart.selectAll("g")
-        .data(data)
-        .enter().append("g")
-        .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
-
-        bar.append("rect")
-        .attr("y", function(d){return y(d.score);})
-        .attr("height",function(d){return height - y(d.score)})
-        .attr("width",barWidth - 1)
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-
-        bar.append("text")
-        .attr("x",barWidth/2)
-        .attr("y",function(d){return y(d.score) + 3;})
-        .attr("dy",".75em")
-        .text(function(d){return d.score})
-
-
-      
-        chart.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-
-        chart.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
+       
       })  
     }
   };
-})
+}])
 
 student_quizlib.directive("showBargraph",function(){
   return {

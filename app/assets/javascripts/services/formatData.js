@@ -55,6 +55,18 @@ student_quizlib.service('FormatData', function ($rootScope,Sharing,QuizStatus){
 		
 		
 	}
+  	this.makePLotData = function(data){
+  		  plotData = []
+  		  increment = 0;
+  		  for(i=0;i<data.length;i++){
+  			  tmpArray = []
+  			  tmpArray.push(increment)
+  			  tmpArray.push(data[i])
+  			  plotData.push(tmpArray)
+  			  increment++ 
+  		  }
+  		  return plotData
+  	}
 
 	
 	

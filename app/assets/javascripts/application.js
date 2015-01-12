@@ -34,4 +34,5 @@
 //=require jquery.flot
 //=require jquery.flot.symbol
 //=require jquery.flot.axislabels
+//=require moment
 
