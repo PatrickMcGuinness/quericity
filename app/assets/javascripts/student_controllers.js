@@ -75,10 +75,12 @@ student_quizlib.controller('ReportsCtrl', ['$scope','ServedQuiz','Sharing','User
 		
 	User.get_current_user().$promise.then(function(data){
       $scope.student_id = data.id
+	
       
 		ServedQuiz.student_attempted_quizzes().$promise.then(function(data){
      
 	    	$scope.served_quizzes = data
+			console.log(data)
 		
 			FormatData.statusFormat(data)
  	    
@@ -132,6 +134,7 @@ student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing','Tim
   ServedQuiz.student_served_quizzes().$promise.then(function(data){
       $scope.all_quizzes = data
       $scope.served_quizzes = data
+	  console.log(data)
     
 	  FormatData.statusFormat($scope.served_quizzes)
   })
