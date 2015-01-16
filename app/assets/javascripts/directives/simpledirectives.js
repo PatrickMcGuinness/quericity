@@ -145,6 +145,17 @@ quizlib.directive("goBack",function(){
     }
   };
 })
+
+quizlib.directive("printDiv",function(){
+  return{
+    link: function(scope,element,attrs){
+      element.on('click', function() {
+        $('.print_div').printElement();
+      });
+    }
+  };
+})
+
 quizlib.directive("changeArrow",function(){
   return {
     link: function(scope,element,attrs){

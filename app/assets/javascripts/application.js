@@ -34,4 +34,10 @@
 //=require jquery.flot
 //=require jquery.flot.symbol
 //=require jquery.flot.axislabels
+<<<<<<< Updated upstream
 
+=======
+//=require angular-sortable-view
+//=require ng-sortable
+//=require print_element
+>>>>>>> Stashed changes

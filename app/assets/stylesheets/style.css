@@ -462,8 +462,13 @@ ul li{
 .mcq-quiz-attempt p{
 	margin-left:10px;
 }
+@media screen{
+	.print_div{
+ 		display: none;
+ 	}
+}
 @media print {
-    .row_bottom,.text-area-div,.buttons-div{
+    /*.row_bottom,.text-area-div,.buttons-div{
         visibility: hidden;
     }
     .print-button,.progress-bar-preview
@@ -483,6 +488,9 @@ ul li{
  
  	.strip{
  		border: none;
+ 	}*/
+ 	.print_div{
+ 		display: block;
  	}
 
 }
