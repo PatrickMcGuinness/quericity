@@ -7,7 +7,7 @@
       </span>
       <span class="sub_nav_link">
         <!--<button type="submit" class="btn btn-primary">Submit</button> -->
-        <a type = "submit" ng-click = 'saveQuiz(QuizForm.$valid)' data-toggle = "tooltip" title = "Print Quiz" tooltip-placement = "top" > Print</a>
+        <a type = "submit" ng-click = 'saveQuiz(QuizForm.$valid)' data-toggle = "tooltip" title = "Print Quiz" tooltip-placement = "top" print_div> Print</a>
       </span>
     </div>
     <div class="sub_nav">
@@ -28,7 +28,7 @@
 
 
 
-<div class="col-xs-12 container main_div"> 
+<div class="col-xs-12 container print_div" ng-controller = "printQuizBankCtrl"> 
     <div class="col-xs-12 title" style="margin-left: 400px;">
       <h3> {{quiz_bank.title}}</h3>
     </div>
@@ -41,61 +41,26 @@
         <span class = "col-xs-11" mathjax-bind = "question.description"></span>
 
       </div>
-
-      <div class = "col-xs-12 mar-top-20">
-        <span>
-          <strong>&nbsp;&nbsp;Answer:</strong>
-        </span>  
-      </div>
-      <div class = "col-xs-12 mar-top-20 mar-left-10">
+      <div class = "col-xs-12 mar-left-10" style="margin-bottom: 20px;">
         
-        <div ng-if = "question.question_type == 1 && option.all_questions == 1">
+        <div ng-if = "question.question_type == 1">
           <input type="radio" name="2_false{{question.id}}" value = true ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex)">&nbsp;True
           &nbsp;&nbsp;<input type="radio" name="true_false{{question.id}}" value = false ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex)">&nbsp;False
         </div>
 
-        <div ng-if = "question.question_type == 1 && option.all_questions == 0">
-          <input type="radio" name="2_false{{question.id}}" value = true ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex + all_questions_to_save.length + 1)">&nbsp;True
-          &nbsp;&nbsp;<input type="radio" name="true_false{{question.id}}" value = false ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex + all_questions_to_save.length + 1)">&nbsp;False
-        </div>
 
-        <div ng-if = "question.question_type == 2 && option.all_questions == 1">
+        <div ng-if = "question.question_type == 2 ">
           <div ng-repeat = "question_option in question.question_options">
 
 
-            <input type="radio" name="answer{{rowIndex}}" value = "{{question_option.id}}" ng-click= "question_numbering_of_radio(rowIndex)" ng-model = "question.answer" style= "float: left;margin-right: 7px;">
             <span style="float: left;margin-right: 10px;">{{options_alphabets[$index]}}:</span>
             <span mathjax-bind = "question_option.answer" >&nbsp;
             {{question_option.answer}}{{show_questions}}</span>
           </div>
         </div>
 
-        <div ng-if = "question.question_type == 2 && option.all_questions == 0">
-          <div ng-repeat = "question_option in question.question_options">
-
-
-            <input type="radio" name="answer{{rowIndex}}" value = "{{question_option.id}}" ng-click= "question_numbering_of_radio(rowIndex + all_questions_to_save.length + 1)" ng-model = "question.answer" style= "float: left;margin-right: 7px;">
-            <span style="float: left;margin-right: 10px;">{{options_alphabets[$index]}}:</span>
-            <span mathjax-bind = "question_option.answer" >&nbsp;
-            {{question_option.answer}}{{show_questions}}</span>
-          </div>
-        </div>
-
-        <div ng-if = "question.question_type == 3 && option.all_questions == 1">
-          <textarea ng-model = "question.answer" class =  "form-control text-area-div"  ng-blur= "question_numbering_of_input(rowIndex ,question)" rows = 3 placeholder = "Enter The Answer"></textarea>
-        </div>
-
-        <div ng-if = "question.question_type == 3 && option.all_questions == 0">
-          <textarea ng-model = "question.answer" class =  "form-control text-area-div"  ng-blur= "question_numbering_of_input(rowIndex + all_questions_to_save.length + 1 ,question)" rows = 3 placeholder = "Enter The Answer"></textarea>
-        </div>
-
-        <div ng-if = "question.question_type == 4 && option.all_questions == 1">
-          <textarea ng-model = "question.answer" class =  "form-control text-area-div"  ng-blur= "question_numbering_of_input(rowIndex , question)" rows = 3 placeholder = "Enter the Answer"></textarea> 
-        </div>
-            
-        <div ng-if = "question.question_type == 4 && option.all_questions == 0">
-          <textarea ng-model = "question.answer" class =  "form-control text-area-div"  ng-blur= "question_numbering_of_input(rowIndex + all_questions_to_save.length + 1, question)" rows = 3 placeholder = "Enter the Answer"></textarea> 
-        </div>
       </div>
     </div>
 </div>
+
+

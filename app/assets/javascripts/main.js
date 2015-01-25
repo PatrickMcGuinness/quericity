@@ -18,6 +18,8 @@ quizlib.config(['$routeProvider',function($routeProvider) {
       {templateUrl: 'assets/partials/quiz_banks/show.html',controller: 'ShowQuizBankCtrl',activetab: 'manage'}).
       when('/quiz_banks/:id/edit',
       {templateUrl: 'assets/partials/quiz_banks/edit.html',controller: 'EditQuizBankCtrl',activetab: 'manage'}).
+      when('/quiz_banks/:id/print',
+      {templateUrl: 'assets/partials/quiz_banks/print.html',controller: 'printQuizBankCtrl',activetab: 'print'}).
       when('/quiz_banks/:id/clone',
       {templateUrl: 'assets/partials/quiz_banks/clone.html',controller: 'CloneQuizBankCtrl',activetab: 'manage'}).
       when('/served_quizzes',

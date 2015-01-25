@@ -464,7 +464,7 @@ ul li{
 }
 @media screen{
 	.print_div{
- 		display: none;
+ 	
  	}
 }
 @media print {
