@@ -1216,19 +1216,28 @@ quizlib.controller("ManageMyCtrl",['$scope','QuizBank','Repository','User','Ques
   }
 }]);
 
-quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','QuestionOption',function($scope, Question,GlobalScope,QuestionOption){
+quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','QuestionOption','QuizBank',function($scope, Question,GlobalScope,QuestionOption,QuizBank){
   
 
   is_true_false = true
   is_mcq = true
   is_open_ended = true
   is_fill_in_the_blank = true
+
   $scope.all_questions_count = 0
   $scope.questions = []
   Question.all($scope.quiz_bank_id,$scope.section_id).$promise.then(function(data){
         $scope.questions = data
   })
 
+  $scope.print_questions = []
+  $scope.options_alphabets = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N"]
+
+  QuizBank.get($scope.quiz_bank_id).$promise.then(function(data){
+    console.log("data:",data.questions)
+    $scope.quiz_bank = data
+    $scope.print_questions = data.questions
+  })
 
   // angular.forEach($scope.sections,function(value,key){
   //     angular.forEach(value.questions,function(value,key){

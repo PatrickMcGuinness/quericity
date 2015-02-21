@@ -1,0 +1,66 @@
+<div class="row_bottom">
+  <div class="container">
+    <div class="sub_nav">
+      <span class="sub_nav_icon">
+        <span class = "glyphicon glyphicon-print">
+        </span>
+      </span>
+      <span class="sub_nav_link">
+        <!--<button type="submit" class="btn btn-primary">Submit</button> -->
+        <a type = "submit" ng-click = 'saveQuiz(QuizForm.$valid)' data-toggle = "tooltip" title = "Print Quiz" tooltip-placement = "top" print_div> Print</a>
+      </span>
+    </div>
+    <div class="sub_nav">
+      <span class="sub_nav_icon"><span class = "glyphicon glyphicon-remove"></span>
+      </span>
+      <span class="sub_nav_link">
+        <a ng-Click = "cancelQuiz()" ng-href = "#/quiz_banks/{{quiz_bank.id}}/show" data-toggle = "tooltip" title = "Cancel" tooltip-placement = "top">Cancel</a>
+      </span>
+    </div>
+    <div class="col-xs-6 input-group">
+      <input type="Search" placeholder="Search..." class="form-control search input-sm clear-search" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search sections by title" tooltip-placement "top"/>
+      <span class="glyphicon glyphicon-search search-bar-icon large-search-icon"></span>
+    </div>
+    
+  </div>
+</div>  
+
+
+
+
+<div class="col-xs-12 container print_div" ng-controller = "printQuizBankCtrl"> 
+    <div class="col-xs-12 title" style="margin-left: 400px;">
+      <h3> {{quiz_bank.title}}</h3>
+    </div>
+    <div class="col-xs-12 title" style="margin-left: 16px;margin-bottom: 11px;">
+      <b>Instructions:</b> {{quiz_bank.instructions}}
+    </div>
+    <div class="col-xs-12" ng-repeat = "question in questions" ng-init="rowIndex = $index">
+      <div class="col-xs-12 " >
+        <span class = "pull-left">{{rowIndex + 1}}.</span>
+        <span class = "col-xs-11" mathjax-bind = "question.description"></span>
+
+      </div>
+      <div class = "col-xs-12 mar-left-10" style="margin-bottom: 20px;">
+        
+        <div ng-if = "question.question_type == 1">
+          <input type="radio" name="2_false{{question.id}}" value = true ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex)">&nbsp;True
+          &nbsp;&nbsp;<input type="radio" name="true_false{{question.id}}" value = false ng-model = "question.answer" ng-click= "question_numbering_of_radio(rowIndex)">&nbsp;False
+        </div>
+
+
+        <div ng-if = "question.question_type == 2 ">
+          <div ng-repeat = "question_option in question.question_options">
+
+
+            <span style="float: left;margin-right: 10px;">{{options_alphabets[$index]}}:</span>
+            <span mathjax-bind = "question_option.answer" >&nbsp;
+            {{question_option.answer}}{{show_questions}}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+</div>
+
+
