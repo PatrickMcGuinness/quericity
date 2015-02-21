@@ -29,6 +29,12 @@
       <span class="sub_nav_icon"><img src="/assets/serve_quiz_white.png" /></span>
       <span class="sub_nav_link"><a href = "#/serve_quiz/new?selected_quiz={{quiz_bank.id}}" data-toggle = "tooltip" title = "Serve Quiz Bank">Serve</a></span>
     </div>
+    <div class="sub_nav">
+    <span class="sub_nav_icon"><span class = "glyphicon glyphicon-print"></span>
+      <span class="sub_nav_link"><a href = '#/quiz_banks/{{quiz_bank_id}}/print' data-toggle = "tooltip" title = "Serve Quiz Bank">Print</a></span>
+    </div>
+
+
     <div class="col-xs-3 input-group">
       <input type="Search" placeholder="Search..." class="form-control search input-sm clear-search" ng-model = "titleFilter" data-toggle = "tooltip" title = "Search sections by title" tooltip-placement "top"/>
       <span class="glyphicon glyphicon-search search-bar-icon large-search-icon"></span>
