@@ -1,0 +1,53 @@
+
+Controllers in Quericity
+
+controllers.js:quizlib.controller('MenuCtrl', ['$scope','$route',function($scope,$route){
+controllers.js:quizlib.controller('ShareCtrl', ['$scope','$routeParams','QuizBank','User',function($scope,$routeParams,QuizBank,User){
+controllers.js:quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',function($scope,User,fileUpload){
+controllers.js:quizlib.controller('PasswordCtrl', ['$scope','User',function($scope,User){
+controllers.js:quizlib.controller('StudentLineGraphCtrl',['$scope','User',function($scope,User){
+controllers.js:quizlib.controller('StudentBarGraphCtrl', ['$scope','User',function($scope,User){
+controllers.js:quizlib.controller("QuizHistogramCtrl",['$scope','ServedQuiz',function($scope,ServedQuiz){
+controllers.js:quizlib.controller('StudentReportCtrl', ['$scope','$routeParams','User',function($scope,$routeParams,User){
+controllers.js:quizlib.controller('QuizReportCtrl', ['$scope','ServedQuiz','$routeParams','TimeDisplay',function($scope,ServedQuiz,$routeParams,TimeDisplay){
+controllers.js:quizlib.controller('StudentBarCtrl', ['$scope','User',function($scope,User){
+controllers.js:quizlib.controller('QuizBarCtrl', ['$scope','ServedQuiz',function($scope,ServedQuiz){
+controllers.js:quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParams','TimeDisplay',function($scope,ServedQuiz,$routeParams,TimeDisplay){
+controllers.js:quizlib.controller('GradeListQuizCtrl', ['$scope','$modal','$rootScope','ServedQuiz','ClonedQuizBank','QuizBank','Sharing','QuizStatus','TimeDisplay',function($scope,$modal,$rootScope,ServedQuiz,ClonedQuizBank,QuizBank,Sharing,QuizStatus,TimeDisplay){
+controllers.js:quizlib.controller('GradeQuestionCtrl', ['$scope','$routeParams','ServedQuiz','Answer',function($scope,$routeParams,ServedQuiz,Answer){
+controllers.js:quizlib.controller('ServeQuizCtrl', ['$scope','$rootScope', '$modal','ServedQuiz','ClonedQuizBank','QuizBank','Sharing','QuizStatus','TimeDisplay','Message',function($scope,$rootScope, $modal,ServedQuiz,ClonedQuizBank,QuizBank,Sharing,QuizStatus,TimeDisplay,Message){
+controllers.js:quizlib.controller('NewServeQuizCtrl', ['$scope','QuizBank','ServedQuiz','ClonedQuizBank','ClonedQuestion','ClonedQuestionOption','Group','User','Sharing','QuestionOption','$routeParams','$location','Message',function($scope,QuizBank,ServedQuiz,ClonedQuizBank,ClonedQuestion,ClonedQuestionOption,Group,User,Sharing,QuestionOption,$routeParams,$location,Message){
+controllers.js:quizlib.controller('GroupListCtrl', ['$scope','User','Group','StudentGroup','Message',function($scope,User,Group,StudentGroup,Message){
+controllers.js:quizlib.controller('AddGroupCtrl', ['$scope','$location','User','Group','StudentGroup','Message',function($scope,$location,User,Group,StudentGroup,Message){
+controllers.js:quizlib.controller('ViewGroupCtrl', ['$scope','$routeParams','Group',function($scope,$routeParams,Group){
+controllers.js:quizlib.controller('EditGroupCtrl', ['$scope','$location','$routeParams','User','Group','StudentGroup','Message',function($scope,$location,$routeParams,User,Group,StudentGroup,Message){
+controllers.js:quizlib.controller('ShowQuizBankCtrl', ['$window','$scope','$routeParams','QuizBank','Repository','User','QuestionTopic','Topic','Section','FavouriteQuiz','Message', function($window,$scope,$routeParams, QuizBank, Repository, User,QuestionTopic,Topic,Section,FavouriteQuiz,Message) {
+controllers.js:quizlib.controller("Navigation",['$scope','Repository','QuizBank',function($scope,Repository,QuizBank){
+controllers.js:quizlib.controller("ManageStarredCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz','Message',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz,Message){
+controllers.js:quizlib.controller("ManageSharedCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz','Message',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz,Message){
+controllers.js:quizlib.controller("ManageCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz','Message',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz,Message){
+controllers.js:quizlib.controller("ManageMyCtrl",['$scope','QuizBank','Repository','User','QuestionTopic','Topic','FavouriteQuiz','Message',function($scope, QuizBank, Repository, User,QuestionTopic,Topic,FavouriteQuiz,Message){
+controllers.js:quizlib.controller("viewQuestionsCtrl",['$scope','Question','GlobalScope','QuestionOption','QuizBank',function($scope, Question,GlobalScope,QuestionOption,QuizBank){
+controllers.js:quizlib.controller("sectionCtrl",['$scope','$rootScope','Section','Question',function($scope,$rootScope,Section,Question){
+controllers.js:quizlib.controller("CloneQuizBankCtrl",['$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','Message',function($scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,Message){
+controllers.js:quizlib.controller("NewQuizBankCtrl",['$scope','$location','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','User','Message',function($scope, $location,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,User,Message){
+EditQuizBankCtrl.js:quizlib.controller("EditQuizBankCtrl",['$window','$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','Message','$rootScope',function($window,$scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,Message,$rootScope){
+newQuestionCtrl.js:quizlib.controller("newQuestionCtrl",['$scope','$rootScope','Question','GlobalScope','QuestionOption',function($scope,$rootScope,Question, GlobalScope,QuestionOption){
+PreviewQuizCtrl.js:quizlib.controller('PreviewQuizCtrl', ['$scope','$routeParams','$timeout','QuizBank','Question','QuestionOption',function($scope,$routeParams,$timeout,QuizBank,Question,QuestionOption){
+printQuizBankCtrl.js:quizlib.controller("printQuizBankCtrl",['$window','$scope','$location','$routeParams','QuizBank','Repository','Section','GlobalScope','Topic','QuestionTopic','Message','$rootScope',function($window,$scope,$location,$routeParams,QuizBank, Repository,Section, GlobalScope,Topic,QuestionTopic,Message,$rootScope){
+student_controllers.js:student_quizlib.controller('SettingsCtrl', ['$scope','User','fileUpload',function($scope,User,fileUpload){
+student_controllers.js:student_quizlib.controller('TakeQuizCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','FormatData','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,FormatData,QuizStatus){
+student_controllers.js:student_quizlib.controller('FinishQuizCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','FormatData','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,FormatData,QuizStatus){
+student_controllers.js:student_quizlib.controller('ReportsCtrl', ['$scope','ServedQuiz','Sharing','User','FormatData',function($scope,ServedQuiz,Sharing,User,FormatData){
+student_controllers.js:student_quizlib.controller('StudentLineGraphCtrl',['$scope','User',function($scope,User){
+student_controllers.js:student_quizlib.controller('StudentBarGraphCtrl', ['$scope','User',function($scope,User){
+student_controllers.js:student_quizlib.controller('QuizDetailCtrl', ['$scope','ServedQuiz','$routeParams','TimeDisplay','FormatData',function($scope,ServedQuiz,$routeParams,TimeDisplay,FormatData){
+student_controllers.js:student_quizlib.controller('QuizListCtrl', ['$scope','ServedQuiz','Sharing','TimeDisplay','FormatData','QuizStatus',function($scope,ServedQuiz,Sharing,TimeDisplay,FormatData,QuizStatus){
+student_controllers.js:student_quizlib.controller('AnswersCtrl', ['$scope','ServedQuiz','Sharing','$routeParams','Answer',function($scope,ServedQuiz,Sharing,$routeParams,Answer){
+student_controllers.js:student_quizlib.controller('QuizAttemptCtrl', ['$scope','ServedQuiz','Sharing','$routeParams',function($scope,ServedQuiz,Sharing,$routeParams){
+student_controllers.js:student_quizlib.controller('AllQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Grade','Answer','Attempt',function($scope,$timeout,ServedQuiz,Sharing, Grade,Answer,Attempt){
+student_controllers.js:student_quizlib.controller('EnrolGroupCtrl',['$scope','Group','StudentGroup','User',function($scope,Group,StudentGroup,User){
+student_controllers.js:student_quizlib.controller('AllQuestionsAnswerAfterQuizCtrl', ['$scope','ServedQuiz','Sharing','Answer','Attempt',function($scope,ServedQuiz,Sharing,Answer,Attempt){
+student_controllers.js:student_quizlib.controller('NumberOfQuestionsNOTimeLimit', ['$scope','ServedQuiz','Sharing','Answer','Grade','Attempt',function($scope,ServedQuiz,Sharing,Answer,Grade,Attempt){
+student_controllers.js:student_quizlib.controller('NumberOfQuestionsTimeLimit', ['$scope','$timeout','ServedQuiz','Sharing','Answer','Grade','Attempt',function($scope,$timeout,ServedQuiz,Sharing,Answer,Grade,Attempt){
+viewQuestionCntrl.js:quizlib.controller("viewQuestionCtrl",['$window','$scope','$rootScope','QuestionOption','Question','GlobalScope',function($window,$scope,$rootScope,QuestionOption,Question,GlobalScope){
