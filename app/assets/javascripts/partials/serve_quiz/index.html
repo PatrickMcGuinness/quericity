@@ -76,12 +76,12 @@
                 </div>  
               </span>
             </td>
-            <td><span style="color:#00a404; font-weight:bold;">Invited:</span><a ng-click = "invited_students(served_quiz.id)" data-toggle = "tooltip" title = "All Students who have not started quiz" tooltip-placement = "top"> {{served_quiz.invited_sharings.length}}</a><span style="color:#c64b00; font-weight:bold;"> Partial:</span><a ng-click = "pending_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who started but have not completed quiz" tooltip-placement = "top"> {{served_quiz.pending_sharings.length}}</a><span style="color:#0069a7; font-weight:bold;"> Completed:</span><a data-toggle = "tooltip" title = "Students Completed the quiz" tooltip-placement = "top"ng-click = "completed_students(served_quiz.id)"> {{served_quiz.completed_sharings.length}}</a></td>
+            <td><span style="color:#0069a7; font-weight:bold;">Invited:</span><a ng-click = "invited_students(served_quiz.id)" data-toggle = "tooltip" title = "All Students who have not started quiz" tooltip-placement = "top"> {{served_quiz.invited_sharings.length}}</a><span style="color:#c64b00; font-weight:bold;"> Partial:</span><a ng-click = "pending_students(served_quiz.id)" data-toggle = "tooltip" title = "Students who started but have not completed quiz" tooltip-placement = "top"> {{served_quiz.pending_sharings.length}}</a><span style="color:#00a404; font-weight:bold;"> Completed:</span><a data-toggle = "tooltip" title = "Students Completed the quiz" tooltip-placement = "top"ng-click = "completed_students(served_quiz.id)"> {{served_quiz.completed_sharings.length}}</a></td>
             <td ng-if = "served_quiz.no_expiration == 0 && served_quiz.close_status == 0">
               N/A
             </td>
             <td ng-if = "served_quiz.no_expiration == 1 && served_quiz.close_status == 0">
-              <a ng-click = "close_quiz(served_quiz)">Close</a>
+              <a ng-click = "close_quiz(served_quiz)">Action</a>
             </td>
             <td ng-if = "served_quiz.no_expiration == 1 && served_quiz.close_status == 1">
               Closed
